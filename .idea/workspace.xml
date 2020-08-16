@@ -1,57 +1,178 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="08c34cf6-cf2a-4242-97f5-eadbba2041fe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/elections/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/elections/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/elections/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runcoding/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/runcoding/urls.py" afterDir="false" />
+    <list default="true" id="f88449b0-a0f2-4c29-a3dd-3d433df21ba6" name="Default Changelist" comment="runcoding homepage ver01.">
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/common/footer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/common/head.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/common/header.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/common/privacy.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/comunity/coding_comunity.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/lecture_view.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/lecture_view_arduino.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/lecture_view_mblock.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/myclass.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/myclass_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/main/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/common.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/font-awesome.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/layout.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/reset.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/slick-theme.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/slick.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/data/arduino_trashcan/arduino_install.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/data/arduino_trashcan/arduino_trashcan.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/Trashcan/trashcan_main.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/img_video.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/link_application.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/link_example.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/link_making.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/link_onlineClass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/bg_botBanner_left01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/bg_botBanner_left02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/bg_botBanner_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_calendar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_play.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_priceDown.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_priceUp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/img_user.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/sv_codingKit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/sv_community.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/sv_myClass.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/sv_review.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/common.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/jquery-migrate-3.0.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/vendor/jquery-3.4.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/vendor/modernizr-3.7.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/wrest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/comunity/coding_comunity.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/comunity/coding_comunity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/index_runcoding.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/index_runcoding.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/lecture_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/lecture_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/lecture_view_arduino.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/lecture_view_arduino.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/lecture_view_mblock.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/lecture_view_mblock.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/myclass.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/myclass.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/myclass_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/myclass_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/lounge/coding_lounge.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lounge/coding_lounge.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1g8dXjKbGmm2K4Bt8nSg59uPENX" />
+  <component name="ProjectId" id="1g9tomsLAE6eJbC3JLw8AEO4kjM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="ignore.virus.scanning.warn.message" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/runcoding" />
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\img\sub" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\data\arduino_trashcan" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\data" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\lecture" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding\src" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding\src\main" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\data\arduino_trashcan" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\main" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src" />
+    </key>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="08c34cf6-cf2a-4242-97f5-eadbba2041fe" name="Default Changelist" comment="" />
-      <created>1597500194877</created>
+      <changelist id="f88449b0-a0f2-4c29-a3dd-3d433df21ba6" name="Default Changelist" comment="" />
+      <created>1597538812763</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1597500194877</updated>
+      <updated>1597538812763</updated>
     </task>
+    <task id="LOCAL-00001" summary="runcoding homepage ver01.">
+      <created>1597596070166</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1597596070166</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="runcoding homepage ver01." />
+    <option name="LAST_COMMIT_MESSAGE" value="runcoding homepage ver01." />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="881" y="377" key="git4idea.merge.GitPullDialog" timestamp="1597501636022">
+    <state x="741" y="343" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1597593773947">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="881" y="377" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597501636022" />
+    <state x="741" y="343" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597593773946" />
+    <state x="184" y="86" key="DiffContextDialog" timestamp="1597599762642">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597599762642" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1597597494625">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597597494625" />
+    <state x="742" y="300" key="git4idea.merge.GitPullDialog" timestamp="1597599781919">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="742" y="300" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597599781919" />
   </component>
 </project>
