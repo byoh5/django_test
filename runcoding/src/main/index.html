@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="../resource/js/vendor/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready( function() {
+
+$("#header").load("../common/header.html");  // 원하는 파일 경로를 삽입하면 된다
+$("#head").load("../common/head.html");
+$("#footer").load("../common/footer.html");  // 추가 인클루드를 원할 경우 이런식으로 추가하면 된다
+
+});
+</script>
+<div id="head"></div>
+</head>
+<body>
+
+<div id="header"></div>
+</body>
+<div id="footer"></div>
+</html>
