@@ -199,7 +199,6 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	border-radius: 5em;
 }
 
-
 .codingKit_list .filter_area {
 	margin-left:110px;
 	width:210px;
@@ -511,6 +510,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	text-align:center;
 	border-radius:5em;
 }
+
 .codingKit_list .filter_area.detail .btn_area a.btn.cart {
 	border:1px solid #969696;
 }

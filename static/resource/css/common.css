@@ -868,6 +868,9 @@ footer .footer .snsArea .snsBtn a {
 [data-ml-modal] .modal-close:hover {background-color:rgba(255,255,255,.2); color:#fff; cursor:pointer;}
 [data-ml-modal] p:first-child, [data-ml-modal] p:last-child {margin:0;}
 
+/* youtube플레이어 화면에 꽉차게 하는 css */
+#youTubePlayer1 {position:relative;width:100%;padding-bottom:56.25%;}
+#youTubePlayer1 iframe {position:absolute;width:100%;height:100%;}
 
 
 

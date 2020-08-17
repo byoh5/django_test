@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- saved from url=(0050)http://www.runcoding.co.kr/_html/myClass_view.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<!--      class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>코딩키트 | 머릿속 생각을 쉽게,뚝딱 런코딩</title>
     <meta name="description" content="" />
     <meta name="Keywords" content="runcoding" />
@@ -35,9 +37,43 @@
 <script src="../resource/js/vendor/modernizr-3.7.1.min.js"></script>
 <script src="../resource/js/common.js?ver=20200730001"></script>
 <script src="../resource/js/wrest.js?ver=20200730001"></script>
+
 </head>
-<body>
+<body oncontextmenu='return false' onselectstart='return false' ondragstart='return false'>
 <header>
+
+    <script>
+    function getVideo(url) {
+        var src = '../resource/data/arduino_trashcan/arduino_install.mp4';
+        if(url == 9)
+            src = '../resource/data/arduino_trashcan/arduino_trashcan.mp4';
+
+        var video  = document.getElementById('video_ctrl');
+        video.src = src;
+    }
+
+    // F12 버튼 방지
+    $(document).ready(function(){
+        $(document).bind('keydown',function(e){
+            if ( e.keyCode == 123 /* F12 */) {
+                e.preventDefault();
+                e.returnValue = false;
+            }
+        });
+    });
+
+    // 우측 클릭 방지
+    document.onmousedown=disableclick;
+    status="Right click is not available.";
+
+    function disableclick(event){
+        if (event.button==2) {
+            alert(status);
+            return false;
+        }
+    }
+    </script>
+
     <div class="header_wrap">
         <a href="http://ec2-54-180-116-142.ap-northeast-2.compute.amazonaws.com:8000/" class="logo">
             <img src="../resource/img/common/logo.png" alt="runcoding">
@@ -45,7 +81,7 @@
         <!-- gnb -->
         <ul class="menu">
             <li>
-                <a href="../lecture/lecture_list.html">코딩키트</a>
+                <a href="lecture_list.html">코딩키트</a>
             </li>
             <li>
                 <a href="../lounge/coding_lounge.html">코딩라운지</a>
@@ -55,7 +91,7 @@
                 <a href="../comunity/coding_comunity.html">커뮤니티</a>
             </li>
             <li>
-                <a href="../lecture/myclass_list.html">나의 강의실</a>
+                <a href="myclass_list.html">나의 강의실</a>
             </li>
         </ul>
         <div class="ab_right">
@@ -87,45 +123,47 @@
 </header>
 
     <div class="wrap">
-        <!-- sub visual -->
-        <section class="sub_visual">
-            <div class="section_wrap">
-                <div class="slogan">
+     <section class="sub_visual">
+    <div class="section_wrap">
+        <div class="slogan">
                     <span class="bigSlg">
-                        나의 강의실
+                        코딩 라운지
                     </span>
-                    <p>
-                        수업 한번으로는 감이 잘 안잡히시나요?<br/>
-                        감 잡힐때까지! 보고 또 보세요!
-                    </p>
-                </div>
-                <img class="subVisual myClass" src="../resource/img/sub/sv_myClass.png" alt="나의 강의실">
-            </div>
-        </section>
-        <!-- sub visual -->
+            <p>
+                다른 학생들은 어떤 작품을 만들었을까?<br/>
+                동영상으로 확인해보세요!
+            </p>
+        </div>
+        <img class="subVisual codingLounge" src="../resource/img/sub/sv_review.png" alt="코딩라운지">
+    </div>
+    </section>
 
-        <!-- codingLounge list -->
-        <div class="codingLounge_list">
-            <ul class="thumb_list">
-                <li>
-                    <img src="../resource/img/Trashcan/trashcan_main.jpg" alt="코딩 라운지 리스트 썸네일">
-                    <div class="text_area">
-                        <span class="title">[아두이노 + AI] 스마트 휴지통</span>
-                        <p class="writer">런코딩</p>
-                        <p class="date">2020.06.30</p>
-                        <a href="myclass.html" class="btn brd_detail">강의 보기</a>
+
+        <!-- codingKit list -->
+        <div class="codingKit_list detail myClass">
+            <div class="lecture_list detail">
+                <div class="detail_area">
+                    <!-- 동영상 영역입니다. -->
+                    <div class="video_area">
+                        <iframe id="youTubePlayer1" type="text/html" width="1000" height="500"
+  src="http://www.youtube.com/embed/pUU90JhO75M?autoplay=1"
+  frameborder="0"></iframe>
                     </div>
-                </li>
-            </ul>
-            <div class="paging_area">
-                <a><img src="../resource/img/sub/go_first.png"></a>
-                <a><img src="../resource/img/sub/go_prev.png"></a>
-                <a class="active">1</a>
-                <a>2</a>
-                <a>3</a>
-                <a><img src="../resource/img/sub/go_next.png"></a>
-                <a><img src="../resource/img/sub/go_last.png"></a>
+
+<!--                    <div class="precaution">-->
+<!--                        <span class="summaryTitle">영상 소개</span>-->
+<!--                        <ul>-->
+<!--                            <li>스마트 휴지통 키트를 완성해 보세요.</li>-->
+<!--                            <li>강의에 대한 요약된 정보를 입력해주세요.</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                </div>
+                <div style="padding-left:300px;">
+                <a href="coding_lounge.html" class="btn list_more" >목록으로</a>
+               </div>
             </div>
+
+
         </div>
 
         <div class="banner bottom">
@@ -133,15 +171,15 @@
             <img class="bg left02" src="../resource/img/sub/bg_botBanner_left02.png" alt="bg02">
             <img class="bg right" src="../resource/img/sub/bg_botBanner_right.png" alt="bg03">
             <span>
-                CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
+                CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br>
                 지금 시작해보세요.
             </span>
-            <a href="../lecture/lecture_list.html" class="btn">시작하기</a>
+            <a href="/myClass_view.html" class="btn">시작하기</a>
         </div>
 
         <footer>
             <div class="footer">
-                <img class="ci" src="../resource/img/common/logo_footer.png" alt="런코딩">
+                <img class="ci" src="../resource/img/sub/logo_footer.png" alt="런코딩">
                 <div class="footerText">
                     <div class="information">
                         <span>INFORMATION</span>
@@ -188,28 +226,28 @@
                     <div class="snsArea">
                         <span>SNS</span>
                         <div class="snsBtn">
-                            <a><img src="../resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
-                            <a><img src="../resource/img/common/ico_instagram.png" alt="instagram"></a>
-                            <a><img src="../resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
-                            <a><img src="../resource/img/common/ico_youtube.png" alt="youtube"></a>
+                            <a><img src="{% static 'resource/img/common/ico_kakaoTalk.png' %}" alt="kakaotalk"></a>
+                            <a><img src="{% static 'resource/img/common/ico_instagram.png' %}" alt="instagram"></a>
+                            <a><img src="{% static 'resource/img/common/ico_naverBlog.png' %}" alt="naverblog"></a>
+                            <a><img src="{% static 'resource/img/common/ico_youtube.png' %}" alt="youtube"></a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="link_area">
                 <div class="linkWrap">
-                    <a href="#modal01">Privacy Policy</a>
-                    <a href="#modal02">Terms &amp; Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms &amp; Conditions</a>
                 </div>
             </div>
         </footer>
 
 
         <!-- privacy modal -->
-        <div data-ml-modal id="modal01">
-            <a href="#!" class="modal-overlay"></a>
+        <div data-ml-modal="" id="modal01">
+            <a href="#" class="modal-overlay"></a>
             <div class="modal-dialog modal-dialog-lg">
-                <a href="#!" class="modal-close">&times;</a>
+                <a href="#" class="modal-close">×</a>
                 <h3>개인정보취급방침</h3>
                 <div class="modal-content">
                     <div class="terms_area">
@@ -219,10 +257,10 @@
             </div>
         </div>
 
-        <div data-ml-modal id="modal02">
-            <a href="#!" class="modal-overlay"></a>
+        <div data-ml-modal="" id="modal02">
+            <a href="#" class="modal-overlay"></a>
             <div class="modal-dialog modal-dialog-lg">
-                <a href="#!" class="modal-close">&times;</a>
+                <a href="#" class="modal-close">×</a>
                 <h3>이용약관</h3>
                 <div class="modal-content">
                     <div class="terms_area">
@@ -250,30 +288,62 @@
             });
         });
 
-        // 차량리스트 목록 더보기
-        $(document).ready(function(){
-
-            var list = $(".lecture_list ul li");
-            var numToShow = 5;
-            var button = $("#more");
-            var numInList = list.length;
-            list.hide();
-            if (numInList > numToShow) {
-                button.show();
+        // 수량 더하기
+        function up(max) {
+            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) + 1;
+            if (document.getElementById("prodQuantity").value >= parseInt(max)) {
+                document.getElementById("prodQuantity").value = max;
             }
-            list.slice(0, numToShow).show();
+        }
+        function down(min) {
+            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) - 1;
+            if (document.getElementById("prodQuantity").value <= parseInt(min)) {
+                document.getElementById("prodQuantity").value = min;
+            }
+        }
 
-            button.click(function(){
-                var showing = list.filter(':visible').length;
-                list.slice(showing - 1, showing + numToShow).fadeIn();
-                var nowShowing = list.filter(':visible').length;
-                if (nowShowing >= numInList) {
-                    button.hide();
+        // accordion menu
+        $(document).ready(function() {
+            $("#accordion .section_title").click(function() {
+                var link = $(this);
+                var closest_ul = link.closest("ul");
+                var parallel_active_links = closest_ul.find(".active")
+                var closest_li = link.closest("li");
+                var link_status = closest_li.hasClass("active");
+                var count = 0;
+
+                closest_ul.find("ul").slideUp(function() {
+                    if (++count == closest_ul.find("ul").length)
+                        parallel_active_links.removeClass("active");
+                });
+
+                if (!link_status) {
+                    closest_li.children("ul").slideDown();
+                    closest_li.addClass("active");
                 }
-            });
-
+            })
         });
+
+        $(window).scroll(function() {
+            var scroll_top = $(window).scrollTop();
+            if (scroll_top >= $(".sub_visual").outerHeight()) {
+                $(".filter_area").addClass("scr");
+            } else {
+                $(".filter_area").removeClass("scr");
+            }
+        });
+
+        $(window).scroll(function () {
+            var scroll_top = $(window).scrollTop();
+            if ( $(".sub_visual").outerHeight() + $(".lecture_list").height() <= scroll_top + $(".fixedArea").height()) {
+                $(".scr").addClass("end");
+            } else {
+                $(".scr").removeClass("end");
+            }
+        });
+
+
     </script>
 
-</body>
-</html>
+
+</body></html>
