@@ -40,7 +40,7 @@
 <body>
 <header>
     <div class="header_wrap">
-        <a href="main/index_runcoding.html" class="logo">
+        <a href="http://ec2-54-180-116-142.ap-northeast-2.compute.amazonaws.com:8000/" class="logo">
             <img src="{% static 'resource/img/common/logo.png' %}" alt="runcoding">
         </a>
         <!-- gnb -->
@@ -49,14 +49,14 @@
                 <a href="{% static 'lecture/lecture_list.html' %}">코딩키트</a>
             </li>
             <li>
-                <a href="lounge/coding_lounge.html">코딩라운지</a>
+                <a href="{% static 'lounge/coding_lounge.html' %}">코딩라운지</a>
             </li>
 
             <li>
-                <a href="comunity/coding_comunity.html">커뮤니티</a>
+                <a href="{% static 'comunity/coding_comunity.html' %}">커뮤니티</a>
             </li>
             <li>
-                <a href="lecture/myclass_list.html">나의 강의실</a>
+                <a href="{% static 'lecture/myclass_list.html' %}">나의 강의실</a>
             </li>
         </ul>
         <div class="ab_right">
@@ -100,7 +100,7 @@
                 지금 시작해보세요.
             </p>
         </div>
-        <img class="subVisual codingKit" src="../resource/img/sub/sv_codingKit.png" alt="코딩키트">
+        <img class="subVisual codingKit" src="{% static 'resource/img/sub/sv_codingKit.png' %}" alt="코딩키트">
     </div>
 </section>
 <!-- sub visual -->
@@ -110,8 +110,8 @@
     <div class="lecture_list">
         <ul>
                 <li class="list01">
-                <a href="lecture_view_arduino.html">
-                    <img src="../resource/img/Trashcan/trashcan_main.jpg" alt="코딩키트 썸네일">
+                <a href="{% static 'lecture/lecture_view_arduino.html' %}">
+                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="코딩키트 썸네일">
                     <div class="text_area">
                             <span>
                                 <small class="type">아두이노</small>
@@ -119,11 +119,11 @@
                             </span>
                     <div class="ckInfo">
                                 <span class="period">
-                                    <img src="../resource/img/sub/ico_calendar.png" alt="기간">
+                                    <img src="{% static 'resource/img/sub/ico_calendar.png' %}" alt="기간">
                                     3개월 과정
                                 </span>
                         <span class="num">
-                                    <img src="../resource/img/sub/ico_play.png" alt="강의 수">
+                                    <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
                                     13개 강의
                                 </span>
                         <span class="price">
@@ -135,19 +135,19 @@
                 </a>
             </li>
                         <li class="list01">
-                <a href="lecture_view_mblock.html">
-                    <img src="../resource/img/Trashcan/trashcan_main.jpg" alt="코딩키트 썸네일">
+                <a href="{% static 'lecture/lecture_view_mblock.htmll' %}">
+                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="코딩키트 썸네일">
                     <div class="text_area">
                                 <span>
                                     <small class="type">엠블럭</small>
                                     [엠블럭 + AI 코딩] 스마트 휴지통                            </span>
                         <div class="ckInfo">
                                     <span class="period">
-                                        <img src="../resource/img/sub/ico_calendar.png" alt="기간">
+                                        <img src="{% static 'resource/img/sub/ico_calendar.png' %}" alt="기간">
                                         3개월 과정
                                     </span>
                             <span class="num">
-                                        <img src="../resource/img/sub/ico_play.png" alt="강의 수">
+                                        <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
                                         12개 강의
                                     </span>
                             <span class="price">
@@ -167,7 +167,7 @@
             <span>SEARCH</span>
             <div class="input_area">
                 <input type="text" name="src_inp" id="src_inp" placeholder="검색어 입력">
-                <button type="button"><img src="../resource/img/sub/ico_search.png" alt="검색"></button>
+                <button type="button"><img src="{% static 'resource/img/sub/ico_search.png' %}" alt="검색"></button>
             </div>
         </div>
         <div class="category">
@@ -197,9 +197,9 @@
     });
 </script>
 <div class="banner bottom">
-    <img class="bg left01" src="../resource/img/sub/bg_botBanner_left01.png" alt="bg01">
-    <img class="bg left02" src="../resource/img/sub/bg_botBanner_left02.png" alt="bg02">
-    <img class="bg right" src="../resource/img/sub/bg_botBanner_right.png" alt="bg03">
+    <img class="bg left01" src="{% static 'resource/img/sub/bg_botBanner_left01.png' %}" alt="bg01">
+    <img class="bg left02" src="{% static 'resource/img/sub/bg_botBanner_left02.png' %}" alt="bg02">
+    <img class="bg right" src="{% static 'resource/img/sub/bg_botBanner_right.png' %}" alt="bg03">
     <span>
                 CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
                 지금 시작해보세요.
@@ -209,7 +209,7 @@
 
 <footer>
     <div class="footer">
-        <img class="ci" src="../resource/img/common/logo_footer.png" alt="런코딩">
+        <img class="ci" src="{% static 'resource/img/common/logo_footer.png' %}" alt="런코딩">
         <div class="footerText">
             <div class="information">
                 <span>INFORMATION</span>
@@ -256,10 +256,10 @@
             <div class="snsArea">
                 <span>SNS</span>
                 <div class="snsBtn">
-                    <a><img src="../resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
-                    <a><img src="../resource/img/common/ico_instagram.png" alt="instagram"></a>
-                    <a><img src="../resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
-                    <a><img src="../resource/img/common/ico_youtube.png" alt="youtube"></a>
+                    <a><img src="{% static 'resource/img/common/ico_kakaoTalk.png' %}" alt="kakaotalk"></a>
+                    <a><img src="{% static 'resource/img/common/ico_instagram.png' %}" alt="instagram"></a>
+                    <a><img src="{% static 'resource/img/common/ico_naverBlog.png' %}" alt="naverblog"></a>
+                    <a><img src="{% static 'resource/img/common/ico_youtube.png' %}" alt="youtube"></a>
                 </div>
             </div>
         </div>

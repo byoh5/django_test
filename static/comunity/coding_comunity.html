@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -13,49 +14,49 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="runcoding">
     <meta property="og:description" content="runcoding">
-    <meta property="og:image" content="../resource/img/common/share_img.jpg">
+    <meta property="og:image" content="{% static 'resource/img/common/share_img.jpg' %}">
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="../resource/img/common/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="../resource/img/common/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="../resource/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/font-awesome.min.css' %}">
 
     <!-- slick css -->
-    <link rel="stylesheet" type="text/css" href="../resource/css/slick.css" />
-    <link rel="stylesheet" type="text/css" href="../resource/css/slick-theme.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick-theme.css' %}" />
 
-    <link rel="stylesheet" type="text/css" href="../resource/css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="../resource/css/common.css" />
-    <link rel="stylesheet" type="text/css" href="../resource/css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/reset.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/layout.css' %}" />
 <!--<script>-->
 <!--var elearning_url       = "https://www.runcoding.co.kr"; var elearning_bbs_url   = "https://www.runcoding.co.kr/bbs"; var elearning_is_member = ""; var elearning_is_admin  = ""; var elearning_is_mobile = "0"; var elearning_bo_table  = ""; var elearning_sca       = ""; var elearning_editor    = ""; var elearning_cookie_domain = ""; </script>-->
 
-<script src="../resource/js/vendor/jquery-3.4.1.min.js"></script>
-<script src="../resource/js/jquery-migrate-3.0.0.js"></script>
-<script src="../resource/js/vendor/modernizr-3.7.1.min.js"></script>
-<script src="../resource/js/common.js?ver=20200730001"></script>
-<script src="../resource/js/wrest.js?ver=20200730001"></script>
+<script src="{% static 'resource/js/vendor/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'resource/js/jquery-migrate-3.0.0.js' %}"></script>
+<script src="{% static 'resource/js/vendor/modernizr-3.7.1.min.js' %}"></script>
+<script src="{% static 'resource/js/common.js?ver=20200730001' %}"></script>
+<script src="{% static 'resource/js/wrest.js?ver=20200730001' %}"></script>
 </head>
 <body>
 <header>
     <div class="header_wrap">
-        <a href="../index_runcoding.html" class="logo">
-            <img src="../resource/img/common/logo.png" alt="runcoding">
+        <a href="http://ec2-54-180-116-142.ap-northeast-2.compute.amazonaws.com:8000/" class="logo">
+            <img src="{% static 'resource/img/common/logo.png' %}" alt="runcoding">
         </a>
         <!-- gnb -->
         <ul class="menu">
             <li>
-                <a href="../lecture/lecture_list.html">코딩키트</a>
+                <a href="{% static 'lecture/lecture_list.html' %}">코딩키트</a>
             </li>
             <li>
-                <a href="../lounge/coding_lounge.html">코딩라운지</a>
+                <a href="{% static 'lounge/coding_lounge.html' %}">코딩라운지</a>
             </li>
 
             <li>
-                <a href="../comunity/coding_comunity.html">커뮤니티</a>
+                <a href="{% static 'comunity/coding_comunity.html' %}">커뮤니티</a>
             </li>
             <li>
-                <a href="../lecture/myclass_list.html">나의 강의실</a>
+                <a href="{% static 'lecture/myclass_list.html' %}">나의 강의실</a>
             </li>
         </ul>
         <div class="ab_right">
@@ -66,7 +67,7 @@
 
             <!-- 로그인 -->
             <div class="user_menu">
-                <span class="userImg"><img src="../resource/img/sub/img_user.png" alt="유저 프로필"></span>
+                <span class="userImg"><img src="{% static 'resource/img/sub/img_user.png' %}" alt="유저 프로필"></span>
                 <ul class="sub_menu">
                     <li>
                         <a href="mypage.html">내 프로필</a>
@@ -88,7 +89,7 @@
 <div class="wrap">
 <section class="sub_visual">
     <div class="section_wrap">
-        <img class="subVisual community" src="../resource/img/sub/sv_community.png" alt="커뮤니티">
+        <img class="subVisual community" src="{% static 'resource/img/sub/sv_community.png' %}" alt="커뮤니티">
         <div class="slogan community">
                     <span class="bigSlg">
                         런코딩 커뮤니티를 통해<br />
@@ -129,9 +130,9 @@
 <!-- } 모듈 목록 끝 -->
 
 <div class="banner bottom">
-    <img class="bg left01" src="../resource/img/sub/bg_botBanner_left01.png" alt="bg01">
-    <img class="bg left02" src="../resource/img/sub/bg_botBanner_left02.png" alt="bg02">
-    <img class="bg right" src="../resource/img/sub/bg_botBanner_right.png" alt="bg03">
+    <img class="bg left01" src="{% static 'resource/img/sub/bg_botBanner_left01.png' %}" alt="bg01">
+    <img class="bg left02" src="{% static 'resource/img/sub/bg_botBanner_left02.png' %}" alt="bg02">
+    <img class="bg right" src="{% static 'resource/img/sub/bg_botBanner_right.png' %}" alt="bg03">
     <span>
                 CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
                 지금 시작해보세요.
@@ -141,7 +142,7 @@
 
 <footer>
     <div class="footer">
-        <img class="ci" src="../resource/img/common/logo_footer.png" alt="런코딩">
+        <img class="ci" src="{% static 'resource/img/common/logo_footer.png' %}" alt="런코딩">
         <div class="footerText">
             <div class="information">
                 <span>INFORMATION</span>
@@ -188,10 +189,10 @@
             <div class="snsArea">
                 <span>SNS</span>
                 <div class="snsBtn">
-                    <a><img src="../resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
-                    <a><img src="../resource/img/common/ico_instagram.png" alt="instagram"></a>
-                    <a><img src="../resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
-                    <a><img src="../resource/img/common/ico_youtube.png" alt="youtube"></a>
+                    <a><img src="{% static 'resource/img/common/ico_kakaoTalk.png' %}" alt="kakaotalk"></a>
+                    <a><img src="{% static 'resource/img/common/ico_instagram.png' %}" alt="instagram"></a>
+                    <a><img src="{% static 'resource/img/common/ico_naverBlog.png' %}" alt="naverblog"></a>
+                    <a><img src="{% static 'resource/img/common/ico_youtube.png' %}" alt="youtube"></a>
                 </div>
             </div>
         </div>
