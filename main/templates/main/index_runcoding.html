@@ -87,7 +87,7 @@
     </div>
 </header>
 
-<div class="wrap">    <link rel="stylesheet" type="text/css" href="resource/css/main.css" >
+<div class="wrap">    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/main.css' %}" >
 
     <!-- main visual -->
     <section class="main_visual">
@@ -104,22 +104,22 @@
                     </span>
                 <a href="codingKit_list.html">시작하기</a>
             </div>
-            <img class="mainVisual" src="resource/img/main/img_mainVisual.png" alt="상상을 현실로 만드는 런코딩">
+            <img class="mainVisual" src="{% static 'resource/img/main/img_mainVisual.png' %}" alt="상상을 현실로 만드는 런코딩">
         </div>
     </section>
     <!-- main visual -->
 
     <!-- main content -->
     <section class="section02">
-        <img class="bg left" src="resource/img/main/bg_sec02left.png" alt="left bg">
-        <img class="bg right" src="resource/img/main/bg_sec02right.png" alt="right bg">
+        <img class="bg left" src="{% static 'resource/img/main/bg_sec02left.png' %}" alt="left bg">
+        <img class="bg right" src="{% static 'resource/img/main/bg_sec02right.png' %}" alt="right bg">
 
         <div class="video_content">
-            <img class="mainVisual" src="resource/img/main/img_video.jpg">
+            <img class="mainVisual" src="{% static 'resource/img/main/img_video.jpg' %}">
         </div>
 
         <div class="benefit">
-            <img src="resource/img/main/img_sec02_01.png" alt="코딩키트를 사면 온라인 강의는 무료!">
+            <img src="{% static 'resource/img/main/img_sec02_01.png' %}" alt="코딩키트를 사면 온라인 강의는 무료!">
             <div class="text_area">
                     <span class="sec_title">
                         코딩키트를 사면<br/>
@@ -170,7 +170,7 @@
                         </div>
                     </li>
                 </ul>
-                <img src="resource/img/main/img_sec02_02.png" alt="런코딩, 누가 무엇을 배울 수 있을까?">
+                <img src="{% static 'resource/img/main/img_sec02_02.png' %}" alt="런코딩, 누가 무엇을 배울 수 있을까?">
             </div>
         </div>
     </section>
@@ -178,7 +178,7 @@
     <section class="section03">
         <div class="makers_area">
             <div class="thumb_list">
-                <img src="resource/img/main/img_makres01.png" alt="makers">
+                <img src="{% static 'resource/img/main/img_makres01.png' %}" alt="makers">
             </div>
             <div class="text_area">
                     <span class="sec_title">
@@ -203,20 +203,20 @@
             <div class="link_area">
                 <a class="link big">
                     <!--<span>온라인 강의</span>-->
-                    <img src="resource/img/main/link_onlineClass.png" alt="온라인 강의">
+                    <img src="{% static 'resource/img/main/link_onlineClass.png' %}" alt="온라인 강의">
                 </a>
                 <div class="small_link">
                     <a class="link small">
                         <!--<span>예제/퀴즈</span>-->
-                        <img src="resource/img/main/link_example.png" alt="예제/퀴즈">
+                        <img src="{% static 'resource/img/main/link_example.png' %}" alt="예제/퀴즈">
                     </a>
                     <a class="link small">
                         <!--<span>만들기</span>-->
-                        <img src="resource/img/main/link_making.png" alt="만들기">
+                        <img src="{% static 'resource/img/main/link_making.png' %}" alt="만들기">
                     </a>
                     <a class="link long">
                         <!--<span>응용하기</span>-->
-                        <img src="resource/img/main/link_application.png" alt="응용하기">
+                        <img src="{% static 'resource/img/main/link_application.png' %}" alt="응용하기">
                     </a>
                 </div>
             </div>
@@ -225,8 +225,8 @@
                     <li class="pa01">
                             <span class="prog_title">
                                 <!--<span class="num">01</span>-->
-                                <img class="ico prog01" src="resource/img/main/ico_progress01w.png" alt="키트구입">
-                                <img class="ico_c prog01" src="resource/img/main/ico_progress01.png" alt="키트구입">
+                                <img class="ico prog01" src="{% static 'resource/img/main/ico_progress01w.png' %}" alt="키트구입">
+                                <img class="ico_c prog01" src="{% static 'resource/img/main/ico_progress01.png' %}" alt="키트구입">
                                 <span class="name">키트구입</span>
                             </span>
                         <p class="pa_description">
@@ -239,8 +239,8 @@
                     <li class="pa02">
                             <span class="prog_title">
                                 <!--<span class="num">02</span>-->
-                                <img class="ico prog02" src="resource/img/main/ico_progress02w.png" alt="코딩하기">
-                                <img class="ico_c prog02" src="resource/img/main/ico_progress02.png" alt="코딩하기">
+                                <img class="ico prog02" src="{% static 'resource/img/main/ico_progress02w.png' %}" alt="코딩하기">
+                                <img class="ico_c prog02" src="{% static 'resource/img/main/ico_progress02.png' %}" alt="코딩하기">
                                 <span class="name">코딩하기</span>
                             </span>
                         <p class="pa_description">
@@ -253,8 +253,8 @@
                     <li class="pa03">
                             <span class="prog_title">
                                 <!--<span class="num">03</span>-->
-                                <img class="ico prog03" src="resource/img/main/ico_progress03w.png" alt="만들기">
-                                <img class="ico_c prog03" src="resource/img/main/ico_progress03.png" alt="만들기">
+                                <img class="ico prog03" src="{% static 'resource/img/main/ico_progress03w.png' %}" alt="만들기">
+                                <img class="ico_c prog03" src="{% static 'resource/img/main/ico_progress03.png' %}" alt="만들기">
                                 <span class="name">만들기</span>
                             </span>
                         <p class="pa_description">
@@ -267,8 +267,8 @@
                     <li class="pa04">
                             <span class="prog_title">
                                 <!--<span class="num">04</span>-->
-                                <img class="ico prog04" src="resource/img/main/ico_progress04w.png" alt="응용하기">
-                                <img class="ico_c prog04" src="resource/img/main/ico_progress04.png" alt="응용하기">
+                                <img class="ico prog04" src="{% static 'resource/img/main/ico_progress04w.png' %}" alt="응용하기">
+                                <img class="ico_c prog04" src="{% static 'resource/img/main/ico_progress04.png' %}" alt="응용하기">
                                 <span class="name">응용하기</span>
                             </span>
                         <p class="pa_description">
@@ -284,9 +284,9 @@
     </section>
 
     <div class="banner bottom">
-        <img class="bg left01" src="resource/img/sub/bg_botBanner_left01.png" alt="bg01">
-        <img class="bg left02" src=resource/img/sub/bg_botBanner_left02.png" alt="bg02">
-        <img class="bg right" src="resource/img/sub/bg_botBanner_right.png" alt="bg03">
+        <img class="bg left01" src="{% static 'resource/img/sub/bg_botBanner_left01.png' %}" alt="bg01">
+        <img class="bg left02" src="{% static 'resource/img/sub/bg_botBanner_left02.png' %}" alt="bg02">
+        <img class="bg right" src="{% static 'resource/img/sub/bg_botBanner_right.png' %}" alt="bg03">
         <span>
                 CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
                 지금 시작해보세요.
@@ -295,8 +295,8 @@
     </div>
 
     <section class="section04">
-        <img class="bg left" src="resource/img/main/bg_contactLeft.png" alt="bg">
-        <img class="bg right" src="resource/img/main/bg_contactRight.png" alt="bg">
+        <img class="bg left" src="{% static 'resource/img/main/bg_contactLeft.png' %}" alt="bg">
+        <img class="bg right" src="{% static 'resource/img/main/bg_contactRight.png' %}" alt="bg">
         <div class="contactUs">
             <div class="text_area">
                 <span class="sm_title">CONTACT US</span>
@@ -318,9 +318,9 @@
 
 
 <div class="banner bottom">
-    <img class="bg left01" src="resource/img/sub/bg_botBanner_left01.png" alt="bg01">
-    <img class="bg left02" src="resource/img/sub/bg_botBanner_left02.png" alt="bg02">
-    <img class="bg right" src="resource/img/sub/bg_botBanner_right.png" alt="bg03">
+    <img class="bg left01" src="{% static 'resource/img/sub/bg_botBanner_left01.png' %}" alt="bg01">
+    <img class="bg left02" src="{% static 'resource/img/sub/bg_botBanner_left02.png' %}" alt="bg02">
+    <img class="bg right" src="{% static 'resource/img/sub/bg_botBanner_right.png' %}" alt="bg03">
     <span>
                 CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
                 지금 시작해보세요.
@@ -332,7 +332,7 @@
     <div>   <link rel="import" href="../common/privacy.html"> </div>
 <footer>
     <div class="footer">
-        <img class="ci" src="resource/img/common/logo_footer.png" alt="런코딩">
+        <img class="ci" src="{% static 'resource/img/common/logo_footer.png' %}" alt="런코딩">
         <div class="footerText">
             <div class="information">
                 <span>INFORMATION</span>
@@ -379,10 +379,10 @@
             <div class="snsArea">
                 <span>SNS</span>
                 <div class="snsBtn">
-                    <a><img src="resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
-                    <a><img src="resource/img/common/ico_instagram.png" alt="instagram"></a>
-                    <a><img src="resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
-                    <a><img src="resource/img/common/ico_youtube.png" alt="youtube"></a>
+                    <a><img src="{% static 'resource/img/common/ico_kakaoTalk.png' %}" alt="kakaotalk"></a>
+                    <a><img src="{% static 'resource/img/common/ico_instagram.png' %}" alt="instagram"></a>
+                    <a><img src="{% static 'resource/img/common/ico_naverBlog.png' %}" alt="naverblog"></a>
+                    <a><img src="{% static 'resource/img/common/ico_youtube.png' %}" alt="youtube"></a>
                 </div>
             </div>
         </div>
