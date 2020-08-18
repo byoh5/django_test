@@ -2007,11 +2007,11 @@ input[id*="answer"] {
 input[id*="answer"] + label {
     display:block;
     padding:20px;
-    border:1px solid #232188;
+    border:1px solid #000;
     border-bottom:0;
     color:#fff;
     font-weight:900;
-    background:#FFCCE6;
+    background:#FFF;
     cursor:pointer;
     position:relative;
 }
@@ -2031,10 +2031,13 @@ input[id*="answer"] + label + div {
     overflow:hidden;
     background:#ebf8ff;
     font-size:11px;
+    color:#000;
+
 }
 input[id*="answer"] + label + div p {
     display:inline-block;
     padding:20px;
+
 }
 input[id*="answer"]:checked + label + div {max-height:100px;}
 input[id*="answer"]:checked + label em {background-position:0 -30px;}
