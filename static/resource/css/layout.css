@@ -2004,14 +2004,34 @@ select.inp_mypage {
 input[id*="answer"] {
     display:none;
 }
+.accordion > label {
+    position: relative;
+    display: block;
+    height: 50px;
+    color: #454d5b;
+    line-height: 50px;
+    padding: 0 10px;
+    margin-bottom: 0px;
+    font-size: 13px;
+    font-weight: 700;
+    border-top: 1px solid #e3e3e2;
+    background: #fff;
+    cursor: pointer;
+    transform: rotate(0deg);
+}
+
 input[id*="answer"] + label {
     display:block;
     padding:20px;
-    border:1px solid #000;
+    #border:1px solid #000;
     border-bottom:0;
-    color:#fff;
+    border-top: 1px solid #e3e3e2;
+    height: 50px;
+    padding: 0 10px;
+    margin-bottom: 0px;
+    line-height: 50px;
     font-weight:900;
-    background:#FFF;
+    background: #fff;
     cursor:pointer;
     position:relative;
 }
@@ -2025,12 +2045,13 @@ input[id*="answer"] + label em {
     display:inline-block;
     background:url("../img/sub/arrow.png"); 0 0 no-repeat;
 }
+
 input[id*="answer"] + label + div {
     max-height:0;
     transition:all .35s;
     overflow:hidden;
-    background:#ebf8ff;
-    font-size:11px;
+    background:#f9f9f9;
+    font-size:17px;
     color:#000;
 
 }
