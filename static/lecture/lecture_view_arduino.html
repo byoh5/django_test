@@ -83,7 +83,6 @@
             </div>
         </div>
     </header>
-
     <div class="wrap">
         <!-- sub visual -->
         <section class="sub_visual">
@@ -127,7 +126,6 @@
                     <div class="curriculum">
                         <h3>커리큘럼</h3>
                         <div class="list_depth1">
-<!--                            <span>Section 01. 발견</span>-->
                             <ul>
                                 <li>
                                     <p class="title">
@@ -209,70 +207,38 @@
                                 </li>
                             </ul>
                         </div>
-<!--                        <div class="list_depth1">-->
-<!--                            <span>Section 02. 동상이몽</span>-->
-<!--                            <ul>-->
-<!--                                <li>-->
-<!--                                    <p class="title">-->
-<!--                                        <b>06.</b> 프로그램 설치 시작! [학습목표]-->
-<!--                                    </p>-->
-<!--                                    <p class="time">00:03:00</p>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <p class="title">-->
-<!--                                        <b>07.</b> 별도의 프로그램?! [호환보드 드라이버 설치]-->
-<!--                                    </p>-->
-<!--                                    <p class="time">00:04:00</p>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <p class="title">-->
-<!--                                        <b>08.</b> 명령을 내리다 [mBlock 설치하기]-->
-<!--                                    </p>-->
-<!--                                    <p class="time">00:05:00</p>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <p class="title">-->
-<!--                                        <b>09.</b> 에아의 계획 [확장블록 추가하기]-->
-<!--                                    </p>-->
-<!--                                    <p class="time">00:05:00</p>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <p class="title">-->
-<!--                                        <b>10.</b> 드디어 전원 ON [우노보드 연결하기]-->
-<!--                                    </p>-->
-<!--                                    <p class="time">00:04:00</p>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <p class="title">-->
-<!--                                        <b>11.</b> 에아의 작동 방식 [아두이노 제어 방식]-->
-<!--                                    </p>-->
-<!--                                    <p class="time">00:15:00</p>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <p class="title">-->
-<!--                                        <b>12.</b> 각자의 계획-->
-<!--                                    </p>-->
-<!--                                    <p class="time">00:02:00</p>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
                     </div>
                 </div>
                 <a href="lecture_list.html" class="btn list_more">목록으로</a>
             </div>
+
+            <script>
+
+                function submit()
+                {
+                    var title = document.getElementById('title').value;
+                    var q = document.getElementById('prodQuantity').value;
+
+                    window.location.href = "../payment/cart.html?t="+title+"&q="+q;
+                };
+
+            </script>
+
             <div class="filter_area detail">
                 <div class="fixedArea">
                     <div class="info_area">
                         <span>INFO</span>
                         <div class="lecture_info">
+
                             <ul>
                                 <li>
                                     <span class="li_title">판매가</span>
+                                     <input type="hidden" id="title" value="11">
                                     <p><span class="price">45,000</span> won</p>
                                 </li>
                                 <li>
-                                    <span class="li_title">소프트웨어</span>
-                                    <p>아두이노, 러닝봇</p>
+                                    <span class="li_title">키트명</span>
+                                    <p>[아두이노 + AI] 스마트 휴지통</p>
                                 </li>
 <!--                                <li>-->
 <!--                                    <span class="li_title">강의 구성</span>-->
@@ -288,13 +254,14 @@
                                 </li>
                                 <li>
                                     <span class="li_title">수량</span>
+
                                     <div class="count_num">
                                         <button id="down" class="btn minus" onclick=" down('1')">
                                             <img src="../resource/img/sub/ico_priceDown.png" alt="down">
                                         </button>
 
-                                        <input type="text" id="prodQuantity" class="input quantity" value="1" />
 
+                                        <input type="text" id="prodQuantity" class="input quantity" value="1" />
                                         <button id="up" class="btn plus" onclick="up('10')">
                                             <img src="../resource/img/sub/ico_priceUp.png" alt="up">
                                         </button>
@@ -304,7 +271,7 @@
                         </div>
                     </div>
                     <div class="btn_area">
-                        <a class="btn cart">장바구니</a>
+                        <a class="btn cart" href="javascript:submit();" data-cart="1">장바구니</a>
                         <a class="btn buy" href="../payment/pay_info.html">바로구매</a>
                     </div>
                 </div>

@@ -424,6 +424,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 .codingKit_list .filter_area.detail .lecture_info ul li p span.price {
 	color:#b14739;
 }
+
 .codingKit_list .filter_area.detail .lecture_info ul li .count_num {
 	display:flex;
 	justify-content:flex-start;
@@ -515,6 +516,24 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	border:1px solid #969696;
 }
 .codingKit_list .filter_area.detail .btn_area a.btn.buy {
+	color:#fff;
+	background-color:#646464;
+}
+
+.cart_title .btn_area {
+	margin-top:0.83em;
+}
+.cart_title .btn_area a.btn {
+	display:block;
+	margin-bottom:0.5em;
+	padding:0.5em 0;
+	width:100%;
+	font-size:0.66em;
+	text-align:center;
+	border-radius:5em;
+}
+
+.cart_title .btn_area a.btn.buy {
 	color:#fff;
 	background-color:#646464;
 }
@@ -826,9 +845,6 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	background-color:#b14739;
 	border-color:#b14739;
 }
-
-
-
 
 	/* board paging */
 .paging_area {
@@ -1236,6 +1252,23 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	text-align:center;
 }
 
+/* cart */
+.cart_title {
+    margin-left:230px;
+    max-width: 1300px;
+    max-height:1500px;
+    width:100%;
+    background-color:#fff;
+	border-radius:5px;
+}
+
+.cart_img {
+    padding-top:20px;
+    width:100%;
+    max-width:400px;
+    max-height:350px;
+    padding-bottom:30px;
+}
 
 /* mypage */
 .mypage_area {
