@@ -104,6 +104,52 @@
         </div>
     </section>
 
+    <script>
+
+         // 수량 더하기
+        function up(max) {
+            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) + 1;
+            if (document.getElementById("prodQuantity").value >= parseInt(max)) {
+                document.getElementById("prodQuantity").value = max;
+            }
+        }
+        function down(min) {
+            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) - 1;
+            if (document.getElementById("prodQuantity").value <= parseInt(min)) {
+                document.getElementById("prodQuantity").value = min;
+            }
+        }
+
+        function check(min) {
+
+			var chks = document.getElementsByName('idxs[]');
+			alert(chks);
+
+<!--			var total_reserve = 0;-->
+<!--			var total_price = 0;-->
+<!--			var total_special_discount_amount = 0;-->
+<!--			var total_memberdc = 0;-->
+
+
+<!--			for (var i=0,m=chks.length;i<m ;i++) {-->
+<!--				if (chks[i].checked == true) {-->
+<!--					total_price += parseInt(this.data[i].price * this.data[i].ea );-->
+<!--					total_special_discount_amount += parseInt(this.data[i].special_discount_amount* this.data[i].ea );-->
+<!--					total_memberdc += parseInt(this.data[i].memberdc* this.data[i].ea );-->
+<!--					total_reserve += parseInt(this.data[i].reserve);-->
+<!--				}-->
+<!--			}-->
+
+<!--			total_special_discount_amount += total_memberdc;-->
+
+<!--			document.getElementById('el-orderitem-total-reserve').innerText = comma(total_reserve);-->
+<!--			document.getElementById('el-orderitem-total-price').innerText = comma(total_price);-->
+<!--			document.getElementById('el-orderitem-total-special_discount_amount').innerText = comma(total_special_discount_amount);-->
+<!--			document.getElementById('el-orderitem-total-result').innerText = comma(total_price - total_special_discount_amount);-->
+
+		}
+    </script>
+
     <div id="orderDiv" > <!--style="display: none" -->
          <div class="container margin-top-40">
              <div class="row">
@@ -114,45 +160,65 @@
                         </div>
                       </div>
 
-                      <div class="row">
+                      <tr class="row">
                           <div class="col-xs-12">
                              <div class="panel panel-default border-radius-none margin-top-30">
                                   <div class="panel-body">
-                                       <div>
-                                           <div class="pull-left margin-right-20 margin-bottom-20">
-                                               <img class="width-120px border-radius" src="../resource/img/Trashcan/trashcan_main.jpg" onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
-                                           </div>
-                                            <div>
-                                                <h4 class="order-info-gig-body margin-top-0 font-weight-500" style="font-size:15px">[아두이노 + AI] 스마트 휴지통</h4>
-                                            </div>
-                                       </div>
+<!--                                       <div>-->
+<!--                                           <div class="pull-left margin-right-20 margin-bottom-20">-->
+<!--                                               <img class="width-120px border-radius" src="../resource/img/Trashcan/trashcan_main.jpg" onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">-->
+<!--                                           </div>-->
+<!--                                            <div>-->
+<!--                                                <h4 class="order-info-gig-body margin-top-0 font-weight-500" style="font-size:15px">[아두이노 + AI] 스마트 휴지통</h4>-->
+<!--                                            </div>-->
+<!--                                       </div>-->
 
                                       <!-- table -->
                                       <table class="order-table">
                                             <colgroup>
-                                                <col width="30%" />
+                                                <col width="3%" />
                                                 <col width="10%" />
                                                 <col width="20%" />
+                                                <col width="20%" />
+                                                <col width="5%" />
                                                 <col width="15%" />
                                                 <col width="10%" />
-                                                <col width="15%" />
+                                                <col width="10%" />
                                             </colgroup>
                                             <thead class="order-package">
                                             <tr>
-                                                <th>옵션 선택</th>
+                                                <th class="text-center">&nbsp;</th>
+                                                <th class="text-center">&nbsp;</th>
+                                                <th class="text-center">상품</th>
+                                                <th class="text-center">옵션 선택</th>
                                                 <th class="text-center">판매가</th>
                                                 <th class="text-center">수량선택</th>
                                                 <th class="text-left">배송구분</th>
                                                 <th class="text-right">배송비</th>
-                                                <th class="text-right">합계</th>
                                             </tr>
                                             </thead>
                                           <tbody class="order-option">
                                             <tr>
                                                 <td>
+                                                    <input type="hidden" name="adultpro[]" value="0">
+                                                    <input type="checkbox" name="idxs[]" value="0" checked onClick="javascript:check();">
+                                                </td>
+                                                <td>
+                                                     <div class="pull-left">
+                                                           <a href="../lecture/lecture_view_arduino.html">
+                                                               <img class="width-120px border-radius" src="../resource/img/Trashcan/trashcan_main.jpg" onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
+                                                           </a>
+                                                     </div>
+                                                </td>
+                                                <td>
+                                                     <div class="pull-left">
+                                                         <span>[아두이노 + AI] 스마트 휴지통</span>
+                                                     </div>
+                                                </td>
+                                                <td>
                                                     <div id="prdModify">
                                                         <li>
-                                                            <span>아두이노 우노</span>
+                                                            <span>&nbsp;</span>
                                                             <select name="arduino" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
                                                                 <option value="">------필수옵션-------</option>
                                                                 <option value="1">아두이노 우노</option>
@@ -168,7 +234,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <strong>&nbsp;&nbsp;&nbsp;45,000원</strong>
+                                                    <strong>45,000원</strong>
                                                 </td>
                                                 <td>
                                                     <div class="flex-center-center">
@@ -191,41 +257,180 @@
                                                 <td>
                                                    <strong>3,000원</strong>
                                                 </td>
-                                                <td>
-                                                   <strong>48,000원</strong>
-                                                </td>
                                             </td>
+
+                                            <!-- second -->
+
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="adultpro[]" value="0">
+                                                    <input type="checkbox" name="idxs[]" value="0" checked onClick="javascript:check();">
+                                                </td>
+                                                <td>
+                                                     <div class="pull-left">
+                                                           <a href="../lecture/lecture_view_arduino.html">
+                                                               <img class="width-120px border-radius" src="../resource/img/Trashcan/trashcan_main.jpg" onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
+                                                           </a>
+                                                     </div>
+                                                </td>
+                                                <td>
+                                                     <div class="pull-left">
+                                                         <span>[아두이노 + AI] 스마트 휴지통</span>
+                                                     </div>
+                                                </td>
+                                                <td>
+                                                    <div id="prdModify">
+                                                        <li>
+                                                            <span>&nbsp;</span>
+                                                            <select name="arduino" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                                <option value="">------필수옵션-------</option>
+                                                                <option value="1">아두이노 우노</option>
+                                                            </select>
+                                                        </li>
+                                                         <li>
+                                                            <span>&nbsp;</span>
+                                                            <select name="runningCam" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                                <option value="">------필수옵션-------</option>
+                                                                <option value="2">러닝캠</option>
+                                                            </select>
+                                                        </li>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <strong>45,000원</strong>
+                                                </td>
+                                                <td>
+                                                    <div class="flex-center-center">
+                                                        <button id="down" class="btn minus" onclick=" down('1')">
+                                                            <img src="../resource/img/sub/ico_priceDown.png" alt="down">
+                                                        </button> &nbsp;&nbsp;
+
+                                                        <input type="text" id="prodQuantity" class="input quantity" value="1"
+                                                               style="display:block; width:1.75em; font-size:0.53em; text-align:center; background:none; border:1px solid #969696; border-radius:2px;"/>
+
+                                                        &nbsp;&nbsp;
+                                                        <button id="up" class="btn plus" onclick="up('10')">
+                                                            <img src="../resource/img/sub/ico_priceUp.png" alt="up">
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                   <strong>기본 배송</strong>
+                                                </td>
+                                                <td>
+                                                   <strong>3,000원</strong>
+                                                </td>
+                                            </tr>
                                           </tbody>
                                       </table>
-                                    </div>
                                  </div>
                              </div>
                         </div>
+                    </div>
 
-                        <!-- 배송지 -->
+                 <!-- 총금액 -->
+                 <div class="margin-top-40 xans-order-totalsummary">
+                     <table summary>
+                         <colgroup>
+                             <col style="width:23%;">
+                             <col style="width:24%;">
+                             <col style="width:23%;" class="displaynone">
+                             <col style="width:auto;">
+                         </colgroup>
+                         <thead>
+                            <tr>
+                                <th scope="col" class="text-center">
+                                    <span>총 상품 금액</span>
+                                </th>
+                                 <th scope="col" class="text-center">
+                                    <span>총 배송비</span>
+                                </th>
+                                 <th scope="col" class="text-center">
+                                    <span>결제 예상 금액</span>
+                                </th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                         <tr>
+                             <td class="price">
+                                <div class="box">
+                                    <strong>90,000</strong> &nbsp;won
+                                    <span class="tail displaynone"></span>
+                                </div>
+                             </td>
+                             <td class="option">
+                                <div class="box">
+                                    <strong>3,000</strong> &nbsp;won
+                                    <span class="tail displaynone"></span>
+                                </div>
+                             </td>
+                             <td class="total">
+                                <div class="box">
+                                    <strong>93,000</strong>&nbsp;won
+                                    <span class="tail displaynone"></span>
+                                </div>
+                             </td>
+                         </tr>
+                         </tbody>
+                     </table>
+                 </div>
+
+                 <!-- 결제방법 -->
+                    <div class="container-2 margin-top-40">
                         <div class="row">
                             <div class="col-xs-12">
                                  <div class="panel panel-default border-radius-none margin-top-30">
-                                      <div class="panel-heading bg-color-gray font-14"><strong>주의사항</strong></div>
-                                      <div class="panel-body color-light-yellow">
+                                      <div class="panel-heading bg-color-gray font-14"><strong>결제방법</strong></div>
+                                      <div class="panel-body padding-all-15 font-14">
+                                           <ui class="margin-bottom-0">
+                                               <li>
+                                                   <div style="width:100px; padding-right:10px">
+                                                        <input type="radio" checked>
+                                                       <span>신용카드</span>
+                                                   </div>
+
+                                               </li>
+                                           </ui>
+                                      </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 배송지 -->
+                    <div class="container-2 margin-top-40">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                 <div class="panel panel-default border-radius-none margin-top-30">
+                                      <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
+                                      <div class="panel-body">
                                            <div class="row">
                                                <div class="col-xs-7 padding-right-30 border-dashed-right">
-                                                   <div class="row">
-                                                       <div class="col-xs-7 padding-left-30 font-14">
-                                                        <string>샬라샬라 </string>
-                                                       </div>
-
-                                                   </div>
-                                               </div>
-                                                </div>
                                            </div>
                                       </div>
                                  </div>
                             </div>
                         </div>
                     </div>
+                    </div>
+
+                    <!-- 유의사항 -->
+                    <div class="container-2 margin-top-40">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                 <div class="panel panel-default border-radius-none margin-top-30">
+                                      <div class="panel-heading bg-color-gray font-14"><strong>알려드립니다.</strong></div>
+                                      <div class="panel-body color-light-yellow">
+                                           <div class="row">
+                                               <div class="col-xs-7 padding-right-30 border-dashed-right">
+                                           </div>
+                                      </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                  </div>
-             </div>
              <div class="btn-center"><a href="#" class="btn order_complete">주문하기</a></div>
         </div>
     </div>
