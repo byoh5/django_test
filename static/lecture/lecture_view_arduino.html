@@ -217,9 +217,9 @@
                 function submit()
                 {
                     var title = document.getElementById('title').value;
-                    var q = document.getElementById('prodQuantity').value;
+<!--                    var q = document.getElementById('prodQuantity').value;-->
 
-                    window.location.href = "../payment/cart.html?t="+title+"&q="+q;
+                    window.location.href = "../payment/order.html?t="+title";
                 };
 
             </script>
@@ -252,26 +252,26 @@
                                     <span class="li_title">학습 기간</span>
                                     <p>3개월</p>
                                 </li>
-                                <li>
-                                    <span class="li_title">수량</span>
+<!--                                <li>-->
+<!--                                    <span class="li_title">수량</span>-->
 
-                                    <div class="count_num">
-                                        <button id="down" class="btn minus" onclick=" down('1')">
-                                            <img src="../resource/img/sub/ico_priceDown.png" alt="down">
-                                        </button>
+<!--                                    <div class="count_num">-->
+<!--                                        <button id="down" class="btn minus" onclick=" down('1')">-->
+<!--                                            <img src="../resource/img/sub/ico_priceDown.png" alt="down">-->
+<!--                                        </button>-->
 
 
-                                        <input type="text" id="prodQuantity" class="input quantity" value="1" />
-                                        <button id="up" class="btn plus" onclick="up('10')">
-                                            <img src="../resource/img/sub/ico_priceUp.png" alt="up">
-                                        </button>
-                                    </div>
-                                </li>
+<!--                                        <input type="text" id="prodQuantity" class="input quantity" value="1" />-->
+<!--                                        <button id="up" class="btn plus" onclick="up('10')">-->
+<!--                                            <img src="../resource/img/sub/ico_priceUp.png" alt="up">-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </li>-->
                             </ul>
                         </div>
                     </div>
                     <div class="btn_area">
-                        <a class="btn cart" href="javascript:submit();" data-cart="1">장바구니</a>
+                        <a class="btn cart" href="../payment/order.html?t=11" data-cart="1">장바구니</a>
                         <a class="btn buy" href="../payment/pay_info.html">바로구매</a>
                     </div>
                 </div>

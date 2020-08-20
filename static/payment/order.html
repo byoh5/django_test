@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>코딩키트 | 머릿속 생각을 쉽게,뚝딱 런코딩</title>
+    <meta name="description" content="" />
+    <meta name="Keywords" content="runcoding" />
+    <meta http-equiv="Copyright" content="" />
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <meta name="robots" content="index,follow">
+    <meta name="format-detection" content="telephone=no" />
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="runcoding">
+    <meta property="og:description" content="runcoding">
+    <meta property="og:image" content="../resource/img/common/share_img.jpg">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../resource/img/common/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../resource/img/common/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../resource/css/font-awesome.min.css">
+
+    <!-- slick css -->
+    <link rel="stylesheet" type="text/css" href="../resource/css/slick.css" />
+    <link rel="stylesheet" type="text/css" href="../resource/css/slick-theme.css" />
+
+    <link rel="stylesheet" type="text/css" href="../resource/css/reset.css?after" />
+    <link rel="stylesheet" type="text/css" href="../resource/css/common.css?after" />
+    <link rel="stylesheet" type="text/css" href="../resource/css/layout.css?after" />
+    <link rel="stylesheet" type="text/css" href="../resource/css/order.css?after" />
+
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<!--<script>-->
+<!--var elearning_url       = "https://www.runcoding.co.kr"; var elearning_bbs_url   = "https://www.runcoding.co.kr/bbs"; var elearning_is_member = ""; var elearning_is_admin  = ""; var elearning_is_mobile = "0"; var elearning_bo_table  = ""; var elearning_sca       = ""; var elearning_editor    = ""; var elearning_cookie_domain = ""; </script>-->
+
+    <script src="../resource/js/vendor/jquery-3.4.1.min.js"></script>
+    <script src="../resource/js/jquery-migrate-3.0.0.js"></script>
+    <script src="../resource/js/vendor/modernizr-3.7.1.min.js"></script>
+    <script src="../resource/js/common.js?ver=20200730001"></script>
+    <script src="../resource/js/wrest.js?ver=20200730001"></script>
+</head>
+
+<body>
+<header>
+    <div class="header_wrap">
+        <a href="http://ec2-54-180-116-142.ap-northeast-2.compute.amazonaws.com:8000/" class="logo">
+            <img src="../resource/img/common/logo.png" alt="runcoding">
+        </a>
+        <!-- gnb -->
+        <ul class="menu">
+            <li>
+                <a href="../lecture/lecture_list.html">코딩키트</a>
+            </li>
+            <li>
+                <a href="../lounge/coding_lounge.html">코딩라운지</a>
+            </li>
+
+            <li>
+                <a href="../comunity/coding_comunity.html">커뮤니티</a>
+            </li>
+            <li>
+                <a href="../lecture/myclass_list.html">나의 강의실</a>
+            </li>
+        </ul>
+        <div class="ab_right">
+            <!-- 비로그인 -->
+            <!--<a href="login.html" class="login">
+                로그인
+            </a>-->
+
+            <!-- 로그인 -->
+            <div class="user_menu">
+                <span class="userImg"><img src="../resource/img/sub/img_user.png" alt="유저 프로필"></span>
+                <ul class="sub_menu">
+                    <li>
+                        <a href="mypage.html">내 프로필</a>
+                    </li>
+                    <li>
+                        <a href="coupon.html">내 쿠폰</a>
+                    </li>
+                    <li>
+                        <a href="orderList.html">주문내역</a>
+                    </li>
+                    <li>
+                        <a href="login.html">로그아웃</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- content -->
+<div class="wrap">
+     <section class="sub_visual">
+        <div class="section_wrap">
+            <div class="slogan">
+                <span class="bigSlg ck_title">
+                   장바구니
+                </span>
+
+            </div>
+            <img class="subVisual codingKit" src="../resource/img/sub/sv_codingKit.png" alt="코딩키트">
+        </div>
+    </section>
+
+    <div id="orderDiv" > <!--style="display: none" -->
+         <div class="container margin-top-40">
+             <div class="row">
+                  <div class="col-xs-offset-1 col-xs-10">
+                      <div class="row">
+                        <div class="col-xs-12">
+                            <h2 class="margin-none"><b>주문하기</b></h2>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="col-xs-12">
+                             <div class="panel panel-default border-radius-none margin-top-30">
+                                  <div class="panel-body">
+                                       <div>
+                                           <div class="pull-left margin-right-20 margin-bottom-20">
+                                               <img class="width-120px border-radius" src="../resource/img/Trashcan/trashcan_main.jpg" onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
+                                           </div>
+                                            <div>
+                                                <h4 class="order-info-gig-body margin-top-0 font-weight-500" style="font-size:15px">[아두이노 + AI] 스마트 휴지통</h4>
+                                            </div>
+                                       </div>
+
+                                      <!-- table -->
+                                      <table class="order-table">
+                                            <colgroup>
+                                                <col width="30%" />
+                                                <col width="10%" />
+                                                <col width="20%" />
+                                                <col width="15%" />
+                                                <col width="10%" />
+                                                <col width="15%" />
+                                            </colgroup>
+                                            <thead class="order-package">
+                                            <tr>
+                                                <th>옵션 선택</th>
+                                                <th class="text-center">판매가</th>
+                                                <th class="text-center">수량선택</th>
+                                                <th class="text-left">배송구분</th>
+                                                <th class="text-right">배송비</th>
+                                                <th class="text-right">합계</th>
+                                            </tr>
+                                            </thead>
+                                          <tbody class="order-option">
+                                            <tr>
+                                                <td>
+                                                    <div id="prdModify">
+                                                        <li>
+                                                            <span>아두이노 우노</span>
+                                                            <select name="arduino" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                                <option value="">------필수옵션-------</option>
+                                                                <option value="1">아두이노 우노</option>
+                                                            </select>
+                                                        </li>
+                                                         <li>
+                                                            <span>&nbsp;</span>
+                                                            <select name="runningCam" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                                <option value="">------필수옵션-------</option>
+                                                                <option value="2">러닝캠</option>
+                                                            </select>
+                                                        </li>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <strong>&nbsp;&nbsp;&nbsp;45,000원</strong>
+                                                </td>
+                                                <td>
+                                                    <div class="flex-center-center">
+                                                    <button id="down" class="btn minus" onclick=" down('1')">
+                                                        <img src="../resource/img/sub/ico_priceDown.png" alt="down">
+                                                    </button> &nbsp;&nbsp;
+
+                                                    <input type="text" id="prodQuantity" class="input quantity" value="1"
+                                                           style="display:block; width:1.75em; font-size:0.53em; text-align:center; background:none; border:1px solid #969696; border-radius:2px;"/>
+
+                                                    &nbsp;&nbsp;
+                                                    <button id="up" class="btn plus" onclick="up('10')">
+                                                        <img src="../resource/img/sub/ico_priceUp.png" alt="up">
+                                                    </button>
+                                                </div>
+                                                </td>
+                                                <td>
+                                                   <strong>기본 배송</strong>
+                                                </td>
+                                                <td>
+                                                   <strong>3,000원</strong>
+                                                </td>
+                                                <td>
+                                                   <strong>48,000원</strong>
+                                                </td>
+                                            </td>
+                                          </tbody>
+                                      </table>
+                                    </div>
+                                 </div>
+                             </div>
+                        </div>
+
+                        <!-- 배송지 -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                 <div class="panel panel-default border-radius-none margin-top-30">
+                                      <div class="panel-heading bg-color-gray font-14"><strong>주의사항</strong></div>
+                                      <div class="panel-body color-light-yellow">
+                                           <div class="row">
+                                               <div class="col-xs-7 padding-right-30 border-dashed-right">
+                                                   <div class="row">
+                                                       <div class="col-xs-7 padding-left-30 font-14">
+                                                        <string>샬라샬라 </string>
+                                                       </div>
+
+                                                   </div>
+                                               </div>
+                                                </div>
+                                           </div>
+                                      </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+             <div class="btn-center"><a href="#" class="btn order_complete">주문하기</a></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="banner bottom">
+        <img class="bg left01" src="../resource/img/sub/bg_botBanner_left01.png" alt="bg01">
+        <img class="bg left02" src="../resource/img/sub/bg_botBanner_left02.png" alt="bg02">
+        <img class="bg right" src="../resource/img/sub/bg_botBanner_right.png" alt="bg03">
+        <span>
+            CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
+            지금 시작해보세요.
+        </span>
+        <a href="../lecture/lecture_list.html" class="btn">시작하기</a>
+    </div>
+
+
+   <footer>
+            <div class="footer">
+                <img class="ci" src="../resource/img/common/logo_footer.png" alt="런코딩">
+                <div class="footerText">
+                    <div class="information">
+                        <span>INFORMATION</span>
+                        <ul>
+                            <li>
+                                <span>Company</span>
+                                <p>런코딩</p>
+                            </li>
+                            <li>
+                                <span>CPO</span>
+                                <p>김하나</p>
+                            </li>
+                            <li>
+                                <span>Business License</span>
+                                <p>000-000-00000</p>
+                            </li>
+                            <li>
+                                <span>Online Biz</span>
+                                <p>000-000-00000</p>
+                            </li>
+                            <li>
+                                <span>Address</span>
+                                <p>경기도 런코딩 런코딩</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contact">
+                        <span>CONTACT</span>
+                        <ul>
+                            <li>
+                                <span>TEL</span>
+                                <p>070-0000-0000</p>
+                            </li>
+                            <li>
+                                <span>E-Mail</span>
+                                <p>master@runcoding.com</p>
+                            </li>
+                            <li>
+                                <span>Kakao ID</span>
+                                <p>런코딩</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="snsArea">
+                        <span>SNS</span>
+                        <div class="snsBtn">
+                            <a><img src="../resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
+                            <a><img src="../resource/img/common/ico_instagram.png" alt="instagram"></a>
+                            <a><img src="../resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
+                            <a><img src="../resource/img/common/ico_youtube.png" alt="youtube"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="link_area">
+                <div class="linkWrap">
+                    <a href="#modal01">Privacy Policy</a>
+                    <a href="#modal02">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- privacy modal -->
+        <div data-ml-modal id="modal01">
+            <a href="#!" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg">
+                <a href="#!" class="modal-close">&times;</a>
+                <h3>개인정보취급방침</h3>
+                <div class="modal-content">
+                    <div class="terms_area">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-ml-modal id="modal02">
+            <a href="#!" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg">
+                <a href="#!" class="modal-close">&times;</a>
+                <h3>이용약관</h3>
+                <div class="modal-content">
+                    <div class="terms_area">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // hamberger menu
+        $('.menu-btn').click(function() {
+            $('.line').toggleClass('animate');
+        });
+        // hamberger menu
+        // navigation
+        $(document).ready(function() {
+            $(".gnbClose, .gnbOpen").on("click", function(){
+                $(".gnb").toggleClass("active");
+                $(".gnbOpen").toggleClass("gnbClose");
+                $("html, body, .wrap").toggleClass("open");
+                $('html, body, .wrap').off('scroll touchmove mousewheel');
+            });
+        });
+
+        // 수량 더하기
+        function up(max) {
+            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) + 1;
+            if (document.getElementById("prodQuantity").value >= parseInt(max)) {
+                document.getElementById("prodQuantity").value = max;
+            }
+        }
+        function down(min) {
+            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) - 1;
+            if (document.getElementById("prodQuantity").value <= parseInt(min)) {
+                document.getElementById("prodQuantity").value = min;
+            }
+        }
+
+        $(window).scroll(function() {
+            var scroll_top = $(window).scrollTop();
+            if (scroll_top >= $(".sub_visual").outerHeight()) {
+                $(".filter_area").addClass("scr");
+            } else {
+                $(".filter_area").removeClass("scr");
+            }
+        });
+
+        $(window).scroll(function () {
+            var scroll_top = $(window).scrollTop();
+            if ( $(".sub_visual").outerHeight() + $(".lecture_list").height() <= scroll_top + $(".fixedArea").height()) {
+                $(".scr").addClass("end");
+            } else {
+                $(".scr").removeClass("end");
+            }
+        });
+    </script>
+</body>
+</html>
