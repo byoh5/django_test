@@ -437,3 +437,50 @@ tr {
     vertical-align: inherit;
     border-color: inherit;
 }
+
+span.quantity {
+    position: relative;
+    display: inline-block;
+    width: 27px;
+    margin: 0 1px 4px 0;
+    padding: 0 21px 0 0;
+    border: 1px solid #d4d8d9;
+    border-radius: 2px;
+}
+
+span.quantity .QuantityUp {
+    position: absolute;
+    left: 27px;
+    top: 0;
+    border:none;
+    vertical-align: top;
+}
+
+span.quantity .QuantityDown {
+    position: absolute;
+    left: 27px;
+    bottom: 0;
+    border: none;
+    vertical-align: top;
+}
+
+span.quantity input {
+    width: 22px;
+    height: 23px;
+    padding: 0 0 0 5px;
+    border: 0;
+    line-height: 23px;
+    font-size: 100%;
+    font-family: "돋움",Dotum;
+    color: #353535;
+    vertical-align: middle;
+}
+
+.quantity_td {
+    padding: 8px 0 5px;
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+
+
