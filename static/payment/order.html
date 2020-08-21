@@ -104,52 +104,6 @@
         </div>
     </section>
 
-    <script>
-
-         // 수량 더하기
-        function up(max) {
-            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) + 1;
-            if (document.getElementById("prodQuantity").value >= parseInt(max)) {
-                document.getElementById("prodQuantity").value = max;
-            }
-        }
-        function down(min) {
-            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) - 1;
-            if (document.getElementById("prodQuantity").value <= parseInt(min)) {
-                document.getElementById("prodQuantity").value = min;
-            }
-        }
-
-        function check(min) {
-
-			var chks = document.getElementsByName('idxs[]');
-			alert(chks);
-
-<!--			var total_reserve = 0;-->
-<!--			var total_price = 0;-->
-<!--			var total_special_discount_amount = 0;-->
-<!--			var total_memberdc = 0;-->
-
-
-<!--			for (var i=0,m=chks.length;i<m ;i++) {-->
-<!--				if (chks[i].checked == true) {-->
-<!--					total_price += parseInt(this.data[i].price * this.data[i].ea );-->
-<!--					total_special_discount_amount += parseInt(this.data[i].special_discount_amount* this.data[i].ea );-->
-<!--					total_memberdc += parseInt(this.data[i].memberdc* this.data[i].ea );-->
-<!--					total_reserve += parseInt(this.data[i].reserve);-->
-<!--				}-->
-<!--			}-->
-
-<!--			total_special_discount_amount += total_memberdc;-->
-
-<!--			document.getElementById('el-orderitem-total-reserve').innerText = comma(total_reserve);-->
-<!--			document.getElementById('el-orderitem-total-price').innerText = comma(total_price);-->
-<!--			document.getElementById('el-orderitem-total-special_discount_amount').innerText = comma(total_special_discount_amount);-->
-<!--			document.getElementById('el-orderitem-total-result').innerText = comma(total_price - total_special_discount_amount);-->
-
-		}
-    </script>
-
     <tr id="orderDiv" > <!--style="display: none" -->
          <div class="container margin-top-40">
              <tr class="row">
@@ -164,23 +118,15 @@
                           <div class="col-xs-12">
                              <div class="panel panel-default border-radius-none margin-top-30">
                                   <div class="panel-body">
-<!--                                       <div>-->
-<!--                                           <div class="pull-left margin-right-20 margin-bottom-20">-->
-<!--                                               <img class="width-120px border-radius" src="../resource/img/Trashcan/trashcan_main.jpg" onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">-->
-<!--                                           </div>-->
-<!--                                            <div>-->
-<!--                                                <h4 class="order-info-gig-body margin-top-0 font-weight-500" style="font-size:15px">[아두이노 + AI] 스마트 휴지통</h4>-->
-<!--                                            </div>-->
-<!--                                       </div>-->
 
                                       <!-- table -->
                                       <table class="order-table">
                                             <colgroup>
-                                                <col width="3%" />
+                                                 <col width="3%" />
                                                 <col width="10%" />
                                                 <col width="20%" />
                                                 <col width="20%" />
-                                                <col width="5%" />
+                                                <col width="10%" />
                                                 <col width="15%" />
                                                 <col width="10%" />
                                                 <col width="10%" />
@@ -189,8 +135,8 @@
                                             <tr>
                                                 <th class="text-center">&nbsp;</th>
                                                 <th class="text-center">&nbsp;</th>
-                                                <th class="text-center">상품</th>
-                                                <th class="text-center">옵션 선택</th>
+                                                <th class="text-left">상품</th>
+                                                <th class="text-left">옵션 선택</th>
                                                 <th class="text-center">판매가</th>
                                                 <th class="text-center">수량선택</th>
                                                 <th class="text-left">배송구분</th>
@@ -233,38 +179,44 @@
                                                         </li>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <strong>45,000원</strong>
+                                                <td >
+                                                    <div id="prd_price_0" style="float:left; margin-left:20px;">
+                                                        <strong>45000</strong>
+                                                     </div>
+                                                    <div style="float:left;">
+                                                        <strong>원</strong>
+                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="flex-center-center">
-                                                    <button id="down" class="btn minus" onclick=" down('1')">
-                                                        <img src="../resource/img/sub/ico_priceDown.png" alt="down">
-                                                    </button> &nbsp;&nbsp;
-
-                                                    <input type="text" id="prodQuantity" class="input quantity" value="1"
-                                                           style="display:block; width:1.75em; font-size:0.53em; text-align:center; background:none; border:1px solid #969696; border-radius:2px;"/>
-
-                                                    &nbsp;&nbsp;
-                                                    <button id="up" class="btn plus" onclick="up('10')">
-                                                        <img src="../resource/img/sub/ico_priceUp.png" alt="up">
-                                                    </button>
-                                                </div>
+                                                <td class="quantity_td" >
+                                                    <span class="quantity">
+                                                        <input type="text" id="prodQuantity_0" class="input quantity" value="1"/>
+                                                        <a href="javascript:up('10', '0')" style="color: #000;">
+                                                            <img src="../resource/img/sub/btn_quantity_up.gif" alt="증가" class="QuantityUp">
+                                                        </a>
+                                                        <a href="javascript:down('1', '0')" style="color: #000;">
+                                                            <img src="../resource/img/sub/btn_quantity_down.gif" alt="감소" class="QuantityDown">
+                                                        </a>
+                                                    </span>
                                                 </td>
                                                 <td>
                                                    <strong>기본 배송</strong>
                                                 </td>
                                                 <td>
-                                                   <strong>3,000원</strong>
+                                                   <div id="prd_option_price_0" style="float:left;">
+                                                        <strong>3,000</strong>
+                                                     </div>
+                                                    <div style="float:left;">
+                                                        <strong>원</strong>
+                                                     </div>
                                                 </td>
-                                            </td>
+                                            </tr>
 
                                             <!-- second -->
 
                                             <tr>
                                                 <td>
                                                     <input type="hidden" name="adultpro[]" value="0">
-                                                    <input type="checkbox" name="idxs[]" value="0" checked onClick="javascript:check();">
+                                                    <input type="checkbox" name="idxs[]" value="1" checked onClick="javascript:check();">
                                                 </td>
                                                 <td>
                                                      <div class="pull-left">
@@ -297,28 +249,34 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <strong>45,000원</strong>
-                                                </td>
-                                                <td>
-                                                    <div class="flex-center-center">
-                                                        <button id="down" class="btn minus" onclick=" down('1')">
-                                                            <img src="../resource/img/sub/ico_priceDown.png" alt="down">
-                                                        </button> &nbsp;&nbsp;
-
-                                                        <input type="text" id="prodQuantity" class="input quantity" value="1"
-                                                               style="display:block; width:1.75em; font-size:0.53em; text-align:center; background:none; border:1px solid #969696; border-radius:2px;"/>
-
-                                                        &nbsp;&nbsp;
-                                                        <button id="up" class="btn plus" onclick="up('10')">
-                                                            <img src="../resource/img/sub/ico_priceUp.png" alt="up">
-                                                        </button>
+                                                    <div id="prd_price_1" style="float:left; margin-left:20px;">
+                                                        <strong>45000</strong>
                                                     </div>
+                                                    <div style="float:left;">
+                                                        <strong>원</strong>
+                                                    </div>
+                                                </td>
+                                                <td class="quantity_td">
+                                                   <span class="quantity">
+                                                        <input id="prodQuantity_1" size="2" value="1" type="text">
+                                                        <a href="javascript:up('10', '1')" style="color: #000;">
+                                                            <img src="../resource/img/sub/btn_quantity_up.gif" alt="증가" class="QuantityUp">
+                                                        </a>
+                                                        <a href="javascript:down('1', '1')" style="color: #000;">
+                                                            <img src="../resource/img/sub/btn_quantity_down.gif" alt="감소" class="QuantityDown">
+                                                        </a>
+                                                    </span>
                                                 </td>
                                                 <td>
                                                    <strong>기본 배송</strong>
                                                 </td>
                                                 <td>
-                                                   <strong>3,000원</strong>
+                                                    <div id="prd_option_price_1" style="float:left;">
+                                                         <strong>3,000</strong>
+                                                    </div>
+                                                     <div style="float:left;">
+                                                        <strong>원</strong>
+                                                     </div>
                                                 </td>
                                             </tr>
                                           </tbody>
@@ -359,23 +317,32 @@
                                              </thead>
                                              <tbody>
                                              <tr>
-                                                 <td class="price">
-                                                    <div class="box">
-                                                        <strong>90,000</strong> &nbsp;won
+                                                 <td>
+                                                    <div id="total_prd_price" class="box" style="padding-left:30%; float:left; margin-right:10px;">
+                                                        <strong>90000</strong>
                                                         <span class="tail displaynone"></span>
                                                     </div>
+                                                     <div style="float:left;">
+                                                        <strong>원</strong>
+                                                     </div>
                                                  </td>
-                                                 <td class="option">
-                                                    <div class="box">
-                                                        <strong>3,000</strong> &nbsp;won
+                                                 <td >
+                                                    <div id="total_option_price" class="box" style="padding-left:35%; float:left; margin-right:10px;">
+                                                        <strong>3000</strong>
                                                         <span class="tail displaynone"></span>
                                                     </div>
+                                                     <div style="float:left;">
+                                                        <strong>원</strong>
+                                                     </div>
                                                  </td>
-                                                 <td class="total">
-                                                    <div class="box">
-                                                        <strong>93,000</strong>&nbsp;won
+                                                 <td >
+                                                    <div id="total_option_prd_price" class="box"  style="padding-left:40%; float:left; margin-right:10px;">
+                                                        <strong>93000</strong>
                                                         <span class="tail displaynone"></span>
                                                     </div>
+                                                     <div style="float:left;">
+                                                        <strong>원</strong>
+                                                     </div>
                                                  </td>
                                              </tr>
                                              </tbody>
@@ -574,28 +541,112 @@
         });
         // hamberger menu
         // navigation
-        $(document).ready(function() {
-            $(".gnbClose, .gnbOpen").on("click", function(){
-                $(".gnb").toggleClass("active");
-                $(".gnbOpen").toggleClass("gnbClose");
-                $("html, body, .wrap").toggleClass("open");
-                $('html, body, .wrap').off('scroll touchmove mousewheel');
-            });
+<!--        $(document).ready(function() {-->
+<!--            $(".gnbClose, .gnbOpen").on("click", function(){-->
+<!--                $(".gnb").toggleClass("active");-->
+<!--                $(".gnbOpen").toggleClass("gnbClose");-->
+<!--                $("html, body, .wrap").toggleClass("open");-->
+<!--                $('html, body, .wrap').off('scroll touchmove mousewheel');-->
+<!--            });-->
+<!--        });-->
+
+         $(document).ready(function() {
+            modify_option_price();
         });
 
+       function modify_option_price()
+       {
+            var chks = document.getElementsByName('idxs[]');
+            if(chks.length > 1)
+            {
+                for (var i=1,m=chks.length;i<=m ;i++)
+                {
+                    var option_name = "prd_option_price_"+i
+                    if (chks[i].checked == true)
+                    {
+                        document.getElementById(option_name).innerHTML = "<strong>" + 0 + "</<strong>";
+                    }
+                }
+             }
+       }
+
         // 수량 더하기
-        function up(max) {
-            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) + 1;
-            if (document.getElementById("prodQuantity").value >= parseInt(max)) {
-                document.getElementById("prodQuantity").value = max;
-            }
+        function up(max, id) {
+            var quantity_name = "prodQuantity_" + id;
+            var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) + 1;
+            if (document.getElementById(quantity_name).value >= parseInt(max))
+                document.getElementById(quantity_name).value = max;
+
+            total_count();
+
         }
-        function down(min) {
-            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) - 1;
-            if (document.getElementById("prodQuantity").value <= parseInt(min)) {
-                document.getElementById("prodQuantity").value = min;
-            }
+        function down(min, id) {
+            var quantity_name = "prodQuantity_" + id;
+            var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) - 1;
+            if (document.getElementById(quantity_name).value <= parseInt(min))
+                document.getElementById(quantity_name).value = min;
+
+            total_count();
         }
+
+        // total 금액 계산하기
+        function total_count()
+        {
+            var chks = document.getElementsByName('idxs[]');
+
+            var prd_price = 0;
+            var prd_total_price = 0;
+            var option = 0;
+            var count = 1;
+
+            var prd_price_name;
+            var quantity_name;
+            var prd_option_name;
+            var total_summary_price = 0;
+
+            var first = 0;
+
+            for (var i=0,m=chks.length;i<m ;i++)
+            {
+                prd_price_name = "prd_price_" + i;
+                quantity_name = "prodQuantity_" + i;
+                prd_option_name ="prd_option_price_" + i;
+
+				if (chks[i].checked == true)
+				{
+				    first += 1;
+
+				    if(first == 1)
+				        document.getElementById(prd_option_name).innerHTML = "<strong>" + 3000 + "</<strong>";
+				    prd_price = document.getElementById(prd_price_name).innerText;
+				    count = document.getElementById(quantity_name).value;
+                    prd_total_price =  parseInt(prd_price) * count;
+
+                    total_summary_price += prd_total_price;
+
+				}
+				else
+				    document.getElementById(prd_option_name).innerHTML = "<strong>" + 0 + "</<strong>";
+			}
+
+			 if (total_summary_price >= 100000 || total_summary_price == 0)
+                document.getElementById("total_option_price").innerHTML = "<strong>" + option + "</<strong>";
+             else
+             {
+                option = 3000;
+                document.getElementById("total_option_price").innerHTML = "<strong>" + option + "</<strong>";
+             }
+
+            var total = total_summary_price + parseInt(option);
+
+            document.getElementById("total_prd_price").innerHTML = "<strong>" + total_summary_price + "</<strong>";
+			document.getElementById("total_option_prd_price").innerHTML = "<strong>" + total + "</<strong>";
+        }
+
+        function check()
+        {
+			total_count();
+		}
 
         $(window).scroll(function() {
             var scroll_top = $(window).scrollTop();
