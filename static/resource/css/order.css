@@ -365,7 +365,8 @@ tfoot tr td {
 
     margin-right: auto;
     margin-left: auto;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
     max-width: 1110px;
     width:100%;
 }
