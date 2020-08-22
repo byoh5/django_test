@@ -40,7 +40,9 @@
     <div class="wrap login">
         <div class="loginBox join">
             <h1>
-                <img onclick="location.href=index_runcoding.html;" src="{% static 'resource/img/common/logo_login.png' %}" alt="런코딩">
+                <a href="/" class="logo">
+                    <img src="{% static 'resource/img/common/logo_login.png' %}" alt="런코딩">
+                </a>
             </h1>
         </div>
 
@@ -561,7 +563,7 @@
             return false;
         }
 
-        alert("submit");
+       document.getElementById("register_from").submit();
     }
 
     <!-- 우편번호 검색을 위한 script -->
