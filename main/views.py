@@ -13,23 +13,17 @@ def register_page(request):
 
 # Create your views here.
 def UserRegister(request):
-    print("testing.....")
-    try:
-        RegisterTB.objects.get(name='OBY1').name
-        print("Exist.....")
-    except:
-        print("DoesNotExist.....")
-
-    print("testing.....")
-    q = RegisterTB(regid=1, userid='ABB',name='OBY')
+    q = RegisterTB(regi_id=request.POST['regi_id'], regi_name=request.POST['regi_id'],
+                   regi_phone=request.POST['regi_id'],regi_email=request.POST['regi_email'],
+                   regi_add01=request.POST['regi_add01'],regi_add02=request.POST['regi_add02'],regi_add03=request.POST['regi_add03'],regi_pass=request.POST['regi_pass'] )
     q.save()
-    return HttpResponse("OK")
+    return render(request, 'login/register.html') #로그인페이지호출
 
 def idChecker(request):
     response_data = {}
 
     try:
-        RegisterTB.objects.get(userid=request.POST['regi_id']).name
+        RegisterTB.objects.get(regi_id=request.POST['regi_id']).name
         print("Exist.....")
         response_data['result'] = 'exist'
     except:
