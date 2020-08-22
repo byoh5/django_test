@@ -21,5 +21,6 @@ urlpatterns = [
     path('register/', UserRegister),
     path('regi/', register_page),
     path('admin/', admin.site.urls),
+    path('idChecker/', idChecker),
     path('', include('main.urls')),
 ]
