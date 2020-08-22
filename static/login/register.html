@@ -15,30 +15,31 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="runcoding">
     <meta property="og:description" content="runcoding">
-    <meta property="og:image" content="../resource/img/common/share_img.jpg">
+    <meta property="og:image" content="{% static 'resource/img/common/share_img.jpg">
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="../resource/img/common/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="../resource/img/common/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'resource/img/common/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{% static 'resource/img/common/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" type="text/css" href="../resource/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/font-awesome.min.css">
 
     <!-- slick css -->
-    <link rel="stylesheet" type="text/css" href="../resource/css/slick.css">
-    <link rel="stylesheet" type="text/css" href="../resource/css/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick-theme.css">
 
-    <link rel="stylesheet" type="text/css" href="../resource/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../resource/css/common.css">
-    <link rel="stylesheet" type="text/css" href="../resource/css/login.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/login.css">
 
-    <script src="../resource/js/jquery-3.4.1.min.js.20200730001"></script>
-    <script src="../resource/js/modernizr-3.7.1.min.js.20200730001"></script>
+    <script src="{% static 'resource/js/jquery-3.4.1.min.js.20200730001"></script>
+    <script src="{% static 'resource/js/modernizr-3.7.1.min.js.20200730001"></script>
 
 </head>
 <body>
     <div class="wrap login">
         <div class="loginBox join">
-                <img onclick="location.href=index_runcoding.html;" src="../resource/img/common/logo_login.png" alt="런코딩">
+            <h1>
+                <img onclick="location.href=index_runcoding.html;" src="{% static 'resource/img/common/logo_login.png" alt="런코딩">
             </h1>
             <!--<span class="slogan">
                 <small>오프라인 강의료의 1/10로 파이썬, 자바스크립트, PHP, JAVA 등...</small>
@@ -46,78 +47,82 @@
             </span>-->
         </div>
 
-        <div class="join_area">
-            <div class="accountInfo">
-                <h2>계정 정보</h2>
 
-                <ul>
-                    <li>
-                        <span>아이디</span>
-                        <div class="input_area">
-                            <input type="text" name="inp_join" id="" class="login_inp">
-                        </div>
-                    </li>
-                    <li>
-                        <span>이름</span>
-                        <div class="input_area">
-                            <input type="text" name="inp_join" id="" class="login_inp">
-                        </div>
-                    </li>
-                    <li>
-                        <span>휴대번호</span>
-                        <div class="input_area">
-                            <input type="text" name="inp_join" id="" class="login_inp">
-                        </div>
-                    </li>
-                    <li>
-                        <span>이메일</span>
-                        <div class="input_area">
-                            <input type="text" name="inp_join" id="" class="login_inp">
-                        </div>
-                    </li>
-                    <li>
-                        <span>주소</span>
-                        <div class="input_area multiLine">
-                            <input type="text" name="inp_join" id="" class="login_inp add01 w70"><button type="button" class="btn address w30">주소찾기</button>
-                            <input type="text" name="inp_join" id="" class="login_inp add02">
-                            <input type="text" name="inp_join" id="" class="login_inp add03" placeholder="상세주소를 입력해주세요.">
-                        </div>
-                    </li>
-                    <li>
-                        <span>비밀번호</span>
-                        <div class="input_area">
-                            <input type="password" name="inp_join" id="" class="login_inp" placeholder="영문 + 숫자 8자 이상 입력해주세요.">
-                        </div>
-                    </li>
-                    <li>
-                        <span>비밀번호 확인</span>
-                        <div class="input_area">
-                            <input type="password" name="inp_join" id="" class="login_inp" placeholder="비밀번호를 다시 입력해주세요.">
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <div class="join_area">
+                <form>
+                    <div class="accountInfo">
+                        <h2>계정 정보</h2>
+                        <ul>
+                            <li>
+                                <span>아이디</span>
+                                <div class="input_area">
+                                    <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" placeholder="영문 + 숫자 8자 이상 입력해주세요." required />
+                                    <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
+                                </div>
+                            </li>
+                            <li>
+                                <span>이름</span>
+                                <div class="input_area">
+                                    <input type="text" name="regi_name" id="regi_name" class="login_inp" required />
+                                </div>
+                            </li>
+                            <li>
+                                <span>휴대번호</span>
+                                <div class="input_area">
+                                    <input type="text" name="regi_phone" id="regi_phone" class="login_inp" maxlength="11" placeholder="- 없이 입력하세요." required />
+                                </div>
+                            </li>
+                            <li>
+                                <span>이메일</span>
+                                <div class="input_area">
+                                    <input type="email" name="regi_email" id="regi_email" class="login_inp" required>
+                                </div>
+                            </li>
+                            <li>
+                                <span>키트 받을 주소</span>
+                                <div class="input_area multiLine">
+                                    <input type="text" name="regi_add01" id="regi_add01" class="login_inp add01 w70" readonly required/>
+                                        <button type="button" class="btn address w30" onClick="javascript:getAddress();">주소찾기</button>
+                                    <input type="text" name="regi_add02" id="regi_add02" class="login_inp add02" readonly required/>
+                                    <input type="text" name="regi_add03" id="regi_add03" class="login_inp add03" placeholder="상세주소를 입력해주세요." required/>
+                                </div>
+                            </li>
+                            <li>
+                                <span>비밀번호</span>
+                                <div class="input_area">
+                                    <input type="password" name="regi_pass" id="regi_pass" class="login_inp" placeholder="영문 + 숫자 8자 이상 입력해주세요." required>
+                                </div>
+                            </li>
+                            <li>
+                                <span>비밀번호 확인</span>
+                                <div class="input_area">
+                                    <input type="password" name="regi_pass_chk" id="regi_pass_chk" class="login_inp" placeholder="비밀번호를 다시 입력해주세요." required>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
 
-            <div class="terms_area">
-                <h2>이용약관</h2>
-                <div class="terms01">
-                    <div class="input_area">
-                        <input type="checkbox" name="inp_login" id="terms01" class="chk_terms">
-                        <label for="terms01">이용약관에 동의합니다.</label>
-                        <a href="#" class="btn">내용 보기</a>
+                <div class="terms_area">
+                    <h2>이용약관</h2>
+                    <div class="terms01">
+                        <div class="input_area">
+                            <input type="checkbox" name="terms01" id="terms01" class="chk_terms" required>
+                            <label for="terms01">이용약관에 동의합니다.</label>
+                            <a href="#" class="btn">내용 보기</a>
+                        </div>
                     </div>
-                </div>
-                <h2>개인정보처리방침</h2>
-                <div class="terms02">
-                    <div class="input_area">
-                        <input type="checkbox" name="inp_login" id="terms02" class="chk_terms">
-                        <label for="terms02">개인정보처리방침에 동의합니다.</label>
-                        <a href="#" class="btn">내용 보기</a>
+                    <h2>개인정보처리방침</h2>
+                    <div class="terms02">
+                        <div class="input_area">
+                            <input type="checkbox" name="terms02" id="terms02" class="chk_terms" required>
+                            <label for="terms02">개인정보처리방침에 동의합니다.</label>
+                            <a href="#" class="btn">내용 보기</a>
+                        </div>
                     </div>
+                    <a href="#" class="btn login" onClick="javascript:regi_submit();">회원가입</a>
                 </div>
-                <a href="#" class="btn login">회원가입</a>
             </div>
-        </div>
     </div>
 
 <!--        <div class="review_area">-->
@@ -263,7 +268,7 @@
 <!--    </div>-->
     <footer>
     <div class="footer">
-        <img class="ci" src="../resource/img/common/logo_footer.png" alt="런코딩">
+        <img class="ci" src="{% static 'resource/img/common/logo_footer.png" alt="런코딩">
         <div class="footerText">
             <div class="information">
                 <span>INFORMATION</span>
@@ -310,10 +315,10 @@
             <div class="snsArea">
                 <span>SNS</span>
                 <div class="snsBtn">
-                    <a><img src="../resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
-                    <a><img src="../resource/img/common/ico_instagram.png" alt="instagram"></a>
-                    <a><img src="../resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
-                    <a><img src="../resource/img/common/ico_youtube.png" alt="youtube"></a>
+                    <a><img src="{% static 'resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
+                    <a><img src="{% static 'resource/img/common/ico_instagram.png" alt="instagram"></a>
+                    <a><img src="{% static 'resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
+                    <a><img src="{% static 'resource/img/common/ico_youtube.png" alt="youtube"></a>
                 </div>
             </div>
         </div>
@@ -370,7 +375,14 @@
 
 </div>
 
+    <!--  address script -->
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <script>
+
+    var chkId = 0;
+    var chkAddr = 0 ;
     // hamberger menu
     $('.menu-btn').click(function() {
         $('.line').toggleClass('animate');
@@ -385,18 +397,126 @@
             $('html, body, .wrap').off('scroll touchmove mousewheel');
         });
     });
-</script>
 
-<!--    <script src="./머릿속 생각을 쉽게,뚝딱 런코딩_files/slick.js.다운로드"></script>-->
-<!--    <script>-->
-<!--        // slick-->
-<!--        $('.sliderArea').slick({-->
-<!--            slidesToShow: 1,-->
-<!--            slidesToScroll: 1,-->
-<!--            centerMode: true,-->
-<!--            arrows: true,-->
-<!--            dots: false-->
-<!--        });-->
-<!--    </script>-->
+    function regi_checkId()
+    {
+        alert("chekid");
+        chkId = 1;
+    }
+
+    function regi_submit()
+    {
+        //(아이디는 8~12자의 영문 대소문자와 숫자로만 입력) (패스워드는 8~12자의 영문 대소문자와 숫자로만 입력)
+        var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+        var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
+
+        var id = document.getElementById('regi_id');
+        var name = document.getElementById('regi_name');
+        var phone = document.getElementById('regi_phone');
+        var email = document.getElementById('regi_email');
+
+        var address01 = document.getElementById('regi_add01');
+        var address01 = document.getElementById('regi_add02');
+        var address01 = document.getElementById('regi_add03');
+
+        var pass = document.getElementById('regi_pass');
+        var pass_chk = document.getElementById('regi_pass_chk');
+
+        var terms01 = document.getElementById('terms01');
+        var terms02 = document.getElementById('terms02');
+
+
+        if(id.value.length == 0 || id.value.length < 8)
+        {
+            alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+            id.focus();
+            return false;
+        }
+        else
+        {
+            if(!chkId)
+            {
+                alert("중복체크 해주세요.");
+                return false;
+            }
+
+            if(!id_pass_patten.test(id.value))
+            {
+                alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+                id.focus();
+                return false;
+            }
+        }
+
+        if(name.value == "")
+        {
+            alert("이름을 입력하세요.");
+            name.focus();
+            return false;
+        }
+
+        if(phone.value == "")
+        {
+            alert("휴대폰 번호를 입력하세요.");
+            phone.focus();
+            return false;
+        }
+
+        if(email.value == "")
+        {
+            alert("이메일 주소를 입력하세요.");
+            email.focus();
+            return false;
+        }
+         else
+        {
+            if(!email_patten.test(email.value))
+            {
+                alert("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
+                email.focus();
+                return false;
+            }
+        }
+
+        if(address01.value == "" || address02.value == "" || address03.value == "")
+        {
+            alert("주소를 입력하세요.");
+            address03.focus();
+            return false;
+        }
+
+       if(pass.value.length == 0 || pass.value.length < 8)
+        {
+            alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+            id.focus();
+            return false;
+        }
+        else
+        {
+            if(!pass_pass_patten.test(id.value))
+            {
+                alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+                id.focus();
+                return false;
+            }
+        }
+
+        alert("submit");
+    }
+
+    <!-- 우편번호 검색을 위한 script -->
+    function getAddress()
+    {
+        chkAddr = 1;
+        new daum.Postcode({
+            oncomplete: function(data)
+            {
+                $('[name=regi_add01]').val(data.zonecode); // 우편번호 (5자리)
+                $('[name=regi_add02]').val(data.address);
+                $('[name=regi_add03]').val(data.buildingName);
+            }
+	    }).open();
+	}
+</script>
 
 </body></html>
