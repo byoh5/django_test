@@ -2,6 +2,7 @@
 <!-- saved from url=(0047)https://www.runcoding.co.kr/_html/join01.html#! -->
 <!--<html xmlns="http://www.w3.org/1999/xhtml" class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
 <html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>머릿속 생각을 쉽게,뚝딱 런코딩</title>
@@ -15,31 +16,31 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="runcoding">
     <meta property="og:description" content="runcoding">
-    <meta property="og:image" content="{% static 'resource/img/common/share_img.jpg">
+    <meta property="og:image" content="{% static 'resource/img/common/share_img.jpg' %}">
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="{% static 'resource/img/common/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="{% static 'resource/img/common/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/font-awesome.min.css' %}">
 
     <!-- slick css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick-theme.css' %}">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/login.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/login.css' %}">
 
-    <script src="{% static 'resource/js/jquery-3.4.1.min.js.20200730001"></script>
-    <script src="{% static 'resource/js/modernizr-3.7.1.min.js.20200730001"></script>
+    <script src="{% static 'resource/js/jquery-3.4.1.min.js.20200730001' %}"></script>
+    <script src="{% static 'resource/js/modernizr-3.7.1.min.js.20200730001' %}"></script>
 
 </head>
 <body>
     <div class="wrap login">
         <div class="loginBox join">
             <h1>
-                <img onclick="location.href=index_runcoding.html;" src="{% static 'resource/img/common/logo_login.png" alt="런코딩">
+                <img onclick="location.href=index_runcoding.html;" src="{% static 'resource/img/common/logo_login.png' %}" alt="런코딩">
             </h1>
             <!--<span class="slogan">
                 <small>오프라인 강의료의 1/10로 파이썬, 자바스크립트, PHP, JAVA 등...</small>
@@ -49,14 +50,15 @@
 
 
             <div class="join_area">
-                <form>
+                <form id="register_from" method="post" action="/register/">
+                    {% csrf_token %}
                     <div class="accountInfo">
                         <h2>계정 정보</h2>
                         <ul>
                             <li>
                                 <span>아이디</span>
                                 <div class="input_area">
-                                    <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" placeholder="영문 + 숫자 8자 이상 입력해주세요." required />
+                                    <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="" placeholder="영문 + 숫자 8자 이상 입력해주세요." required />
                                     <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
                                 </div>
                             </li>
@@ -268,7 +270,7 @@
 <!--    </div>-->
     <footer>
     <div class="footer">
-        <img class="ci" src="{% static 'resource/img/common/logo_footer.png" alt="런코딩">
+        <img class="ci" src="{% static 'resource/img/common/logo_footer.png' %}" alt="런코딩">
         <div class="footerText">
             <div class="information">
                 <span>INFORMATION</span>
@@ -315,10 +317,10 @@
             <div class="snsArea">
                 <span>SNS</span>
                 <div class="snsBtn">
-                    <a><img src="{% static 'resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
-                    <a><img src="{% static 'resource/img/common/ico_instagram.png" alt="instagram"></a>
-                    <a><img src="{% static 'resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
-                    <a><img src="{% static 'resource/img/common/ico_youtube.png" alt="youtube"></a>
+                    <a><img src="{% static 'resource/img/common/ico_kakaoTalk.png' %}" alt="kakaotalk"></a>
+                    <a><img src="{% static 'resource/img/common/ico_instagram.png' %}" alt="instagram"></a>
+                    <a><img src="{% static 'resource/img/common/ico_naverBlog.png' %}" alt="naverblog"></a>
+                    <a><img src="{% static 'resource/img/common/ico_youtube.png' %}" alt="youtube"></a>
                 </div>
             </div>
         </div>
@@ -400,6 +402,7 @@
 
     function regi_checkId()
     {
+        document.getElementById('register_from').submit();
         alert("chekid");
         chkId = 1;
     }

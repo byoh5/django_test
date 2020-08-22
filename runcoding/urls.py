@@ -19,6 +19,7 @@ from main.views import *
 
 urlpatterns = [
     path('register/', UserRegister),
-    path('', include('main.urls')),
+    path('regi/', register_page),
     path('admin/', admin.site.urls),
+    path('', include('main.urls')),
 ]
