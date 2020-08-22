@@ -42,10 +42,6 @@
             <h1>
                 <img onclick="location.href=index_runcoding.html;" src="{% static 'resource/img/common/logo_login.png' %}" alt="런코딩">
             </h1>
-            <!--<span class="slogan">
-                <small>오프라인 강의료의 1/10로 파이썬, 자바스크립트, PHP, JAVA 등...</small>
-                모든 강의를 무제한 수강하세요!
-            </span>-->
         </div>
 
 
@@ -403,6 +399,8 @@
     function regi_checkId()
     {
         var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+        var id = document.getElementById('regi_id');
+
         if(!id_pass_patten.test(id.value))
         {
             alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
@@ -411,8 +409,36 @@
         }
         else
         {
-            document.getElementById('register_from').submit();
-            chkId = 1;
+           var formData = $("#register_from").serialize();
+
+            $.ajax({
+                cache:false,
+                url : "http://localhost:8000/idChecker/",
+                type : "POST",
+                data : formData,
+                success : function(data)
+                {
+                    if(data.result == "exist")
+                    {
+                        alert("사용할 수 없는 ID 입니다.");
+                        id.value = "";
+                        id.focus();
+                        return false;
+                    }
+                    else
+                    {
+                        alert("사용해도 되는 ID 입니다.");
+                        chkId = 1;
+                    }
+
+                }, // success
+
+                exist : function(xhr, status)
+                {
+                    alert("사용할 수 없는 ID 입니다.");
+                    return false;
+                }
+            }); // $.ajax */
         }
     }
 

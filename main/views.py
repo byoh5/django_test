@@ -2,6 +2,9 @@ from django.shortcuts import render
 from main.models import *
 from django.http import HttpResponse
 
+import json
+from django.http import HttpResponse
+
 def index(request):
     return render(request, 'main/index_runcoding.html')
 
@@ -23,11 +26,14 @@ def UserRegister(request):
     return HttpResponse("OK")
 
 def idChecker(request):
+    response_data = {}
+
     try:
-        RegisterTB.objects.get(userid='OBY&').name
-        # RegisterTB.objects.get(userid=request.POST['regi_id']).name
+        RegisterTB.objects.get(userid=request.POST['regi_id']).name
         print("Exist.....")
-        return render(request, 'login/register.html')
+        response_data['result'] = 'exist'
     except:
         print("DoesNotExist.....")
-        return render(request, 'login/register.html')
+        response_data['result'] = 'success'
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
