@@ -58,7 +58,7 @@
                             <li>
                                 <span>아이디</span>
                                 <div class="input_area">
-                                    <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="" placeholder="영문 + 숫자 8자 이상 입력해주세요." required />
+                                    <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요." required />
                                     <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
                                 </div>
                             </li>
@@ -77,7 +77,7 @@
                             <li>
                                 <span>이메일</span>
                                 <div class="input_area">
-                                    <input type="email" name="regi_email" id="regi_email" class="login_inp" required>
+                                    <input type="email" name="regi_email" id="regi_email" class="login_inp" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," required>
                                 </div>
                             </li>
                             <li>
@@ -92,13 +92,13 @@
                             <li>
                                 <span>비밀번호</span>
                                 <div class="input_area">
-                                    <input type="password" name="regi_pass" id="regi_pass" class="login_inp" placeholder="영문 + 숫자 8자 이상 입력해주세요." required>
+                                    <input type="password" name="regi_pass" id="regi_pass" class="login_inp"  onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요." required>
                                 </div>
                             </li>
                             <li>
                                 <span>비밀번호 확인</span>
                                 <div class="input_area">
-                                    <input type="password" name="regi_pass_chk" id="regi_pass_chk" class="login_inp" placeholder="비밀번호를 다시 입력해주세요." required>
+                                    <input type="password" name="regi_pass_chk" id="regi_pass_chk" class="login_inp" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,"  placeholder="비밀번호를 다시 입력해주세요." required>
                                 </div>
                             </li>
                         </ul>
@@ -109,7 +109,7 @@
                     <h2>이용약관</h2>
                     <div class="terms01">
                         <div class="input_area">
-                            <input type="checkbox" name="terms01" id="terms01" class="chk_terms" required>
+                            <input type="checkbox" name="terms01" id="terms01" class="chk_terms" onClick="javascript:termFlag();" required>
                             <label for="terms01">이용약관에 동의합니다.</label>
                             <a href="#" class="btn">내용 보기</a>
                         </div>
@@ -402,9 +402,18 @@
 
     function regi_checkId()
     {
-        document.getElementById('register_from').submit();
-        alert("chekid");
-        chkId = 1;
+        var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+        if(!id_pass_patten.test(id.value))
+        {
+            alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+            id.focus();
+            return false;
+        }
+        else
+        {
+            document.getElementById('register_from').submit();
+            chkId = 1;
+        }
     }
 
     function regi_submit()
@@ -488,20 +497,42 @@
             return false;
         }
 
-       if(pass.value.length == 0 || pass.value.length < 8)
+       if(pass.value.length == 0 || pass_chk.value.length < 8)
         {
-            alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
-            id.focus();
+            alert("비밀번호는 8~12자의 영문과 숫자로만 입력하세요");
+            pass.focus();
             return false;
         }
         else
         {
-            if(!pass_pass_patten.test(id.value))
+            if(!id_pass_patten.test(pass.value))
             {
-                alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
-                id.focus();
+                alert("비밀번호는 8~12자의 영문과 숫자로만 입력하세요");
+                pass.focus();
                 return false;
             }
+
+            if(pass.value != pass_chk.value)
+            {
+                alert("비밀번호와 비밀번호 확인 번호가 다릅니다.");
+                pass_chk.focus();
+                pass_chk.value = "";
+                return false;
+            }
+        }
+
+        if($("input:checkbox[name=terms01]").is(":checked") == false)
+        {
+            alert("이용약관에 동의해 주세요.");
+            terms01.focus();
+            return false;
+        }
+
+        if($("input:checkbox[name=terms02]").is(":checked") == false)
+        {
+            alert("개인정보 처리방침에 동의해주세요.");
+            terms02.focus();
+            return false;
         }
 
         alert("submit");
