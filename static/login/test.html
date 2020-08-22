@@ -36,9 +36,9 @@
 
 </head>
 
- <form name="register" method="post" action="{% url 'polls:write'%}>
+ <form name="register" method="post" action="/register/>
       {% csrf_token %}
-      <input type="text" name="inp_join" id="" class="login_inp">
+
     <input type="text" name="regi_id" id="regi_id" class="login_inp">
     <input type="text" name="regi_name" id="regi_name" class="login_inp">
     <input type="submit" value="go">

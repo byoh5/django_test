@@ -19,60 +19,20 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f88449b0-a0f2-4c29-a3dd-3d433df21ba6" name="Default Changelist" comment="runcoding homepage ver01.">
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/common/footer.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/common/head.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/common/header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/common/privacy.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/comunity/coding_comunity.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/lecture_view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/lecture_view_arduino.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/lecture_view_mblock.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/myclass.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/lecture/myclass_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/main/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/common.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/font-awesome.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/layout.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/reset.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/slick-theme.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/css/slick.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/data/arduino_trashcan/arduino_install.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/data/arduino_trashcan/arduino_trashcan.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/Trashcan/trashcan_main.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/img_video.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/link_application.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/link_example.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/link_making.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/main/link_onlineClass.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/bg_botBanner_left01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/bg_botBanner_left02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/bg_botBanner_right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_calendar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_play.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_priceDown.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_priceUp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/ico_search.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/img_user.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/sv_codingKit.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/sv_community.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/sv_myClass.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/img/sub/sv_review.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/common.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/jquery-migrate-3.0.0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/vendor/jquery-3.4.1.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/vendor/modernizr-3.7.1.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runcoding_test/src/resource/js/wrest.js" afterDir="false" />
+    <list default="true" id="f88449b0-a0f2-4c29-a3dd-3d433df21ba6" name="Default Changelist" comment="login 로직">
+      <change afterPath="$PROJECT_DIR$/static/common/head.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/header.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/login/addr_test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/payment/cart_ex.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/resource/img/common/logo_login.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/comunity/coding_comunity.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/comunity/coding_comunity.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/index_runcoding.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/index_runcoding.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/lecture_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/lecture_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/lecture_view_arduino.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/lecture_view_arduino.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/lecture_view_mblock.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/lecture_view_mblock.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/myclass.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/myclass.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/lecture/myclass_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lecture/myclass_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/lounge/coding_lounge.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/main/lounge/coding_lounge.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/common/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/common/footer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/common/head.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/common/header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/main/common/privacy.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/common/privacy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runcoding/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/runcoding/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/login/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/login/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/payment/cart.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,22 +62,22 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/runcoding" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/resource/img/sub" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\static" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\main\templates\main" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\main\templates" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\static\resource\img\common" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\static\resource\css\party" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\static\resource\img\sub" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\static\resource\js" />
+      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\static\resource\img\font" />
       <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding" />
       <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\img\sub" />
-      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\data\arduino_trashcan" />
-      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\data" />
-      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\lecture" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding\src" />
-      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding\src\main" />
-      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\data\arduino_trashcan" />
-      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\main" />
-      <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -138,7 +98,266 @@
       <option name="project" value="LOCAL" />
       <updated>1597596070166</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="runcoding homepage ver01">
+      <created>1597600426052</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1597600426052</updated>
+    </task>
+    <task id="LOCAL-00003" summary="runcoding homepage ver01">
+      <created>1597600606239</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1597600606239</updated>
+    </task>
+    <task id="LOCAL-00004" summary="runcoding homepage ver01 - static">
+      <created>1597627948543</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1597627948543</updated>
+    </task>
+    <task id="LOCAL-00005" summary="runcoding homepage ver01 - static">
+      <created>1597628509961</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1597628509961</updated>
+    </task>
+    <task id="LOCAL-00006" summary="runcoding homepage ver01 - setting">
+      <created>1597628827927</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1597628827927</updated>
+    </task>
+    <task id="LOCAL-00007" summary="runcoding homepage ver01 - index_runcoding">
+      <created>1597629566711</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1597629566711</updated>
+    </task>
+    <task id="LOCAL-00008" summary="runcoding homepage ver01 - menu page">
+      <created>1597631052022</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1597631052022</updated>
+    </task>
+    <task id="LOCAL-00009" summary="runcoding homepage ver01 - menu page">
+      <created>1597631415224</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1597631415224</updated>
+    </task>
+    <task id="LOCAL-00010" summary="runcoding homepage ver01 - menu page">
+      <created>1597631864723</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1597631864723</updated>
+    </task>
+    <task id="LOCAL-00011" summary="runcoding homepage ver01 - menu page">
+      <created>1597632049337</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1597632049337</updated>
+    </task>
+    <task id="LOCAL-00012" summary="runcoding homepage ver01 - menu page">
+      <created>1597632245993</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1597632245993</updated>
+    </task>
+    <task id="LOCAL-00013" summary="runcoding homepage ver01 - nodownload">
+      <created>1597632700254</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1597632700254</updated>
+    </task>
+    <task id="LOCAL-00014" summary="runcoding homepage ver01 - nodownload">
+      <created>1597632943048</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1597632943048</updated>
+    </task>
+    <task id="LOCAL-00015" summary="runcoding homepage ver01">
+      <created>1597645206676</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1597645206677</updated>
+    </task>
+    <task id="LOCAL-00016" summary="runcoding homepage ver01 - add img">
+      <created>1597669680049</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1597669680049</updated>
+    </task>
+    <task id="LOCAL-00017" summary="runcoding homepage ver01 - lounge">
+      <created>1597674262145</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1597674262145</updated>
+    </task>
+    <task id="LOCAL-00018" summary="runcoding homepage ver01 - lounge">
+      <created>1597677284487</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1597677284487</updated>
+    </task>
+    <task id="LOCAL-00019" summary="runcoding homepage ver01 - comutiy">
+      <created>1597715481970</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1597715481970</updated>
+    </task>
+    <task id="LOCAL-00020" summary="runcoding homepage ver01 - comutiy css">
+      <created>1597716113559</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1597716113560</updated>
+    </task>
+    <task id="LOCAL-00021" summary="runcoding homepage ver01 - comutiy css">
+      <created>1597716688332</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1597716688332</updated>
+    </task>
+    <task id="LOCAL-00022" summary="runcoding homepage ver01 - comutiy css">
+      <created>1597717028076</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1597717028076</updated>
+    </task>
+    <task id="LOCAL-00023" summary="runcoding homepage ver01 - comutiy css">
+      <created>1597717916352</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1597717916353</updated>
+    </task>
+    <task id="LOCAL-00024" summary="runcoding homepage ver01 - comutiy css">
+      <created>1597739125837</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1597739125837</updated>
+    </task>
+    <task id="LOCAL-00025" summary="runcoding homepage ver01 - comutiy css">
+      <created>1597747350927</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1597747350927</updated>
+    </task>
+    <task id="LOCAL-00026" summary="PG사 연결 test">
+      <created>1597763359844</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1597763359844</updated>
+    </task>
+    <task id="LOCAL-00027" summary="장바구니 form">
+      <created>1597848804002</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1597848804003</updated>
+    </task>
+    <task id="LOCAL-00028" summary="장바구니 form">
+      <created>1597920922026</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1597920922026</updated>
+    </task>
+    <task id="LOCAL-00029" summary="장바구니 form">
+      <created>1597967607595</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1597967607595</updated>
+    </task>
+    <task id="LOCAL-00030" summary="장바구니 form">
+      <created>1597977124481</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1597977124481</updated>
+    </task>
+    <task id="LOCAL-00031" summary="layout 불필요 코드 삭제">
+      <created>1597986315338</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1597986315338</updated>
+    </task>
+    <task id="LOCAL-00032" summary="장바구니 가격 계산 로직 추가">
+      <created>1598013321702</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1598013321702</updated>
+    </task>
+    <task id="LOCAL-00033" summary="장바구니 가격 계산 img 추가">
+      <created>1598013427724</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1598013427724</updated>
+    </task>
+    <task id="LOCAL-00034" summary="장바구니 가격 계산 로직 css">
+      <created>1598013478288</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1598013478288</updated>
+    </task>
+    <task id="LOCAL-00035" summary="장바구니 가격 계산 로직">
+      <created>1598017373313</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1598017373313</updated>
+    </task>
+    <task id="LOCAL-00036" summary="login 로직 test">
+      <created>1598061443261</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1598061443261</updated>
+    </task>
+    <task id="LOCAL-00037" summary="login 로직">
+      <created>1598098120810</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1598098120810</updated>
+    </task>
+    <task id="LOCAL-00038" summary="login 로직">
+      <created>1598098210779</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1598098210779</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,24 +374,58 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="runcoding homepage ver01." />
-    <option name="LAST_COMMIT_MESSAGE" value="runcoding homepage ver01." />
+    <MESSAGE value="runcoding homepage ver01 - static" />
+    <MESSAGE value="runcoding homepage ver01 - setting" />
+    <MESSAGE value="runcoding homepage ver01 - index_runcoding" />
+    <MESSAGE value="runcoding homepage ver01 - menu page" />
+    <MESSAGE value="runcoding homepage ver01 - nodownload" />
+    <MESSAGE value="runcoding homepage ver01" />
+    <MESSAGE value="runcoding homepage ver01 - add img" />
+    <MESSAGE value="runcoding homepage ver01 - lounge" />
+    <MESSAGE value="runcoding homepage ver01 - comutiy" />
+    <MESSAGE value="runcoding homepage ver01 - comutiy css" />
+    <MESSAGE value="PG사 연결 test" />
+    <MESSAGE value="장바구니 form" />
+    <MESSAGE value="layout 불필요 코드 삭제" />
+    <MESSAGE value="장바구니 가격 계산 로직 추가" />
+    <MESSAGE value="장바구니 가격 계산 img 추가" />
+    <MESSAGE value="장바구니 가격 계산 로직 css" />
+    <MESSAGE value="장바구니 가격 계산 로직" />
+    <MESSAGE value="login 로직 test" />
+    <MESSAGE value="login 로직" />
+    <option name="LAST_COMMIT_MESSAGE" value="login 로직" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="741" y="343" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1597593773947">
+    <state x="741" y="343" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1597890900661">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="741" y="343" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597593773946" />
+    <state x="741" y="343" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597890900661" />
     <state x="184" y="86" key="DiffContextDialog" timestamp="1597599762642">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="184" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597599762642" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1597597494625">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1598098218502">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597597494625" />
-    <state x="742" y="300" key="git4idea.merge.GitPullDialog" timestamp="1597599781919">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597986326036" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598098218502" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1598099532942">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597991471836" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598099532942" />
+    <state x="561" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598007956740">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="561" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1598007956740" />
+    <state x="742" y="300" key="git4idea.merge.GitPullDialog" timestamp="1598099505350">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="742" y="300" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597599781919" />
+    <state x="742" y="300" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598099505350" />
+    <state x="623" y="225" key="search.everywhere.popup" timestamp="1597842334675">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597842334675" />
   </component>
 </project>
