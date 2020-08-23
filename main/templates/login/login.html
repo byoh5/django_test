@@ -105,7 +105,7 @@
             data : formData,
             success : function(data)
             {
-                if(data.result == "ok")
+                if(data.result == "true")
                 {
                     location.href="/";
                 }
@@ -113,6 +113,7 @@
                 {
                     deleteCookie("csrftoken" );
                     alert("로그인 실패했습니다.");
+                    location.href="/run_login/";
                 }
 
 
