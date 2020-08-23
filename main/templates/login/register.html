@@ -404,8 +404,6 @@
         var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
         var id = document.getElementById('regi_id');
 
-        alert(id);
-
         if(!id_pass_patten.test(id.value))
         {
             alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
@@ -418,7 +416,7 @@
 
             $.ajax({
                 cache:false,
-                url : "http://localhost:8000/idChecker/",
+                url : "http://54.180.116.142:8000/idChecker/",
                 type : "POST",
                 data : formData,
                 success : function(data)
