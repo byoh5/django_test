@@ -46,9 +46,8 @@
             </h1>
         </div>
 
-
             <div class="join_area">
-                <form id="register_from" method="post" action="/register/">
+                <form id="register_form">
                     {% csrf_token %}
                     <div class="accountInfo">
                         <h2>계정 정보</h2>
@@ -120,7 +119,7 @@
                             <a href="#" class="btn">내용 보기</a>
                         </div>
                     </div>
-                    <a href="#" class="btn login" onClick="javascript:regi_submit();">회원가입</a>
+                    <a href="javascript:void(0);" class="btn login" onClick="javascript:regi_submit();">회원가입</a>
                 </div>
             </div>
     </div>
@@ -411,7 +410,7 @@
         }
         else
         {
-           var formData = $("#register_from").serialize();
+           var formData = $("#register_form").serialize();
 
             $.ajax({
                 cache:false,
@@ -456,15 +455,11 @@
         var email = document.getElementById('regi_email');
 
         var address01 = document.getElementById('regi_add01');
-        var address01 = document.getElementById('regi_add02');
-        var address01 = document.getElementById('regi_add03');
+        var address02 = document.getElementById('regi_add02');
+        var address03 = document.getElementById('regi_add03');
 
         var pass = document.getElementById('regi_pass');
         var pass_chk = document.getElementById('regi_pass_chk');
-
-        var terms01 = document.getElementById('terms01');
-        var terms02 = document.getElementById('terms02');
-
 
         if(id.value.length == 0 || id.value.length < 8)
         {
@@ -552,19 +547,48 @@
         if($("input:checkbox[name=terms01]").is(":checked") == false)
         {
             alert("이용약관에 동의해 주세요.");
-            terms01.focus();
+            $("input:checkbox[name=terms01]").focus();
             return false;
         }
 
         if($("input:checkbox[name=terms02]").is(":checked") == false)
         {
             alert("개인정보 처리방침에 동의해주세요.");
-            terms02.focus();
+            $("input:checkbox[name=terms02]").focus();
             return false;
         }
 
-       document.getElementById("register_from").submit();
+       var formData = $("#register_form").serialize();
+
+        $.ajax({
+            cache:false,
+            url : "http://localhost:8000/register/",
+            type : "POST",
+            data : formData,
+            success : function(data)
+            {
+                alert("ok");
+                deleteCookie("csrftoken" );
+                location.href="/run_login/"
+
+            }, // success
+
+            exist : function(xhr, status)
+            {
+                alert("사용할 수 없는 ID 입니다.");
+                return false;
+            }
+        }); // $.ajax */
     }
+
+    function deleteCookie( cookieName )
+     {
+      var expireDate = new Date();
+
+      //어제 날짜를 쿠키 소멸 날짜로 설정한다.
+      expireDate.setDate( expireDate.getDate() - 1 );
+      document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString() + "; path=/";
+     }
 
     <!-- 우편번호 검색을 위한 script -->
     function getAddress()
@@ -578,6 +602,8 @@
                 $('[name=regi_add03]').val(data.buildingName);
             }
 	    }).open();
+
+	    return true;
 	}
 </script>
 

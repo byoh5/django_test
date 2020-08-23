@@ -39,7 +39,7 @@
 <body>
 <header>
     <div class="header_wrap">
-        <a href="http://ec2-54-180-116-142.ap-northeast-2.compute.amazonaws.com:8000/" class="logo">
+        <a href="/" class="logo">
             <img src="../resource/img/common/logo.png" alt="runcoding">
         </a>
         <!-- gnb -->
@@ -59,11 +59,6 @@
             </li>
         </ul>
         <div class="ab_right">
-            <!-- 비로그인 -->
-            <!--<a href="login.html" class="login">
-                로그인
-            </a>-->
-
             <!-- 로그인 -->
             <div class="user_menu">
                 <span class="userImg"><img src="../resource/img/sub/img_user.png" alt="유저 프로필"></span>
@@ -78,7 +73,7 @@
                         <a href="orderList.html">주문내역</a>
                     </li>
                     <li>
-                        <a href="login.html">로그아웃</a>
+                        <a href="../login/logout.html">로그아웃</a>
                     </li>
                 </ul>
             </div>
@@ -235,44 +230,19 @@
     </div>
 
     <script>
-        // hamberger menu
-        $('.menu-btn').click(function() {
-            $('.line').toggleClass('animate');
-        });
-        // hamberger menu
-        // navigation
-        $(document).ready(function() {
-            $(".gnbClose, .gnbOpen").on("click", function(){
-                $(".gnb").toggleClass("active");
-                $(".gnbOpen").toggleClass("gnbClose");
-                $("html, body, .wrap").toggleClass("open");
-                $('html, body, .wrap').off('scroll touchmove mousewheel');
-            });
-        });
+    $(document).ready(function() {
+        alert("cookies test");
 
-        // 차량리스트 목록 더보기
-        $(document).ready(function(){
+        if(document.cookie == "")
+        {
+            alert("로그인이 필요합니다.");
+            location.href = "/run_login/";
+        }
+        else
+        {
 
-            var list = $(".lecture_list ul li");
-            var numToShow = 5;
-            var button = $("#more");
-            var numInList = list.length;
-            list.hide();
-            if (numInList > numToShow) {
-                button.show();
-            }
-            list.slice(0, numToShow).show();
-
-            button.click(function(){
-                var showing = list.filter(':visible').length;
-                list.slice(showing - 1, showing + numToShow).fadeIn();
-                var nowShowing = list.filter(':visible').length;
-                if (nowShowing >= numInList) {
-                    button.hide();
-                }
-            });
-
-        });
+        }
+    });
     </script>
 
 </body>

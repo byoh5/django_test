@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://www.runcoding.co.kr/_html/join01.html#! -->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>머릿속 생각을 쉽게,뚝딱 런코딩</title>
+    <meta name="description" content="">
+    <meta name="Keywords" content="runcoding">
+    <meta http-equiv="Copyright" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="index,follow">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="runcoding">
+    <meta property="og:description" content="runcoding">
+    <meta property="og:image" content="{% static 'resource/img/common/share_img.jpg' %}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/font-awesome.min.css' %}">
+
+    <!-- slick css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick-theme.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/login.css' %}">
+
+    <script src="{% static 'resource/js/jquery-3.4.1.min.js.20200730001' %}"></script>
+    <script src="{% static 'resource/js/modernizr-3.7.1.min.js.20200730001' %}"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body>
+<div class="wrap login">
+    <div class="loginBox">
+        <h1>
+            <img onclick="/" src="{% static 'resource/img/common/logo_login.png' %}" alt="런코딩">
+        </h1>
+        <form id="login_form">
+             {% csrf_token %}
+            <div class="input_area">
+                <input type="text" name="login_id" id="login_id" class="login_inp" placeholder="이메일을 입력해주세요." />
+                <input type="password" name="login_pass" id="login_pass" class="login_inp" placeholder="비밀번호를 입력해주세요." />
+            </div>
+        </form>
+        <div class="btn_area">
+            <a href="javascript:void(0);" onClick="javascript:login_submit();" class="btn login">로그인</a>
+            <a href="/regi/" class="link join">회원가입</a>
+            <a href="#" class="link find">비밀번호 재설정</a>
+        </div>
+
+        <div class="snsLogin">
+            <span>SNS계정 간편 로그인</span>
+            <a href="#"><img src="{% static 'resource/img/common/ico_naver.png' %}" alt="네이버 계정으로 로그인"></a>
+            <a href="#"><img src="{% static 'resource/img/common/ico_google.png' %}" alt="구글 계정으로 로그인"></a>
+            <a href="#"><img src="{% static 'resource/img/common/ico_facebook.png' %}" alt="페이스북 계정으로 로그인"></a>
+        </div>
+    </div>
+    <!-- find password modal -->
+    <div data-ml-modal="" id="modal01">
+        <a href="#" class="modal-overlay"></a>
+        <div class="modal-dialog modal-dialog-lg findPW">
+            <a href="#" class="modal-close">×</a>
+            <h3>비밀번호 재설정</h3>
+            <div class="modal-content">
+                <span>회원님의 이메일로 비밀번호 재설정 링크를 보내드립니다.</span>
+                <div class="input_area">
+                    <input type="text" name="inp_login" id="" class="login_inp" placeholder="이메일을 입력해주세요.">
+                </div>
+                <div class="btn_area">
+                    <a href="#" class="btn login">메일로 보내기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function deleteCookie( cookieName )
+     {
+      var expireDate = new Date();
+
+      //어제 날짜를 쿠키 소멸 날짜로 설정한다.
+      expireDate.setDate( expireDate.getDate() - 1 );
+      document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString() + "; path=/";
+     }
+
+    function login_submit()
+    {
+        var formData = $("#login_form").serialize();
+
+        $.ajax({
+            cache:false,
+            url : "http://localhost:8000/login_form/",
+            type : "POST",
+            data : formData,
+            success : function(data)
+            {
+                if(data.result == "ok")
+                {
+                    location.href="/";
+                }
+                else
+                {
+                    deleteCookie("csrftoken" );
+                    alert("로그인 실패했습니다.");
+                }
+
+
+            }, // success
+
+            exist : function(xhr, status)
+            {
+                deleteCookie("csrftoken" );
+                alert("로그인 실패했습니다.");
+                return false;
+            }
+        }); // $.ajax */
+    }
+
+     function page_move(some_data) {
+        var form = document.createElement("form");
+        var parm = new Array();
+        var input = new Array();
+
+        form.action = url;
+        form.method = "post";
+
+
+        parm.push( ['some_key1', 'some_value1'] );
+        parm.push( ['some_key2', 'some_value2'] );
+        parm.push( ['some_data', some_data] );
+
+
+        for (var i = 0; i < parm.length; i++) {
+            input[i] = document.createElement("input");
+            input[i].setAttribute("type", "hidden");
+            input[i].setAttribute('name', parm[i][0]);
+            input[i].setAttribute("value", parm[i][1]);
+            form.appendChild(input[i]);
+        }
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+
+
+</body></html>

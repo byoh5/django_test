@@ -37,7 +37,7 @@
 <body>
     <header>
         <div class="header_wrap">
-            <a href="http://ec2-54-180-116-142.ap-northeast-2.compute.amazonaws.com:8000/" class="logo">
+            <a href="/" class="logo">
                 <img src="../resource/img/common/logo.png" alt="runcoding">
             </a>
             <!-- gnb -->
@@ -229,11 +229,12 @@
                     <div class="info_area">
                         <span>INFO</span>
                         <div class="lecture_info">
-
                             <ul>
                                 <li>
                                     <span class="li_title">판매가</span>
-                                     <input type="hidden" id="title" value="11">
+                                    <form id="prd_form">
+                                        <input type="hidden" id="title" value="aAt"> <!--arduino-AI-trashcan -->
+                                     </form>
                                     <p><span class="price">45,000</span> won</p>
                                 </li>
                                 <li>
@@ -271,7 +272,7 @@
                         </div>
                     </div>
                     <div class="btn_area">
-                        <a class="btn cart" href="../payment/order.html?t=11" data-cart="1">장바구니</a>
+                        <a href="#" class="btn cart" onClick="javascript:goOrder();">장바구니</a>
                         <a class="btn buy" href="../payment/pay_info.html">바로구매</a>
                     </div>
                 </div>
@@ -385,20 +386,20 @@
     </div>
 
     <script>
-        // hamberger menu
-        $('.menu-btn').click(function() {
-            $('.line').toggleClass('animate');
-        });
-        // hamberger menu
-        // navigation
-        $(document).ready(function() {
-            $(".gnbClose, .gnbOpen").on("click", function(){
-                $(".gnb").toggleClass("active");
-                $(".gnbOpen").toggleClass("gnbClose");
-                $("html, body, .wrap").toggleClass("open");
-                $('html, body, .wrap').off('scroll touchmove mousewheel');
-            });
-        });
+<!--        // hamberger menu-->
+<!--        $('.menu-btn').click(function() {-->
+<!--            $('.line').toggleClass('animate');-->
+<!--        });-->
+<!--        // hamberger menu-->
+<!--        // navigation-->
+<!--        $(document).ready(function() {-->
+<!--            $(".gnbClose, .gnbOpen").on("click", function(){-->
+<!--                $(".gnb").toggleClass("active");-->
+<!--                $(".gnbOpen").toggleClass("gnbClose");-->
+<!--                $("html, body, .wrap").toggleClass("open");-->
+<!--                $('html, body, .wrap').off('scroll touchmove mousewheel');-->
+<!--            });-->
+<!--        });-->
 
         // 수량 더하기
         function up(max) {
@@ -431,6 +432,20 @@
                 $(".scr").removeClass("end");
             }
         });
+
+        function goOrder()
+        {
+            if(document.cookie == "")
+            {
+                alert("로그인이 필요합니다.");
+                location.href = "/run_login/";
+            }
+            else
+            {
+                location.href = "/run_order/";
+            }
+         }
+
     </script>
 
 </body>

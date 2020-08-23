@@ -75,7 +75,7 @@
     </script>
 
     <div class="header_wrap">
-        <a href="http://ec2-54-180-116-142.ap-northeast-2.compute.amazonaws.com:8000/" class="logo">
+        <a href="/" class="logo">
             <img src="../resource/img/common/logo.png" alt="runcoding">
         </a>
         <!-- gnb -->
@@ -293,19 +293,17 @@
     </div>
 
     <script>
-        // hamberger menu
-        $('.menu-btn').click(function() {
-            $('.line').toggleClass('animate');
-        });
-        // hamberger menu
-        // navigation
         $(document).ready(function() {
-            $(".gnbClose, .gnbOpen").on("click", function(){
-                $(".gnb").toggleClass("active");
-                $(".gnbOpen").toggleClass("gnbClose");
-                $("html, body, .wrap").toggleClass("open");
-                $('html, body, .wrap').off('scroll touchmove mousewheel');
-            });
+
+            if(document.cookie == "")
+            {
+                alert("로그인이 필요합니다.");
+                location.href = "/run_login/";
+            }
+            else
+            {
+
+            }
         });
 
         // 수량 더하기
