@@ -24,7 +24,7 @@ def idChecker(request):
     response_data = {}
 
     try:
-        RegisterTB.objects.get(regi_id=request.POST['regi_id']).name
+        RegisterTB.objects.get(regi_id=request.POST['regi_id'])
         print("Exist.....")
         response_data['result'] = 'exist'
     except:
