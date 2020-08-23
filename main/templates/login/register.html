@@ -32,8 +32,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/login.css' %}">
 
-    <script src="{% static 'resource/js/jquery-3.4.1.min.js.20200730001' %}"></script>
-    <script src="{% static 'resource/js/modernizr-3.7.1.min.js.20200730001' %}"></script>
+    <script src="{% static 'resource/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'resource/js/modernizr-3.7.1.min.js' %}"></script>
 
 </head>
 <body>
@@ -55,20 +55,20 @@
                             <li>
                                 <span>아이디</span>
                                 <div class="input_area">
-                                    <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요." required />
+                                    <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요."/>
                                     <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
                                 </div>
                             </li>
                             <li>
                                 <span>이름</span>
                                 <div class="input_area">
-                                    <input type="text" name="regi_name" id="regi_name" class="login_inp" required />
+                                    <input type="text" name="regi_name" id="regi_name" class="login_inp" required >
                                 </div>
                             </li>
                             <li>
                                 <span>휴대번호</span>
                                 <div class="input_area">
-                                    <input type="text" name="regi_phone" id="regi_phone" class="login_inp" maxlength="11" placeholder="- 없이 입력하세요." required />
+                                    <input type="text" name="regi_phone" id="regi_phone" class="login_inp" maxlength="11" placeholder="- 없이 입력하세요." required >
                                 </div>
                             </li>
                             <li>
@@ -376,8 +376,8 @@
 
     <!--  address script -->
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-<!--<script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
-<script src="{% static 'resource/js/jquery-ajax-runcoding.js' %}"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!--<script src="{% static 'resource/js/jquery-ajax-runcoding.js' %}"></script>-->
 
 
 <script>
@@ -403,6 +403,8 @@
     {
         var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
         var id = document.getElementById('regi_id');
+
+        alert(id);
 
         if(!id_pass_patten.test(id.value))
         {
@@ -544,6 +546,16 @@
                 pass_chk.value = "";
                 return false;
             }
+        }
+
+        if(id.value == pass.value)
+        {
+            alert("아이디와 같은 비밀번호를 사용할 수 없습니다.");
+            pass.value="";
+            pass_chk.value = "";
+            pass.focus();
+            return false;
+
         }
 
         if($("input:checkbox[name=terms01]").is(":checked") == false)
