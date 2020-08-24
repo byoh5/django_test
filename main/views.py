@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from main.models import *
 from django.http import HttpResponse
 import bcrypt
@@ -45,24 +45,44 @@ def login_page(request):
 
 def login(request):
     response_data = {}
-    regi_info = RegisterTB.objects.get(regi_id=request.POST['login_id'])
 
-    password_encrypt = regi_info.regi_pass
-    print(password_encrypt) # db select
+    if request.method == "POST":
+        regi_info = RegisterTB.objects.get(regi_id=request.POST['login_id'])
 
-    login_password = request.POST['login_pass']
+        if regi_info is not None:
+            password_encrypt = regi_info.regi_pass # db select
+            login_password = request.POST['login_pass']
 
-    check_pass = bcrypt.checkpw(login_password.encode('utf-8'),  password_encrypt.encode('utf-8'))
-    print(check_pass)
+            check_pass = bcrypt.checkpw(login_password.encode('utf-8'),  password_encrypt.encode('utf-8'))
+            print(check_pass) # true/false
 
-    if(check_pass):
-        response_data['result'] = 'true'
-    else:
-        response_data['result'] = 'fail'
+            if (check_pass):
+                sesseion_auth = bcrypt.hashpw(regi_info.regi_id.encode('utf-8'), bcrypt.gensalt())
+                session = sesseion_auth.decode('utf-8')
+                print(session)
+                request.session['client_id'] = session  # session_auth를 디비에 저장
+                request.session['user_id'] = regi_info.regi_id
+                # 읽을 떄 client_id = request.session.get('client_id')
+                response_data['result'] = 'success'
+            else:
+                response_data['result'] = 'fail'
+                response_data['client_id'] = ''
 
-    # csrf 토근을 이용해서 cookies를 지정하면 될듯
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
 
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+
+# 이후 세션 단계로 관리. fix된 url로 들어왔을 때 막기 위함.
 def order_page(request):
-    return render(request, 'payment/order.html')
+    session = request.session.get('client_id')
+    print(session)
+
+    if session is None:
+        return render(request, 'login/login.html')
+    else:
+        return render(request, 'payment/order.html') #templete에 없으면 호출이 안됨. ajax
+
+def logout(request):
+    request.session['client_id'] = ''
+    request.session['user_id'] = ''
+    return render(request, 'main/index_runcoding.html')

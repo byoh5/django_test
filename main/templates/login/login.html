@@ -84,16 +84,6 @@
 
 
 <script>
-
-    function deleteCookie( cookieName )
-     {
-      var expireDate = new Date();
-
-      //어제 날짜를 쿠키 소멸 날짜로 설정한다.
-      expireDate.setDate( expireDate.getDate() - 1 );
-      document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString() + "; path=/";
-     }
-
     function login_submit()
     {
         var formData = $("#login_form").serialize();
@@ -105,13 +95,12 @@
             data : formData,
             success : function(data)
             {
-                if(data.result == "true")
+                if(data.result == "success")
                 {
                     location.href="/";
                 }
                 else
                 {
-                    deleteCookie("csrftoken" );
                     alert("로그인 실패했습니다.");
                     location.href="/run_login/";
                 }
@@ -121,7 +110,6 @@
 
             exist : function(xhr, status)
             {
-                deleteCookie("csrftoken" );
                 alert("로그인 실패했습니다.");
                 return false;
             }

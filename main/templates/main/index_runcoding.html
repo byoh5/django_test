@@ -79,7 +79,7 @@
                         <a href="orderList.html">주문내역</a>
                     </li>
                     <li>
-                        <a href="{% static 'login/logout.html' %}">로그아웃</a>
+                        <a href="/run_logout/">로그아웃</a>
                     </li>
                 </ul>
             </div>
@@ -106,6 +106,7 @@
             </div>
             <img class="mainVisual" src="{% static 'resource/img/main/img_mainVisual.png' %}" alt="상상을 현실로 만드는 런코딩">
         </div>
+        {{ request.session.client_id }}
     </section>
     <!-- main visual -->
 

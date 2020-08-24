@@ -49,6 +49,7 @@
             <div class="join_area">
                 <form id="register_form">
                     {% csrf_token %}
+<!--                    <input type="hidden" name="csrfmiddlewaretoken" id="csrfmiddlewaretoken" value='{% csrf_token %}'>-->
                     <div class="accountInfo">
                         <h2>계정 정보</h2>
                         <ul>
@@ -422,6 +423,7 @@
                 data : formData,
                 success : function(data)
                 {
+                    alert("Test");
                     if(data.result == "exist")
                     {
                         alert("사용할 수 없는 ID 입니다.");

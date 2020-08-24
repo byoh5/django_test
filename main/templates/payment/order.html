@@ -83,7 +83,7 @@
                         <a href="orderList.html">주문내역</a>
                     </li>
                     <li>
-                        <a href="{% static 'login/logout.html' %}">로그아웃</a>
+                        <a href="/run_logout/">로그아웃</a>
                     </li>
                 </ul>
             </div>
@@ -106,6 +106,7 @@
     </section>
 
     <tr id="orderDiv" > <!--style="display: none" -->
+        <input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
          <div class="container margin-top-40">
              <tr class="row">
                   <div class="col-xs-offset-1 col-xs-10">
@@ -114,7 +115,7 @@
                             <h2 class="margin-none"><b>주문하기</b></h2>
                         </div>
                       </div>
-
+                        {% csrf_token %}
                       <tr class="row">
                           <div class="col-xs-12">
                              <div class="panel panel-default border-radius-none margin-top-30">
@@ -544,7 +545,8 @@
          $(document).ready(function() {
             alert("cookies test");
 
-            if(document.cookie == "")
+            alert($("input[type=hidden][name=clientId]").val());
+            if($("input[type=hidden][name=clientId]").val() == "")
             {
                 alert("로그인이 필요합니다.");
                 location.href = "/run_login/";
@@ -552,21 +554,8 @@
             else
             {
                 modify_option_price();
-            }
+             }
          });
-
-<!--         $(document).ready(function() {-->
-
-<!--            // 쿠키 삭제-->
-<!--            var cookies = document.cookie;-->
-<!--            for (var i = 0; i < cookies.split(";").length; ++i)-->
-<!--            {-->
-<!--                var myCookie = cookies[i];-->
-<!--                var pos = myCookie.indexOf("=");-->
-<!--                var name = pos > -1 ? myCookie.substr(0, pos) : myCookie; document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";-->
-<!--            }-->
-<!--            modify_option_price();-->
-<!--        });-->
 
        function modify_option_price()
        {
