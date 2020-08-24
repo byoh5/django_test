@@ -414,9 +414,8 @@
         else
         {
            var formData = $("#register_form").serialize();
-           alert(formData);
 
-            $.ajax({
+            $.ajaxSetup({
                 cache:false,
                 url : "http://54.180.116.142:8000/idChecker/",
                 type : "POST",
@@ -575,16 +574,14 @@
 
        var formData = $("#register_form").serialize();
 
-        $.ajax({
+        $.ajaxSetup ({
             cache:false,
-            url : "http://54.180.116.142:8000/register/",
+            url : "http://localhost:8000/register/",
             type : "POST",
             data : formData,
             success : function(data)
             {
-                alert("ok");
-                deleteCookie("csrftoken" );
-                location.href="/run_login/"
+                location.href="/run_login/";
 
             }, // success
 
@@ -595,15 +592,6 @@
             }
         }); // $.ajax */
     }
-
-    function deleteCookie( cookieName )
-     {
-      var expireDate = new Date();
-
-      //어제 날짜를 쿠키 소멸 날짜로 설정한다.
-      expireDate.setDate( expireDate.getDate() - 1 );
-      document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString() + "; path=/";
-     }
 
     <!-- 우편번호 검색을 위한 script -->
     function getAddress()
