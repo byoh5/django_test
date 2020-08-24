@@ -87,34 +87,6 @@
     function login_submit()
     {
         document.getElementById('login_form').submit();
-<!--        var formData = $("#login_form").serialize();-->
-
-<!--        $.ajax({-->
-<!--            cache:false,-->
-<!--            url : "http://localhost:8000/login_form/",-->
-<!--            type : "POST",-->
-<!--            data : formData,-->
-<!--            success : function(data)-->
-<!--            {-->
-<!--                if(data.result == "success")-->
-<!--                {-->
-<!--                    location.href="/";-->
-<!--                }-->
-<!--                else-->
-<!--                {-->
-<!--                    alert("로그인 실패했습니다.");-->
-<!--                    location.href="/run_login/";-->
-<!--                }-->
-
-
-<!--            }, // success-->
-
-<!--            exist : function(xhr, status)-->
-<!--            {-->
-<!--                alert("로그인 실패했습니다.");-->
-<!--                return false;-->
-<!--            }-->
-<!--        }); // $.ajax */-->
     }
 
      function page_move(some_data) {

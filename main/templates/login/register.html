@@ -412,38 +412,37 @@
         }
         else
         {
-           var formData = $("#register_form").serialize();
+            alert("개발중");
+<!--           var formData = $("#register_form").serialize();-->
 
-<!--            csrfmiddlewaretoken: '{{ csrf_token }}'-->
+<!--            $.ajax({-->
+<!--                cache:false,-->
+<!--                url : "http://54.180.116.142:8000/idChecker/",-->
+<!--                type : "POST",-->
+<!--                data : formData,-->
+<!--                success : function(data)-->
+<!--                {-->
+<!--                    if(data.result == "exist")-->
+<!--                    {-->
+<!--                        alert("사용할 수 없는 ID 입니다.");-->
+<!--                        id.value = "";-->
+<!--                        id.focus();-->
+<!--                        return false;-->
+<!--                    }-->
+<!--                    else-->
+<!--                    {-->
+<!--                        alert("사용해도 되는 ID 입니다.");-->
+<!--                        chkId = 1;-->
+<!--                    }-->
 
-            $.ajax({
-                cache:false,
-                url : "http://54.180.116.142:8000/idChecker/",
-                type : "POST",
-                data : formData,
-                success : function(data)
-                {
-                    if(data.result == "exist")
-                    {
-                        alert("사용할 수 없는 ID 입니다.");
-                        id.value = "";
-                        id.focus();
-                        return false;
-                    }
-                    else
-                    {
-                        alert("사용해도 되는 ID 입니다.");
-                        chkId = 1;
-                    }
+<!--                }, // success-->
 
-                }, // success
-
-                exist : function(xhr, status)
-                {
-                    alert("사용할 수 없는 ID 입니다.");
-                    return false;
-                }
-            }); // $.ajax */
+<!--                exist : function(xhr, status)-->
+<!--                {-->
+<!--                    alert("사용할 수 없는 ID 입니다.");-->
+<!--                    return false;-->
+<!--                }-->
+<!--            }); // $.ajax */-->
         }
     }
 
@@ -574,26 +573,6 @@
 
 
         document.getElementById('register_form').submit();
-<!--       var formData = $("#register_form").serialize();-->
-
-<!--        $.ajax({-->
-<!--            cache:false,-->
-<!--            url : "http://54.180.116.142:8000/register/",-->
-<!--            type : "POST",-->
-<!--            data : formData,-->
-<!--            success : function(data)-->
-<!--            {-->
-<!--                alert("ok");-->
-<!--                location.href="/run_login/"-->
-
-<!--            }, // success-->
-
-<!--            exist : function(xhr, status)-->
-<!--            {-->
-<!--                alert("사용할 수 없는 ID 입니다.");-->
-<!--                return false;-->
-<!--            }-->
-<!--        }); // $.ajax */-->
     }
 
     <!-- 우편번호 검색을 위한 script -->
