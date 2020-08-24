@@ -414,16 +414,15 @@
         else
         {
            var formData = $("#register_form").serialize();
-           alert(formData);
 
-            $.ajaxSetup({
+<!--            csrfmiddlewaretoken: '{{ csrf_token }}'-->
+            $.ajax({
                 cache:false,
                 url : "http://54.180.116.142:8000/idChecker/",
                 type : "POST",
                 data : formData,
                 success : function(data)
                 {
-                    alert("Test");
                     if(data.result == "exist")
                     {
                         alert("사용할 수 없는 ID 입니다.");
