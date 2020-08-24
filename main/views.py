@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect
 from main.models import *
-from django.http import HttpResponse
 import bcrypt
 
 import json
 from django.http import HttpResponse
-
-from django_test.main.models import RegisterTB
 
 
 def index(request):
