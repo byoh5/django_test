@@ -38,7 +38,8 @@ def idChecker(request):
         print("DoesNotExist.....")
         response_data['result'] = 'success'
 
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+    return render(request, 'login/login.html')
+    r#eturn HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def login_page(request):
     return render(request, 'login/login.html')
