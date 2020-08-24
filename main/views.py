@@ -6,6 +6,9 @@ import bcrypt
 import json
 from django.http import HttpResponse
 
+from django_test.main.models import RegisterTB
+
+
 def index(request):
     return render(request, 'main/index_runcoding.html')
 
@@ -38,8 +41,7 @@ def idChecker(request):
         print("DoesNotExist.....")
         response_data['result'] = 'success'
 
-    return render(request, 'login/login.html')
-    r#eturn HttpResponse(json.dumps(response_data), content_type="application/json")
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def login_page(request):
     return render(request, 'login/login.html')
