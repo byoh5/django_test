@@ -72,6 +72,8 @@ def login(request):
 
         #return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+        #return render(request, 'contact_form.html', {'form': form})
+
 
 
 # 이후 세션 단계로 관리. fix된 url로 들어왔을 때 막기 위함.

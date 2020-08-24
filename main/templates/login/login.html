@@ -43,7 +43,7 @@
         <h1>
             <img onclick="/" src="{% static 'resource/img/common/logo_login.png' %}" alt="런코딩">
         </h1>
-        <form id="login_form">
+        <form id="login_form" method="post" action="/login_form/">
              {% csrf_token %}
             <div class="input_area">
                 <input type="text" name="login_id" id="login_id" class="login_inp" placeholder="이메일을 입력해주세요." />
@@ -86,34 +86,35 @@
 <script>
     function login_submit()
     {
-        var formData = $("#login_form").serialize();
+        document.getElementById('login_form').submit();
+<!--        var formData = $("#login_form").serialize();-->
 
-        $.ajax({
-            cache:false,
-            url : "http://localhost:8000/login_form/",
-            type : "POST",
-            data : formData,
-            success : function(data)
-            {
-                if(data.result == "success")
-                {
-                    location.href="/";
-                }
-                else
-                {
-                    alert("로그인 실패했습니다.");
-                    location.href="/run_login/";
-                }
+<!--        $.ajax({-->
+<!--            cache:false,-->
+<!--            url : "http://localhost:8000/login_form/",-->
+<!--            type : "POST",-->
+<!--            data : formData,-->
+<!--            success : function(data)-->
+<!--            {-->
+<!--                if(data.result == "success")-->
+<!--                {-->
+<!--                    location.href="/";-->
+<!--                }-->
+<!--                else-->
+<!--                {-->
+<!--                    alert("로그인 실패했습니다.");-->
+<!--                    location.href="/run_login/";-->
+<!--                }-->
 
 
-            }, // success
+<!--            }, // success-->
 
-            exist : function(xhr, status)
-            {
-                alert("로그인 실패했습니다.");
-                return false;
-            }
-        }); // $.ajax */
+<!--            exist : function(xhr, status)-->
+<!--            {-->
+<!--                alert("로그인 실패했습니다.");-->
+<!--                return false;-->
+<!--            }-->
+<!--        }); // $.ajax */-->
     }
 
      function page_move(some_data) {
