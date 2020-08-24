@@ -77,8 +77,10 @@ def order_page(request):
     session = request.session.get('client_id')
     print(session)
 
+    response_data = {}
+    response_data['result'] = 'fail'
     if session is None:
-        return render(request, 'login/login.html')
+        return HttpResponse(json.dumps(response_data), content_type="application/json") #render(request, 'login/login.html')
     else:
         return render(request, 'payment/order.html') #templete에 없으면 호출이 안됨. ajax
 
