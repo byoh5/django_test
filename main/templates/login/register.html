@@ -416,7 +416,7 @@
            var formData = $("#register_form").serialize();
            alert(formData);
 
-            $.ajax({
+            $.ajaxSetup({
                 cache:false,
                 url : "http://54.180.116.142:8000/idChecker/",
                 type : "POST",
