@@ -20,19 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f88449b0-a0f2-4c29-a3dd-3d433df21ba6" name="Default Changelist" comment="login 로직">
-      <change afterPath="$PROJECT_DIR$/static/common/head.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/login/addr_test.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/payment/cart_ex.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/resource/img/common/logo_login.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/common/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/common/footer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/common/head.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/common/header.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/templates/main/common/privacy.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/common/privacy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runcoding/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/runcoding/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/login/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/login/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/payment/cart.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runcoding/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/runcoding/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +70,18 @@
       <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding" />
       <recent name="C:\Users\OBYONE\Documents\OBY\RunCoding\RuncodingServer\django_test\runcoding_test\src\resource\img\sub" />
     </key>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -357,7 +360,28 @@
       <option name="project" value="LOCAL" />
       <updated>1598098210779</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="db checker">
+      <created>1598105766209</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1598105766209</updated>
+    </task>
+    <task id="LOCAL-00040" summary="dbdb">
+      <created>1598110373943</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1598110373943</updated>
+    </task>
+    <task id="LOCAL-00041" summary="login 로직">
+      <created>1598196129629</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1598196129629</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -365,12 +389,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="runcoding homepage ver01." />
@@ -392,6 +417,8 @@
     <MESSAGE value="장바구니 가격 계산 로직 css" />
     <MESSAGE value="장바구니 가격 계산 로직" />
     <MESSAGE value="login 로직 test" />
+    <MESSAGE value="db checker" />
+    <MESSAGE value="dbdb" />
     <MESSAGE value="login 로직" />
     <option name="LAST_COMMIT_MESSAGE" value="login 로직" />
   </component>
@@ -400,14 +427,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="741" y="343" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597890900661" />
-    <state x="184" y="86" key="DiffContextDialog" timestamp="1597599762642">
+    <state x="389" y="71" width="1234" height="813" key="CommitChangelistDialog2" timestamp="1598196128779">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597599762642" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1598098218502">
+    <state x="389" y="71" width="1234" height="813" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1598196128779" />
+    <state x="184" y="86" key="DiffContextDialog" timestamp="1598185955873">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597986326036" />
+    <state x="184" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1598185955873" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1598196138816">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1598196138816" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598098218502" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1598099532942">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -418,10 +449,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="561" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1598007956740" />
-    <state x="742" y="300" key="git4idea.merge.GitPullDialog" timestamp="1598099505350">
+    <state x="742" y="300" key="git4idea.merge.GitPullDialog" timestamp="1598273596101">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="742" y="300" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1597599781919" />
+    <state x="742" y="300" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1598273596101" />
     <state x="742" y="300" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598099505350" />
     <state x="623" y="225" key="search.everywhere.popup" timestamp="1597842334675">
       <screen x="0" y="0" width="1920" height="1040" />
