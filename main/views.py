@@ -64,11 +64,13 @@ def login(request):
                 request.session['user_id'] = regi_info.regi_id
                 # 읽을 떄 client_id = request.session.get('client_id')
                 response_data['result'] = 'success'
+                return render(request, 'main/index_runcoding.html')
             else:
                 response_data['result'] = 'fail'
                 response_data['client_id'] = ''
+                return render(request, 'login/login.html')
 
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
+        #return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
 

@@ -49,7 +49,6 @@
             <div class="join_area">
                 <form id="register_form">
                     {% csrf_token %}
-<!--                    <input type="hidden" name="csrfmiddlewaretoken" id="csrfmiddlewaretoken" value='{% csrf_token %}'>-->
                     <div class="accountInfo">
                         <h2>계정 정보</h2>
                         <ul>
@@ -416,6 +415,7 @@
            var formData = $("#register_form").serialize();
 
 <!--            csrfmiddlewaretoken: '{{ csrf_token }}'-->
+
             $.ajax({
                 cache:false,
                 url : "http://54.180.116.142:8000/idChecker/",
@@ -473,11 +473,11 @@
         }
         else
         {
-            if(!chkId)
-            {
-                alert("중복체크 해주세요.");
-                return false;
-            }
+<!--            if(!chkId)-->
+<!--            {-->
+<!--                alert("중복체크 해주세요.");-->
+<!--                return false;-->
+<!--            }-->
 
             if(!id_pass_patten.test(id.value))
             {
@@ -572,37 +572,29 @@
             return false;
         }
 
-       var formData = $("#register_form").serialize();
 
-        $.ajax({
-            cache:false,
-            url : "http://54.180.116.142:8000/register/",
-            type : "POST",
-            data : formData,
-            success : function(data)
-            {
-                alert("ok");
-                deleteCookie("csrftoken" );
-                location.href="/run_login/"
+        document.getElementById('register_form').submit();
+<!--       var formData = $("#register_form").serialize();-->
 
-            }, // success
+<!--        $.ajax({-->
+<!--            cache:false,-->
+<!--            url : "http://54.180.116.142:8000/register/",-->
+<!--            type : "POST",-->
+<!--            data : formData,-->
+<!--            success : function(data)-->
+<!--            {-->
+<!--                alert("ok");-->
+<!--                location.href="/run_login/"-->
 
-            exist : function(xhr, status)
-            {
-                alert("사용할 수 없는 ID 입니다.");
-                return false;
-            }
-        }); // $.ajax */
+<!--            }, // success-->
+
+<!--            exist : function(xhr, status)-->
+<!--            {-->
+<!--                alert("사용할 수 없는 ID 입니다.");-->
+<!--                return false;-->
+<!--            }-->
+<!--        }); // $.ajax */-->
     }
-
-    function deleteCookie( cookieName )
-     {
-      var expireDate = new Date();
-
-      //어제 날짜를 쿠키 소멸 날짜로 설정한다.
-      expireDate.setDate( expireDate.getDate() - 1 );
-      document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString() + "; path=/";
-     }
 
     <!-- 우편번호 검색을 위한 script -->
     function getAddress()
