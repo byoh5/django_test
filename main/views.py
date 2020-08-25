@@ -67,8 +67,6 @@ def UserRegister(request):
     return render(request, 'login/login.html') #로그인페이지호출
 
 def login(request):
-    response_data = {}
-
     if request.method == "POST":
         regi_info = RegisterTB.objects.get(regi_id=request.POST['login_id'])
 
@@ -86,18 +84,12 @@ def login(request):
                 request.session['client_id'] = session  # session_auth를 디비에 저장
                 request.session['user_id'] = regi_info.regi_id
                 # 읽을 떄 client_id = request.session.get('client_id')
-                response_data['result'] = 'success'
+                request.session['result'] = 'success'
                 return render(request, 'main/index_runcoding.html')
             else:
-                response_data['result'] = 'fail'
-                response_data['client_id'] = ''
+                request.session['result'] = 'fail'
+                request.session['client_id'] = ''
                 return render(request, 'login/login.html')
-
-        #return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-        #return render(request, 'contact_form.html', {'form': form})
-
-
 
 def logout(request):
     request.session['client_id'] = ''
@@ -113,11 +105,11 @@ def popup(request):
     try:
         RegisterTB.objects.get(regi_id=request.POST['popup_regiId'])
         print("Exist.....")
-        request.session['result'] = 'exist'
+        request.session['IDresult'] = 'exist'
         return render(request, 'popup/popup.html')
     except:
         print("DoesNotExist.....")
-        request.session['result'] = 'ok'
+        request.session['IDresult'] = 'ok'
         return render(request, 'popup/popup.html')
 
 

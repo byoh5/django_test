@@ -22,7 +22,7 @@
                                 <span>아이디</span>
                                 <div class="input_area">
                                     <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요."/>
-                                    <input type="hidden" id="result" name="result" value={{ request.session.result }}>
+                                    <input type="hidden" id="result" name="result" value={{ request.session.IDresult }}>
                                     <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
                                 </div>
                             </li>
@@ -174,6 +174,7 @@
             }
 
             var remote_result = document.getElementById("result").value;
+            alert(remote_result);
             if(remote_result == "" || remote_result.length > 2)
             {
                 alert("아이디 중복체크 해주세요.");

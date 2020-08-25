@@ -45,7 +45,7 @@
 <form id="popup_form" method="post" action="/popup/">
      {% csrf_token %}
      <input type="hidden" name="popup_regiId" id="popup_regiId" value="">
-     <input type="hidden" id="result" name="result" value={{ request.session.result }}>
+     <input type="hidden" id="result" name="result" value={{ request.session.IDresult }}>
  </form>
 <script>
     $(document).ready(function() {
@@ -76,7 +76,9 @@
     function close()
     {
         alert("close 개발중");
+        self.close();
     }
+
 </script>
 </body>
 </html>
