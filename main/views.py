@@ -17,24 +17,37 @@ def register_page(request):
     request.session['result'] = ""
     return render(request, 'login/register.html')
 
-def trashcn_arduino_page(request):
-    return render(request, 'lecture/lecture_view_arduino.html')
-
 def login_page(request):
     return render(request, 'login/login.html')
 
 def popup_page(request):
     return render(request, 'popup/popup.html')
 
+def class_page(request):
+    return render(request, 'class/class_list.html')
+
+def trashcn_arduino_page(request):
+    return render(request, 'class/class_view_arduino.html')
+
+def trashcn_mblock_page(request):
+    return render(request, 'class/class_view_mblock.html')
+
+def myclass_list_page(request):
+    return render(request, 'myclass/myclass_list.html')
+
+def myclass_page(request):
+    return render(request, 'myclass/myclass.html')
+
 # 이후 세션 단계로 관리. fix된 url로 들어왔을 때 막기 위함.
 def order_page(request):
     session = request.session.get('client_id')
+    userid = request.session.get('user_id') #이 값으로 디비에서 정보찾고..
     print(session)
 
-    response_data = {}
-    response_data['result'] = 'fail'
+    #구매하는 제품 form의 title # 이값으로 prd_table 뒤져서 가겨계산하고... order table에 insert
+
     if session is None:
-        return HttpResponse(json.dumps(response_data), content_type="application/json") #render(request, 'login/login.html')
+        return render(request, 'lecture/lecture_view_arduino.html')
     else:
         return render(request, 'payment/order.html') #templete에 없으면 호출이 안됨. ajax
 

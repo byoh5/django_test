@@ -43,6 +43,29 @@
 
 <body>
 <header>
+    <script>
+    // F12 버튼 방지
+    $(document).ready(function(){
+        $(document).bind('keydown',function(e){
+            if ( e.keyCode == 123 /* F12 */) {
+                e.preventDefault();
+                e.returnValue = false;
+            }
+        });
+    });
+
+    // 우측 클릭 방지
+    document.onmousedown=disableclick;
+    status="Right click is not available.";
+
+    function disableclick(event){
+        if (event.button==2) {
+            alert(status);
+            return false;
+        }
+    }
+    </script>
+
     <div class="header_wrap">
         <input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
         <a href="/" class="logo">
@@ -51,7 +74,7 @@
         <!-- gnb -->
         <ul class="menu">
             <li>
-                <a href="{% static 'lecture/lecture_list.html' %}">코딩키트</a>
+                <a href="/class/">코딩키트</a>
             </li>
             <li>
                 <a href="{% static 'lounge/coding_lounge.html' %}">코딩라운지</a>
@@ -61,7 +84,7 @@
                 <a href="{% static 'comunity/coding_comunity.html' %}">커뮤니티</a>
             </li>
             <li>
-                <a href="{% static 'lecture/myclass_list.html' %}">나의 강의실</a>
+                <a href="/myclass_list/">나의 강의실</a>
             </li>
         </ul>
         <div class="ab_right">

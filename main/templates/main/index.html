@@ -1,21 +1,463 @@
 <!DOCTYPE html>
+{% load static %}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <script src="../resource/js/vendor/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-$(document).ready( function() {
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>코딩키트 | 머릿속 생각을 쉽게,뚝딱 런코딩</title>
+    <meta name="description" content="" />
+    <meta name="Keywords" content="runcoding" />
+    <meta http-equiv="Copyright" content="" />
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <meta name="robots" content="index,follow">
+    <meta name="format-detection" content="telephone=no" />
 
-$("#header").load("../common/header.html");  // 원하는 파일 경로를 삽입하면 된다
-$("#head").load("../common/head.html");
-$("#footer").load("../common/footer.html");  // 추가 인클루드를 원할 경우 이런식으로 추가하면 된다
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="runcoding">
+    <meta property="og:description" content="runcoding">
+    <meta property="og:image" content="{% static 'resource/img/common/share_img.jpg' %}">
 
-});
-</script>
-<div id="head"></div>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/font-awesome.min.css' %}">
+
+    <!-- slick css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick-theme.css' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/reset.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/layout.css' %}" />
+<!--<script>-->
+<!--var elearning_url       = "https://www.runcoding.co.kr"; var elearning_bbs_url   = "https://www.runcoding.co.kr/bbs"; var elearning_is_member = ""; var elearning_is_admin  = ""; var elearning_is_mobile = "0"; var elearning_bo_table  = ""; var elearning_sca       = ""; var elearning_editor    = ""; var elearning_cookie_domain = ""; </script>-->
+
+<script src="{% static 'resource/js/vendor/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'resource/js/jquery-migrate-3.0.0.js' %}"></script>
+<script src="{% static 'resource/js/vendor/modernizr-3.7.1.min.js' %}"></script>
+<script src="{% static 'resource/js/common.js?ver=20200730001' %}"></script>
+<script src="{% static 'resource/js/wrest.js?ver=20200730001' %}"></script>
 </head>
 <body>
+<header>
+    <div class="header_wrap">
+        <a href="/" class="logo">
+            <img src="{% static 'resource/img/common/logo.png' %}" alt="runcoding">
+        </a>
+        <!-- gnb -->
+        <ul class="menu">
+            <li>
+                <a href="{% static 'lecture/lecture_list.html' %}">코딩키트</a>
+            </li>
+            <li>
+                <a href="{% static 'lounge/coding_lounge.html' %}">코딩라운지</a>
+            </li>
 
-<div id="header"></div>
+            <li>
+                <a href="{% static 'comunity/coding_comunity.html' %}">커뮤니티</a>
+            </li>
+            <li>
+                <a href="{% static 'lecture/myclass_list.html' %}">나의 강의실</a>
+            </li>
+        </ul>
+        <div class="ab_right">
+            <!-- 비로그인 -->
+            <!--<a href="login.html" class="login">
+                로그인
+            </a>-->
+
+            <!-- 로그인 -->
+            <div class="user_menu">
+                <span class="userImg"><img src="{% static 'resource/img/sub/img_user.png' %}" alt="유저 프로필"></span>
+                <ul class="sub_menu">
+                    <li>
+                        <a href="mypage.html">내 프로필</a>
+                    </li>
+                    <li>
+                        <a href="coupon.html">내 쿠폰</a>
+                    </li>
+                    <li>
+                        <a href="orderList.html">주문내역</a>
+                    </li>
+                    <li>
+                        <a href="/run_logout/">로그아웃</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="wrap">    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/main.css' %}" >
+
+    <!-- main visual -->
+    <section class="main_visual">
+        <div class="section_wrap">
+            <div class="slogan">
+                <p>CREATIVE CODING KIT + CLASS</p>
+                <span class="smallSlg">
+                        내 머릿속 생각을 쉽게! 뚝닥!<br/>
+                        만들어보자
+                    </span>
+                <span class="bigSlg">
+                        <span class="sky">CODE. MAKE. CREATE</span><br/>
+                        상상을 현실로 만드는 런코딩
+                    </span>
+                <a href="{% static 'lecture/lecture_list.html' %}">시작하기</a>
+            </div>
+            <img class="mainVisual" src="{% static 'resource/img/main/img_mainVisual.png' %}" alt="상상을 현실로 만드는 런코딩">
+        </div>
+    </section>
+    <!-- main visual -->
+
+    <!-- main content -->
+    <section class="section02">
+        <img class="bg left" src="{% static 'resource/img/main/bg_sec02left.png' %}" alt="left bg">
+        <img class="bg right" src="{% static 'resource/img/main/bg_sec02right.png' %}" alt="right bg">
+
+        <div class="video_content">
+            <img class="mainVisual" src="{% static 'resource/img/main/img_video.jpg' %}">
+
+
+        </div>
+
+        <div class="benefit">
+            <img src="{% static 'resource/img/main/img_sec02_01.png' %}" alt="코딩키트를 사면 온라인 강의는 무료!">
+            <div class="text_area">
+                    <span class="sec_title">
+                        코딩키트를 사면<br/>
+                        온라인 강의는 무료!
+                    </span>
+                <p>
+                    내가 생각한 알고리즘으로 코딩을 한다면<br/>
+                    어떤 일이 일어날까?<br/><br/>
+
+                    10년차 프로그래머의 핵심 쏙쏙 온라인 강의와<br/>
+                    디자인 키트로 쉽게! 뚝딱! 만들어보자<br/><br/>
+
+                    어렵게만 생각되었던 인공지능 AI 코딩도 뚝딱!<br/>
+                    런코딩과 함께 집에서 다양한 FUN MAKER가 되어봐!
+                </p>
+            </div>
+        </div>
+
+        <div class="benefit scd">
+            <div class="text_area">
+                    <span class="sec_title">
+                        런코딩,<br/>
+                        누가 무엇을 배울 수 있을까?
+                    </span>
+                <p>
+                    블럭코딩으로 코딩의 개념을 이해했다면 실제 코딩을 해보고 어떤 결과물로 이어지는지 경험해봐!<br/>
+                    강의 속 퀴즈로 개념을 연습해서 같은 키트로 또다른 MAKER가 되어봐!
+                </p>
+                <a href="" class="btn link">시작하기</a>
+            </div>
+            <div class="benefit_list">
+                <ul>
+                    <li class="top">
+                        <div class="text_area">
+                            <span>코딩원리가 궁금한 <span>JUNIOR</span></span>
+                            <p>
+                                초등학교 고학년부터 중학생까지 크리에이티브 메이커 활동으로<br/>
+                                원리와 재미를 한번에!
+                            </p>
+                        </div>
+                    </li>
+                    <li class="bottom">
+                        <div class="text_area">
+                            <span>AI코딩이 궁금한 <span>JUNIOR</span></span>
+                            <p>
+                                런코딩이 직접 개발한 “러닝봇”과 함께 AI 코딩을 쉽게! 뚝닥!
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+                <img src="{% static 'resource/img/main/img_sec02_02.png' %}" alt="런코딩, 누가 무엇을 배울 수 있을까?">
+            </div>
+        </div>
+    </section>
+
+    <section class="section03">
+        <div class="makers_area">
+            <div class="thumb_list">
+                <img src="{% static 'resource/img/main/img_makres01.png' %}" alt="makers">
+            </div>
+            <div class="text_area">
+                    <span class="sec_title">
+                        런코딩 MAKERS
+                    </span>
+                <p>
+                    실제 런코딩 키트로<br/>
+                    또 다른 MAKER가 된 친구들의<br/>
+                    작품을 구경해봐.
+                </p>
+                <a href="" class="btn link">MAKER 작품 둘러보기</a>
+            </div>
+        </div>
+
+        <div class="ourClass">
+            <span class="big_title">영상 강의부터 키트 응용하기까지</span>
+            <p>
+                온라인 강의 내용으로 코딩에 대한 개념 학습으로 기본기를 다지고<br/>
+                예제와 퀴즈로 응용 학습까지!<br/>
+                마지막으로 코딩키트까지 만들어 실생활에 적용되는 코딩까지 마스터!
+            </p>
+            <div class="link_area">
+                <a class="link big">
+                    <!--<span>온라인 강의</span>-->
+                    <img src="{% static 'resource/img/main/link_onlineClass.png' %}" alt="온라인 강의">
+                </a>
+                <div class="small_link">
+                    <a class="link small">
+                        <!--<span>예제/퀴즈</span>-->
+                        <img src="{% static 'resource/img/main/link_example.png' %}" alt="예제/퀴즈">
+                    </a>
+                    <a class="link small">
+                        <!--<span>만들기</span>-->
+                        <img src="{% static 'resource/img/main/link_making.png' %}" alt="만들기">
+                    </a>
+                    <a class="link long">
+                        <!--<span>응용하기</span>-->
+                        <img src="{% static 'resource/img/main/link_application.png' %}" alt="응용하기">
+                    </a>
+                </div>
+            </div>
+            <div class="progress_area">
+                <ul>
+                    <li class="pa01">
+                            <span class="prog_title">
+                                <!--<span class="num">01</span>-->
+                                <img class="ico prog01" src="{% static 'resource/img/main/ico_progress01w.png' %}" alt="키트구입">
+                                <img class="ico_c prog01" src="{% static 'resource/img/main/ico_progress01.png' %}" alt="키트구입">
+                                <span class="name">키트구입</span>
+                            </span>
+                        <p class="pa_description">
+                            난이도에 맞춰<br/>
+                            코딩 키트를 구입하면<br/>
+                            집으로 슝!
+                        </p>
+                        <!-- <a href="" class="btn pa">Explore</a> -->
+                    </li>
+                    <li class="pa02">
+                            <span class="prog_title">
+                                <!--<span class="num">02</span>-->
+                                <img class="ico prog02" src="{% static 'resource/img/main/ico_progress02w.png' %}" alt="코딩하기">
+                                <img class="ico_c prog02" src="{% static 'resource/img/main/ico_progress02.png' %}" alt="코딩하기">
+                                <span class="name">코딩하기</span>
+                            </span>
+                        <p class="pa_description">
+                            난이도에 맞춰<br/>
+                            코딩 키트를 구입하면<br/>
+                            집으로 슝!
+                        </p>
+                        <!-- <a href="" class="btn pa">Explore</a> -->
+                    </li>
+                    <li class="pa03">
+                            <span class="prog_title">
+                                <!--<span class="num">03</span>-->
+                                <img class="ico prog03" src="{% static 'resource/img/main/ico_progress03w.png' %}" alt="만들기">
+                                <img class="ico_c prog03" src="{% static 'resource/img/main/ico_progress03.png' %}" alt="만들기">
+                                <span class="name">만들기</span>
+                            </span>
+                        <p class="pa_description">
+                            난이도에 맞춰<br/>
+                            코딩 키트를 구입하면<br/>
+                            집으로 슝!
+                        </p>
+                        <!-- <a href="" class="btn pa">Explore</a> -->
+                    </li>
+                    <li class="pa04">
+                            <span class="prog_title">
+                                <!--<span class="num">04</span>-->
+                                <img class="ico prog04" src="{% static 'resource/img/main/ico_progress04w.png' %}" alt="응용하기">
+                                <img class="ico_c prog04" src="{% static 'resource/img/main/ico_progress04.png' %}" alt="응용하기">
+                                <span class="name">응용하기</span>
+                            </span>
+                        <p class="pa_description">
+                            난이도에 맞춰<br/>
+                            코딩 키트를 구입하면<br/>
+                            집으로 슝!
+                        </p>
+                        <!-- <a href="" class="btn pa">Explore</a> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="banner bottom">
+        <img class="bg left01" src="{% static 'resource/img/sub/bg_botBanner_left01.png' %}" alt="bg01">
+        <img class="bg left02" src="{% static 'resource/img/sub/bg_botBanner_left02.png' %}" alt="bg02">
+        <img class="bg right" src="{% static 'resource/img/sub/bg_botBanner_right.png' %}" alt="bg03">
+        <span>
+                CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
+                지금 시작해보세요.
+            </span>
+        <a href="" class="btn">시작하기</a>
+    </div>
+
+    <section class="section04">
+        <img class="bg left" src="{% static 'resource/img/main/bg_contactLeft.png' %}" alt="bg">
+        <img class="bg right" src="{% static 'resource/img/main/bg_contactRight.png' %}" alt="bg">
+        <div class="contactUs">
+            <div class="text_area">
+                <span class="sm_title">CONTACT US</span>
+                <span class="big_title">I B2B I 기업, 기관, 학교, 단체, 강사</span>
+                <p>
+                    코딩교구 상품 대량 구매 시, 매뉴얼, 동영상강의, 강의 PPT 등 무료 제공.<br/>
+                    출강도 가능하오니, 자세한 사항은 문의 바랍니다.
+                </p>
+            </div>
+            <div class="input_area">
+                <input type="text" name="contact" id="email" placeholder="이메일 주소">
+                <textarea rows="5" name="contact" id="text" placeholder="문의 내용"></textarea>
+                <button type="button" name="contact" class="submit">문의하기</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
+<div class="banner bottom">
+    <img class="bg left01" src="{% static 'resource/img/sub/bg_botBanner_left01.png' %}" alt="bg01">
+    <img class="bg left02" src="{% static 'resource/img/sub/bg_botBanner_left02.png' %}" alt="bg02">
+    <img class="bg right" src="{% static 'resource/img/sub/bg_botBanner_right.png' %}" alt="bg03">
+    <span>
+                CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
+                지금 시작해보세요.
+            </span>
+    <a href="" class="btn">시작하기</a>
+</div>
+
+    <div id="footer"/>
+    <div>   <link rel="import" href="../common/privacy.html"> </div>
+<footer>
+    <div class="footer">
+        <img class="ci" src="{% static 'resource/img/common/logo_footer.png' %}" alt="런코딩">
+        <div class="footerText">
+            <div class="information">
+                <span>INFORMATION</span>
+                <ul>
+                    <li>
+                        <span>Company</span>
+                        <p>런코딩</p>
+                    </li>
+                    <li>
+                        <span>CPO</span>
+                        <p>김하나</p>
+                    </li>
+                    <li>
+                        <span>Business License</span>
+                        <p>000-000-00000</p>
+                    </li>
+                    <li>
+                        <span>Online Biz</span>
+                        <p>000-000-00000</p>
+                    </li>
+                    <li>
+                        <span>Address</span>
+                        <p>경기도 런코딩 런코딩</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="contact">
+                <span>CONTACT</span>
+                <ul>
+                    <li>
+                        <span>TEL</span>
+                        <p>070-0000-0000</p>
+                    </li>
+                    <li>
+                        <span>E-Mail</span>
+                        <p>master@runcoding.com</p>
+                    </li>
+                    <li>
+                        <span>Kakao ID</span>
+                        <p>런코딩</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="snsArea">
+                <span>SNS</span>
+                <div class="snsBtn">
+                    <a><img src="{% static 'resource/img/common/ico_kakaoTalk.png' %}" alt="kakaotalk"></a>
+                    <a><img src="{% static 'resource/img/common/ico_instagram.png' %}" alt="instagram"></a>
+                    <a><img src="{% static 'resource/img/common/ico_naverBlog.png' %}" alt="naverblog"></a>
+                    <a><img src="{% static 'resource/img/common/ico_youtube.png' %}" alt="youtube"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="link_area">
+        <div class="linkWrap">
+            <a href="#modal01">Privacy Policy</a>
+            <a href="#modal02">Terms &amp; Conditions</a>
+        </div>
+    </div>
+</footer>
+
+
+<!-- privacy modal -->
+<div data-ml-modal id="modal01">
+    <a href="#!" class="modal-overlay"></a>
+    <div class="modal-dialog modal-dialog-lg">
+        <a href="#!" class="modal-close">&times;</a>
+        <h3>개인정보취급방침</h3>
+        <div class="modal-content">
+            <div class="terms_area">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-ml-modal id="modal02">
+    <a href="#!" class="modal-overlay"></a>
+    <div class="modal-dialog modal-dialog-lg">
+        <a href="#!" class="modal-close">&times;</a>
+        <h3>이용약관</h3>
+        <div class="modal-content">
+            <div class="terms_area">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div data-ml-modal id="modal02">
+    <a href="#!" class="modal-overlay"></a>
+    <div class="modal-dialog modal-dialog-lg">
+        <a href="#!" class="modal-close">&times;</a>
+        <h3>이용약관</h3>
+        <div class="modal-content">
+            <div class="terms_area">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+    // hamberger menu
+    $('.menu-btn').click(function() {
+        $('.line').toggleClass('animate');
+    });
+    // hamberger menu
+    // navigation
+    $(document).ready(function() {
+        $(".gnbClose, .gnbOpen").on("click", function(){
+            $(".gnb").toggleClass("active");
+            $(".gnbOpen").toggleClass("gnbClose");
+            $("html, body, .wrap").toggleClass("open");
+            $('html, body, .wrap').off('scroll touchmove mousewheel');
+        });
+    });
+</script>
+
+
 </body>
-<div id="footer"></div>
 </html>

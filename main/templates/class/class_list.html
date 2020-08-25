@@ -1,0 +1,122 @@
+{% load static %}
+{% include "common/header.html" %}
+
+<div class="wrap">
+<!-- sub visual -->
+<section class="sub_visual">
+    <div class="section_wrap">
+        <div class="slogan">
+                    <span class="bigSlg">
+                        코딩키트
+                    </span>
+            <p>
+                <span class="brown">"크리에이티브 코딩키트"</span>로 배우는 런코딩!<br/>
+                지금 시작해보세요.
+            </p>
+        </div>
+        <img class="subVisual codingKit" src="{% static 'resource/img/sub/sv_codingKit.png' %}" alt="코딩키트">
+    </div>
+</section>
+<!-- sub visual -->
+
+<!-- codingKit list -->
+<div class="codingKit_list">
+    <div class="lecture_list">
+        <ul>
+            <li class="list01">
+                <a href="/trashcan_arduino/">
+                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="코딩키트 썸네일">
+                    <div class="text_area">
+                            <span>
+                                <small class="type">아두이노</small>
+                                [아두이노 + AI 코딩] 스마트 휴지통
+                            </span>
+                    <div class="ckInfo">
+                                <span class="period">
+                                    <img src="{% static 'resource/img/sub/ico_calendar.png' %}" alt="기간">
+                                    3개월 과정
+                                </span>
+                        <span class="num">
+                                    <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
+                                    13개 강의
+                                </span>
+                        <span class="price">
+                                    45,000 won
+                                </span>
+                    </div>
+                        <p class="description"> </p>
+                    </div>
+                </a>
+            </li>
+             <li class="list01">
+                <a href="/trashcan_mblock/">
+                    <img src="{% static 'resourc/img/Trashcan/trashcan_main.jpg' %}" alt="코딩키트 썸네일">
+                    <div class="text_area">
+                                <span>
+                                    <small class="type">엠블럭</small>
+                                    [엠블럭 + AI 코딩] 스마트 휴지통                            </span>
+                        <div class="ckInfo">
+                                    <span class="period">
+                                        <img src="{% static 'resource/img/sub/ico_calendar.png' %}" alt="기간">
+                                        3개월 과정
+                                    </span>
+                            <span class="num">
+                                        <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
+                                        12개 강의
+                                    </span>
+                            <span class="price">
+                                        45,000 won
+                                    </span>
+                        </div>
+                        <p class="description">
+                            스크래치 기반의 mblock을 이용해봐요.                        </p>
+                    </div>
+                </a>
+            </li>
+                    </ul>
+        <!--<a id="more" class="btn list_more">더보기</a>-->
+    </div>
+    <div class="filter_area fixed">
+        <div class="search_area">
+            <span>SEARCH</span>
+            <div class="input_area">
+                <input type="text" name="src_inp" id="src_inp" placeholder="검색어 입력">
+                <button type="button"><img src="{% static 'resource/img/sub/ico_search.png' %}" alt="검색"></button>
+            </div>
+        </div>
+        <div class="category">
+            <span>CATEGORIES</span>
+            <!--<button type="button" class="btn_filter" onclick="location.href=''">전체</button>-->
+            <button type="button" style="cursor:pointer" class="btn_filter " onclick=location.href="/trashcan_arduino/">아두이노</button>
+            <button type="button" style="cursor:pointer" class="btn_filter " onclick=location.href="/trashcan_mblock/">엠블럭</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(window).scroll(function() {
+        var scroll_top = $(window).scrollTop();
+        if (scroll_top >= $(".sub_visual").outerHeight()) {
+            $(".filter_area").addClass("scr");
+        } else {
+            $(".filter_area").removeClass("scr");
+        }
+    });
+
+    $(window).scroll(function() {
+        var scroll_top = $(window).scrollTop();
+        if (scroll_top >= $(".lecture_list").outerHeight() + 100) {
+            $(".scr").addClass("end");
+        } else {
+            $(".scr").removeClass("end");
+        }
+    });
+</script>
+{% include "common/banner_bottom.html" %}
+{% include "common/footer.html" %}
+
+
+
+
+</body>
+</html>

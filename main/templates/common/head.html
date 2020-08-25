@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)https://www.runcoding.co.kr/_html/join01.html#! -->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
 <html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>머릿속 생각을 쉽게,뚝딱 런코딩</title>
@@ -29,37 +28,17 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/layout.css' %}">
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/order.css' %}">-->
+<!--     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/login.css' %}">-->
 
-    <script src="{% static 'resource/js/jquery-3.4.1.min.js.20200730001' %}"></script>
-    <script src="{% static 'resource/js/modernizr-3.7.1.min.js.20200730001' %}"></script>
+    <script src="{% static 'resource/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'resource/js/modernizr-3.7.1.min.js1' %}"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="{% static 'resource/js/jquery-migrate-3.0.0.js' %}"></script>
+    <script src="{% static 'resource/js/common.js?ver=20200730001' %}"></script>
+    <script src="{% static 'resource/js/wrest.js?ver=20200730001' %}"></script>
 
 </head>
+
 <body>
-
-<script>
-        $(document).ready(function() {
-
-           var cookie = document.cookie;
-            if(cookie.indexOf( "csrftoken" ) != -1)
-            {
-               deleteCookie("csrftoken" );
-            }
-
-            location.href="/";
-        });
-
-
-        function deleteCookie( cookieName )
-         {
-          var expireDate = new Date();
-
-          //어제 날짜를 쿠키 소멸 날짜로 설정한다.
-          expireDate.setDate( expireDate.getDate() - 1 );
-          document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString() + "; path=/";
-         }
-</script>
-
-
-</body></html>

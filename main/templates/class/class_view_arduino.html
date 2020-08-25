@@ -138,8 +138,8 @@
                             <ul>
                                 <li>
                                     <span class="li_title">판매가</span>
-                                    <form id="prd_form">
-                                        <input type="hidden" id="title" value="aAt"> <!--arduino-AI-trashcan -->
+                                    <form id="prd_form" method="post" action="/run_order/">
+                                        <input type="hidden" id="title" name="title" value="aAt"> <!--arduino-AI-trashcan -->
                                      </form>
                                     <p><span class="price">45,000</span> won</p>
                                 </li>
@@ -235,7 +235,7 @@
             }
             else
             {
-                location.href = "/run_order/";
+                document.getElementById("prd_form").submit();
              }
          }
 
