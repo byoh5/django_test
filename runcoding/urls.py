@@ -20,11 +20,13 @@ from main.views import *
 urlpatterns = [
     path('register/', UserRegister),
     path('login_form/', login),
-    path('idChecker/', idChecker),
     path('regi/', register_page),
     path('run_login/', login_page),
     path('run_order/', order_page),
     path('run_logout/', logout),
+    path('run_popup/', popup_page),
+    path('popup/', popup),
+    path('trashcn_arduino/', trashcn_arduino_page),
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
 ]

@@ -1,88 +1,6 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>머릿속 생각을 쉽게,뚝딱 런코딩</title>
-    <meta name="description" content="" />
-    <meta name="Keywords" content="runcoding" />
-    <meta http-equiv="Copyright" content="" />
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
-    <meta name="robots" content="index,follow">
-    <meta name="format-detection" content="telephone=no" />
+{% load static %}
+{% include "common/header.html" %}
 
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="runcoding">
-    <meta property="og:description" content="runcoding">
-    <meta property="og:image" content="../resource/img/common/share_img.jpg">
-
-    <!-- favicon -->
-    <link rel="shortcut icon" href="assets/img/common/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="assets/img/common/favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" type="text/css" href="../resource/css/font-awesome.min.css">
-
-    <!-- slick css -->
-    <link rel="stylesheet" type="text/css" href="../resource/css/slick.css" />
-    <link rel="stylesheet" type="text/css" href="../resource/css/slick-theme.css" />
-
-    <link rel="stylesheet" type="text/css" href="../resource/css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="../resource/css/common.css" />
-
-    <link rel="stylesheet" type="text/css" href="../resource/css/layout.css" />
-
-    <script src="../resource/js/vendor/jquery-3.4.1.min.js"></script>
-    <script src="../resource/js/vendor/modernizr-3.7.1.min.js"></script>
-
-</head>
-<body>
-    <header>
-        <div class="header_wrap">
-            <a href="/" class="logo">
-                <img src="../resource/img/common/logo.png" alt="runcoding">
-            </a>
-            <!-- gnb -->
-            <ul class="menu">
-                <li>
-                    <a href="lecture_list.html">코딩키트</a>
-                </li>
-                <li>
-                    <a href="../lounge/coding_lounge.html">코딩라운지</a>
-                </li>
-
-                <li>
-                    <a href="../comunity/coding_comunity.html">커뮤니티</a>
-                </li>
-                <li>
-                    <a href="myclass_list.html">나의 강의실</a>
-                </li>
-            </ul>
-            <div class="ab_right">
-                <!-- 비로그인 -->
-                <!--<a href="login.html" class="login">
-                    로그인
-                </a>-->
-
-                <!-- 로그인 -->
-                <div class="user_menu">
-                    <span class="userImg"><img src="../resource/img/sub/img_user.png" alt="유저 프로필"></span>
-                    <ul class="sub_menu">
-                        <li>
-                            <a href="mypage.html">내 프로필</a>
-                        </li>
-                        <li>
-                            <a href="coupon.html">내 쿠폰</a>
-                        </li>
-                        <li>
-                            <a href="orderList.html">주문내역</a>
-                        </li>
-                        <li>
-                            <a href="login.html">로그아웃</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
     <div class="wrap">
         <!-- sub visual -->
         <section class="sub_visual">
@@ -95,7 +13,7 @@
                         <span>[아두이노 + AI]</span>
                     </div>
                 </div>
-                <img class="subVisual codingKit" src="../resource/img/sub/sv_codingKit.png" alt="코딩키트">
+                <img class="subVisual codingKit" src="{% static 'resource/img/sub/sv_codingKit.png' %}" alt="코딩키트">
             </div>
         </section>
         <!-- sub visual -->
@@ -104,7 +22,7 @@
         <div class="codingKit_list detail">
             <div class="lecture_list detail">
                 <div class="detail_area">
-                    <img src="../resource/img/Trashcan/trashcan_main.jpg" alt="상품상세 이미지">
+                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="상품상세 이미지">
 
                     <div class="precaution">
                         <span class="cautionTitle">구매 전 유의사항</span>
@@ -212,18 +130,6 @@
                 <a href="lecture_list.html" class="btn list_more">목록으로</a>
             </div>
 
-            <script>
-
-                function submit()
-                {
-                    var title = document.getElementById('title').value;
-<!--                    var q = document.getElementById('prodQuantity').value;-->
-
-                    window.location.href = "../payment/order.html?t="+title";
-                };
-
-            </script>
-
             <div class="filter_area detail">
                 <div class="fixedArea">
                     <div class="info_area">
@@ -273,134 +179,18 @@
                     </div>
                     <div class="btn_area">
                         <a href="#" class="btn cart" onClick="javascript:goOrder();">장바구니</a>
-                        <a class="btn buy" href="../payment/pay_info.html">바로구매</a>
+                        <a class="btn buy" href="#">바로구매</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="banner bottom">
-            <img class="bg left01" src="../resource/img/sub/bg_botBanner_left01.png" alt="bg01">
-            <img class="bg left02" src="../resource/img/sub/bg_botBanner_left02.png" alt="bg02">
-            <img class="bg right" src="../resource/img/sub/bg_botBanner_right.png" alt="bg03">
-            <span>
-                CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
-                지금 시작해보세요.
-            </span>
-            <a href="../lecture/lecture_list.html" class="btn">시작하기</a>
-        </div>
-
-        <footer>
-            <div class="footer">
-                <img class="ci" src="../resource/img/common/logo_footer.png" alt="런코딩">
-                <div class="footerText">
-                    <div class="information">
-                        <span>INFORMATION</span>
-                        <ul>
-                            <li>
-                                <span>Company</span>
-                                <p>런코딩</p>
-                            </li>
-                            <li>
-                                <span>CPO</span>
-                                <p>김하나</p>
-                            </li>
-                            <li>
-                                <span>Business License</span>
-                                <p>000-000-00000</p>
-                            </li>
-                            <li>
-                                <span>Online Biz</span>
-                                <p>000-000-00000</p>
-                            </li>
-                            <li>
-                                <span>Address</span>
-                                <p>경기도 런코딩 런코딩</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="contact">
-                        <span>CONTACT</span>
-                        <ul>
-                            <li>
-                                <span>TEL</span>
-                                <p>070-0000-0000</p>
-                            </li>
-                            <li>
-                                <span>E-Mail</span>
-                                <p>master@runcoding.com</p>
-                            </li>
-                            <li>
-                                <span>Kakao ID</span>
-                                <p>런코딩</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="snsArea">
-                        <span>SNS</span>
-                        <div class="snsBtn">
-                            <a><img src="../resource/img/common/ico_kakaoTalk.png" alt="kakaotalk"></a>
-                            <a><img src="../resource/img/common/ico_instagram.png" alt="instagram"></a>
-                            <a><img src="../resource/img/common/ico_naverBlog.png" alt="naverblog"></a>
-                            <a><img src="../resource/img/common/ico_youtube.png" alt="youtube"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="link_area">
-                <div class="linkWrap">
-                    <a href="#modal01">Privacy Policy</a>
-                    <a href="#modal02">Terms &amp; Conditions</a>
-                </div>
-            </div>
-        </footer>
-
-
-        <!-- privacy modal -->
-        <div data-ml-modal id="modal01">
-            <a href="#!" class="modal-overlay"></a>
-            <div class="modal-dialog modal-dialog-lg">
-                <a href="#!" class="modal-close">&times;</a>
-                <h3>개인정보취급방침</h3>
-                <div class="modal-content">
-                    <div class="terms_area">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div data-ml-modal id="modal02">
-            <a href="#!" class="modal-overlay"></a>
-            <div class="modal-dialog modal-dialog-lg">
-                <a href="#!" class="modal-close">&times;</a>
-                <h3>이용약관</h3>
-                <div class="modal-content">
-                    <div class="terms_area">
-
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% include "common/banner_bottom.html" %}
+        {% include "common/footer.html" %}
 
     </div>
 
     <script>
-<!--        // hamberger menu-->
-<!--        $('.menu-btn').click(function() {-->
-<!--            $('.line').toggleClass('animate');-->
-<!--        });-->
-<!--        // hamberger menu-->
-<!--        // navigation-->
-<!--        $(document).ready(function() {-->
-<!--            $(".gnbClose, .gnbOpen").on("click", function(){-->
-<!--                $(".gnb").toggleClass("active");-->
-<!--                $(".gnbOpen").toggleClass("gnbClose");-->
-<!--                $("html, body, .wrap").toggleClass("open");-->
-<!--                $('html, body, .wrap').off('scroll touchmove mousewheel');-->
-<!--            });-->
-<!--        });-->
-
         // 수량 더하기
         function up(max) {
             document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) + 1;
@@ -433,9 +223,12 @@
             }
         });
 
+        <!-- templates로 옮기자 쿠키 session 확인을 위해서.-->
+
         function goOrder()
         {
-            if(document.cookie == "")
+
+            if($("input[type=hidden][name=clientId]").val() == "")
             {
                 alert("로그인이 필요합니다.");
                 location.href = "/run_login/";
@@ -443,7 +236,7 @@
             else
             {
                 location.href = "/run_order/";
-            }
+             }
          }
 
     </script>

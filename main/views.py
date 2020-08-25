@@ -8,11 +8,35 @@ from django.db import models
 #RegisterTB 테이블 import 확인하기
 
 def index(request):
+    return render(request, 'main/index_runcoding.html')
+
+def index_page(request):
     return render(request, 'main/index.html')
 
 def register_page(request):
     request.session['result'] = ""
     return render(request, 'login/register.html')
+
+def trashcn_arduino_page(request):
+    return render(request, 'lecture/lecture_view_arduino.html')
+
+def login_page(request):
+    return render(request, 'login/login.html')
+
+def popup_page(request):
+    return render(request, 'popup/popup.html')
+
+# 이후 세션 단계로 관리. fix된 url로 들어왔을 때 막기 위함.
+def order_page(request):
+    session = request.session.get('client_id')
+    print(session)
+
+    response_data = {}
+    response_data['result'] = 'fail'
+    if session is None:
+        return HttpResponse(json.dumps(response_data), content_type="application/json") #render(request, 'login/login.html')
+    else:
+        return render(request, 'payment/order.html') #templete에 없으면 호출이 안됨. ajax
 
 # Create your views here.
 def UserRegister(request):
@@ -28,9 +52,6 @@ def UserRegister(request):
                    regi_add03=request.POST['regi_add03'],regi_pass=password_encrypt.decode('utf-8'))
     q.save()
     return render(request, 'login/login.html') #로그인페이지호출
-
-def login_page(request):
-    return render(request, 'login/login.html')
 
 def login(request):
     response_data = {}
@@ -53,7 +74,7 @@ def login(request):
                 request.session['user_id'] = regi_info.regi_id
                 # 읽을 떄 client_id = request.session.get('client_id')
                 response_data['result'] = 'success'
-                return render(request, 'main/index.html')
+                return render(request, 'main/index_runcoding.html')
             else:
                 response_data['result'] = 'fail'
                 response_data['client_id'] = ''
@@ -63,22 +84,12 @@ def login(request):
 
         #return render(request, 'contact_form.html', {'form': form})
 
-# 이후 세션 단계로 관리. fix된 url로 들어왔을 때 막기 위함.
-def order_page(request):
-    session = request.session.get('client_id')
-    print(session)
 
-    response_data = {}
-    response_data['result'] = 'fail'
-    if session is None:
-        return HttpResponse(json.dumps(response_data), content_type="application/json") #render(request, 'login/login.html')
-    else:
-        return render(request, 'payment/order.html') #templete에 없으면 호출이 안됨. ajax
 
 def logout(request):
     request.session['client_id'] = ''
     request.session['user_id'] = ''
-    return render(request, 'main/index.html')
+    return render(request, 'main/index_runcoding.html')
 
 
 def popup(request):
@@ -96,6 +107,5 @@ def popup(request):
         request.session['result'] = 'ok'
         return render(request, 'popup/popup.html')
 
-def popup_page(request):
-    return render(request, 'popup/popup.html')
+
 
