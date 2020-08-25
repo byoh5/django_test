@@ -26,6 +26,7 @@ SECRET_KEY = 'hllj7=^t0at1n0^$-h4!^uumv*(*7=tu_pi+oyzyc0gw4!!6&='
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+STATIC_ROOT = '/static/files/path/'
 
 
 # Application definition
