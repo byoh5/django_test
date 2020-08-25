@@ -56,6 +56,7 @@
                                 <span>아이디</span>
                                 <div class="input_area">
                                     <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요."/>
+                                    <input type="hidden" id="result" name="result" value={{ request.session.result }}>
                                     <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
                                 </div>
                             </li>
@@ -399,50 +400,23 @@
         });
     });
 
+    var popup_window;
     function regi_checkId()
     {
         var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
         var id = document.getElementById('regi_id');
+        chkId = 1;
 
         if(!id_pass_patten.test(id.value))
         {
             alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+            chkId = 0;
             id.focus();
             return false;
         }
         else
         {
-            alert("개발중");
-<!--           var formData = $("#register_form").serialize();-->
-
-<!--            $.ajax({-->
-<!--                cache:false,-->
-<!--                url : "http://54.180.116.142:8000/idChecker/",-->
-<!--                type : "POST",-->
-<!--                data : formData,-->
-<!--                success : function(data)-->
-<!--                {-->
-<!--                    if(data.result == "exist")-->
-<!--                    {-->
-<!--                        alert("사용할 수 없는 ID 입니다.");-->
-<!--                        id.value = "";-->
-<!--                        id.focus();-->
-<!--                        return false;-->
-<!--                    }-->
-<!--                    else-->
-<!--                    {-->
-<!--                        alert("사용해도 되는 ID 입니다.");-->
-<!--                        chkId = 1;-->
-<!--                    }-->
-
-<!--                }, // success-->
-
-<!--                exist : function(xhr, status)-->
-<!--                {-->
-<!--                    alert("사용할 수 없는 ID 입니다.");-->
-<!--                    return false;-->
-<!--                }-->
-<!--            }); // $.ajax */-->
+            popup_window = window.open("/run_popup/", "check id", "width=500,height=200,top=300,left=500");
         }
     }
 
@@ -472,11 +446,18 @@
         }
         else
         {
-<!--            if(!chkId)-->
-<!--            {-->
-<!--                alert("중복체크 해주세요.");-->
-<!--                return false;-->
-<!--            }-->
+            if(!chkId)
+            {
+                alert("아이디 중복체크 해주세요.");
+                return false;
+            }
+
+            var remote_result = document.getElementById("result").value;
+            if(remote_result == "" || remote_result.length > 2)
+            {
+                alert("아이디 중복체크 해주세요.");
+                return false;
+            }
 
             if(!id_pass_patten.test(id.value))
             {

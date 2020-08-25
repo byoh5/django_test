@@ -4,12 +4,14 @@ import bcrypt
 
 import json
 from django.http import HttpResponse
-
+from django.db import models
+#RegisterTB 테이블 import 확인하기
 
 def index(request):
-    return render(request, 'main/index_runcoding.html')
+    return render(request, 'main/index.html')
 
 def register_page(request):
+    request.session['result'] = ""
     return render(request, 'login/register.html')
 
 # Create your views here.
@@ -26,19 +28,6 @@ def UserRegister(request):
                    regi_add03=request.POST['regi_add03'],regi_pass=password_encrypt.decode('utf-8'))
     q.save()
     return render(request, 'login/login.html') #로그인페이지호출
-
-def idChecker(request):
-    response_data = {}
-
-    try:
-        RegisterTB.objects.get(regi_id=request.POST['regi_id'])
-        print("Exist.....")
-        response_data['result'] = 'exist'
-    except:
-        print("DoesNotExist.....")
-        response_data['result'] = 'success'
-
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def login_page(request):
     return render(request, 'login/login.html')
@@ -64,7 +53,7 @@ def login(request):
                 request.session['user_id'] = regi_info.regi_id
                 # 읽을 떄 client_id = request.session.get('client_id')
                 response_data['result'] = 'success'
-                return render(request, 'main/index_runcoding.html')
+                return render(request, 'main/index.html')
             else:
                 response_data['result'] = 'fail'
                 response_data['client_id'] = ''
@@ -73,8 +62,6 @@ def login(request):
         #return HttpResponse(json.dumps(response_data), content_type="application/json")
 
         #return render(request, 'contact_form.html', {'form': form})
-
-
 
 # 이후 세션 단계로 관리. fix된 url로 들어왔을 때 막기 위함.
 def order_page(request):
@@ -91,4 +78,24 @@ def order_page(request):
 def logout(request):
     request.session['client_id'] = ''
     request.session['user_id'] = ''
-    return render(request, 'main/index_runcoding.html')
+    return render(request, 'main/index.html')
+
+
+def popup(request):
+    print("come popup")
+
+    print(request.POST['popup_regiId']);
+
+    try:
+        RegisterTB.objects.get(regi_id=request.POST['popup_regiId'])
+        print("Exist.....")
+        request.session['result'] = 'exist'
+        return render(request, 'popup/popup.html')
+    except:
+        print("DoesNotExist.....")
+        request.session['result'] = 'ok'
+        return render(request, 'popup/popup.html')
+
+def popup_page(request):
+    return render(request, 'popup/popup.html')
+
