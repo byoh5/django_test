@@ -14,13 +14,14 @@ def index_page(request):
     return render(request, 'main/index.html')
 
 def register_page(request):
-    request.session['result'] = ""
+    request.session['IDresult'] = ""
     return render(request, 'login/register.html')
 
 def login_page(request):
     return render(request, 'login/login.html')
 
 def popup_page(request):
+    request.session['IDresult'] = ""
     return render(request, 'popup/popup.html')
 
 def class_page(request):
@@ -52,6 +53,7 @@ def order_page(request):
         return render(request, 'payment/order.html') #templete에 없으면 호출이 안됨. ajax
 
 # Create your views here.
+# id로 검색해서 없으면 진행...있으면 에러리턴.
 def UserRegister(request):
 
     password = request.POST['regi_pass']
