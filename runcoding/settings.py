@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 STATIC_ROOT = '/static/files/path/'
-
+DATETIME_FORMAT = 'Y-m-d H:i:s'
 
 # Application definition
 

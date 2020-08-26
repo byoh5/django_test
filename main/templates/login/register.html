@@ -22,7 +22,6 @@
                                 <span>아이디</span>
                                 <div class="input_area">
                                     <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요."/>
-                                    <input type="hidden" id="result" name="result" value={{ request.session.IDresult }}>
                                     <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
                                 </div>
                             </li>
@@ -173,6 +172,7 @@
                 return false;
             }
 
+<!-- 서버에서 진행 안됨... 중복체크 후 다시 id를 변경한다면 중복체크를 어떻게 확인할 수 있을 까 -->
 <!--            var remote_result = document.getElementById("result").value;-->
 <!--            alert(remote_result);-->
 <!--            if(remote_result == "" || remote_result.length > 2)-->
