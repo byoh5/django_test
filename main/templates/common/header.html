@@ -1,5 +1,6 @@
 {% load static %}
 {% include "common/head.html" %}
+<input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
 <header>
     <script>
     // F12 버튼 방지
@@ -10,6 +11,17 @@
                 e.returnValue = false;
             }
         });
+
+        if($("input[type=hidden][name=clientId]").val() != "")
+        {
+            $("#logout").show();
+            $("#login").hide();
+        }
+        else
+        {
+            $("#logout").hide();
+            $("#login").show();
+        }
     });
 
     // 우측 클릭 방지
@@ -65,7 +77,12 @@
                         <a href="orderList.html">주문내역</a>
                     </li>
                     <li>
-                        <a href="/run_logout/">로그아웃</a>
+                        <div id="logout" >
+                            <a href="/run_logout/">로그아웃</a>
+                        </div>
+                        <div id="login">
+                            <a href="/run_login/">로그인</a>
+                        </div>
                     </li>
                 </ul>
             </div>

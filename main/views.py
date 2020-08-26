@@ -104,6 +104,7 @@ def login(request):
             if (check_pass): # 비밀번호가 맞으면 login table에 저장
                 session_auth = bcrypt.hashpw(regi_id.encode('utf-8'), bcrypt.gensalt())
                 session = session_auth.decode('utf-8')
+                delete_login(loginId)
 
                 q = LoginTB(user_id=loginId, session_id=session, login_time=datetime.now())
                 q.save()
@@ -124,16 +125,20 @@ def login(request):
             request.session['client_id'] = ''
             return render(request, 'login/login.html')  #가입자가 아닙니다.
 
-def logout(request):
-    user_id = request.session.get('user_id')
+def delete_login(user_id):
     login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
     print(user_id)
     print(login_info.count())
-    
+
     if login_info.count() is not 0:
-        login_info[0].dbstat = 'D-'
-        login_info[0].logout_time = datetime.now()
-        login_info[0].save()
+        new_login = login_info[0]
+        new_login.dbstat = 'D-'
+        new_login.logout_time = datetime.now()
+        new_login.save()
+
+def logout(request):
+    user_id = request.session.get('user_id')
+    delete_login(user_id)
 
     request.session['client_id'] = ''
     request.session['user_id'] = ''
