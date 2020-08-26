@@ -127,8 +127,6 @@ def login(request):
 
 def delete_login(user_id):
     login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
-    print(user_id)
-    print(login_info.count())
 
     if login_info.count() is not 0:
         new_login = login_info[0]
@@ -138,7 +136,8 @@ def delete_login(user_id):
 
 def logout(request):
     user_id = request.session.get('user_id')
-    delete_login(user_id)
+    if user_id is not None:
+        delete_login(user_id)
 
     request.session['client_id'] = ''
     request.session['user_id'] = ''
