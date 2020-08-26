@@ -3,12 +3,15 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 
 .wrap {
 	display:flex;
+
 	flex-wrap:wrap;
-	justify-content:center;
-	align-items:center;
 	min-width:1024px;
 	background:url(../img/common/bg_login.jpg) no-repeat center;
 	background-size:cover;
+	align-items: center;
+	vertical-align: middle;
+
+	margin-top:50px;
 }
 
 .loginBox {
