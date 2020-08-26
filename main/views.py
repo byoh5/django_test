@@ -41,6 +41,15 @@ def myclass_list_page(request):
 def myclass_page(request):
     return render(request, 'myclass/myclass.html')
 
+def comunity_page(request):
+    return render(request, 'comunity/coding_comunity.html')
+
+def lounge_page(request):
+    return render(request, 'lounge/coding_lounge.html')
+
+def loungeView_page(request):
+    return render(request, 'lounge/coding_lounge_view.html')
+
 # 이후 세션 단계로 관리. fix된 url로 들어왔을 때 막기 위함.
 def order_page(request):
     session = request.session.get('client_id')
@@ -54,6 +63,28 @@ def order_page(request):
         return render(request, 'lecture/lecture_view_arduino.html')
     else:
         return render(request, 'payment/order.html') #templete에 없으면 호출이 안됨. ajax
+
+def order(request):
+    user_id = request.session.get('user_id')
+    session = request.session.get('client_id')
+
+    login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
+    session_id = login_info[0].session_id
+
+    # 에러남 수정해야됨
+    # check_session = bcrypt.checkpw(session.encode('utf-8'), session_id.encode('utf-8'))
+    # print(check_session)  # true/false
+    #
+    # if not check_session:
+    #     return render(request, 'login/login.html')
+    # else:
+
+    # order table에 저장하고 싶은데...resturn 메세지가 있어야 할듯.
+    prd_code = request.POST['prd_code']
+    order = OrderTB(user_id=user_id, prd_code=prd_code,
+                   order_time=datetime.now())
+
+    order.save()
 
 # Create your views here.
 # id로 검색해서 없으면 진행...있으면 에러리턴.
