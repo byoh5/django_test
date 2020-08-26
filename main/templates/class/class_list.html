@@ -1,5 +1,5 @@
-{% load static %}
 {% include "common/header.html" %}
+{% load static %}
 
 <div class="wrap">
 <!-- sub visual -->
@@ -50,7 +50,7 @@
             </li>
              <li class="list01">
                 <a href="/trashcan_mblock/">
-                    <img src="{% static 'resourc/img/Trashcan/trashcan_main.jpg' %}" alt="코딩키트 썸네일">
+                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="코딩키트 썸네일">
                     <div class="text_area">
                                 <span>
                                     <small class="type">엠블럭</small>
@@ -105,12 +105,13 @@
 
     $(window).scroll(function() {
         var scroll_top = $(window).scrollTop();
-        if (scroll_top >= $(".lecture_list").outerHeight() + 100) {
+        if (scroll_top >= $(".class_list").outerHeight() + 100) {
             $(".scr").addClass("end");
         } else {
             $(".scr").removeClass("end");
         }
     });
+
 </script>
 {% include "common/banner_bottom.html" %}
 {% include "common/footer.html" %}
