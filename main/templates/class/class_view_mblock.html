@@ -179,6 +179,10 @@
                             <ul>
                                 <li>
                                     <span class="li_title">판매가</span>
+                                    <form id="prd_form" method="post" action="/run_order/">
+                                        {% csrf_token %}
+                                        <input type="hidden" id="prd_code" name="prd_code" value="mAt"> <!--arduino-AI-trashcan -->
+                                     </form>
                                     <p><span class="price">45,000</span> won</p>
                                 </li>
                                 <li>
