@@ -33,6 +33,7 @@ class PrdTB(models.Model):
     price = models.IntegerField(null=True)
     option = models.CharField(max_length=50)
     goal = models.CharField(max_length=150)
+    url = models.CharField(max_length=50, default = '')
     dbstat = models.CharField(max_length=50, default='A')
 
 class ItemTB(models.Model): #curriculum

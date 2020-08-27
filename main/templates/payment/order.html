@@ -60,21 +60,22 @@
                                             </tr>
                                             </thead>
                                           <tbody class="order-option">
+                                          {% for orderDetail in order_detail %}
                                             <tr>
                                                 <td>
-                                                    <input type="hidden" name="adultpro[]" value="0">
-                                                    <input type="checkbox" name="idxs[]" value="0" checked onClick="javascript:check();">
+                                                    <input type="hidden" name="adultpro[]" value={{orderDetail.order_idx}}>
+                                                    <input type="checkbox" name="idxs[]" value={{orderDetail.order_idx}} checked onClick="javascript:check();">
                                                 </td>
                                                 <td>
                                                      <div class="pull-left">
-                                                           <a href="{% static 'lecture/lecture_view_arduino.html' %}">
-                                                               <img class="width-120px border-radius" src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
+                                                           <a href='{{orderDetail.prd.urls}}'>
+                                                               <img class="width-120px border-radius" src={{orderDetail.prd.img}} onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
                                                            </a>
                                                      </div>
                                                 </td>
                                                 <td>
                                                      <div class="pull-left">
-                                                         <span>[아두이노 + AI] 스마트 휴지통</span>
+                                                         <span>{{orderDetail.prd.title}}</span>
                                                      </div>
                                                 </td>
                                                 <td>
@@ -97,7 +98,7 @@
                                                 </td>
                                                 <td >
                                                     <div id="prd_price_0" style="float:left; margin-left:20px;">
-                                                        <strong>45000</strong>
+                                                        <strong>{{orderDetail.prd.price}}</strong>
                                                      </div>
                                                     <div style="float:left;">
                                                         <strong>원</strong>
@@ -115,86 +116,18 @@
                                                     </span>
                                                 </td>
                                                 <td>
-                                                   <strong>기본 배송</strong>
+                                                   <strong>{{orderDetail.delivery}}</strong>
                                                 </td>
                                                 <td>
                                                    <div id="prd_option_price_0" style="float:left;">
-                                                        <strong>3,000</strong>
+                                                        <strong>{{orderDetail.delivery_price}}</strong>
                                                      </div>
                                                     <div style="float:left;">
                                                         <strong>원</strong>
                                                      </div>
                                                 </td>
                                             </tr>
-
-                                            <!-- second -->
-
-                                            <tr>
-                                                <td>
-                                                    <input type="hidden" name="adultpro[]" value="0">
-                                                    <input type="checkbox" name="idxs[]" value="1" checked onClick="javascript:check();">
-                                                </td>
-                                                <td>
-                                                     <div class="pull-left">
-                                                           <a href="{% static 'lecture/lecture_view_arduino.html' %}">
-                                                               <img class="width-120px border-radius" src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
-                                                           </a>
-                                                     </div>
-                                                </td>
-                                                <td>
-                                                     <div class="pull-left">
-                                                         <span>[아두이노 + AI] 스마트 휴지통</span>
-                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div id="prdModify">
-                                                        <li>
-                                                            <span>&nbsp;</span>
-                                                            <select name="arduino" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                                <option value="">------필수옵션-------</option>
-                                                                <option value="1">아두이노 우노</option>
-                                                            </select>
-                                                        </li>
-                                                         <li>
-                                                            <span>&nbsp;</span>
-                                                            <select name="runningCam" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                                <option value="">------필수옵션-------</option>
-                                                                <option value="2">러닝캠</option>
-                                                            </select>
-                                                        </li>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div id="prd_price_1" style="float:left; margin-left:20px;">
-                                                        <strong>45000</strong>
-                                                    </div>
-                                                    <div style="float:left;">
-                                                        <strong>원</strong>
-                                                    </div>
-                                                </td>
-                                                <td class="quantity_td">
-                                                   <span class="quantity">
-                                                        <input id="prodQuantity_1" size="2" value="1" type="text">
-                                                        <a href="javascript:up('10', '1')" style="color: #000;">
-                                                            <img src="{% static 'resource/img/sub/btn_quantity_up.gif' %}" alt="증가" class="QuantityUp">
-                                                        </a>
-                                                        <a href="javascript:down('1', '1')" style="color: #000;">
-                                                            <img src="{% static 'resource/img/sub/btn_quantity_down.gif' %}" alt="감소" class="QuantityDown">
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                   <strong>기본 배송</strong>
-                                                </td>
-                                                <td>
-                                                    <div id="prd_option_price_1" style="float:left;">
-                                                         <strong>3,000</strong>
-                                                    </div>
-                                                     <div style="float:left;">
-                                                        <strong>원</strong>
-                                                     </div>
-                                                </td>
-                                            </tr>
+                                          {% endfor %}
                                           </tbody>
                                       </table>
                                  </div>

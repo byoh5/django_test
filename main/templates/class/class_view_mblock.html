@@ -1,6 +1,7 @@
-{% load static %}
 {% include "common/header.html" %}
+{% load static %}
 
+<input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
     <div class="wrap">
         <!-- sub visual -->
         <section class="sub_visual">
@@ -189,10 +190,6 @@
                                     <span class="li_title">소프트웨어</span>
                                     <p>아두이노, 엠블럭, 러닝봇</p>
                                 </li>
-<!--                                <li>-->
-<!--                                    <span class="li_title">강의 구성</span>-->
-<!--                                    <p>5개 섹션 (총 22개 유닛)</p>-->
-<!--                                </li>-->
                                 <li>
                                     <span class="li_title">학습 목표</span>
                                     <p>엠블럭 환경구축, 활용<br> 인공지능 </p>
@@ -201,27 +198,14 @@
                                     <span class="li_title">학습 기간</span>
                                     <p>3개월</p>
                                 </li>
-                                <li>
-                                    <span class="li_title">수량</span>
-                                    <div class="count_num">
-                                        <button id="down" class="btn minus" onclick=" down('1')">
-                                            <img src="{% static 'resource/img/sub/ico_priceDown.png' %}" alt="down">
-                                        </button>
-
-                                        <input type="text" id="prodQuantity" class="input quantity" value="1" />
-
-                                        <button id="up" class="btn plus" onclick="up('10')">
-                                            <img src="{% static 'resource/img/sub/ico_priceUp.png' %}" alt="up">
-                                        </button>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="btn_area">
-                        <a class="btn cart" href="/run_order/">장바구니</a>
-                        <a class="btn buy" href="#">바로구매</a>
+                       <a href="#" class="btn cart" onClick="javascript:goOrder();">장바구니</a>
+                        <a class="btn buy" href="/order/">바로구매</a>
                     </div>
+                     <input type="hidden" name="message" value="{{message}}" readonly>
                 </div>
             </div>
         </div>
@@ -231,19 +215,6 @@
     </div>
 
     <script>
-        // 수량 더하기
-        function up(max) {
-            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) + 1;
-            if (document.getElementById("prodQuantity").value >= parseInt(max)) {
-                document.getElementById("prodQuantity").value = max;
-            }
-        }
-        function down(min) {
-            document.getElementById("prodQuantity").value = parseInt(document.getElementById("prodQuantity").value) - 1;
-            if (document.getElementById("prodQuantity").value <= parseInt(min)) {
-                document.getElementById("prodQuantity").value = min;
-            }
-        }
 
         $(window).scroll(function() {
             var scroll_top = $(window).scrollTop();
@@ -262,6 +233,28 @@
                 $(".scr").removeClass("end");
             }
         });
+
+         function goOrder()
+        {
+            alert("test");
+            if($("input[type=hidden][name=clientId]").val() == "")
+            {
+                alert("로그인이 필요합니다.");
+                location.href = "/run_login/";
+            }
+            else
+            {
+                document.getElementById("prd_form").submit();
+             }
+         }
+
+          $(document).ready(function() {
+          var msg = $("input[type=hidden][name=message]").val();
+            if (msg == 1)
+            {
+                alert("장바구니에 담겼습니다.")
+            }
+            });
     </script>
 
 </body>

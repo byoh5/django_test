@@ -81,6 +81,7 @@ def order(request):
     session_id = login_info[0].session_id
     messages = 0;
 
+    print(user_id)
     # 에러남 수정해야됨
     # check_session = bcrypt.checkpw(session.encode('utf-8'), session_id.encode('utf-8'))
     # print(check_session)  # true/false
@@ -94,7 +95,7 @@ def order(request):
     if login_info.count() is not 0:
         prd_code = request.POST['prd_code']
         order_prd_info = select_order_prdCode(user_id, prd_code)
-
+        print(order_prd_info.count())
         if order_prd_info.count() is not 0:
             update_order_prdCode(order_prd_info)
             messages = 1;  # 성공
