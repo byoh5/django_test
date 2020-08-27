@@ -64,7 +64,7 @@
                                             <tr>
                                                 <td>
                                                     <input type="hidden" name="adultpro[]" value={{orderDetail.order_idx}}>
-                                                    <input type="checkbox" name="idxs[]" value={{orderDetail.order_idx}} checked onClick="javascript:check();">
+                                                    <input type="checkbox" name="idxs[]" value={{forloop.counter0}} checked onClick="javascript:check();">
                                                 </td>
                                                 <td>
                                                      <div class="pull-left">
@@ -97,7 +97,7 @@
                                                     </div>
                                                 </td>
                                                 <td >
-                                                    <div id="prd_price_0" style="float:left; margin-left:20px;">
+                                                    <div id="prd_price_{{forloop.counter0}}" style="float:left; margin-left:20px;">
                                                         <strong>{{orderDetail.prd.price}}</strong>
                                                      </div>
                                                     <div style="float:left;">
@@ -106,11 +106,11 @@
                                                 </td>
                                                 <td class="quantity_td" >
                                                     <span class="quantity">
-                                                        <input type="text" id="prodQuantity_0" class="input quantity" value="1"/>
-                                                        <a href="javascript:up('10', '0')" style="color: #000;">
+                                                        <input type="text" id="prodQuantity_{{forloop.counter0}}" class="input quantity" value={{orderDetail.count}} >
+                                                        <a href="javascript:up('10','{{forloop.counter0}}')" style="color: #000;">
                                                             <img src="{% static 'resource/img/sub/btn_quantity_up.gif' %}" alt="증가" class="QuantityUp">
                                                         </a>
-                                                        <a href="javascript:down('1', '0')" style="color: #000;">
+                                                        <a href="javascript:down('1', '{{forloop.counter0}}')" style="color: #000;">
                                                             <img src="{% static 'resource/img/sub/btn_quantity_down.gif' %}" alt="감소" class="QuantityDown">
                                                         </a>
                                                     </span>
@@ -119,8 +119,12 @@
                                                    <strong>{{orderDetail.delivery}}</strong>
                                                 </td>
                                                 <td>
-                                                   <div id="prd_option_price_0" style="float:left;">
+                                                   <div id="prd_option_price_{{forloop.counter0}}" style="float:left;">
+                                                        {% if forloop.counter0 == 0 %}
                                                         <strong>{{orderDetail.delivery_price}}</strong>
+                                                        {% else %}
+                                                        <strong>0</strong>
+                                                        {%endif%}
                                                      </div>
                                                     <div style="float:left;">
                                                         <strong>원</strong>
@@ -266,7 +270,10 @@
                     </tr>
 
                   </div>
-                <div class="btn-center"><a href="#" class="btn order_complete">주문하기</a></div>
+                <div class="btn-center">
+<!--                    <a href="#" class="btn order_save">저장하기</a> 논의 후 개발-->
+                    <a href="#" class="btn order_complete">주문하기</a>
+                </div>
         </div>
     </div>
 </div>
@@ -288,25 +295,9 @@
             }
             else
             {
-                modify_option_price();
+                total_count();
              }
          });
-
-       function modify_option_price()
-       {
-            var chks = document.getElementsByName('idxs[]');
-            if(chks.length > 1)
-            {
-                for (var i=1,m=chks.length;i<=m ;i++)
-                {
-                    var option_name = "prd_option_price_"+i
-                    if (chks[i].checked == true)
-                    {
-                        document.getElementById(option_name).innerHTML = "<strong>" + 0 + "</<strong>";
-                    }
-                }
-             }
-       }
 
         // 수량 더하기
         function up(max, id) {
@@ -342,8 +333,6 @@
             var prd_option_name;
             var total_summary_price = 0;
 
-            var first = 0;
-
             for (var i=0,m=chks.length;i<m ;i++)
             {
                 prd_price_name = "prd_price_" + i;
@@ -353,19 +342,11 @@
 				if (chks[i].checked == true)
 				{
 				    // 여러 상품 중 하나만 배송비 표시하기 위한 변수
-				    first += 1;
-
-				    if(first == 1)
-				        document.getElementById(prd_option_name).innerHTML = "<strong>" + 3000 + "</<strong>";
-				    else
-				        document.getElementById(prd_option_name).innerHTML = "<strong>" + 0 + "</<strong>";
-
 				    prd_price = document.getElementById(prd_price_name).innerText;
 				    count = document.getElementById(quantity_name).value;
                     prd_total_price =  parseInt(prd_price) * count;
 
                     total_summary_price += prd_total_price;
-
 				}
 				else
 				    document.getElementById(prd_option_name).innerHTML = "<strong>" + 0 + "</<strong>";
