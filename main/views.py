@@ -76,7 +76,7 @@ def order(request):
 
     login_info= select_login(user_id)
     session_id = login_info[0].session_id
-    messages = 0;
+    messages = 0
 
     print(user_id)
     # 에러남 수정해야됨
@@ -95,18 +95,18 @@ def order(request):
         print(order_prd_info.count())
         if order_prd_info.count() is not 0:
             update_order_prdCode(order_prd_info)
-            messages = 1;  # 성공
+            messages = 1  # 성공
         else:
             prd_info = select_prd(prd_code)
             order = OrderTB(user_id=user_id, prd_code=prd_code, prd=prd_info[0],
                            order_time=datetime.now())
             order.save()
-            messages = 1; #성공
+            messages = 1 #성공
 
-        context = {
-            "message": messages,
-        }
-        return render(request,'class/class_view_arduino.html', context)
+    context = {
+        "message": messages,
+    }
+    return render(request,'class/class_view_arduino.html', context)
 
     # Create your views here.
 # id로 검색해서 없으면 진행...있으면 에러리턴.
