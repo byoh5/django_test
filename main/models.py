@@ -51,3 +51,14 @@ class OrderTB(models.Model):
     delivery = models.CharField(max_length=50, default='기본배송')
     delivery_price = models.IntegerField(default='3000')
     order_time = models.DateTimeField(null=True)
+    dbstat = models.CharField(max_length=50, default='A')
+
+class PayTB(models.Model):
+    pay_idx = models.AutoField(primary_key=True)
+    user_id = models.CharField(max_length=50)
+    pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
+    order_id = models.CharField(max_length=50, default='') #order_idx
+    prd_price = models.IntegerField(default='0')
+    delivery_price = models.IntegerField(default='0')
+    pay_result = models.IntegerField(default='100') # 0: 성공 1: 실패
+

@@ -241,9 +241,21 @@
                                      <div class="panel panel-default border-radius-none margin-top-30">
                                           <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
                                           <div class="panel-body">
+                                              {% for userDetail in user_detail %}
                                                <div class="row">
-                                                   <div class="col-xs-7 padding-right-30 border-dashed-right"></div>
+                                                   <div class="col-xs-7 padding-right-30 ">
+                                                       {{userDetail.regi_name}}
+                                                   </div>
+                                                   <div class="col-xs-7 padding-right-30 ">
+                                                       {{userDetail.regi_phone}}
+                                                   </div>
+                                                   <div class="col-xs-7 padding-right-30 ">
+                                                       {{userDetail.regi_add01}}
+                                                       {{userDetail.regi_add02}}
+                                                       {{userDetail.regi_add03}}
+                                                   </div>
                                                </div>
+                                              {%endfor%}
                                           </div>
                                      </div>
                                 </div>

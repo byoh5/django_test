@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
-from django.utils import timezone
 from main.models import *
 from main.query import *
 from datetime import datetime
-from django.contrib import messages
 import bcrypt
 
 import json
@@ -65,11 +62,11 @@ def order_page(request):
         return render(request, 'login/login.html')
     else:
         order_info = select_order(userid)
+        user_info = select_register(userid)
         context = {
             "order_detail": order_info,
+            "user_detail": user_info,
         }
-
-        print(order_info[0].prd.title)
 
         return render(request, 'payment/order.html', context) #templete에 없으면 호출이 안됨. ajax
 

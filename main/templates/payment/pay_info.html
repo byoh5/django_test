@@ -1,5 +1,6 @@
-{% load static %}
+
 {% include "common/header.html" %}
+{% load static %}
 
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <div class="wrap">
@@ -11,7 +12,7 @@
                     </span>
 
                 </div>
-                <img class="subVisual codingKit" src="../resource/img/sub/sv_codingKit.png" alt="코딩키트">
+                <img class="subVisual codingKit" src="{% static 'resource/img/sub/sv_codingKit.png' %}" alt="코딩키트">
             </div>
         </section>
 <script>
