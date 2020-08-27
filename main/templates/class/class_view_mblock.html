@@ -202,8 +202,8 @@
                         </div>
                     </div>
                     <div class="btn_area">
-                       <a href="#" class="btn cart" onClick="javascript:goOrder();">장바구니</a>
-                        <a class="btn buy" href="/order/">바로구매</a>
+                       <a href="#" class="btn cart" onClick="javascript:goOrder(1);">장바구니</a>
+                        <a class="btn buy" href="#" onClick="javascript:goOrder(2);">바로구매</a>
                     </div>
                      <input type="hidden" name="message" value="{{message}}" readonly>
                 </div>
@@ -234,7 +234,7 @@
             }
         });
 
-         function goOrder()
+         function goOrder(flag)
         {
             alert("test");
             if($("input[type=hidden][name=clientId]").val() == "")
@@ -244,7 +244,10 @@
             }
             else
             {
-                document.getElementById("prd_form").submit();
+                if(flag == 1)
+                    document.getElementById("prd_form").submit();
+                if(flag == 2)
+                    location.href = "/order/"
              }
          }
 
