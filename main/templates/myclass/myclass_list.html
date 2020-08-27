@@ -1,6 +1,6 @@
 {% load static %}
 {% include "common/header.html" %}
-
+<input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
     <div class="wrap">
         <!-- sub visual -->
         <section class="sub_visual">
@@ -28,7 +28,7 @@
                         <span class="title">[아두이노 + AI] 스마트 휴지통</span>
                         <p class="writer">런코딩</p>
                         <p class="date">2020.06.30</p>
-                        <a href="myclass.html" class="btn brd_detail">강의 보기</a>
+                        <a href="/myclass/" class="btn brd_detail">강의 보기</a>
                     </div>
                 </li>
             </ul>
@@ -47,11 +47,14 @@
         {% include "common/footer.html" %}
 
     <script>
-    $(document).ready(function() {
-        alert("로그인 시킬라고 강제 이동합니다. 개발중..");
+        $(document).ready(function() {
+            if($("input[type=hidden][name=clientId]").val() == "")
+            {
+                alert("로그인이 필요합니다.");
+                location.href = "/run_login/";
+            }
+         });
 
-            location.href = "/run_login/";
-        });
     </script>
 
 </body>

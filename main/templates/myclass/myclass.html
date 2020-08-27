@@ -1,6 +1,6 @@
 {% load static %}
 {% include "common/header.html" %}
-
+<input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
     <div class="wrap">
         <!-- sub visual -->
         <section class="sub_visual">
@@ -57,10 +57,10 @@
 
                         </div>
                     </div>
-                    <div class="btn_area">
-                        <a href="#" class="btn cart">나의 강의실로</a>
-                        <a class="btn buy">다음 강의</a>
-                    </div>
+<!--                    <div class="btn_area">-->
+<!--                        <a href="#" class="btn cart">나의 강의실로</a>-->
+<!--                        <a class="btn buy">다음 강의</a>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -72,10 +72,13 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-                alert("개발중.. 회원가입하고 쓰시오");
+       $(document).ready(function() {
+            if($("input[type=hidden][name=clientId]").val() == "")
+            {
+                alert("로그인이 필요합니다.");
                 location.href = "/run_login/";
-        });
+            }
+         });
 
         // 수량 더하기
         function up(max) {
