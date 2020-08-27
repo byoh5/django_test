@@ -44,7 +44,8 @@ class ItemTB(models.Model): #curriculum
 class OrderTB(models.Model):
     order_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50, default = '') #LoginTB.euser_id
-    prd_code =  models.CharField(max_length=50, default = '') #prdTB.prd_code
+    prd_code = models.CharField(max_length=50, default = '') #prdTB.prd_code
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True)
     count = models.IntegerField(default='1')
     delivery = models.CharField(max_length=50, default='기본배송')
     delivery_price = models.IntegerField(default='3000')

@@ -23,7 +23,7 @@ urlpatterns = [
     path('run_popup/', popup_page),
     path('class/', class_page),
     path('myclass/', myclass_page),
-    path('run_order/', order_page),
+    path('order/', order_page),
     path('comunity/', comunity_page),
     path('lounge/', lounge_page),
     path('lounge_view/', loungeView_page),
@@ -34,6 +34,7 @@ urlpatterns = [
     path('login_form/', login),
     path('run_logout/', logout),
     path('popup/', popup),
+    path('run_order/', order),
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
 ]

@@ -23,12 +23,12 @@
              {
                  alert("사용할 수 없는 ID 입니다.");
                  opener.document.getElementById("regi_id").value = "";
-                 close();
+                 window.child.close();
              }
              else
              {
                  alert("사용할 수 있는 ID 입니다.");
-                 close();
+                 window.child.close();
              }
         }
     });

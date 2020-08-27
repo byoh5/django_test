@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.utils import timezone
 from main.models import *
+from main.query import *
 from datetime import datetime
+from django.contrib import messages
 import bcrypt
 
 import json
@@ -51,25 +54,32 @@ def loungeView_page(request):
     return render(request, 'lounge/coding_lounge_view.html')
 
 # 이후 세션 단계로 관리. fix된 url로 들어왔을 때 막기 위함.
+
+
 def order_page(request):
     session = request.session.get('client_id')
     userid = request.session.get('user_id') #이 값으로 디비에서 정보찾고..
     print(session)
 
-
-    #구매하는 제품 form의 title # 이값으로 prd_table 뒤져서 가겨계산하고... order table에 insert
-
     if session is None:
-        return render(request, 'lecture/lecture_view_arduino.html')
+        return render(request, 'login/login.html')
     else:
-        return render(request, 'payment/order.html') #templete에 없으면 호출이 안됨. ajax
+        order_info = select_order(userid)
+        context = {
+            "order_detail": order_info,
+        }
+
+        print(order_info[0].prd.title)
+
+        return render(request, 'payment/order.html', context) #templete에 없으면 호출이 안됨. ajax
 
 def order(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
 
-    login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
+    login_info= select_login(user_id)
     session_id = login_info[0].session_id
+    messages = 0;
 
     # 에러남 수정해야됨
     # check_session = bcrypt.checkpw(session.encode('utf-8'), session_id.encode('utf-8'))
@@ -80,16 +90,31 @@ def order(request):
     # else:
 
     # order table에 저장하고 싶은데...resturn 메세지가 있어야 할듯.
-    prd_code = request.POST['prd_code']
-    order = OrderTB(user_id=user_id, prd_code=prd_code,
-                   order_time=datetime.now())
 
-    order.save()
+    if login_info.count() is not 0:
+        prd_code = request.POST['prd_code']
+        order_prd_info = select_order_prdCode(user_id, prd_code)
 
-# Create your views here.
+        if order_prd_info.count() is not 0:
+            update_order_prdCode(order_prd_info)
+            messages = 1;  # 성공
+        else:
+            prd_info = select_prd(prd_code)
+            order = OrderTB(user_id=user_id, prd_code=prd_code, prd=prd_info[0],
+                           order_time=datetime.now())
+            order.save()
+            messages = 1; #성공
+
+        context = {
+            "message": messages,
+        }
+        return render(request,'class/class_view_arduino.html', context)
+
+    # Create your views here.
 # id로 검색해서 없으면 진행...있으면 에러리턴.
 def UserRegister(request):
-    regi_info = RegisterTB.objects.filter(regi_id=request.POST['regi_id'], dbstat='A') # 회원가입 요청한 ID 가입자 아님을 더블체크
+    regi_id = request.POST['regi_id']
+    regi_info = select_register(regi_id) # 회원가입 요청한 ID 가입자 아님을 더블체크
 
     if regi_info.count() is 0:
         password = request.POST['regi_pass']
@@ -97,7 +122,7 @@ def UserRegister(request):
     
         print(password_encrypt);
     
-        q = RegisterTB(regi_id=request.POST['regi_id'], regi_name=request.POST['regi_name'],
+        q = RegisterTB(regi_id=regi_id, regi_name=request.POST['regi_name'],
                        regi_phone=request.POST['regi_phone'],regi_email=request.POST['regi_email'],
                        regi_add01=request.POST['regi_add01'],regi_add02=request.POST['regi_add02'],
                        regi_add03=request.POST['regi_add03'],regi_pass=password_encrypt.decode('utf-8'),
@@ -116,7 +141,7 @@ def UserRegister(request):
 def login(request):
     if request.method == "POST":
         loginId = request.POST['login_id']
-        regi_info = RegisterTB.objects.filter(regi_id=loginId, dbstat='A')
+        regi_info = select_register(loginId)
 
         #debug용 - 지우지 마시오
         #print(regi_info.count())
@@ -156,14 +181,7 @@ def login(request):
             request.session['client_id'] = ''
             return render(request, 'login/login.html')  #가입자가 아닙니다.
 
-def delete_login(user_id):
-    login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
 
-    if login_info.count() is not 0:
-        new_login = login_info[0]
-        new_login.dbstat = 'D-'
-        new_login.logout_time = datetime.now()
-        new_login.save()
 
 def logout(request):
     user_id = request.session.get('user_id')
@@ -176,19 +194,18 @@ def logout(request):
 
 
 def popup(request):
-    regi_info = RegisterTB.objects.filter(regi_id=request.POST['popup_regiId'], dbstat='A')
-    print(str(regi_info.query))
-
-    print(regi_info.count())
+    regi_id = request.POST['popup_regiId']
+    regi_info = select_register(regi_id)
 
     if regi_info.count() is not 0:
         print("Exist.....")
         request.session['IDresult'] = 'exist'
-        return render(request, 'popup/popup.html')
+
     else:
         print("DoesNotExist.....")
         request.session['IDresult'] = 'ok'
-        return render(request, 'popup/popup.html')
+
+    return render(request, 'popup/popup.html')
 
 
 
