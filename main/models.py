@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 class RegisterTB(models.Model):
     regi_idx = models.AutoField(primary_key=True)
@@ -11,7 +11,7 @@ class RegisterTB(models.Model):
     regi_add02 = models.CharField(max_length=50)
     regi_add03 = models.CharField(max_length=50)
     regi_pass = models.CharField(max_length=50)
-    stime = models.DateTimeField(null=True)
+    stime = models.DateTimeField(default=timezone.now)
     expireTime = models.DateTimeField(null=True)
     dbstat = models.CharField(max_length=50, default='A')
 
@@ -19,7 +19,7 @@ class LoginTB(models.Model):
     login_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50, default = '') #RegisterTB.regi_id
     session_id = models.CharField(max_length=150)
-    login_time = models.DateTimeField(null=True)
+    login_time = models.DateTimeField(default=timezone.now)
     logout_time = models.DateTimeField(null=True)
     dbstat = models.CharField(max_length=50, default='A')
 
@@ -50,7 +50,7 @@ class OrderTB(models.Model):
     count = models.IntegerField(default='1')
     delivery = models.CharField(max_length=50, default='기본배송')
     delivery_price = models.IntegerField(default='3000')
-    order_time = models.DateTimeField(null=True)
+    order_time = models.DateTimeField(default=timezone.now)
     dbstat = models.CharField(max_length=50, default='A')
 
 class PayTB(models.Model):

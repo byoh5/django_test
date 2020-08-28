@@ -1,5 +1,5 @@
 from main.models import *
-from datetime import datetime
+from django.utils import timezone
 
 def select_order(user_id):
     order_info = OrderTB.objects.filter(user_id=user_id)
@@ -32,5 +32,5 @@ def delete_login(user_id):
     if login_info.count() is not 0:
         new_login = login_info[0]
         new_login.dbstat = 'D-'
-        new_login.logout_time = datetime.now()
+        new_login.logout_time = timezone.now()
         new_login.save()
