@@ -214,11 +214,7 @@ def logout(request):
     if user_id is not None:
         delete_login(user_id)
 
-        # context = {
-        #     "client_id": '',
-        #     "user_id": '',
-        #     "logout_message": message_ok,
-        # }
+    request.session['client_id'] = ''
 
     return render(request, 'main/index_runcoding.html')
 
