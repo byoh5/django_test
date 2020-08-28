@@ -30,8 +30,8 @@ STATIC_ROOT = '/static/files/path/'
 DATETIME_FORMAT = 'Y-m-d H:i:s'
 
 #session
-SESSION_COOKIE_AGE = 100
-SESSION_COOKIE_NAME = 'run_session_coding'
+# SESSION_COOKIE_AGE = 100
+# SESSION_COOKIE_NAME = 'run_session_coding'
 
 # HTTPS일때만 사용될 수 있음
 #SESSION_COOKIE_SECURE = True
