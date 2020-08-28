@@ -150,8 +150,8 @@ def UserRegister(request):
 
 def login(request):
     if request.method == "POST":
-        loginId = request.POST['login_id']
-        regi_info = select_register(loginId)
+        login_id = request.POST['login_id']
+        regi_info = select_register(login_id)
         if regi_info.count() is not 0:
             password_encrypt = regi_info[0].regi_pass
             regi_id = regi_info[0].regi_id
@@ -160,8 +160,8 @@ def login(request):
             if check_pass:
                 session_auth = bcrypt.hashpw(regi_id.encode('utf-8'), bcrypt.gensalt())
                 session = session_auth.decode('utf-8')
-                delete_login(loginId)
-                q = LoginTB(user_id=loginId, session_id=session)
+                delete_login(login_id)
+                q = LoginTB(user_id=login_id, session_id=session)
                 q.save()
                 request.session['client_id'] = session
                 request.session['user_id'] = regi_id
