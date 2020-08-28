@@ -220,7 +220,7 @@ def logout(request):
         #     "logout_message": message_ok,
         # }
 
-    return render(request, 'main/index_runcoding.html', context)
+    return render(request, 'main/index_runcoding.html')
 
 
 def popup(request):
