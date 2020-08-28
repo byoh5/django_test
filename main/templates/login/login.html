@@ -1,7 +1,7 @@
 {% load static %}
 {% include "common/head.html" %}
 <link rel="stylesheet" type="text/css" href="{% static 'resource/css/login.css' %}" />
-
+<input type="hidden" id="result" name="result" value="{{result}}">
 <div class="wrap login">
     <div class="loginBox">
         <h1>
@@ -52,31 +52,42 @@
     {
         document.getElementById('login_form').submit();
     }
-
-     function page_move(some_data) {
-        var form = document.createElement("form");
-        var parm = new Array();
-        var input = new Array();
-
-        form.action = url;
-        form.method = "post";
-
-
-        parm.push( ['some_key1', 'some_value1'] );
-        parm.push( ['some_key2', 'some_value2'] );
-        parm.push( ['some_data', some_data] );
-
-
-        for (var i = 0; i < parm.length; i++) {
-            input[i] = document.createElement("input");
-            input[i].setAttribute("type", "hidden");
-            input[i].setAttribute('name', parm[i][0]);
-            input[i].setAttribute("value", parm[i][1]);
-            form.appendChild(input[i]);
+    $(document).ready(function(){
+        var login_result = $("input[type=hidden][name=result]").val();
+        if(login_result == 202)
+        {
+            alert("비밀번호가 잘못 되었습니다.");
         }
-        document.body.appendChild(form);
-        form.submit();
-    }
+        else if(login_result == 204)
+        {
+            alert("가입자가 아닙니다.");
+        }
+    });
+
+<!--     function page_move(some_data) {-->
+<!--        var form = document.createElement("form");-->
+<!--        var parm = new Array();-->
+<!--        var input = new Array();-->
+
+<!--        form.action = url;-->
+<!--        form.method = "post";-->
+
+
+<!--        parm.push( ['some_key1', 'some_value1'] );-->
+<!--        parm.push( ['some_key2', 'some_value2'] );-->
+<!--        parm.push( ['some_data', some_data] );-->
+
+
+<!--        for (var i = 0; i < parm.length; i++) {-->
+<!--            input[i] = document.createElement("input");-->
+<!--            input[i].setAttribute("type", "hidden");-->
+<!--            input[i].setAttribute('name', parm[i][0]);-->
+<!--            input[i].setAttribute("value", parm[i][1]);-->
+<!--            form.appendChild(input[i]);-->
+<!--        }-->
+<!--        document.body.appendChild(form);-->
+<!--        form.submit();-->
+<!--    }-->
 </script>
 
 

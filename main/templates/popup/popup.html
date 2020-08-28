@@ -4,31 +4,30 @@
 <form id="popup_form" method="post" action="/popup/">
      {% csrf_token %}
      <input type="hidden" name="popup_regiId" id="popup_regiId" value="">
-     <input type="hidden" id="result" name="result" value={{ request.session.IDresult }}>
+     <input type="hidden" name="message" value="{{popup_message}}" readonly>
  </form>
 <script>
     $(document).ready(function() {
-
+{{ request.session.IDresult }}
         document.getElementById("popup_regiId").value = opener.document.getElementById("regi_id").value;
 
-        var remote_result = document.getElementById("result").value;
-        alert(remote_result);
+        var remote_result = $("input[type=hidden][name=message]").val();
         if(remote_result == "")
         {
             document.getElementById("popup_form").submit();
         }
         else
         {
-             if(remote_result.length > 2)
+             if(remote_result != 200)
              {
                  alert("사용할 수 없는 ID 입니다.");
                  opener.document.getElementById("regi_id").value = "";
-                 window.child.close();
+                 close();
              }
              else
              {
                  alert("사용할 수 있는 ID 입니다.");
-                 window.child.close();
+                 close();
              }
         }
     });

@@ -9,6 +9,12 @@ from django.http import HttpResponse
 from django.db import models
 #RegisterTB 테이블 import 확인하기
 
+#login
+message_ok = 200
+message_diff_pass = 202
+message_no_regi = 204
+message_exist_id = 208
+
 def index(request):
     return render(request, 'main/index_runcoding.html')
 
@@ -73,6 +79,9 @@ def order_page(request):
 def order(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
+    print("come")
+    print(user_id)
+    print(session)
 
     login_info= select_login(user_id)
     session_id = login_info[0].session_id
@@ -140,6 +149,7 @@ def login(request):
     if request.method == "POST":
         loginId = request.POST['login_id']
         regi_info = select_register(loginId)
+        message = 0
 
         #debug용 - 지우지 마시오
         #print(regi_info.count())
@@ -167,17 +177,35 @@ def login(request):
                 request.session['user_id'] = regi_id
                 # 읽을 때 client_id = request.session.get('client_id')
                 request.session['result'] = 'success'
-                return render(request, 'main/index_runcoding.html')
+
+                context = {
+                    "client_id": session,
+                    "user_id": regi_id,
+                    "result": message_ok,
+                }
+                return render(request, 'main/index_runcoding.html', context)
 
             else:  # 비밀번호가 틀리면
-                request.session['result'] = 'fail'
+                request.session['result'] = message_diff_pass
                 request.session['client_id'] = ''
-                return render(request, 'login/login.html')
+
+                context = {
+                    "client_id": '',
+                    "user_id": regi_id,
+                    "result": message_diff_pass,
+                }
+
+                return render(request, 'login/login.html',context)
 
         else:  # 로그인 ID가 가입자가 아니면
-            request.session['result'] = 'fail'
+            request.session['result'] = message_no_regi
             request.session['client_id'] = ''
-            return render(request, 'login/login.html')  #가입자가 아닙니다.
+            context = {
+                "client_id": '',
+                "user_id": '',
+                "result": message_no_regi,
+            }
+            return render(request, 'login/login.html', context)  #가입자가 아닙니다.
 
 
 
@@ -186,9 +214,13 @@ def logout(request):
     if user_id is not None:
         delete_login(user_id)
 
-    request.session['client_id'] = ''
-    request.session['user_id'] = ''
-    return render(request, 'main/index_runcoding.html')
+        # context = {
+        #     "client_id": '',
+        #     "user_id": '',
+        #     "logout_message": message_ok,
+        # }
+
+    return render(request, 'main/index_runcoding.html', context)
 
 
 def popup(request):
@@ -197,13 +229,20 @@ def popup(request):
 
     if regi_info.count() is not 0:
         print("Exist.....")
-        request.session['IDresult'] = 'exist'
+        # request.session['IDresult'] = 'exist'
+
+        context = {
+            "popup_message": message_exist_id, #전역 변수로 변경 필요
+        }
 
     else:
         print("DoesNotExist.....")
-        request.session['IDresult'] = 'ok'
+        context = {
+            "popup_message": message_ok,
+        }
+        # request.session['IDresult'] = 'ok'
 
-    return render(request, 'popup/popup.html')
+    return render(request, 'popup/popup.html', context)
 
 
 
