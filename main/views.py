@@ -157,7 +157,7 @@ def login(request):
             regi_id = regi_info[0].regi_id
             login_password = request.POST['login_pass']
             check_pass = bcrypt.checkpw(login_password.encode('utf-8'), password_encrypt.encode('utf-8'))
-            if (check_pass):
+            if check_pass:
                 session_auth = bcrypt.hashpw(regi_id.encode('utf-8'), bcrypt.gensalt())
                 session = session_auth.decode('utf-8')
                 delete_login(loginId)
