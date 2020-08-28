@@ -68,7 +68,7 @@ def loungeView_page(request):
 def order_page(request):
     session = request.session.get('client_id')
     userid = request.session.get('user_id')  # 이 값으로 디비에서 정보찾고..
-    print(session)
+    # print(session)
 
     if session is None:
         return render(request, 'login/login.html')
@@ -87,15 +87,10 @@ def order(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
 
-    print("come")
-    print(user_id)
-    print(session)
-
     login_info = select_login(user_id)
     session_id = login_info[0].session_id
     messages = 0
 
-    print(user_id)
     # 에러남 수정해야됨
     # check_session = bcrypt.checkpw(session.encode('utf-8'), session_id.encode('utf-8'))
     # print(check_session)  # true/false
@@ -109,7 +104,6 @@ def order(request):
     if login_info.count() is not 0:
         prd_code = request.POST['prd_code']
         order_prd_info = select_order_prdCode(user_id, prd_code)
-        print(order_prd_info.count())
         if order_prd_info.count() is not 0:
             update_order_prdCode(order_prd_info)
             messages = 1  # 성공
@@ -136,7 +130,7 @@ def UserRegister(request):
         password = request.POST['regi_pass']
         password_encrypt = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        print(password_encrypt);
+        # print(password_encrypt);
 
         q = RegisterTB(regi_id=regi_id, regi_name=request.POST['regi_name'],
                        regi_phone=request.POST['regi_phone'], regi_email=request.POST['regi_email'],
@@ -172,7 +166,7 @@ def login(request):
             login_password = request.POST['login_pass']
 
             check_pass = bcrypt.checkpw(login_password.encode('utf-8'), password_encrypt.encode('utf-8'))
-            print(check_pass)  # true/false
+            # print(check_pass)  # true/false
 
             if (check_pass):  # 비밀번호가 맞으면 login table에 저장
                 session_auth = bcrypt.hashpw(regi_id.encode('utf-8'), bcrypt.gensalt())
@@ -235,7 +229,7 @@ def popup(request):
     regi_info = select_register(regi_id)
 
     if regi_info.count() is not 0:
-        print("Exist.....")
+        # print("Exist.....")
         # request.session['IDresult'] = 'exist'
 
         context = {
@@ -243,7 +237,7 @@ def popup(request):
         }
 
     else:
-        print("DoesNotExist.....")
+        # print("DoesNotExist.....")
         context = {
             "popup_message": message_ok,
         }
