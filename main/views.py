@@ -152,8 +152,6 @@ def login(request):
     if request.method == "POST":
         loginId = request.POST['login_id']
         regi_info = select_register(loginId)
-        message = 0
-
         # debug용 - 지우지 마시오
         # print(regi_info.count())
         # print(str(regi_info.query))
