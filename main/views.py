@@ -152,56 +152,38 @@ def login(request):
     if request.method == "POST":
         loginId = request.POST['login_id']
         regi_info = select_register(loginId)
-        # debug용 - 지우지 마시오
-        # print(regi_info.count())
-        # print(str(regi_info.query))
-        # print(regi_info)
-        # print(regi_info[0].regi_pass)
-
         if regi_info.count() is not 0:
-            password_encrypt = regi_info[0].regi_pass  # db select
+            password_encrypt = regi_info[0].regi_pass
             regi_id = regi_info[0].regi_id
             login_password = request.POST['login_pass']
-
             check_pass = bcrypt.checkpw(login_password.encode('utf-8'), password_encrypt.encode('utf-8'))
-            # print(check_pass)  # true/false
-
-            if (check_pass):  # 비밀번호가 맞으면 login table에 저장
+            if (check_pass):
                 session_auth = bcrypt.hashpw(regi_id.encode('utf-8'), bcrypt.gensalt())
                 session = session_auth.decode('utf-8')
                 delete_login(loginId)
-
                 q = LoginTB(user_id=loginId, session_id=session)
                 q.save()
-
-                request.session['client_id'] = session  # session_auth를 디비에 저장
+                request.session['client_id'] = session
                 request.session['user_id'] = regi_id
-                # 읽을 때 client_id = request.session.get('client_id')
                 request.session['result'] = 'success'
                 request.user = regi_id
-
                 request.session.modified = True
-
                 context = {
                     "client_id": session,
                     "user_id": regi_id,
                     "result": message_ok,
                 }
                 return render(request, 'main/index_runcoding.html', context)
-
-            else:  # 비밀번호가 틀리면
+            else:
                 request.session['result'] = message_diff_pass
                 request.session['client_id'] = ''
-
                 context = {
                     "client_id": '',
                     "user_id": regi_id,
                     "result": message_diff_pass,
                 }
-
                 return render(request, 'login/login.html', context)
-
-        else:  # 로그인 ID가 가입자가 아니면
+        else:
             request.session['result'] = message_no_regi
             request.session['client_id'] = ''
             context = {
