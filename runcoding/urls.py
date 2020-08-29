@@ -34,7 +34,9 @@ urlpatterns = [
     path('login_form/', login),
     path('run_logout/', logout),
     path('popup/', popup),
+    path('run_pay/', payment),
     path('run_order/', order),
+    path('pay_result/', pay_result),
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
 ]

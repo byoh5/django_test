@@ -58,7 +58,11 @@ class PayTB(models.Model):
     user_id = models.CharField(max_length=50)
     pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
     order_id = models.CharField(max_length=50, default='') #order_idx
-    prd_price = models.IntegerField(default='0')
+    prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
+    prd_price = models.IntegerField(default='0') # product total
     delivery_price = models.IntegerField(default='0')
+    prd_total_price = models.IntegerField(default='0')  # product total + delivary
     pay_result = models.IntegerField(default='100') # 0: 성공 1: 실패
+    pay_result_info = models.CharField(max_length=300, default='') #pay_msg
+    pay_time = models.DateTimeField(default=timezone.now)
 

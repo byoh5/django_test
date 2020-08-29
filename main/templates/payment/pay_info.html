@@ -15,7 +15,27 @@
                 <img class="subVisual codingKit" src="{% static 'resource/img/sub/sv_codingKit.png' %}" alt="코딩키트">
             </div>
         </section>
+
+<form id="result_form" method="post" action="/pay_result/" >
+    {% csrf_token %}
+    <input type="hidden" id="pay" name="pay" value={{payment.pay_idx}}>
+    <input type="hidden" id="pay_result" name="pay_result" value="">
+    <input type="hidden" id="pay_msg" name="pay_msg" value="">
+</form>
 <script>
+
+    var title = '{{payment.prd_info}}';
+    var price = '{{payment.prd_total_price}}';
+    var email = '{{payment.pay_user.regi_email}}';
+    var phone = '{{payment.pay_user.regi_phone}}';
+    var buyer_name = '{{payment.pay_user.regi_name}}';
+    var buyer_addr1 = '{{payment.pay_user.regi_add02}}';
+    var buyer_addr2 = '{{payment.pay_user.regi_add03}}';
+    var buyer_addr = buyer_addr1.concat(" ", buyer_addr1);
+    var buyer_postcode = '{{payment.pay_user.regi_add01}}';
+
+    alert(buyer_addr);
+     alert(buyer_postcode);
 
     var IMP = window.IMP; // 생략가능
     IMP.init('imp08800373'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
@@ -24,13 +44,13 @@
     pg : 'kcp', // version 1.1.0부터 지원.
     pay_method : 'card',
     merchant_uid : 'merchant_' + new Date().getTime(),
-    name : 'runcoding:[아두이노+AI] 스마트 휴지통',
-    amount : 45000,
-    buyer_email : 'oneppp1019@naver.com',
-    buyer_name : '김하나',
-    buyer_tel : '010-8571-8372',
-    buyer_addr : '서울특별시 강남구 삼성동',
-    buyer_postcode : '123-456',
+    name : title,
+    amount : price,
+    buyer_email : email,
+    buyer_name : buyer_name,
+    buyer_tel : phone,
+    buyer_addr : buyer_addr,
+    buyer_postcode : buyer_postcode,
     m_redirect_url : 'http://locahost:8000'
 }, function(rsp) {
        if ( rsp.success ) {
@@ -51,9 +71,14 @@
     			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
     			msg += '\결제 금액 : ' + rsp.paid_amount;
     			msg += '카드 승인번호 : ' + rsp.apply_num;
-
+                $("input[type=hidden][name=pay_result]").val('0');
+                $("input[type=hidden][name=pay_msg]").val(msg);
     			alert(msg);
     		} else {
+    		     msg = "결제가 제대로 이뤄지지 않았습니다. \n 고객 센터에 문의 바랍니다."
+    		     $("input[type=hidden][name=pay_result]").val('1');
+    		     $("input[type=hidden][name=pay_msg]").val(msg);
+    		     alert(msg);
     			//[3] 아직 제대로 결제가 되지 않았습니다.
     			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
     		}
@@ -61,9 +86,11 @@
     } else {
         var msg = '결제에 실패하였습니다.';
         msg += '에러내용 : ' + rsp.error_msg;
-
+        $("input[type=hidden][name=pay_result]").val('1');
+        $("input[type=hidden][name=pay_msg]").val(msg);
         alert(msg);
     }
+    document.getElementById("result_form").submit();
 });
 
 

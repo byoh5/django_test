@@ -11,6 +11,12 @@ message_diff_pass = 202
 message_no_regi = 204
 message_exist_id = 208
 
+delete_on = 1
+delete_off = 0
+
+pay_ok = 0
+pay_fail = 1
+
 
 def index(request):
     return render(request, 'main/index_runcoding.html')
@@ -78,27 +84,6 @@ def order_page(request):
             "user_detail": user_info,
         }
         return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
-
-
-def order(request):
-    user_id = request.session.get('user_id')
-    login_info = select_login(user_id)
-    messages = 0
-    if login_info.count() is not 0:
-        prd_code = request.POST['prd_code']
-        order_prd_info = select_order_prdCode(user_id, prd_code)
-        if order_prd_info.count() is not 0:
-            update_order_prdCode(order_prd_info)
-            messages = 1  # 성공
-        else:
-            prd_info = select_prd(prd_code)
-            order = OrderTB(user_id=user_id, prd_code=prd_code, prd=prd_info[0])
-            order.save()
-            messages = 1  # 성공
-    context = {
-        "message": messages,
-    }
-    return render(request, 'class/class_view_arduino.html', context)
 
 # id로 검색해서 없으면 진행...있으면 에러리턴.
 def UserRegister(request):
@@ -185,5 +170,92 @@ def popup(request):
         }
     return render(request, 'popup/popup.html', context)
 
+def order(request):
+    user_id = request.session.get('user_id')
+    login_info = select_login(user_id)
+    messages = 0
+    if login_info.count() is not 0:
+        prd_code = request.POST['prd_code']
+        order_prd_info = select_order_prdCode(user_id, prd_code)
+        if order_prd_info.count() is not 0:
+            update_order_prdCode(order_prd_info)
+            messages = 1  # 성공
+        else:
+            prd_info = select_prd(prd_code)
+            order = OrderTB(user_id=user_id, prd_code=prd_code, prd=prd_info[0])
+            order.save()
+            messages = 1  # 성공
+    context = {
+        "message": messages,
+    }
+    return render(request, 'class/class_view_arduino.html', context)
 
+def payment(request):
+    user_id = request.session.get('user_id')
+    order_len = request.POST['len']
+    prd_price = int(request.POST['total_prd_price'])
+    option_price = int(request.POST['total_option_price'])
+    prd_total_price = int(request.POST['total_option_prd_price'])
 
+    order_list = ""
+    prd_title = ""
+    prd_total_count = 0
+
+    print(order_len)
+    for cnt in range(int(order_len)):
+        idx = request.POST['orderIdxs_' + str(cnt)]
+        prd_count = request.POST['prodQuantity_' + str(cnt)]
+        prd_total_count += int(prd_count)
+        print(idx, user_id, prd_count)
+        prd_title = update_order_idx(idx, user_id, prd_count) #count 변경 되었을 수 있으니 정보 update 및 상품 title get
+        order_list += idx + ","
+
+    print(prd_title)
+    if prd_total_count > 1:
+        prd_title += "_외 " + str(prd_total_count) + "개"
+
+    regi_info = select_register(user_id)
+
+    pay_info = PayTB(user_id=user_id, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
+          prd_price=prd_price, delivery_price=option_price, prd_total_price=prd_total_price)
+    pay_info.save()
+
+    context = {
+        "payment": pay_info,
+    }
+
+    return render(request, 'payment/pay_info.html', context)
+
+def pay_result(request):
+    pay_idx = int(request.POST['pay'])
+    user_id = request.session.get('user_id')
+
+    pay_result = request.POST['pay_result']
+    pay_msg = request.POST['pay_msg']
+
+    pay_info = select_pay(pay_idx)
+
+    if pay_info.count() is not 0:
+        update_pay = pay_info[0]
+        update_pay.pay_result_info = pay_msg
+        update_pay.pay_result = pay_result
+
+        if pay_result == pay_ok:
+            split_order = update_pay.order_id.split(',')
+            for data in split_order:
+                print(data)
+                if len(data) > 0:
+                    delete_order_idx(data, user_id)
+        update_pay.save()
+
+    if pay_result == pay_ok:
+        return render(request, 'myclass/myclass.html')
+    else:
+        order_info = select_order(user_id)
+        user_info = select_register(user_id)
+        context = {
+            "order_detail": order_info,
+            "user_detail": user_info,
+        }
+
+        return render(request, 'payment/order.html', context)

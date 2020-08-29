@@ -27,7 +27,7 @@
                             <h2 class="margin-none"><b>주문하기</b></h2>
                         </div>
                       </div>
-                        {% csrf_token %}
+
                       <tr class="row">
                           <div class="col-xs-12">
                              <div class="panel panel-default border-radius-none margin-top-30">
@@ -57,80 +57,88 @@
                                                 <th class="text-right">배송비</th>
                                             </tr>
                                             </thead>
-                                          <tbody class="order-option">
-                                          {% for orderDetail in order_detail %}
-                                            <tr>
-                                                <td>
-                                                    <input type="hidden" name="adultpro[]" value={{orderDetail.order_idx}}>
-                                                    <input type="checkbox" name="idxs[]" value={{forloop.counter0}} checked onClick="javascript:check();">
-                                                </td>
-                                                <td>
-                                                     <div class="pull-left">
-                                                           <a href='{{orderDetail.prd.urls}}'>
-                                                               <img class="width-120px border-radius" src={{orderDetail.prd.img}} onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
-                                                           </a>
-                                                     </div>
-                                                </td>
-                                                <td>
-                                                     <div class="pull-left">
-                                                         <span>{{orderDetail.prd.title}}</span>
-                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div id="prdModify">
-                                                        <li>
-                                                            <span>&nbsp;</span>
-                                                            <select name="arduino" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                                <option value="">------필수옵션-------</option>
-                                                                <option value="1">아두이노 우노</option>
-                                                            </select>
-                                                        </li>
-                                                         <li>
-                                                            <span>&nbsp;</span>
-                                                            <select name="runningCam" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                                <option value="">------필수옵션-------</option>
-                                                                <option value="2">러닝캠</option>
-                                                            </select>
-                                                        </li>
-                                                    </div>
-                                                </td>
-                                                <td >
-                                                    <div id="prd_price_{{forloop.counter0}}" style="float:left; margin-left:20px;">
-                                                        <strong>{{orderDetail.prd.price}}</strong>
-                                                     </div>
-                                                    <div style="float:left;">
-                                                        <strong>원</strong>
-                                                     </div>
-                                                </td>
-                                                <td class="quantity_td" >
-                                                    <span class="quantity">
-                                                        <input type="text" id="prodQuantity_{{forloop.counter0}}" class="input quantity" value={{orderDetail.count}} >
-                                                        <a href="javascript:up('10','{{forloop.counter0}}')" style="color: #000;">
-                                                            <img src="{% static 'resource/img/sub/btn_quantity_up.gif' %}" alt="증가" class="QuantityUp">
-                                                        </a>
-                                                        <a href="javascript:down('1', '{{forloop.counter0}}')" style="color: #000;">
-                                                            <img src="{% static 'resource/img/sub/btn_quantity_down.gif' %}" alt="감소" class="QuantityDown">
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                   <strong>{{orderDetail.delivery}}</strong>
-                                                </td>
-                                                <td>
-                                                   <div id="prd_option_price_{{forloop.counter0}}" style="float:left;">
-                                                        {% if forloop.counter0 == 0 %}
-                                                        <strong>{{orderDetail.delivery_price}}</strong>
-                                                        {% else %}
-                                                        <strong>0</strong>
-                                                        {%endif%}
-                                                     </div>
-                                                    <div style="float:left;">
-                                                        <strong>원</strong>
-                                                     </div>
-                                                </td>
-                                            </tr>
-                                          {% endfor %}
-                                          </tbody>
+                                          <form id="order_form" method="post" action="/run_pay/">
+                                            {% csrf_token %}
+                                              <tbody class="order-option">
+                                              {% for orderDetail in order_detail %}
+                                                <tr>
+                                                    <input type="hidden" id="len" name="len" value="0">
+                                                    <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
+                                                    <input type="hidden" id="total_option_price" name="total_option_price" value="0">
+                                                    <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
+                                                    <td>
+                                                        <input type="hidden" name="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
+                                                        <input type="hidden" id="len" name="len" value="0">
+                                                        <input type="checkbox" name="idxs[]" value={{forloop.counter0}} checked onClick="javascript:check();">
+                                                    </td>
+                                                    <td>
+                                                         <div class="pull-left">
+                                                               <a href='{{orderDetail.prd.urls}}'>
+                                                                   <img class="width-120px border-radius" src={{orderDetail.prd.img}} onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
+                                                               </a>
+                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                         <div class="pull-left">
+                                                             <span>{{orderDetail.prd.title}}</span>
+                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="prdModify">
+                                                            <li>
+                                                                <span>&nbsp;</span>
+                                                                <select name="arduino" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                                    <option value="">------필수옵션-------</option>
+                                                                    <option value="1">아두이노 우노</option>
+                                                                </select>
+                                                            </li>
+                                                             <li>
+                                                                <span>&nbsp;</span>
+                                                                <select name="runningCam" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                                    <option value="">------필수옵션-------</option>
+                                                                    <option value="2">러닝캠</option>
+                                                                </select>
+                                                            </li>
+                                                        </div>
+                                                    </td>
+                                                    <td >
+                                                        <div id="prd_price_{{forloop.counter0}}" style="float:left; margin-left:20px;">
+                                                            <strong>{{orderDetail.prd.price}}</strong>
+                                                         </div>
+                                                        <div style="float:left;">
+                                                            <strong>원</strong>
+                                                         </div>
+                                                    </td>
+                                                    <td class="quantity_td" >
+                                                        <span class="quantity">
+                                                            <input type="text" name="prodQuantity_{{forloop.counter0}}" id="prodQuantity_{{forloop.counter0}}" class="input quantity" value={{orderDetail.count}} >
+                                                            <a href="javascript:up('10','{{forloop.counter0}}')" style="color: #000;">
+                                                                <img src="{% static 'resource/img/sub/btn_quantity_up.gif' %}" alt="증가" class="QuantityUp">
+                                                            </a>
+                                                            <a href="javascript:down('1', '{{forloop.counter0}}')" style="color: #000;">
+                                                                <img src="{% static 'resource/img/sub/btn_quantity_down.gif' %}" alt="감소" class="QuantityDown">
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                       <strong>{{orderDetail.delivery}}</strong>
+                                                    </td>
+                                                    <td>
+                                                       <div id="prd_option_price_{{forloop.counter0}}" style="float:left;">
+                                                            {% if forloop.counter0 == 0 %}
+                                                            <strong>{{orderDetail.delivery_price}}</strong>
+                                                            {% else %}
+                                                            <strong>0</strong>
+                                                            {%endif%}
+                                                         </div>
+                                                        <div style="float:left;">
+                                                            <strong>원</strong>
+                                                         </div>
+                                                    </td>
+                                                </tr>
+                                              {% endfor %}
+                                              </tbody>
+                                          </form>
                                       </table>
                                  </div>
                              </div>
@@ -169,7 +177,7 @@
                                              <tbody>
                                              <tr>
                                                  <td>
-                                                    <div id="total_prd_price" class="box" style="padding-left:30%; float:left; margin-right:10px;">
+                                                    <div id="div_total_prd_price" class="box" style="padding-left:30%; float:left; margin-right:10px;">
                                                         <strong>90000</strong>
                                                         <span class="tail displaynone"></span>
                                                     </div>
@@ -178,7 +186,7 @@
                                                      </div>
                                                  </td>
                                                  <td >
-                                                    <div id="total_option_price" class="box" style="padding-left:35%; float:left; margin-right:10px;">
+                                                    <div id="div_total_option_price" class="box" style="padding-left:35%; float:left; margin-right:10px;">
                                                         <strong>3000</strong>
                                                         <span class="tail displaynone"></span>
                                                     </div>
@@ -187,7 +195,7 @@
                                                      </div>
                                                  </td>
                                                  <td >
-                                                    <div id="total_option_prd_price" class="box"  style="padding-left:40%; float:left; margin-right:10px;">
+                                                    <div id="div_total_option_prd_price" class="box"  style="padding-left:40%; float:left; margin-right:10px;">
                                                         <strong>93000</strong>
                                                         <span class="tail displaynone"></span>
                                                     </div>
@@ -205,7 +213,6 @@
                       </div>
                     </div>
                  </tr>
-
 
                  <!-- 결제방법 -->
                  <tr class="row">
@@ -282,7 +289,7 @@
                   </div>
                 <div class="btn-center">
 <!--                    <a href="#" class="btn order_save">저장하기</a> 논의 후 개발-->
-                    <a href="#" class="btn order_complete">주문하기</a>
+                    <a href="#" class="btn order_complete" onClick="javascript:goPay();">주문하기</a>
                 </div>
         </div>
     </div>
@@ -309,8 +316,25 @@
              }
          });
 
+         function goPay()
+         {
+            var chks = document.getElementsByName('idxs[]');
+            var check_len = 0;
+             for (var i=0,m=chks.length;i<m ;i++)
+             {
+                if (chks[i].checked == true)
+                {
+                    check_len++;
+                }
+             }
+
+             $("input[type=hidden][name=len]").val(check_len);
+             document.getElementById("order_form").submit();
+         }
+
         // 수량 더하기
-        function up(max, id) {
+        function up(max, id)
+        {
             var quantity_name = "prodQuantity_" + id;
             var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) + 1;
             if (document.getElementById(quantity_name).value >= parseInt(max))
@@ -337,6 +361,7 @@
             var prd_total_price = 0;
             var option = 0;
             var count = 1;
+            var first = 1;
 
             var prd_price_name;
             var quantity_name;
@@ -355,6 +380,13 @@
 				    prd_price = document.getElementById(prd_price_name).innerText;
 				    count = document.getElementById(quantity_name).value;
                     prd_total_price =  parseInt(prd_price) * count;
+                    if(first == 1)
+                    {
+                        document.getElementById(prd_option_name).innerHTML = "<strong>" + 3000 + "</<strong>";
+                        first++;
+                    }
+                    else
+                        document.getElementById(prd_option_name).innerHTML = "<strong>" + 0 + "</<strong>";
 
                     total_summary_price += prd_total_price;
 				}
@@ -363,17 +395,20 @@
 			}
 
 			 if (total_summary_price >= 100000 || total_summary_price == 0)
-                document.getElementById("total_option_price").innerHTML = "<strong>" + option + "</<strong>";
+                document.getElementById("div_total_option_price").innerHTML = "<strong>" + option + "</<strong>";
              else
              {
-                option = 3000;
-                document.getElementById("total_option_price").innerHTML = "<strong>" + option + "</<strong>";
+                document.getElementById("div_total_option_price").innerHTML = "<strong>" + 3000 + "</<strong>";
              }
 
             var total = total_summary_price + parseInt(option);
 
-            document.getElementById("total_prd_price").innerHTML = "<strong>" + total_summary_price + "</<strong>";
-			document.getElementById("total_option_prd_price").innerHTML = "<strong>" + total + "</<strong>";
+            document.getElementById("div_total_prd_price").innerHTML = "<strong>" + total_summary_price + "</<strong>";
+			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + total + "</<strong>";
+
+			$("input[type=hidden][name=total_prd_price]").val(total_summary_price);
+			$("input[type=hidden][name=total_option_price]").val(option);
+			$("input[type=hidden][name=total_option_prd_price]").val(total);
         }
 
         function check()
