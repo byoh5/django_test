@@ -11,7 +11,12 @@
                 </a>
             </h1>
         </div>
-
+        <form id="popup_form" method="post" action="/popup/">
+            {% csrf_token %}
+             <input type="hidden" name="popup_regiId" id="popup_regiId" value="">
+             <input type="hidden" name="message" value="{{popup_message}}" readonly>
+             <input type="hidden" name="regiId" value="{{regiId}}" readonly>
+        </form>
             <div class="join_area">
                 <form id="register_form" method="post" action="/register/">
                     {% csrf_token %}
@@ -21,9 +26,10 @@
                             <li>
                                 <span>아이디</span>
                                 <div class="input_area">
-                                    <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요."/>
-                                    <input type="hidden" id="result" name="result" value={{ request.session.IDresult }}>
-                                    <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
+                                        <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요."/>
+<!--                                        <input type="hidden" id="result" name="result" value={{ request.session.IDresult }}>-->
+                                        <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
+                                    </form>
                                 </div>
                             </li>
                             <li>
@@ -119,6 +125,21 @@
             $("html, body, .wrap").toggleClass("open");
             $('html, body, .wrap').off('scroll touchmove mousewheel');
         });
+
+        var remote_result = $("input[type=hidden][name=message]").val();
+        if(remote_result != "")
+        {
+            if(remote_result == 208)
+             {
+                 alert("사용할 수 없는 ID 입니다.");
+                 document.getElementById("regi_id").value = "";
+             }
+             else if(remote_result == 200)
+             {
+                 alert("사용할 수 있는 ID 입니다.");
+                 document.getElementById("regi_id").value = $("input[type=hidden][name=regiId]").val()
+             }
+        }
     });
 
     var popup_window;
@@ -137,7 +158,8 @@
         }
         else
         {
-            popup_window = window.open("/run_popup/", "check id", "width=500,height=200,top=300,left=500");
+            $("input[type=hidden][name=popup_regiId]").val(id.value);
+             document.getElementById("popup_form").submit();
         }
     }
 
@@ -173,14 +195,12 @@
                 return false;
             }
 
-<!-- 서버에서 진행 안됨... 중복체크 후 다시 id를 변경한다면 중복체크를 어떻게 확인할 수 있을 까 -->
-<!--            var remote_result = document.getElementById("result").value;-->
-<!--            alert(remote_result);-->
-<!--            if(remote_result == "" || remote_result.length > 2)-->
-<!--            {-->
-<!--                alert("아이디 중복체크 해주세요.");-->
-<!--                return false;-->
-<!--            }-->
+            var remote_result = $("input[type=hidden][name=message]").val();
+            if(remote_result == 208)
+            {
+                alert("아이디 중복체크 해주세요.");
+                return false;
+            }
 
             if(!id_pass_patten.test(id.value))
             {

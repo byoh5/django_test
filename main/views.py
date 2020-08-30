@@ -100,7 +100,11 @@ def UserRegister(request):
         q.save()
         return render(request, 'login/login.html')  # 로그인페이지호출
     else:
-        return render(request, 'login/register.html')  # register page에서 메시지 출력 이미 가입자입니다.
+        context = {
+            "popup_message": message_exist_id,
+            "regiId": regi_id,
+        }
+        return render(request, 'login/register.html', context)  # register page에서 메시지 출력 이미 가입자입니다.
 
 
 def login(request):
@@ -160,15 +164,18 @@ def logout(request):
 def popup(request):
     regi_id = request.POST['popup_regiId']
     regi_info = select_register(regi_id)
+    print(regi_id)
     if regi_info.count() is not 0:
         context = {
             "popup_message": message_exist_id,  # 전역 변수로 변경 필요
+            "regiId":regi_id,
         }
     else:
         context = {
             "popup_message": message_ok,
+            "regiId": regi_id,
         }
-    return render(request, 'popup/popup.html', context)
+    return render(request, 'login/register.html', context)
 
 def order(request):
     user_id = request.session.get('user_id')
