@@ -46,7 +46,6 @@ def class_page(request):
 def class_detail_page(request):
     prd_code = request.POST['detail_prd_code']
     items_info = select_class_detail(prd_code)
-    prd_info = select_prd(prd_code)
 
     context = {
         "class_items_detail": items_info,
@@ -190,10 +189,10 @@ def popup(request):
 
 def order(request):
     user_id = request.session.get('user_id')
+    prd_code = request.POST['prd_code']
     login_info = select_login(user_id)
     messages = 0
     if login_info.count() is not 0:
-        prd_code = request.POST['prd_code']
         order_prd_info = select_order_prdCode(user_id, prd_code)
         if order_prd_info.count() is not 0:
             update_order_prdCode(order_prd_info)
@@ -203,10 +202,14 @@ def order(request):
             order = OrderTB(user_id=user_id, prd_code=prd_code, prd=prd_info[0])
             order.save()
             messages = 1  # 성공
+
+    items_info = select_class_detail(prd_code)
     context = {
         "message": messages,
+        "class_items_detail": items_info,
+        "prd_detail": items_info[0].prd,
     }
-    return render(request, 'class/class_view_arduino.html', context)
+    return render(request, 'class/class_detail.html', context)
 
 def payment(request):
     user_id = request.session.get('user_id')
