@@ -208,16 +208,13 @@ def payment(request):
     prd_title = ""
     prd_total_count = 0
 
-    print(order_len)
     for cnt in range(int(order_len)):
         idx = request.POST['orderIdxs_' + str(cnt)]
         prd_count = request.POST['prodQuantity_' + str(cnt)]
         prd_total_count += int(prd_count)
-        print(idx, user_id, prd_count)
         prd_title = update_order_idx(idx, user_id, prd_count) #count 변경 되었을 수 있으니 정보 update 및 상품 title get
         order_list += idx + ","
 
-    print(prd_title)
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
 
@@ -237,8 +234,11 @@ def pay_result(request):
     pay_idx = int(request.POST['pay'])
     user_id = request.session.get('user_id')
 
-    pay_result = request.POST['pay_result']
+    pay_result = int(request.POST['pay_result'])
     pay_msg = request.POST['pay_msg']
+
+    print(pay_result)
+    print(pay_msg)
 
     pay_info = select_pay(pay_idx)
 
@@ -249,12 +249,14 @@ def pay_result(request):
 
         if pay_result == pay_ok:
             split_order = update_pay.order_id.split(',')
+            print(split_order)
             for data in split_order:
                 print(data)
                 if len(data) > 0:
                     delete_order_idx(data, user_id)
         update_pay.save()
 
+    print(pay_result, pay_ok)
     if pay_result == pay_ok:
         return render(request, 'myclass/myclass.html')
     else:
