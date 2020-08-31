@@ -25,6 +25,9 @@ SECRET_KEY = 'hllj7=^t0at1n0^$-h4!^uumv*(*7=tu_pi+oyzyc0gw4!!6&='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+USE_TZ = True
+TIME_ZONE = 'Asia/Seoul'
+
 ALLOWED_HOSTS = ['*']
 STATIC_ROOT = '/static/files/path/'
 DATETIME_FORMAT = 'Y-m-d H:i:s'

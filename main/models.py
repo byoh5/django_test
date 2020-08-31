@@ -66,3 +66,10 @@ class PayTB(models.Model):
     pay_result_info = models.CharField(max_length=300, default='') #pay_msg
     pay_time = models.DateTimeField(default=timezone.now)
 
+class MyClassListTB(models.Model):
+    myclassList_idx = models.AutoField(primary_key=True)
+    user_id = models.CharField(max_length=50)
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True)
+    start_time = models.DateTimeField(default=timezone.localtime())
+    expire_time = models.DateTimeField(default='')
+    dbstat = models.CharField(max_length=50, default='A')

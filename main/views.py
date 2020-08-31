@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from main.models import *
 from main.query import *
 import bcrypt
+from django.utils import timezone
 
 # RegisterTB 테이블 import 확인하기
 
@@ -53,7 +54,14 @@ def trashcn_mblock_page(request):
 
 
 def myclass_list_page(request):
-    return render(request, 'myclass/myclass_list.html')
+    user_id = request.session.get('user_id')
+    myclass_list_info = select_myclass_list(user_id)
+
+    context = {
+        "myclass_list_detail": myclass_list_info,
+    }
+
+    return render(request, 'myclass/myclass_list.html', context)
 
 
 def myclass_page(request):
@@ -237,9 +245,6 @@ def pay_result(request):
     pay_result = int(request.POST['pay_result'])
     pay_msg = request.POST['pay_msg']
 
-    print(pay_result)
-    print(pay_msg)
-
     pay_info = select_pay(pay_idx)
 
     if pay_info.count() is not 0:
@@ -249,16 +254,30 @@ def pay_result(request):
 
         if pay_result == pay_ok:
             split_order = update_pay.order_id.split(',')
-            print(split_order)
+            
+            # product -> myclass에 넣고, 장바구니 정리하기
             for data in split_order:
-                print(data)
                 if len(data) > 0:
-                    delete_order_idx(data, user_id)
+                    order_info = select_order_idx(data, user_id)
+
+                    if order_info.count() is not 0:
+                        # insert myclass_list
+                        expireTime = timezone.now() + timezone.timedelta(days=90)
+                        myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd, expire_time=expireTime)
+                        myclass_list_info.save()
+
+                    delete_order_idx(order_info)  # order dbstat 변경
+
         update_pay.save()
 
-    print(pay_result, pay_ok)
     if pay_result == pay_ok:
-        return render(request, 'myclass/myclass.html')
+        myclass_list_info = select_myclass_list(user_id)
+
+        context = {
+            "myclass_list_detail": myclass_list_info,
+        }
+
+        return render(request, 'myclass/myclass_list.html', context)
     else:
         order_info = select_order(user_id)
         user_info = select_register(user_id)

@@ -24,50 +24,55 @@
 </form>
 <script>
 
-    var title = '{{payment.prd_info}}';
-    var price = '{{payment.prd_total_price}}';
-    var email = '{{payment.pay_user.regi_email}}';
-    var phone = '{{payment.pay_user.regi_phone}}';
-    var buyer_name = '{{payment.pay_user.regi_name}}';
-    var buyer_addr1 = '{{payment.pay_user.regi_add02}}';
-    var buyer_addr2 = '{{payment.pay_user.regi_add03}}';
-    var buyer_addr = buyer_addr1.concat(" ", buyer_addr1);
-    var buyer_postcode = '{{payment.pay_user.regi_add01}}';
+<!--    var title = '{{payment.prd_info}}';-->
+<!--    var price = '{{payment.prd_total_price}}';-->
+<!--    var email = '{{payment.pay_user.regi_email}}';-->
+<!--    var phone = '{{payment.pay_user.regi_phone}}';-->
+<!--    var buyer_name = '{{payment.pay_user.regi_name}}';-->
+<!--    var buyer_addr1 = '{{payment.pay_user.regi_add02}}';-->
+<!--    var buyer_addr2 = '{{payment.pay_user.regi_add03}}';-->
+<!--    var buyer_addr = buyer_addr1.concat(" ", buyer_addr1);-->
+<!--    var buyer_postcode = '{{payment.pay_user.regi_add01}}';-->
 
-    var IMP = window.IMP; // 생략가능
-    IMP.init('imp08800373'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+<!--    var IMP = window.IMP; // 생략가능-->
+<!--    IMP.init('imp08800373'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용-->
 
-    IMP.request_pay({
-    pg : 'kcp', // version 1.1.0부터 지원.
-    pay_method : 'card',
-    merchant_uid : 'merchant_' + new Date().getTime(),
-    name : title,
-    amount : price,
-    buyer_email : email,
-    buyer_name : buyer_name,
-    buyer_tel : phone,
-    buyer_addr : buyer_addr,
-    buyer_postcode : buyer_postcode,
-    }, function(rsp) {
-        if ( rsp.success ) {
-            var msg = '결제가 완료되었습니다.';
-            msg += '고유ID : ' + rsp.imp_uid;
-            msg += '상점 거래ID : ' + rsp.merchant_uid;
-            msg += '결제 금액 : ' + rsp.paid_amount;
-            msg += '카드 승인번호 : ' + rsp.apply_num;
-            $("input[type=hidden][name=pay_result]").val('0');
+<!--    IMP.request_pay({-->
+<!--    pg : 'kcp', // version 1.1.0부터 지원.-->
+<!--    pay_method : 'card',-->
+<!--    merchant_uid : 'merchant_' + new Date().getTime(),-->
+<!--    name : title,-->
+<!--    amount : price,-->
+<!--    buyer_email : email,-->
+<!--    buyer_name : buyer_name,-->
+<!--    buyer_tel : phone,-->
+<!--    buyer_addr : buyer_addr,-->
+<!--    buyer_postcode : buyer_postcode,-->
+<!--    }, function(rsp) {-->
+<!--        if ( rsp.success ) {-->
+<!--            var msg = '결제가 완료되었습니다.';-->
+<!--            msg += '고유ID : ' + rsp.imp_uid;-->
+<!--            msg += '상점 거래ID : ' + rsp.merchant_uid;-->
+<!--            msg += '결제 금액 : ' + rsp.paid_amount;-->
+<!--            msg += '카드 승인번호 : ' + rsp.apply_num;-->
+<!--            $("input[type=hidden][name=pay_result]").val('0');-->
 
-        } else {
-            var msg = '결제에 실패하였습니다.';
-            msg += '에러내용 : ' + rsp.error_msg;
-            $("input[type=hidden][name=pay_result]").val('1');
-        }
+<!--        } else {-->
+<!--            var msg = '결제에 실패하였습니다.';-->
+<!--            msg += '에러내용 : ' + rsp.error_msg;-->
+<!--            $("input[type=hidden][name=pay_result]").val('1');-->
+<!--        }-->
 
-        alert(msg);
-         $("input[type=hidden][name=pay_msg]").val(msg);
-         document.getElementById("result_form").submit();
-    });
+<!--        alert(msg);-->
+<!--         $("input[type=hidden][name=pay_msg]").val(msg);-->
+<!--         document.getElementById("result_form").submit();-->
+<!--    });-->
 
+<!-- test -->
+
+ $("input[type=hidden][name=pay_result]").val('0');
+ $("input[type=hidden][name=pay_msg]").val('100');
+ document.getElementById("result_form").submit();
 </script>
 
 </body>

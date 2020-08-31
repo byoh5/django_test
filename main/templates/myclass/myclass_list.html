@@ -22,25 +22,27 @@
         <!-- codingLounge list -->
         <div class="codingLounge_list">
             <ul class="thumb_list">
+                 {% for list_detail in myclass_list_detail %}
                 <li>
-                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="코딩 라운지 리스트 썸네일">
+                    <img src={{list_detail.prd.img}} alt="코딩 라운지 리스트 썸네일">
                     <div class="text_area">
-                        <span class="title">[아두이노 + AI] 스마트 휴지통</span>
+                        <span class="title">{{list_detail.prd.title}}</span>
                         <p class="writer">런코딩</p>
-                        <p class="date">2020.06.30</p>
+                        <p class="date">{{list_detail.expire_time}}</p>
                         <a href="/myclass/" class="btn brd_detail">강의 보기</a>
                     </div>
                 </li>
+                {%endfor%}
             </ul>
-            <div class="paging_area">
-                <a><img src="{% static 'resourceresource/img/sub/go_first.png' %}"></a>
-                <a><img src="{% static 'resource/img/sub/go_prev.png' %}"></a>
-                <a class="active">1</a>
-                <a>2</a>
-                <a>3</a>
-                <a><img src="{% static 'resource/img/sub/go_next.png' %}"></a>
-                <a><img src="{% static 'resource/img/sub/go_last.png' %}"></a>
-            </div>
+<!--            <div class="paging_area">-->
+<!--                <a><img src="{% static 'resourceresource/img/sub/go_first.png' %}"></a>-->
+<!--                <a><img src="{% static 'resource/img/sub/go_prev.png' %}"></a>-->
+<!--                <a class="active">1</a>-->
+<!--                <a>2</a>-->
+<!--                <a>3</a>-->
+<!--                <a><img src="{% static 'resource/img/sub/go_next.png' %}"></a>-->
+<!--                <a><img src="{% static 'resource/img/sub/go_last.png' %}"></a>-->
+<!--            </div>-->
         </div>
 
         {% include "common/banner_bottom.html" %}

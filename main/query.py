@@ -29,6 +29,10 @@ def select_pay(pay_idx):
     pay_info = PayTB.objects.filter(pay_idx=pay_idx)
     return pay_info
 
+def select_myclass_list(user_id):
+    myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, dbstat='A')
+    return myclass_list_info
+
 def update_order_prdCode(order_prd_info):
     new_orderPrd = order_prd_info[0]
     new_orderPrd.count = new_orderPrd.count + 1
@@ -47,9 +51,7 @@ def update_order_idx(idx, user_id, count):
 
     return prd_title
 
-def delete_order_idx(idx, user_id):
-    order_info = select_order_idx(idx, user_id)
-
+def delete_order_idx(order_info):
     if order_info.count() is not 0:
         new_order = order_info[0]
         new_order.dbstat = 'D-'

@@ -19,8 +19,9 @@
                         <span class="sky">CODE. MAKE. CREATE</span><br/>
                         상상을 현실로 만드는 런코딩
                     </span>
-                <a href="{% static 'lecture/lecture_list.html' %}">시작하기</a>
+                <a href="/class/">시작하기</a>
             </div>
+
             <img class="mainVisual" src="{% static 'resource/img/main/img_mainVisual.png' %}" alt="상상을 현실로 만드는 런코딩">
         </div>
     </section>
@@ -31,7 +32,9 @@
         <img class="bg right" src="{% static 'resource/img/main/bg_sec02right.png' %}" alt="right bg">
 
         <div class="video_content">
-            <img class="mainVisual" src="{% static 'resource/img/main/img_video.jpg' %}">
+            <video id="video_ctrl" width ="860" height="500" id="a_video" controls autoplay loop controlsList="nodownload" src="{% static 'resource/data/main/runcoding.mp4' %}" >
+                        </video>
+<!--            <img class="mainVisual" src="{% static 'resource/img/main/img_video.jpg' %}">-->
 
 
         </div>
@@ -66,7 +69,7 @@
                     블럭코딩으로 코딩의 개념을 이해했다면 실제 코딩을 해보고 어떤 결과물로 이어지는지 경험해봐!<br/>
                     강의 속 퀴즈로 개념을 연습해서 같은 키트로 또다른 MAKER가 되어봐!
                 </p>
-                <a href="" class="btn link">시작하기</a>
+                <a href="/class/" class="btn link">시작하기</a>
             </div>
             <div class="benefit_list">
                 <ul>
@@ -107,7 +110,7 @@
                     또 다른 MAKER가 된 친구들의<br/>
                     작품을 구경해봐.
                 </p>
-                <a href="" class="btn link">MAKER 작품 둘러보기</a>
+                <a href="/lounge/" class="btn link">MAKER 작품 둘러보기</a>
             </div>
         </div>
 
