@@ -20,23 +20,26 @@ from main.views import *
 urlpatterns = [
     path('regi/', register_page),
     path('run_login/', login_page),
-    path('run_popup/', popup_page),
-    path('class/', class_page),
-    path('myclass/', myclass_page),
-    path('order/', order_page),
-    path('comunity/', comunity_page),
-    path('lounge/', lounge_page),
-    path('lounge_view/', loungeView_page),
-    path('trashcan_arduino/', trashcn_arduino_page),
-    path('trashcan_mblock/', trashcn_mblock_page),
-    path('myclass_list/', myclass_list_page),
     path('register/', UserRegister),
     path('login_form/', login),
     path('run_logout/', logout),
     path('popup/', popup),
+
+    path('class/', class_page),
+    path('class_detail/', class_detail_page),
+
+    path('myclass/', myclass_page),
+    path('myclass_list/', myclass_list_page),
+
+    path('comunity/', comunity_page),
+    path('lounge/', lounge_page),
+    path('lounge_view/', loungeView_page),
+
+    path('order/', order_page),
     path('run_pay/', payment),
     path('run_order/', order),
     path('pay_result/', pay_result),
+
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
 ]

@@ -33,6 +33,15 @@ def select_myclass_list(user_id):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, dbstat='A')
     return myclass_list_info
 
+def select_class_list():
+    prd_info = PrdTB.objects.filter(dbstat='A')
+    return prd_info
+
+def select_class_detail(prd_code):
+    item_info = ItemTB.objects.filter(prd_code=prd_code)
+    print(item_info.count())
+    return item_info
+
 def update_order_prdCode(order_prd_info):
     new_orderPrd = order_prd_info[0]
     new_orderPrd.count = new_orderPrd.count + 1

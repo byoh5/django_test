@@ -28,7 +28,6 @@ def index_page(request):
 
 
 def register_page(request):
-    request.session['IDresult'] = ""
     return render(request, 'login/register.html')
 
 
@@ -36,21 +35,25 @@ def login_page(request):
     return render(request, 'login/login.html')
 
 
-def popup_page(request):
-    request.session['IDresult'] = ""
-    return render(request, 'popup/popup.html')
-
-
 def class_page(request):
-    return render(request, 'class/class_list.html')
+    class_list_info = select_class_list()
+    context = {
+        "class_list_detail": class_list_info,
+    }
 
+    return render(request, 'class/class_list.html', context)
 
-def trashcn_arduino_page(request):
-    return render(request, 'class/class_view_arduino.html')
+def class_detail_page(request):
+    prd_code = request.POST['detail_prd_code']
+    items_info = select_class_detail(prd_code)
+    prd_info = select_prd(prd_code)
 
+    context = {
+        "class_items_detail": items_info,
+        "prd_detail": items_info[0].prd,
+    }
 
-def trashcn_mblock_page(request):
-    return render(request, 'class/class_view_mblock.html')
+    return render(request, 'class/class_detail.html', context)
 
 
 def myclass_list_page(request):
@@ -262,7 +265,8 @@ def pay_result(request):
 
                     if order_info.count() is not 0:
                         # insert myclass_list
-                        expireTime = timezone.now() + timezone.timedelta(days=90)
+                        period = order_info[0].prd.period * 60
+                        expireTime = timezone.now() + timezone.timedelta(days=period)
                         myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd, expire_time=expireTime)
                         myclass_list_info.save()
 
@@ -287,3 +291,8 @@ def pay_result(request):
         }
 
         return render(request, 'payment/order.html', context)
+
+
+# 스크립트로
+# myclass expire되면 dbstat 바꾸는거 진행
+#

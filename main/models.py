@@ -23,10 +23,13 @@ class LoginTB(models.Model):
     logout_time = models.DateTimeField(null=True)
     dbstat = models.CharField(max_length=50, default='A')
 
+#kit1 : trashcan
 class PrdTB(models.Model):
     prd_idx = models.AutoField(primary_key=True)
-    prd_code = models.CharField(max_length=50, default = '')
+    prd_code = models.CharField(max_length=50, default='') #year(2020) + month(08) + arduino(001), mblock(002), AI(300), kit count(1)
     title = models.CharField(max_length=50)
+    title2 = models.CharField(max_length=50, default='') #detail page title
+    title3 = models.CharField(max_length=50, default='') #detail sub page title
     img = models.CharField(max_length=50)
     period = models.IntegerField(null=True)
     class_count = models.IntegerField(null=True)
@@ -38,15 +41,18 @@ class PrdTB(models.Model):
 
 class ItemTB(models.Model): #curriculum
     item_idx = models.AutoField(primary_key=True)
+    prd_code = models.CharField(max_length=50, default='')
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT)
     title = models.CharField(max_length=50)
     time = models.CharField(max_length=50)
+    data = models.CharField(max_length=150, default='')
+    order = models.IntegerField(default='0')
 
 class OrderTB(models.Model):
     order_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50, default = '') #LoginTB.euser_id
     prd_code = models.CharField(max_length=50, default = '') #prdTB.prd_code
-    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True)
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True) #개월 기준
     count = models.IntegerField(default='1')
     delivery = models.CharField(max_length=50, default='기본배송')
     delivery_price = models.IntegerField(default='3000')

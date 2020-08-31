@@ -23,57 +23,39 @@
 <div class="codingKit_list">
     <div class="lecture_list">
         <ul>
+             <form id="class_form" method="POST" action="/class_detail/">
+                {% csrf_token %}
+                <input type="hidden" id="detail_prd_code" name="detail_prd_code" value="">
+            </form>
+
+             {% for classList_detail in class_list_detail %}
             <li class="list01">
-                <a href="/trashcan_arduino/">
-                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="코딩키트 썸네일">
+                <a href="javascript:void(0);" onclick="javscript:goClassDetail({{classList_detail.prd_code}});">
+                    <img src={{classList_detail.img}} alt="코딩키트 썸네일">
                     <div class="text_area">
                             <span>
                                 <small class="type">아두이노</small>
-                                [아두이노 + AI 코딩] 스마트 휴지통
+                                {{classList_detail.title}}
                             </span>
                     <div class="ckInfo">
                                 <span class="period">
                                     <img src="{% static 'resource/img/sub/ico_calendar.png' %}" alt="기간">
-                                    3개월 과정
+                                    {{classList_detail.period}}개월 과정
                                 </span>
                         <span class="num">
                                     <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
-                                    13개 강의
+                                    {{classList_detail.class_count}}개 강의
                                 </span>
                         <span class="price">
-                                    45,000 won
+                                    {{classList_detail.price}} won
                                 </span>
                     </div>
                         <p class="description"> </p>
                     </div>
                 </a>
             </li>
-             <li class="list01">
-                <a href="/trashcan_mblock/">
-                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="코딩키트 썸네일">
-                    <div class="text_area">
-                                <span>
-                                    <small class="type">엠블럭</small>
-                                    [엠블럭 + AI 코딩] 스마트 휴지통                            </span>
-                        <div class="ckInfo">
-                                    <span class="period">
-                                        <img src="{% static 'resource/img/sub/ico_calendar.png' %}" alt="기간">
-                                        3개월 과정
-                                    </span>
-                            <span class="num">
-                                        <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
-                                        12개 강의
-                                    </span>
-                            <span class="price">
-                                        45,000 won
-                                    </span>
-                        </div>
-                        <p class="description">
-                            스크래치 기반의 mblock을 이용해봐요.                        </p>
-                    </div>
-                </a>
-            </li>
-                    </ul>
+            {% endfor%}
+        </ul>
         <!--<a id="more" class="btn list_more">더보기</a>-->
     </div>
     <div class="filter_area fixed">
@@ -112,11 +94,15 @@
         }
     });
 
+    function goClassDetail(prdCode)
+    {
+         $("input[type=hidden][name=detail_prd_code]").val(prdCode);
+        document.getElementById('class_form').submit();
+    }
+
 </script>
 {% include "common/banner_bottom.html" %}
 {% include "common/footer.html" %}
-
-
 
 
 </body>
