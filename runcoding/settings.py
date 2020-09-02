@@ -51,12 +51,12 @@ INSTALLED_APPS = [
     'main',
 
     #allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
-    #provider
-    'allauth.socialaccount.providers.naver',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    #
+    # #provider
+    # 'allauth.socialaccount.providers.naver',
 ]
 
 
