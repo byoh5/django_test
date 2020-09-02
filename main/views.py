@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.views.generic.base import TemplateView, View
 from django.middleware.csrf import *
-from main.naver import *
+# from main.naver import *
 from django.contrib.auth import get_user_model
 # from django.http import HttpResponse, HttpResponseRedirect
 
