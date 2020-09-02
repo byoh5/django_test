@@ -24,6 +24,7 @@ urlpatterns = [
     path('login_form/', login),
     path('run_logout/', logout),
     path('popup/', popup),
+    # path('social_accounts/',SocialLoginCallbackView.as_view()),
 
     path('class/', class_page),
     path('class_detail/', class_detail_page),
@@ -41,5 +42,6 @@ urlpatterns = [
     path('pay_result/', pay_result),
 
     path('admin/', admin.site.urls),
+    # path('accounts/', include('allauth.urls')),
     path('', include('main.urls')),
 ]

@@ -25,9 +25,6 @@ SECRET_KEY = 'hllj7=^t0at1n0^$-h4!^uumv*(*7=tu_pi+oyzyc0gw4!!6&='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-USE_TZ = True
-TIME_ZONE = 'Asia/Seoul'
-
 ALLOWED_HOSTS = ['*']
 STATIC_ROOT = '/static/files/path/'
 DATETIME_FORMAT = 'Y-m-d H:i:s'
@@ -46,11 +43,20 @@ SESSION_COOKIE_NAME = 'run_session_coding'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+
+    #allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    #provider
+    'allauth.socialaccount.providers.naver',
 ]
 
 
@@ -114,19 +120,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL='/run_login/'
+NAVER_CLIENT_ID='5ie4f9CS7FURh7zzFG7C'
+NAVER_SECRET_KEY='7_CYaFVs4A'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'ko-kr'
+TIME_ZONE = 'Asia/Seoul'
+USE_TZ = True
 USE_I18N = True
-
 USE_L10N = True
 
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

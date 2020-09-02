@@ -39,8 +39,11 @@ def select_class_list():
 
 def select_class_detail(prd_code):
     item_info = ItemTB.objects.filter(prd_code=prd_code)
-    print(item_info.count())
     return item_info
+
+def select_downdata(prdCode):
+    downdata_info = ItemDowndataTB.objects.filter(prd_code=prdCode)
+    return downdata_info
 
 def update_order_prdCode(order_prd_info):
     new_orderPrd = order_prd_info[0]
@@ -51,7 +54,6 @@ def update_order_idx(idx, user_id, count):
     order_info = select_order_idx(idx, user_id)
     prd_title = ""
 
-    print(order_info.count())
     if order_info.count() is not 0:
         prd_title = order_info[0].prd.title
         new_order = order_info[0]

@@ -39,6 +39,14 @@ class PrdTB(models.Model):
     url = models.CharField(max_length=50, default = '')
     dbstat = models.CharField(max_length=50, default='A')
 
+class ItemDowndataTB(models.Model):
+    downdata_idx = models.AutoField(primary_key=True)
+    downdata = models.CharField(max_length=50, default='')
+    downdata_name = models.CharField(max_length=50, default='')
+    prd_code = models.CharField(max_length=50, default='')
+    dbstat = models.CharField(max_length=50, default='A')
+
+
 class ItemTB(models.Model): #curriculum
     item_idx = models.AutoField(primary_key=True)
     prd_code = models.CharField(max_length=50, default='')

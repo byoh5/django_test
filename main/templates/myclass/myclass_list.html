@@ -19,6 +19,11 @@
         </section>
         <!-- sub visual -->
 
+        <form id="myclass_form" method="post" action="/myclass/">
+            {% csrf_token %}
+            <input type="hidden" id="prdCode" name="prdCode" value="">
+        </form>
+
         <!-- codingLounge list -->
         <div class="codingLounge_list">
             <ul class="thumb_list">
@@ -27,9 +32,9 @@
                     <img src={{list_detail.prd.img}} alt="코딩 라운지 리스트 썸네일">
                     <div class="text_area">
                         <span class="title">{{list_detail.prd.title}}</span>
-                        <p class="writer">런코딩</p>
-                        <p class="date">{{list_detail.expire_time}}</p>
-                        <a href="/myclass/" class="btn brd_detail">강의 보기</a>
+                        <p class="writer">{{list_detail.start_time | date:'yy-m-d' }}</p>
+                        <p class="date"> ~ {{list_detail.expire_time | date:'yy-m-d' }}</p>
+                        <a href="javascript:void(0);" onclick="javascript:goMyClass({{list_detail.prd.prd_code}});" class="btn brd_detail">강의 보기</a>
                     </div>
                 </li>
                 {%endfor%}
@@ -56,6 +61,12 @@
                 location.href = "/run_login/";
             }
          });
+
+         function goMyClass(prdCode)
+         {
+            $("input[type=hidden][name=prdCode]").val(prdCode);
+            document.getElementById("myclass_form").submit();
+         }
 
     </script>
 

@@ -1,16 +1,15 @@
 {% load static %}
 {% include "common/header.html" %}
-<input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
     <div class="wrap">
         <!-- sub visual -->
         <section class="sub_visual">
             <div class="section_wrap">
                 <div class="slogan">
                    <span class="bigSlg ck_title">
-                        스마트 휴지통
+                        {{title}}
                     </span>
                     <div class="pageNav">
-                        <span>[아두이노 + AI]</span>
+                        <span>{{sub_title}}</span>
                     </div>
                 </div>
                 <img class="subVisual myClass" src="{% static 'resource/img/sub/sv_myClass.png' %}" alt="나의 강의실">
@@ -24,17 +23,17 @@
                 <div class="detail_area">
                     <!-- 동영상 영역입니다. -->
                     <div class="video_area">
-<!--                        <img src="../resource/img/sub/samp_video.png" alt="video area">-->
-                        <video id="video_ctrl" width ="750" height="500" id="a_video" controls controlsList="nodownload" src="{% static 'resource/data/arduino_trashcan/arduino_install.mp4' %}" >
-                        </video>
-
+                        <video id="video_ctrl" width ="100%" height="100%" controls controlsList="nodownload" src="" />
                     </div>
 
                     <div class="precaution">
-                        <span class="summaryTitle">강의 소개</span>
+                        <span class="summaryTitle">강의 자료실</span>
                         <ul>
-                            <li>스마트 휴지통 키트를 완성해 보세요.</li>
-                            <li>강의에 대한 요약된 정보를 입력해주세요.</li>
+                             {% for downData_info in downData %}
+                                <a href="/static/resource/data/download/{{downData_info.prd_code}}/{{downData_info.downdata}}" download>
+                                    <li>{{downData_info.downdata_name}}</li>
+                                </a>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -47,25 +46,24 @@
                         <div class="lecture_info">
                             <ul class="lectureList" id="accordion">
                                 <li class="active">
-                                    <span class="section_title">section 01.</span>
+<!--                                    <span class="section_title">강의 목록</span>-->
                                     <ul class="submenu">
-                                        <li class="now"><a href="javascript:getVideo(1);" class="classList">01. 아두이노 설치 [환경구축]</a></li>
-                                        <li><a href="javascript:getVideo(9);"  class="classList">09. Trashcan [키트만들기]</a></li>
+                                         {% for item_detail in myclass_detail %}
+                                       <li>
+                                             <a href="javascript:getVideo('{{item_detail.prd_code}}', '{{item_detail.data}}');" class="classList">
+                                                 {{forloop.counter}}. {{item_detail.title}}</a>
+                                       </li>
+                                        {% endfor %}
                                     </ul>
                                 </li>
                             </ul>
 
                         </div>
                     </div>
-<!--                    <div class="btn_area">-->
-<!--                        <a href="#" class="btn cart">나의 강의실로</a>-->
-<!--                        <a class="btn buy">다음 강의</a>-->
-<!--                    </div>-->
                 </div>
             </div>
         </div>
 
-       {% include "common/banner_bottom.html" %}
         {% include "common/footer.html" %}
 
 
@@ -134,17 +132,12 @@
             }
         });
 
-        function getVideo(url) {
-        var src = '../resource/data/arduino_trashcan/arduino_install.mp4';
-        if(url == 9)
-            src = '../resource/data/arduino_trashcan/arduino_trashcan.mp4';
-
-        var video  = document.getElementById('video_ctrl');
-        video.src = src;
-    }
-
-
+        function getVideo(prdCode, data)
+        {
+            var src = '/static/resource/data/' + prdCode + '/' + data;
+            var video  = document.getElementById('video_ctrl');
+            video.src = src;
+        }
     </script>
-
 
 </body></html>
