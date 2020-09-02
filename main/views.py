@@ -78,12 +78,10 @@ def myclass_list_page(request):
 
 def myclass_page(request):
     prdCode = request.POST['prdCode']
-    print(prdCode)
 
     item_info = select_class_detail(prdCode)
     downdata_info = select_downdata(prdCode)
 
-    print(downdata_info[0].downdata_name)
     if item_info.count() is not 0:
         context = {
             "myclass_detail": item_info,
