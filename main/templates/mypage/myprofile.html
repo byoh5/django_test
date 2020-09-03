@@ -1,0 +1,188 @@
+{% load static %}
+{% include "common/header.html" %}
+
+    <div class="wrap mypage">
+
+        <!-- mypage tabs -->
+        <div class="tabs mypage">
+            <ul>
+                <li class="active"><a href="/myprofile/">내 프로필</a></li>
+<!--                <li><a href="#">내 쿠폰</a></li>-->
+                <li><a href="/myorder/">주문내역</a></li>
+            </ul>
+        </div>
+
+        <!-- mypage content -->
+        <div class="mypage_area myInfo">
+            <div class="info_area">
+                <ul>
+                     {% for userInfo in user_detail %}
+                    <li class="email">
+                        <span class="infoTit">email</span>
+                        <p>{{userInfo.regi_email}}</p>
+                    </li>
+                    <li class="name">
+                        <span class="infoTit">name </span>
+                        <p>{{userInfo.regi_name}}</p>
+                    </li>
+                    <li class="phone">
+                        <span class="infoTit">phone</span>
+                        <p>{{userInfo.regi_phone}}</p>
+                        <a href="#phone" class="btn edit">변경</a>
+                    </li>
+                    <li class="address">
+                        <span class="infoTit">address</span>
+                        <p>{{userInfo.regi_add02}} {{userInfo.regi_add03}}</p>
+                        <a href="#address" class="btn edit">변경</a>
+                    </li>
+                    <li class="password">
+                        <span class="infoTit">비밀번호 변경</span>
+                        <div class="input_area">
+                            <input type="password" name="beforePW" id="beforePW" placeholder="이전 비밀번호">
+                            <input type="password" name="newPW" id="newPW" placeholder="새 비밀번호">
+                            <input type="password" name="newChPW" id="newChPW" placeholder="새 비밀번호 확인">
+                            <a href="javascript:changePW();" class="btn editPW">비밀번호 변경</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- 전화번호 변경 팝업 -->
+        <div data-ml-modal="" id="phone">
+            <a href="#!" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg mypage">
+                <a href="#!" class="modal-close">×</a>
+                <h3>전화번호 변경</h3>
+                <div class="modal-content">
+                    <span>변경할 휴대폰 번호를 입력해주세요.</span>
+                    <div class="input_area">
+                        <input type="text" name="change_phone" id="" class="login_inp" placeholder="전화번호를 -없이 숫자만 입력해주세요.">
+                        <a href="#" class="btn certified">휴대폰 인증</a>
+                    </div>
+                    <div class="btn_area">
+                        <a href="#" class="btn cancle">변경 취소</a>
+                        <a href="#" class="btn apply">변경사항 적용</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 주소 변경 팝업 -->
+        <div data-ml-modal="" id="address">
+            <a href="#!" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg mypage">
+                <a href="#!" class="modal-close">×</a>
+                <h3>주소 변경</h3>
+                <div class="modal-content">
+                    <span>변경할 주소를 입력해주세요.</span>
+                        <div class="input_area address">
+                            <input type="text" name="regi_add01" id="regi_add01" class="login_inp add01 w50">
+                            <button class="btn address w30" onClick="javascript:getAddress();">주소 찾기</button>
+                            <input type="text" name="regi_add02" id="regi_add02" class="login_inp add02 w80">
+                            <input type="text" name="regi_add03" id="regi_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
+                        </div>
+                    <div class="btn_area">
+                        <a href="#" class="btn cancle">변경 취소</a>
+                        <a href="javascript:changeAddr();" class="btn apply">변경사항 적용</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include "common/footer.html" %}
+    </div>
+
+    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <input type="hidden" id="msg" name="msg" value="{{message}}">
+    <script>
+    $(document).ready(function() {
+        var msg = $("input[type=hidden][name=msg]").val();
+        if(msg == 202)
+            alert("입력하신 이전 비밀번호가 다릅니다");
+    });
+
+
+    function getAddress()
+    {
+        chkAddr = 1;
+        new daum.Postcode({
+            oncomplete: function(data)
+            {
+                $('[name=regi_add01]').val(data.zonecode); // 우편번호 (5자리)
+                $('[name=regi_add02]').val(data.address);
+                $('[name=regi_add03]').val(data.buildingName);
+            }
+	    }).open();
+
+	    return true;
+	}
+
+	function changeAddr()
+	{
+        var newForm = $('<form></form>');
+
+        newForm.attr("name", "modify");
+        newForm.attr("method", "post");
+        newForm.attr("action", "/my_modify_addr/");
+
+        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'regi_add01', value : $('[name=regi_add01]').val()}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'regi_add02', value : $('[name=regi_add02]').val()}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'regi_add03', value : $('[name=regi_add03]').val()}));
+
+        newForm.appendTo('body');
+        newForm.submit();
+	}
+
+	function changePW()
+	{
+	    var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+	    var pass = document.getElementById('newPW');
+        var pass_chk = document.getElementById('newChPW');
+
+	    if(pass.value.length == 0 || pass_chk.value.length < 8)
+        {
+            alert("비밀번호는 8~12자의 영문과 숫자로만 입력하세요");
+            pass.focus();
+            return false;
+        }
+        else
+        {
+            if(!id_pass_patten.test(pass.value))
+            {
+                alert("비밀번호는 8~12자의 영문과 숫자로만 입력하세요");
+                pass.focus();
+                return false;
+            }
+
+            if(pass.value != pass_chk.value)
+            {
+                alert("비밀번호와 비밀번호 확인 번호가 다릅니다.");
+                pass_chk.focus();
+                pass_chk.value = "";
+                return false;
+            }
+        }
+
+        var newForm = $('<form></form>');
+
+        newForm.attr("name", "modify_pw");
+        newForm.attr("method", "post");
+        newForm.attr("action", "/my_modify_pw/");
+
+        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'beforePW', value : $('[name=beforePW]').val()}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'newPW', value : $('[name=newPW]').val()}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'newChPW', value : $('[name=newChPW]').val()}));
+
+        newForm.appendTo('body');
+        newForm.submit();
+	}
+    </script>
+
+
+</body></html>

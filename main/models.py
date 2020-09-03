@@ -17,7 +17,7 @@ class RegisterTB(models.Model):
 
 class LoginTB(models.Model):
     login_idx = models.AutoField(primary_key=True)
-    user_id = models.CharField(max_length=50, default = '') #RegisterTB.regi_id
+    user_id = models.CharField(max_length=50, default='') #RegisterTB.regi_id
     session_id = models.CharField(max_length=150)
     login_time = models.DateTimeField(default=timezone.now)
     logout_time = models.DateTimeField(null=True)
@@ -76,6 +76,7 @@ class PayTB(models.Model):
     prd_price = models.IntegerField(default='0') # product total
     delivery_price = models.IntegerField(default='0')
     prd_total_price = models.IntegerField(default='0')  # product total + delivary
+    delivery_addr = models.CharField(max_length=150, default='')
     pay_result = models.IntegerField(default='100') # 0: 성공 1: 실패
     pay_result_info = models.CharField(max_length=300, default='') #pay_msg
     pay_time = models.DateTimeField(default=timezone.now)

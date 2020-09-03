@@ -117,6 +117,24 @@ def order_page(request):
         }
         return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
 
+
+def mypage_profile(request):
+    user_id = request.session.get('user_id')
+    user_info = select_register(user_id)
+    context = {
+        "user_detail": user_info,
+    }
+    return render(request, 'mypage/myprofile.html', context)
+
+def mypage_order(request):
+    user_id = request.session.get('user_id')
+    pay_user_info = select_pay_user(user_id)
+    context = {
+        "user_detail": pay_user_info,
+    }
+    return render(request, 'mypage/myorder.html', context)
+
+
 # id로 검색해서 없으면 진행...있으면 에러리턴.
 def UserRegister(request):
     regi_id = request.POST['regi_id']
@@ -151,13 +169,14 @@ def login(request):
             if check_pass:
                 session_auth = bcrypt.hashpw(regi_id.encode('utf-8'), bcrypt.gensalt())
                 session = session_auth.decode('utf-8')
-                delete_login(login_id)
-                q = LoginTB(user_id=login_id, session_id=session)
+                delete_login(login_id) # 기존에 로그인 한 정보가 있다면 지움.
+
+                q = LoginTB(user_id=login_id, session_id=session) #새로운 로그인 정보 등록
                 q.save()
-                request.session['client_id'] = session
+
+                request.session['client_id'] = session #쿠기에 정보 저장
                 request.session['user_id'] = regi_id
                 request.session['result'] = 'success'
-                request.user = regi_id
                 request.session.modified = True
                 context = {
                     "client_id": session,
@@ -196,7 +215,6 @@ def logout(request):
 def popup(request):
     regi_id = request.POST['popup_regiId']
     regi_info = select_register(regi_id)
-    print(regi_id)
     if regi_info.count() is not 0:
         context = {
             "popup_message": message_exist_id,  # 전역 변수로 변경 필요
@@ -256,15 +274,18 @@ def payment(request):
 
     regi_info = select_register(user_id)
 
-    pay_info = PayTB(user_id=user_id, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
-          prd_price=prd_price, delivery_price=option_price, prd_total_price=prd_total_price)
-    pay_info.save()
+    if regi_info.count() is not 0:
+        addr = regi_info[0].regi_add02 + " " + regi_info[0].regi_add03
 
-    context = {
-        "payment": pay_info,
-    }
+        pay_info = PayTB(user_id=user_id, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
+              prd_price=prd_price, delivery_price=option_price, prd_total_price=prd_total_price, delivery_addr=addr)
+        pay_info.save()
 
-    return render(request, 'payment/pay_info.html', context)
+        context = {
+            "payment": pay_info,
+        }
+
+        return render(request, 'payment/pay_info.html', context)
 
 def pay_result(request):
     pay_idx = int(request.POST['pay'])
@@ -317,7 +338,44 @@ def pay_result(request):
 
         return render(request, 'payment/order.html', context)
 
+def mypage_profile_modify_addr(request):
+    user_id = request.session.get('user_id')
+    add01 = request.POST['regi_add01']
+    add02 = request.POST['regi_add02']
+    add03 = request.POST['regi_add03']
+    update_user_addr(user_id, add01, add02, add03)
 
+    user_info = select_register(user_id)
+    context = {
+        "user_detail": user_info,
+    }
+    return render(request, 'mypage/myprofile.html', context)
+
+def mypage_profile_modify_pw(request):
+    user_id = request.session.get('user_id')
+    beforePW = request.POST['beforePW']
+    newPW = request.POST['newPW']
+
+    user_info = select_register(user_id)
+    if user_info.count() is not 0:
+        check_pass = bcrypt.checkpw(beforePW.encode('utf-8'), user_info[0].regi_pass.encode('utf-8'))
+        if check_pass: #true이면 비번 정보 변경
+            new_user = user_info[0]
+            password_encrypt = bcrypt.hashpw(newPW.encode('utf-8'), bcrypt.gensalt())
+            new_user.regi_pass = password_encrypt.decode('utf-8')
+            new_user.save()
+
+            delete_login(user_id)
+            request.session['client_id'] = ''
+            return render(request, 'login/login.html')
+
+        else: #입력한 기존 비밀번호가 틀리면 error 처리
+            context = {
+                "user_detail": user_info,
+                "message": message_diff_pass,
+            }
+
+            return render(request, 'mypage/myprofile.html', context)
 # 스크립트로
 # myclass expire되면 dbstat 바꾸는거 진행
 

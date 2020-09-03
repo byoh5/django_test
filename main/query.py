@@ -29,6 +29,10 @@ def select_pay(pay_idx):
     pay_info = PayTB.objects.filter(pay_idx=pay_idx)
     return pay_info
 
+def select_pay_user(user_id):
+    pay_info = PayTB.objects.filter(user_id=user_id)
+    return pay_info
+
 def select_myclass_list(user_id):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, dbstat='A')
     return myclass_list_info
@@ -44,6 +48,18 @@ def select_class_detail(prd_code):
 def select_downdata(prdCode):
     downdata_info = ItemDowndataTB.objects.filter(prd_code=prdCode)
     return downdata_info
+
+def update_user_addr(user_id,add01,add02,add03):
+    user_info = select_register(user_id)
+
+    if user_info.count() is not 0:
+        new_user = user_info[0]
+        new_user.regi_add01 = add01
+        new_user.regi_add02 = add02
+        new_user.regi_add03 = add03
+        new_user.save()
+
+        return new_user
 
 def update_order_prdCode(order_prd_info):
     new_orderPrd = order_prd_info[0]

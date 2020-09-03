@@ -41,6 +41,11 @@ urlpatterns = [
     path('run_order/', order),
     path('pay_result/', pay_result),
 
+    path('myprofile/', mypage_profile),
+    path('myorder/', mypage_order),
+    path('my_modify_addr/', mypage_profile_modify_addr),
+    path('my_modify_pw/', mypage_profile_modify_pw),
+
     path('admin/', admin.site.urls),
     # path('accounts/', include('allauth.urls')),
     path('', include('main.urls')),

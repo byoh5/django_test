@@ -1,0 +1,56 @@
+{% load static %}
+{% include "common/header.html" %}
+
+    <div class="wrap mypage">
+
+        <!-- mypage tabs -->
+        <div class="tabs mypage">
+            <ul>
+                <li><a href="/myprofile/">내 프로필</a></li>
+                <li class="active"><a href="/myorder/">주문내역</a></li>
+            </ul>
+        </div>
+
+        <!-- mypage content -->
+        <div class="mypage_area membership">
+            <div class="membership_area">
+                <ul>
+                    <li class="mypageTbl orderList">
+                        <h3>주문내역</h3>
+
+                        <!-- 해당정보가 없을경우 -->
+                        <!--<div class="empty">
+                            <span>주문내역이 없습니다.</span>
+                        </div>-->
+                        <!-- 해당정보가 없을경우 end -->
+
+                        <ul class="list">
+                            <li class="thead">
+                                <span class="orderNum">주문번호</span>
+                                <span class="payDate">결제일</span>
+                                <span class="content">내용</span>
+                                <span class="cost">금액</span>
+                                <span class="etc">-</span>
+                            </li>
+                            {% for userInfo in user_detail %}
+                            <li class="tbody">
+                                <span class="orderNum">{{forloop.counter}}</span>
+                                <span class="payDate">{{userInfo.pay_time}}</span>
+                                <span class="content">{{userInfo.prd_info}}</span>
+                                <span class="cost">{{userInfo.prd_total_price}}</span>
+                                <span class="etc">
+                                    <a href="#" class="btn order">상세보기</a>
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+      {% include "common/footer.html" %}
+
+    </div>
+</body></html>

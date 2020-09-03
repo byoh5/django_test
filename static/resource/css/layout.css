@@ -1538,7 +1538,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	display:block;
 	padding:0;
 	font-size:0.6em;
-	text-align:left;
+	text-align:center;
 }
 .mypage_area .membership_area > ul > li.mypageTbl ul.list li.thead span {
 	font-weight:600;
@@ -1558,11 +1558,11 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 .mypage_area .membership_area > ul > li.orderList ul.list li span.orderNum {
 	margin-right:2%;
-	width:13%;
+	width:5%;
 }
 .mypage_area .membership_area > ul > li.orderList ul.list li span.payDate {
 	margin-right:2%;
-	width:13%;
+	width:20%;
 }
 .mypage_area .membership_area > ul > li.orderList ul.list li span.option,
 .mypage_area .membership_area > ul > li.orderList ul.list li span.cost {
