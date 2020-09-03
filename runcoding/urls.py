@@ -16,6 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from main.views import *
+from main.codeView.lecture import *
+from main.codeView.comunity import *
+from main.codeView.login import *
+from main.codeView.lounge import *
+from main.codeView.myclass import *
+from main.codeView.mypage import *
+from main.codeView.order import *
+from main.codeView.payment import *
+from main.codeView.regi import *
 
 urlpatterns = [
     path('regi/', register_page),
@@ -23,7 +32,7 @@ urlpatterns = [
     path('register/', UserRegister),
     path('login_form/', login),
     path('run_logout/', logout),
-    path('popup/', popup),
+    path('check_id/', check_id_popup),
     # path('social_accounts/',SocialLoginCallbackView.as_view()),
 
     path('class/', class_page),

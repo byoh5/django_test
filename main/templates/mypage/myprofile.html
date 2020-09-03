@@ -36,7 +36,7 @@
                         <a href="#address" class="btn edit">변경</a>
                     </li>
                     <li class="password">
-                        <span class="infoTit">비밀번호 변경</span>
+                        <span class="infoTit">비밀번호 변경 </span>
                         <div class="input_area">
                             <input type="password" name="beforePW" id="beforePW" placeholder="이전 비밀번호">
                             <input type="password" name="newPW" id="newPW" placeholder="새 비밀번호">
@@ -72,9 +72,9 @@
 
         <!-- 주소 변경 팝업 -->
         <div data-ml-modal="" id="address">
-            <a href="#!" class="modal-overlay"></a>
+            <a href="" class="modal-overlay"></a>
             <div class="modal-dialog modal-dialog-lg mypage">
-                <a href="#!" class="modal-close">×</a>
+                <a href="" class="modal-close">×</a>
                 <h3>주소 변경</h3>
                 <div class="modal-content">
                     <span>변경할 주소를 입력해주세요.</span>
@@ -85,8 +85,8 @@
                             <input type="text" name="regi_add03" id="regi_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
                         </div>
                     <div class="btn_area">
-                        <a href="#" class="btn cancle">변경 취소</a>
-                        <a href="javascript:changeAddr();" class="btn apply">변경사항 적용</a>
+                        <a href="" class="btn cancle">변경 취소</a>
+                        <a href="javascript:void(0);" onclick="javascript:changeAddr();" class="btn apply">변경사항 적용</a>
                     </div>
                 </div>
             </div>
@@ -95,20 +95,22 @@
         {% include "common/footer.html" %}
     </div>
 
+    <input type="hidden" id="msg" name="msg" value="{{message}}">
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <input type="hidden" id="msg" name="msg" value="{{message}}">
+
+
     <script>
     $(document).ready(function() {
         var msg = $("input[type=hidden][name=msg]").val();
         if(msg == 202)
             alert("입력하신 이전 비밀번호가 다릅니다");
+            return true;
     });
 
 
     function getAddress()
     {
-        chkAddr = 1;
         new daum.Postcode({
             oncomplete: function(data)
             {
@@ -123,19 +125,24 @@
 
 	function changeAddr()
 	{
-        var newForm = $('<form></form>');
+	    if($('[name=regi_add01]').val() == "" || $('[name=regi_add02]').val() == "" || $('[name=regi_add03]').val() == "")
+	       alert("주소를 바르게 입력해주세요");
+	    else
+	    {
+            var newForm = $('<form></form>');
 
-        newForm.attr("name", "modify");
-        newForm.attr("method", "post");
-        newForm.attr("action", "/my_modify_addr/");
+            newForm.attr("name", "modify");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/my_modify_addr/");
 
-        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-        newForm.append($('<input/>', {type: 'hidden', name: 'regi_add01', value : $('[name=regi_add01]').val()}));
-        newForm.append($('<input/>', {type: 'hidden', name: 'regi_add02', value : $('[name=regi_add02]').val()}));
-        newForm.append($('<input/>', {type: 'hidden', name: 'regi_add03', value : $('[name=regi_add03]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add01', value : $('[name=regi_add01]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add02', value : $('[name=regi_add02]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add03', value : $('[name=regi_add03]').val()}));
 
-        newForm.appendTo('body');
-        newForm.submit();
+            newForm.appendTo('body');
+            newForm.submit();
+        }
 	}
 
 	function changePW()

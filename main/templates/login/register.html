@@ -11,7 +11,7 @@
                 </a>
             </h1>
         </div>
-        <form id="popup_form" method="post" action="/popup/">
+        <form id="popup_form" method="post" action="/check_id/">
             {% csrf_token %}
              <input type="hidden" name="popup_regiId" id="popup_regiId" value="">
              <input type="hidden" name="message" value="{{popup_message}}" readonly>
@@ -50,7 +50,7 @@
                                 </div>
                             </li>
                             <li>
-                                <span>키트 받을 주소</span>
+                                <span>주소</span>
                                 <div class="input_area multiLine">
                                     <input type="text" name="regi_add01" id="regi_add01" class="login_inp add01 w70" readonly required/>
                                         <button type="button" class="btn address w30" onClick="javascript:getAddress();">주소찾기</button>
@@ -104,7 +104,6 @@
     <!--  address script -->
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<!--<script src="{% static 'resource/js/jquery-ajax-runcoding.js' %}"></script>-->
 
 
 <script>
