@@ -140,6 +140,17 @@ USE_TZ = True
 USE_I18N = True
 USE_L10N = True
 
+EMAIL_HOST = 'smtp.gmail.com'
+# 메일을 호스트하는 서버
+EMAIL_PORT = '587'
+# gmail과의 통신하는 포트
+EMAIL_HOST_USER = '********@gmail.com'
+# 발신할 이메일
+EMAIL_HOST_PASSWORD = '********'
+# 발신할 메일의 비밀번호
+EMAIL_USE_TLS = True
+# TLS 보안 방법
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # Static files (CSS, JavaScript, Images)

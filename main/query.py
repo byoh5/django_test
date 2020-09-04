@@ -21,6 +21,10 @@ def select_register(regi_id):
     regi_info = RegisterTB.objects.filter(regi_id=regi_id, dbstat='A')
     return regi_info
 
+def select_register_all(regi_id):
+    regi_info = RegisterTB.objects.filter(regi_id=regi_id)
+    return regi_info
+
 def select_prd(prd_code):
     prd_info = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
     return prd_info

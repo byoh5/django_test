@@ -11,12 +11,6 @@
                 </a>
             </h1>
         </div>
-        <form id="popup_form" method="post" action="/check_id/">
-            {% csrf_token %}
-             <input type="hidden" name="popup_regiId" id="popup_regiId" value="">
-             <input type="hidden" name="message" value="{{popup_message}}" readonly>
-             <input type="hidden" name="regiId" value="{{regiId}}" readonly>
-        </form>
             <div class="join_area">
                 <form id="register_form" method="post" action="/register/">
                     {% csrf_token %}
@@ -27,8 +21,7 @@
                                 <span>아이디</span>
                                 <div class="input_area">
                                         <input type="text" name="regi_id" id="regi_id" class="register" minlength="8" maxlength="12" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요."/>
-                                        <button type="button" class="btn register w30" onClick="javascript:regi_checkId();">중복체크</button>
-                                    </form>
+                                        <button type="button" class="btn register w30" id="popbutton"   onClick="javascript:regi_checkId();">중복체크</button>
                                 </div>
                             </li>
                             <li>
@@ -96,7 +89,6 @@
             </div>
     </div>
 
-
     {% include "common/banner_bottom.html" %}
     {% include "common/footer.html" %}
 </div>
@@ -105,59 +97,57 @@
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/animate.min.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/jquery.modal.css" />
+<script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/jquery.modal.js"></script>
+<script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
 
 <script>
 
     var chkId = 0;
     var chkAddr = 0 ;
-    // hamberger menu
-    $('.menu-btn').click(function() {
-        $('.line').toggleClass('animate');
-    });
-    // hamberger menu
-    // navigation
-    $(document).ready(function() {
-        $(".gnbClose, .gnbOpen").on("click", function(){
-            $(".gnb").toggleClass("active");
-            $(".gnbOpen").toggleClass("gnbClose");
-            $("html, body, .wrap").toggleClass("open");
-            $('html, body, .wrap').off('scroll touchmove mousewheel');
-        });
-
-        var remote_result = $("input[type=hidden][name=message]").val();
-        if(remote_result != "")
-        {
-            if(remote_result == 208)
-             {
-                 alert("사용할 수 없는 ID 입니다.");
-                 document.getElementById("regi_id").value = "";
-             }
-             else if(remote_result == 200)
-             {
-                 alert("사용할 수 있는 ID 입니다.");
-                 document.getElementById("regi_id").value = $("input[type=hidden][name=regiId]").val()
-             }
-        }
-    });
 
     var popup_window;
     function regi_checkId()
     {
         var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
         var id = document.getElementById('regi_id');
-        chkId = 1;
+
 
         if(!id_pass_patten.test(id.value))
         {
-            alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+            $("#res_msg").text("아이디는 8~12자의 영문과 숫자로만 입력하세요.");
+            $('div.modal').modal();
             chkId = 0;
             id.focus();
             return false;
         }
         else
         {
-            $("input[type=hidden][name=popup_regiId]").val(id.value);
-             document.getElementById("popup_form").submit();
+            var regi_frm = $('#register_form');
+
+             $.ajax({
+                data: regi_frm.serialize(),
+                type: 'post',
+                url: '/check_id/',
+                dataType: 'json',
+                success:function(result){
+                    if(result == 200)
+                    {
+                         $("#res_msg").text("사용할 수 있는 ID 입니다.");
+                          chkId = 1;
+                    }
+                    else
+                    {
+                        $("#res_msg").text("사용할 수 없는 ID 입니다.");
+                        id.focus();
+                        id.value = "";
+                        chkId = 0;
+                    }
+                   $('div.modal').modal();
+                }
+             });
+
         }
     }
 
@@ -181,7 +171,8 @@
 
         if(id.value.length == 0 || id.value.length < 8)
         {
-            alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+            $("#res_msg").text("아이디는 8~12자의 영문과 숫자로만 입력하세요.");
+            $('div.modal').modal();
             id.focus();
             return false;
         }
@@ -189,20 +180,15 @@
         {
             if(!chkId)
             {
-                alert("아이디 중복체크 해주세요.");
-                return false;
-            }
-
-            var remote_result = $("input[type=hidden][name=message]").val();
-            if(remote_result == 208)
-            {
-                alert("아이디 중복체크 해주세요.");
+                $("#res_msg").text("아이디 중복체크 해주세요.");
+                $('div.modal').modal();
                 return false;
             }
 
             if(!id_pass_patten.test(id.value))
             {
-                alert("아이디는 8~12자의 영문과 숫자로만 입력하세요");
+                $("#res_msg").text("아이디는 8~12자의 영문과 숫자로만 입력하세요.");
+                $('div.modal').modal();
                 id.focus();
                 return false;
             }
@@ -210,21 +196,24 @@
 
         if(name.value == "")
         {
-            alert("이름을 입력하세요.");
+            $("#res_msg").text("이름을 입력하세요.");
+            $('div.modal').modal();
             name.focus();
             return false;
         }
 
         if(phone.value == "")
         {
-            alert("휴대폰 번호를 입력하세요.");
+            $("#res_msg").text("휴대폰 번호를 입력하세요.");
+            $('div.modal').modal();
             phone.focus();
             return false;
         }
 
         if(email.value == "")
         {
-            alert("이메일 주소를 입력하세요.");
+            $("#res_msg").text("이메일 주소를 입력하세요.");
+            $('div.modal').modal();
             email.focus();
             return false;
         }
@@ -232,7 +221,8 @@
         {
             if(!email_patten.test(email.value))
             {
-                alert("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
+                $("#res_msg").text("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
+                $('div.modal').modal();
                 email.focus();
                 return false;
             }
@@ -240,14 +230,16 @@
 
         if(address01.value == "" || address02.value == "" || address03.value == "")
         {
-            alert("주소를 입력하세요.");
+            $("#res_msg").text("주소를 입력하세요.");
+            $('div.modal').modal();
             address03.focus();
             return false;
         }
 
        if(pass.value.length == 0 || pass_chk.value.length < 8)
         {
-            alert("비밀번호는 8~12자의 영문과 숫자로만 입력하세요");
+            $("#res_msg").text("비밀번호는 8~12자의 영문과 숫자로만 입력하세요.");
+            $('div.modal').modal();
             pass.focus();
             return false;
         }
@@ -255,14 +247,16 @@
         {
             if(!id_pass_patten.test(pass.value))
             {
-                alert("비밀번호는 8~12자의 영문과 숫자로만 입력하세요");
+                $("#res_msg").text("비밀번호는 8~12자의 영문과 숫자로만 입력하세요.");
+                $('div.modal').modal();
                 pass.focus();
                 return false;
             }
 
             if(pass.value != pass_chk.value)
             {
-                alert("비밀번호와 비밀번호 확인 번호가 다릅니다.");
+                $("#res_msg").text("비밀번호와 비밀번호 확인 번호가 다릅니다.");
+                $('div.modal').modal();
                 pass_chk.focus();
                 pass_chk.value = "";
                 return false;
@@ -271,7 +265,8 @@
 
         if(id.value == pass.value)
         {
-            alert("아이디와 같은 비밀번호를 사용할 수 없습니다.");
+            $("#res_msg").text("아이디와 같은 비밀번호를 사용할 수 없습니다.");
+            $('div.modal').modal();
             pass.value="";
             pass_chk.value = "";
             pass.focus();
@@ -281,18 +276,19 @@
 
         if($("input:checkbox[name=terms01]").is(":checked") == false)
         {
-            alert("이용약관에 동의해 주세요.");
+            $("#res_msg").text("이용약관에 동의해 주세요.");
+            $('div.modal').modal();
             $("input:checkbox[name=terms01]").focus();
             return false;
         }
 
         if($("input:checkbox[name=terms02]").is(":checked") == false)
         {
-            alert("개인정보 처리방침에 동의해주세요.");
+            $("#res_msg").text("개인정보 처리방침에 동의해주세요.");
+            $('div.modal').modal();
             $("input:checkbox[name=terms02]").focus();
             return false;
         }
-
 
         document.getElementById('register_form').submit();
     }
