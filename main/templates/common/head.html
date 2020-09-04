@@ -31,6 +31,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/layout.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/main.css' %}">
 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/animate.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/jquery.modal.css" />
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/jquery.modal.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
+
+
     <script src="{% static 'resource/js/vendor/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'resource/js/vendor/modernizr-3.7.1.min.js' %}"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -501,9 +507,16 @@ div {box-sizing:border-box;}
 table {border-spacing:0; border-collapse:collapse; table-layout:fixed;}
 
 
-
 </script>
-
 </head>
 
 <body oncontextmenu='return false' onselectstart='return false' ondragstart='return false'>
+
+    <div class="modal fade">
+      <div class="modal-dialog">
+        <div id="res_msg" class="modal-content">
+            <!-- remote ajax call이 되는영역 -->
+        </div>
+      </div>
+    </div>
+
