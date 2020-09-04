@@ -33,21 +33,21 @@ delete_off = 0
 def index(request):
     return render(request, 'main/index_runcoding.html')
 
-def activate(request, uid64, token):
-
-    uid = force_text(urlsafe_base64_decode(uid64))
-    user = RegisterTB.objects.get(pk=uid)
-
-    print(uid)
-    print(user)
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.dbstat = 'A'
-        user.save()
-        # auth.login(request, user)
-        return redirect('/')
-    else:
-        return HttpResponse('비정상적인 접근입니다.')
+# def activate(request, uid64, token):
+#
+#     uid = force_text(urlsafe_base64_decode(uid64))
+#     user = RegisterTB.objects.get(pk=uid)
+#
+#     print(uid)
+#     print(user)
+#
+#     if user is not None and account_activation_token.check_token(user, token):
+#         user.dbstat = 'A'
+#         user.save()
+#         # auth.login(request, user)
+#         return redirect('/')
+#     else:
+#         return HttpResponse('비정상적인 접근입니다.')
 
 # 스크립트로
 # myclass expire되면 dbstat 바꾸는거 진행
