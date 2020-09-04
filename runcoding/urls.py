@@ -33,7 +33,6 @@ urlpatterns = [
     path('login_form/', login),
     path('run_logout/', logout),
     path('check_id/', check_id_popup),
-    # path('social_accounts/',SocialLoginCallbackView.as_view()),
 
     path('class/', class_page),
     path('class_detail/', class_detail_page),
@@ -56,6 +55,5 @@ urlpatterns = [
     path('my_modify_pw/', mypage_profile_modify_pw),
 
     path('admin/', admin.site.urls),
-    # path('accounts/', include('allauth.urls')),
     path('', include('main.urls')),
 ]
