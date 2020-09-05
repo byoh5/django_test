@@ -236,24 +236,44 @@
                             <div>
                                 <div class="col-xs-12">
                                      <div class="panel panel-default border-radius-none margin-top-30">
-                                          <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
-                                          <div class="panel-body">
-                                              {% for userDetail in user_detail %}
-                                               <div class="row">
-                                                   <div class="col-xs-7 padding-right-30 ">
-                                                       {{userDetail.regi_name}}
+                                              <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
+                                              <div class="panel-body padding-all-15 col-xs-3 border-dashed-right">
+                                                  {% for userDetail in user_detail %}
+                                                       <div class="row padding-all-15">
+                                                           <div class="font-16 ">
+                                                                <input type="radio" checked>
+                                                               <span><p>받는분 : {{userDetail.regi_receiver1_name}}</p></span>
+                                                           </div>
+                                                           <div class="font-16">
+                                                             <span>  {{userDetail.regi_receiver1_add01}} </span>
+                                                             <span> {{userDetail.regi_receiver1_add02}}</span>
+                                                             <span> {{userDetail.regi_receiver1_add03}}</span>
+                                                           </div>
+                                                           <div class="font-16">
+                                                             <span>휴대폰 : {{userDetail.regi_phone}}</span>
+                                                           </div>
+                                                       </div>
+                                                  {%endfor%}
+
+                                                   <div class="col-xs-3">
+                                                   {% for userDetail in user_detail %}
+                                                       <div class="row padding-all-15">
+                                                           <div class="font-16 ">
+                                                                <input type="radio" checked>
+                                                               <span><p>받는분 : {{userDetail.regi_receiver2_name}}</p></span>
+                                                           </div>
+                                                           <div class="font-16">
+                                                             <span>  {{userDetail.regi_receiver2_add01}} </span>
+                                                             <span> {{userDetail.regi_receiver2_add02}}</span>
+                                                             <span> {{userDetail.regi_receiver2_add03}}</span>
+                                                           </div>
+                                                           <div class="font-16">
+                                                             <span>휴대폰 : {{userDetail.regi_phone}}</span>
+                                                           </div>
+                                                       </div>
+                                                  {%endfor%}
                                                    </div>
-                                                   <div class="col-xs-7 padding-right-30 ">
-                                                       {{userDetail.regi_phone}}
-                                                   </div>
-                                                   <div class="col-xs-7 padding-right-30 ">
-                                                       {{userDetail.regi_add01}}
-                                                       {{userDetail.regi_add02}}
-                                                       {{userDetail.regi_add03}}
-                                                   </div>
-                                               </div>
-                                              {%endfor%}
-                                          </div>
+                                              </div>
                                      </div>
                                 </div>
                             </div>
@@ -290,6 +310,17 @@
 {% include "common/banner_bottom.html" %}
 {% include "common/footer.html" %}
     <script>
+        function removeComma(str)
+       {
+          n = parseInt(str.replace(/,/g,""));
+          return n;
+       }
+
+       function numberWithCommas(x)
+       {
+           return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
 
         $('.menu-btn').click(function() {
             $('.line').toggleClass('animate');
@@ -381,6 +412,8 @@
                 quantity_name = "prodQuantity_" + i;
                 prd_option_name ="prd_option_price_" + i;
 
+                prd_price_format = numberWithCommas(document.getElementById(prd_price_name).innerText);
+
 				if (chks[i].checked == true)
 				{
 				    // 여러 상품 중 하나만 배송비 표시하기 위한 변수
@@ -389,7 +422,8 @@
                     prd_total_price =  parseInt(prd_price) * count;
                     if(first == 1)
                     {
-                        document.getElementById(prd_option_name).innerHTML = "<strong>" + 3000 + "</<strong>";
+                        option = 3000
+                        document.getElementById(prd_option_name).innerHTML = "<strong>" + numberWithCommas(option) + "</<strong>";
                         first++;
                     }
                     else
@@ -399,23 +433,26 @@
 				}
 				else
 				    document.getElementById(prd_option_name).innerHTML = "<strong>" + 0 + "</<strong>";
+
+				document.getElementById(prd_price_name).innerText = prd_price_format;
 			}
 
 			 if (total_summary_price >= 100000 || total_summary_price == 0)
-                document.getElementById("div_total_option_price").innerHTML = "<strong>" + option + "</<strong>";
+                document.getElementById("div_total_option_price").innerHTML = "<strong>" + numberWithCommas(option) + "</<strong>";
              else
              {
-                document.getElementById("div_total_option_price").innerHTML = "<strong>" + 3000 + "</<strong>";
+                option = 3000
+                document.getElementById("div_total_option_price").innerHTML = "<strong>" + numberWithCommas(option) + "</<strong>";
              }
 
             var total = total_summary_price + parseInt(option);
 
-            document.getElementById("div_total_prd_price").innerHTML = "<strong>" + total_summary_price + "</<strong>";
-			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + total + "</<strong>";
+            document.getElementById("div_total_prd_price").innerHTML = "<strong>" + numberWithCommas(total_summary_price) + "</<strong>";
+			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
 
 			$("input[type=hidden][name=total_prd_price]").val(total_summary_price);
 			$("input[type=hidden][name=total_option_price]").val(option);
-			$("input[type=hidden][name=total_option_prd_price]").val(total);
+            $("input[type=hidden][name=total_option_prd_price]").val(total);
         }
 
         function check()
@@ -423,23 +460,7 @@
 			total_count();
 		}
 
-        $(window).scroll(function() {
-            var scroll_top = $(window).scrollTop();
-            if (scroll_top >= $(".sub_visual").outerHeight()) {
-                $(".filter_area").addClass("scr");
-            } else {
-                $(".filter_area").removeClass("scr");
-            }
-        });
 
-        $(window).scroll(function () {
-            var scroll_top = $(window).scrollTop();
-            if ( $(".sub_visual").outerHeight() + $(".lecture_list").height() <= scroll_top + $(".fixedArea").height()) {
-                $(".scr").addClass("end");
-            } else {
-                $(".scr").removeClass("end");
-            }
-        });
     </script>
 </body>
 </html>

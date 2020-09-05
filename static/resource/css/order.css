@@ -262,6 +262,10 @@ thead {
     width: 58.33333%;
 }
 
+.col-xs-3 {
+    width: 49.33333%;
+}
+
 .padding-right-30 {
     padding-right: 30px !important;
 }
@@ -297,6 +301,15 @@ thead {
 .panel-heading {
     padding: 10px 12px;
     border-bottom: 1px solid transparent;
+}
+
+.font-16 {
+    font-size: 16px !important;
+    font-family: MetroSans;
+    font-weight: 400;
+    line-height: 1.5438;
+    letter-spacing: 0;
+
 }
 
 .font-14 {
@@ -492,5 +505,7 @@ span.quantity input {
     vertical-align: middle;
     word-wrap: break-word;
 }
+
+.dollars:before { content:'$'; }
 
 

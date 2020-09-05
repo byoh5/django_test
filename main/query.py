@@ -53,14 +53,28 @@ def select_downdata(prdCode):
     downdata_info = ItemDowndataTB.objects.filter(prd_code=prdCode)
     return downdata_info
 
-def update_user_addr(user_id,add01,add02,add03):
+def update_user_addr(user_id, name, add01,add02,add03):
     user_info = select_register(user_id)
 
     if user_info.count() is not 0:
         new_user = user_info[0]
-        new_user.regi_add01 = add01
-        new_user.regi_add02 = add02
-        new_user.regi_add03 = add03
+        new_user.regi_receiver1_name = name
+        new_user.regi_receiver1_add01 = add01
+        new_user.regi_receiver1_add02 = add02
+        new_user.regi_receiver1_add03 = add03
+        new_user.save()
+
+        return new_user
+
+def update_user_addr2(user_id, name, add01,add02,add03):
+    user_info = select_register(user_id)
+
+    if user_info.count() is not 0:
+        new_user = user_info[0]
+        new_user.regi_receiver2_name = name
+        new_user.regi_receiver2_add01 = add01
+        new_user.regi_receiver2_add02 = add02
+        new_user.regi_receiver2_add03 = add03
         new_user.save()
 
         return new_user

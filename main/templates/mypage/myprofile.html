@@ -18,22 +18,24 @@
                 <ul>
                      {% for userInfo in user_detail %}
                     <li class="email">
-                        <span class="infoTit">email</span>
-                        <p>{{userInfo.regi_email}}</p>
+                        <span class="infoTit">name / email</span>
+                        <p>{{userInfo.regi_name}} / {{userInfo.regi_email}}</p>
                     </li>
-                    <li class="name">
-                        <span class="infoTit">name </span>
-                        <p>{{userInfo.regi_name}}</p>
-                    </li>
+
                     <li class="phone">
                         <span class="infoTit">phone</span>
                         <p>{{userInfo.regi_phone}}</p>
                         <a href="#phone" class="btn edit">변경</a>
                     </li>
                     <li class="address">
-                        <span class="infoTit">address</span>
-                        <p>{{userInfo.regi_add02}} {{userInfo.regi_add03}}</p>
-                        <a href="#address" class="btn edit">변경</a>
+                        <span class="infoTit">({{userInfo.regi_receiver1_name}}) 기본배송지</span>
+                        <p>{{userInfo.regi_receiver1_add02}} {{userInfo.regi_receiver1_add03}}</p>
+                        <a href="#address1" class="btn edit">변경</a>
+                    </li>
+                     <li class="address">
+                        <span class="infoTit">({{userInfo.regi_receiver2_name}}) 배송지</span>
+                        <p>{{userInfo.regi_receiver2_add02}} {{userInfo.regi_receiver2_add03}}</p>
+                        <a href="#address2" class="btn edit">변경</a>
                     </li>
                     <li class="password">
                         <span class="infoTit">비밀번호 변경 </span>
@@ -71,13 +73,17 @@
         </div>
 
         <!-- 주소 변경 팝업 -->
-        <div data-ml-modal="" id="address">
+        <div data-ml-modal="" id="address1">
             <a href="" class="modal-overlay"></a>
             <div class="modal-dialog modal-dialog-lg mypage">
                 <a href="" class="modal-close">×</a>
                 <h3>주소 변경</h3>
                 <div class="modal-content">
                     <span>변경할 주소를 입력해주세요.</span>
+                     <div class="input_area" style="margin-bottom:10px">
+                         <input type="text" name="regi_receiver1_name" id="regi_name" class="w50" placeholder="받는 분 이름을 작성해주세요.">
+                         <string class="w30" ></string>
+                     </div>
                         <div class="input_area address">
                             <input type="text" name="regi_add01" id="regi_add01" class="login_inp add01 w50">
                             <button class="btn address w30" onClick="javascript:getAddress();">주소 찾기</button>
@@ -92,13 +98,38 @@
             </div>
         </div>
 
+         <!-- 주소 변경 팝업 -->
+        <div data-ml-modal="" id="address2">
+            <a href="" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg mypage">
+                <a href="" class="modal-close">×</a>
+                <h3>주소 변경</h3>
+                <div class="modal-content">
+                    <span>변경할 주소를 입력해주세요.</span>
+                     <div class="input_area" style="margin-bottom:10px">
+                         <input type="text" name="regi_receiver2_name" id="regi_receiver2_name" class="w50" placeholder="받는 분 이름을 작성해주세요.">
+                         <string class="w30" ></string>
+                     </div>
+                        <div class="input_area address">
+                            <input type="text" name="regi_receiver2_add01" id="regi_receiver2_add01" class="login_inp add01 w50">
+                            <button class="btn address w30" onClick="javascript:getAddress(2);">주소 찾기</button>
+                            <input type="text" name="regi_receiver2_add02" id="regi_receiver2_add02" class="login_inp add02 w80">
+                            <input type="text" name="regi_receiver2_add03" id="regi_receiver2_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
+                        </div>
+                    <div class="btn_area">
+                        <a href="" class="btn cancle">변경 취소</a>
+                        <a href="javascript:void(0);" onclick="javascript:changeAddr2();" class="btn apply">변경사항 적용</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% include "common/footer.html" %}
     </div>
 
     <input type="hidden" id="msg" name="msg" value="{{message}}">
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
 
     <script>
     $(document).ready(function() {
@@ -109,9 +140,23 @@
     });
 
 
-    function getAddress()
+    function getAddress(data)
     {
-        new daum.Postcode({
+        if(data == 2)
+        {
+            new daum.Postcode({
+                oncomplete: function(data)
+                {
+                    $('[name=regi_receiver2_add01]').val(data.zonecode); // 우편번호 (5자리)
+                    $('[name=regi_receiver2_add02]').val(data.address);
+                    $('[name=regi_receiver2_add03]').val(data.buildingName);
+                }
+            }).open();
+
+        }
+        else
+        {
+            new daum.Postcode({
             oncomplete: function(data)
             {
                 $('[name=regi_add01]').val(data.zonecode); // 우편번호 (5자리)
@@ -120,13 +165,22 @@
             }
 	    }).open();
 
+        }
+
+
 	    return true;
 	}
 
 	function changeAddr()
 	{
 	    if($('[name=regi_add01]').val() == "" || $('[name=regi_add02]').val() == "" || $('[name=regi_add03]').val() == "")
-	       alert("주소를 바르게 입력해주세요");
+	    {
+             alert("주소를 바르게 입력해주세요.");
+	    }
+	    else if($('[name=regi_receiver1_name]').val() == "")
+	    {
+            alert("이름을 입력해주세요.");
+	    }
 	    else
 	    {
             var newForm = $('<form></form>');
@@ -136,9 +190,39 @@
             newForm.attr("action", "/my_modify_addr/");
 
             newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver1_name', value : $('[name=regi_receiver1_name]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_add01', value : $('[name=regi_add01]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_add02', value : $('[name=regi_add02]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_add03', value : $('[name=regi_add03]').val()}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+        }
+	}
+
+	function changeAddr2()
+	{
+	    if($('[name=regi_receiver2_add01]').val() == "" || $('[name=regi_receiver2_add02]').val() == "" || $('[name=regi_receiver2_add03]').val() == "")
+	    {
+             alert("주소를 바르게 입력해주세요.");
+	    }
+	    else if($('[name=regi_receiver2_name]').val() == "")
+	    {
+            alert("이름을 입력해주세요.");
+	    }
+	    else
+	    {
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "modify");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/my_modify_addr2/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_name', value : $('[name=regi_receiver2_name]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add01', value : $('[name=regi_receiver2_add01]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add02', value : $('[name=regi_receiver2_add02]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add03', value : $('[name=regi_receiver2_add03]').val()}));
 
             newForm.appendTo('body');
             newForm.submit();

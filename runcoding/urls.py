@@ -52,6 +52,7 @@ urlpatterns = [
     path('myprofile/', mypage_profile),
     path('myorder/', mypage_order),
     path('my_modify_addr/', mypage_profile_modify_addr),
+    path('my_modify_addr2/', mypage_profile_modify_addr2),
     path('my_modify_pw/', mypage_profile_modify_pw),
 
     path('admin/', admin.site.urls),
