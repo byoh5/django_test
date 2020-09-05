@@ -169,11 +169,18 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	max-width:1130px;
 	border-top:1px solid #969696;
 }
-.join_area .accountInfo,
-.join_area .terms_area {
+
+.join_area .accountInfo{
 	position:relative;
 	width:520px;
 }
+
+.join_area .terms_area {
+	position:relative;
+	margin-top:100px;
+	width:520px;
+}
+
 .join_area > div > h2 {
 	display:block;
 	margin-bottom:0.75em;
