@@ -12,6 +12,13 @@
             </h1>
         </div>
             <div class="join_area">
+                 <div class="modal fade">
+                  <div class="modal-dialog">
+                    <div id="res_msg" class="modal-content">
+                        <!-- remote ajax call이 되는영역 -->
+                    </div>
+                  </div>
+                </div>
                 <form id="register_form" method="post" action="/register/">
                     {% csrf_token %}
                     <div class="accountInfo">
