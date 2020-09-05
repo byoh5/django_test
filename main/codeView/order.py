@@ -14,6 +14,8 @@ def order_page(request):
         context = {
             "order_detail": order_info,
             "user_detail": user_info,
+            "pay_result": '',
+            "pay_msg": '',
         }
         return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
 

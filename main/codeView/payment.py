@@ -92,6 +92,8 @@ def pay_result(request):
         context = {
             "order_detail": order_info,
             "user_detail": user_info,
+            "pay_result": pay_result,
+            "pay_msg": pay_msg,
         }
 
         return render(request, 'payment/order.html', context)

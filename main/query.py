@@ -17,12 +17,12 @@ def select_login(user_id):
     login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
     return login_info
 
-def select_register(regi_id):
-    regi_info = RegisterTB.objects.filter(regi_id=regi_id, dbstat='A')
+def select_register(regi_email):
+    regi_info = RegisterTB.objects.filter(regi_email=regi_email, dbstat='A')
     return regi_info
 
-def select_register_all(regi_id):
-    regi_info = RegisterTB.objects.filter(regi_id=regi_id)
+def select_register_all(regi_email):
+    regi_info = RegisterTB.objects.filter(regi_email=regi_email)
     return regi_info
 
 def select_prd(prd_code):

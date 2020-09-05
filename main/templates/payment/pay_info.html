@@ -60,19 +60,14 @@
         } else {
             var msg = '결제에 실패하였습니다.';
             msg += '에러내용 : ' + rsp.error_msg;
+
             $("input[type=hidden][name=pay_result]").val('1');
         }
 
-        alert(msg);
          $("input[type=hidden][name=pay_msg]").val(msg);
          document.getElementById("result_form").submit();
     });
 
-<!-- test -->
-
-<!-- $("input[type=hidden][name=pay_result]").val('0');-->
-<!-- $("input[type=hidden][name=pay_msg]").val('100');-->
-<!-- document.getElementById("result_form").submit();-->
 </script>
 
 </body>

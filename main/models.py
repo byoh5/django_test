@@ -1,12 +1,13 @@
 from django.db import models
 from django.utils import timezone
 # Create your models here.
+
+
 class RegisterTB(models.Model):
     regi_idx = models.AutoField(primary_key=True)
-    regi_id = models.CharField(max_length=50) #가입떄 입력한 ID
+    regi_email = models.CharField(max_length=50)
     regi_name = models.CharField(max_length=50)
     regi_phone = models.CharField(max_length=50)
-    regi_email = models.CharField(max_length=50)
     regi_add01 = models.CharField(max_length=50)
     regi_add02 = models.CharField(max_length=50)
     regi_add03 = models.CharField(max_length=50)
@@ -17,7 +18,7 @@ class RegisterTB(models.Model):
 
 class LoginTB(models.Model):
     login_idx = models.AutoField(primary_key=True)
-    user_id = models.CharField(max_length=50, default='') #RegisterTB.regi_id
+    user_id = models.CharField(max_length=50, default='') #RegisterTB.regi_email
     session_id = models.CharField(max_length=150)
     login_time = models.DateTimeField(default=timezone.now)
     logout_time = models.DateTimeField(null=True)

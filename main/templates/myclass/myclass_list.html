@@ -1,6 +1,5 @@
 {% load static %}
 {% include "common/header.html" %}
-<input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
     <div class="wrap">
         <!-- sub visual -->
         <section class="sub_visual">
@@ -53,12 +52,17 @@
         {% include "common/banner_bottom.html" %}
         {% include "common/footer.html" %}
 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/animate.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/jquery.modal.css" />
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/jquery.modal.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
+
     <script>
         $(document).ready(function() {
             if($("input[type=hidden][name=clientId]").val() == "")
             {
-                alert("로그인이 필요합니다.");
-                location.href = "/run_login/";
+                $("#res_msg").text("가입자가 아닙니다. 회원가입을 해주세요.");
+                $('div.modal').modal();
             }
          });
 

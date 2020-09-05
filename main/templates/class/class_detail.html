@@ -121,15 +121,13 @@
             }
         });
 
-        <!-- templates로 옮기자 쿠키 session 확인을 위해서.-->
-
         function goOrder(flag)
         {
 
             if($("input[type=hidden][name=clientId]").val() == "")
             {
-                alert("로그인이 필요합니다.");
-                location.href = "/run_login/";
+                $("#res_msg").text("로그인이 필요합니다.");
+                $('div.modal').modal();
             }
             else
             {
@@ -144,7 +142,8 @@
           var msg = $("input[type=hidden][name=message]").val();
             if (msg == 1)
             {
-                alert("장바구니에 담겼습니다.")
+                $("#res_msg").text("장바구니에 담겼습니다.");
+                $('div.modal').modal();
             }
 
          });

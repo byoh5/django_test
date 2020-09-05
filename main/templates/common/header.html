@@ -1,5 +1,11 @@
 {% load static %}
 {% include "common/head.html" %}
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/animate.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/jquery.modal.css" />
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/jquery.modal.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
+
 <header>
     <script>
     // F12 버튼 방지
@@ -23,13 +29,29 @@
         }
     });
 
+     function goMyClass()
+    {
+         if($("input[type=hidden][name=clientId]").val() == "")
+         {
+                $("#res_msg").text("가입자가 아닙니다. 회원가입을 해주세요.");
+                $('div.modal').modal();
+                return false;
+         }
+         else
+         {
+            location.href="/myclass_list/";
+         }
+
+    }
+
     // 우측 클릭 방지
     document.onmousedown=disableclick;
     status="Right click is not available.";
 
     function disableclick(event){
         if (event.button==2) {
-            alert(status);
+            $("#res_msg").text(status);
+            $('div.modal').modal();
             return false;
         }
     }
@@ -54,7 +76,7 @@
                 <a href="/comunity/">커뮤니티</a>
             </li>
             <li>
-                <a href="/myclass_list/">나의 강의실</a>
+                <a href="javascript:goMyClass();">나의 강의실</a>
             </li>
         </ul>
         <div class="ab_right">

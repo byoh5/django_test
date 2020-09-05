@@ -86,17 +86,9 @@
                                                     <td>
                                                         <div id="prdModify">
                                                             <li>
-                                                                <span>&nbsp;</span>
-                                                                <select name="arduino" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                                <select id="options" name="options" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
                                                                     <option value="">------필수옵션-------</option>
-                                                                    <option value="1">아두이노 우노</option>
-                                                                </select>
-                                                            </li>
-                                                             <li>
-                                                                <span>&nbsp;</span>
-                                                                <select name="runningCam" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                                    <option value="">------필수옵션-------</option>
-                                                                    <option value="2">러닝캠</option>
+                                                                    <option value="20200905">{{orderDetail.prd.option}}</option>
                                                                 </select>
                                                             </li>
                                                         </div>
@@ -295,7 +287,6 @@
     </div>
 </div>
 
-
 {% include "common/banner_bottom.html" %}
 {% include "common/footer.html" %}
     <script>
@@ -307,12 +298,18 @@
          $(document).ready(function() {
             if($("input[type=hidden][name=clientId]").val() == "")
             {
-                alert("로그인이 필요합니다.");
-                location.href = "/run_login/";
+                $("#res_msg").text("로그인이 필요합니다.");
+                $('div.modal').modal();
             }
             else
             {
                 total_count();
+
+                if('{{ pay_result }}' == 1)
+                {
+                    $("#res_msg").text('{{ pay_msg }}');
+                    $('div.modal').modal();
+                }
              }
          });
 
@@ -324,12 +321,22 @@
              {
                 if (chks[i].checked == true)
                 {
-                    check_len++;
+                    if($("#options option:selected").val() != 20200905)
+                    {
+                         $("#res_msg").text("필수 옵션을 선택해 주세요.");
+                         $('div.modal').modal();
+                         return false;
+                    }
+                    else
+                        check_len++;
                 }
              }
 
-             $("input[type=hidden][name=len]").val(check_len);
-             document.getElementById("order_form").submit();
+             if(check_len > 0)
+             {
+                 $("input[type=hidden][name=len]").val(check_len);
+                 document.getElementById("order_form").submit();
+             }
          }
 
         // 수량 더하기

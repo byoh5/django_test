@@ -14,8 +14,8 @@ def register_page(request):
     return render(request, 'login/register.html')
 
 def check_id_popup(request):
-    regi_id = request.POST['regi_id']
-    regi_info = select_register_all(regi_id)
+    regi_email = request.POST['regi_email']
+    regi_info = select_register_all(regi_email)
     if regi_info.count() is not 0:
         msg = message_exist_id
     else:
@@ -25,14 +25,14 @@ def check_id_popup(request):
 
 # id로 검색해서 없으면 진행...있으면 에러리턴.
 def UserRegister(request):
-    regi_id = request.POST['regi_id']
-    regi_info = select_register_all(regi_id)  # 회원가입 요청한 ID 가입자 아님을 더블체크
+    regi_email = request.POST['regi_email']
+    regi_info = select_register_all(regi_email)  # 회원가입 요청한 ID 가입자 아님을 더블체크
 
     if regi_info.count() is 0:
         password = request.POST['regi_pass']
         password_encrypt = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        regi_new = RegisterTB(regi_id=regi_id, regi_name=request.POST['regi_name'],
-                       regi_phone=request.POST['regi_phone'], regi_email=request.POST['regi_email'],
+        regi_new = RegisterTB(regi_email=request.POST['regi_email'], regi_name=request.POST['regi_name'],
+                       regi_phone=request.POST['regi_phone'],
                        regi_add01=request.POST['regi_add01'], regi_add02=request.POST['regi_add02'],
                        regi_add03=request.POST['regi_add03'], regi_pass=password_encrypt.decode('utf-8'))
         regi_new.save()

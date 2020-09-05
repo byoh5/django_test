@@ -4,13 +4,14 @@ from main.models import *
 
 def myclass_list_page(request):
     user_id = request.session.get('user_id')
-    myclass_list_info = select_myclass_list(user_id)
+    if user_id is not None:
+        myclass_list_info = select_myclass_list(user_id)
 
-    context = {
-        "myclass_list_detail": myclass_list_info,
-    }
-
-    return render(request, 'myclass/myclass_list.html', context)
+        context = {
+            "myclass_list_detail": myclass_list_info,
+        }
+        return render(request, 'myclass/myclass_list.html', context)
+    return render(request, 'myclass/myclass_list.html')
 
 
 def myclass_page(request):
