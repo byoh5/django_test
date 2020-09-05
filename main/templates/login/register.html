@@ -22,7 +22,7 @@
                              <li>
                              </li>
                             <li>
-                                <span>아이디</span>
+                                <span>이메일</span>
                                 <div class="input_area">
                                      <input type="email" name="regi_email" id="regi_email" class="register" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="정확히 입력해주세요." required>
                                     <button type="button" class="btn register w30" id="popbutton" onClick="javascript:regi_checkId();">중복체크</button>
@@ -105,12 +105,10 @@
     var chkId = 0;
     var chkAddr = 0 ;
 
-    var popup_window;
     function regi_checkId()
     {
         var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
         var email = document.getElementById('regi_email');
-
 
         if(!email_patten.test(email.value))
         {
@@ -136,12 +134,9 @@
                     }
                     else
                     {
-                        if(result == 202)
-                        {
-                            $("#res_msg").text("이미 가입자로 사용할 수 없습니다.");
-                            email.value = "";
-                        }
-                        else if(
+                        $("#res_msg").text("이미 가입자로 사용할 수 없습니다.");
+                        email.value = "";
+                        chkId = 0;
 
                     }
                    $('div.modal').modal();
