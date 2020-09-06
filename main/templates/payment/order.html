@@ -255,6 +255,7 @@
                                                        </div>
                                                    </div>
                                                   <div class="row col-xs-3" style="padding-left:50px; display:inline-block; ">
+                                                      {% if userDetail.regi_receiver2_name != "" %}
                                                       <div class="font-16">
                                                           <input name="addr" value="2" type="radio">
                                                           <strong>{{userDetail.regi_receiver2_name}}</strong>
@@ -267,6 +268,7 @@
                                                       <div class="font-16">
                                                            {{userDetail.regi_phone}}
                                                        </div>
+                                                      {% endif %}
                                                   </div>
                                                   {%endfor%}
                                               </div>
