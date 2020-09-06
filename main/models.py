@@ -69,6 +69,7 @@ class OrderTB(models.Model):
     count = models.IntegerField(default='1')
     delivery = models.CharField(max_length=50, default='기본배송')
     delivery_price = models.IntegerField(default='3000')
+    delevery_addr_num = models.IntegerField(default='0')
     order_time = models.DateTimeField(default=timezone.now)
     dbstat = models.CharField(max_length=50, default='A')
 

@@ -63,6 +63,7 @@
                                               {% for orderDetail in order_detail %}
                                                 <tr>
                                                     <input type="hidden" id="len" name="len" value="0">
+                                                    <input type="hidden" id="addr_num" name="addr_num" value="0">
                                                     <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
                                                     <input type="hidden" id="total_option_price" name="total_option_price" value="0">
                                                     <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
@@ -86,7 +87,7 @@
                                                     <td>
                                                         <div id="prdModify">
                                                             <li>
-                                                                <select id="options" name="options" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                                <select id="options_{{forloop.counter0}}" name="options_{{forloop.counter0}}" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
                                                                     <option value="">------필수옵션-------</option>
                                                                     <option value="20200905">{{orderDetail.prd.option}}</option>
                                                                 </select>
@@ -236,43 +237,38 @@
                             <div>
                                 <div class="col-xs-12">
                                      <div class="panel panel-default border-radius-none margin-top-30">
-                                              <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
-                                              <div class="panel-body padding-all-15 col-xs-3 border-dashed-right">
+                                          <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
+                                              <div class="panel-body">
                                                   {% for userDetail in user_detail %}
-                                                       <div class="row padding-all-15">
-                                                           <div class="font-16 ">
-                                                                <input type="radio" checked>
-                                                               <span><p>받는분 : {{userDetail.regi_receiver1_name}}</p></span>
-                                                           </div>
-                                                           <div class="font-16">
-                                                             <span>  {{userDetail.regi_receiver1_add01}} </span>
-                                                             <span> {{userDetail.regi_receiver1_add02}}</span>
-                                                             <span> {{userDetail.regi_receiver1_add03}}</span>
-                                                           </div>
-                                                           <div class="font-16">
-                                                             <span>휴대폰 : {{userDetail.regi_phone}}</span>
-                                                           </div>
+                                                   <div class="row padding-all-15 col-xs-3 border-dashed-right" style="display:inline-block;">
+                                                       <div class="font-16">
+                                                           <input name="addr" type="radio" value="1"checked>
+                                                           <strong>{{userDetail.regi_receiver1_name}}</strong>(기본 배송지)
                                                        </div>
-                                                  {%endfor%}
-
-                                                   <div class="col-xs-3">
-                                                   {% for userDetail in user_detail %}
-                                                       <div class="row padding-all-15">
-                                                           <div class="font-16 ">
-                                                                <input type="radio" checked>
-                                                               <span><p>받는분 : {{userDetail.regi_receiver2_name}}</p></span>
-                                                           </div>
-                                                           <div class="font-16">
-                                                             <span>  {{userDetail.regi_receiver2_add01}} </span>
-                                                             <span> {{userDetail.regi_receiver2_add02}}</span>
-                                                             <span> {{userDetail.regi_receiver2_add03}}</span>
-                                                           </div>
-                                                           <div class="font-16">
-                                                             <span>휴대폰 : {{userDetail.regi_phone}}</span>
-                                                           </div>
+                                                       <div class="font-16">
+                                                           {{userDetail.regi_receiver1_add02}}
+                                                           {{userDetail.regi_receiver1_add03}}
+                                                           ({{userDetail.regi_receiver1_add01}})
                                                        </div>
-                                                  {%endfor%}
+                                                        <div class="font-16">
+                                                           {{userDetail.regi_phone}}
+                                                       </div>
                                                    </div>
+                                                  <div class="row col-xs-3" style="padding-left:50px; display:inline-block; ">
+                                                      <div class="font-16">
+                                                          <input name="addr" value="2" type="radio">
+                                                          <strong>{{userDetail.regi_receiver2_name}}</strong>
+                                                       </div>
+                                                       <div class="font-16">
+                                                           {{userDetail.regi_receiver2_add02}}
+                                                           {{userDetail.regi_receiver2_add03}}
+                                                           ({{userDetail.regi_receiver2_add01}})
+                                                       </div>
+                                                      <div class="font-16">
+                                                           {{userDetail.regi_phone}}
+                                                       </div>
+                                                  </div>
+                                                  {%endfor%}
                                               </div>
                                      </div>
                                 </div>
@@ -297,14 +293,14 @@
                             </div>
                         </div>
                     </tr>
-
-                  </div>
+                </div>
                 <div class="btn-center">
 <!--                    <a href="#" class="btn order_save">저장하기</a> 논의 후 개발-->
                     <a href="#" class="btn order_complete" onClick="javascript:goPay();">주문하기</a>
                 </div>
-        </div>
-    </div>
+             </tr>
+         </div>
+    </tr>
 </div>
 
 {% include "common/banner_bottom.html" %}
@@ -352,7 +348,9 @@
              {
                 if (chks[i].checked == true)
                 {
-                    if($("#options option:selected").val() != 20200905)
+                    prd_option_name = "options_" + i;
+                    var select_id = document.getElementById(prd_option_name);
+                    if(select_id.selectedIndex == 0)
                     {
                          $("#res_msg").text("필수 옵션을 선택해 주세요.");
                          $('div.modal').modal();
@@ -365,7 +363,10 @@
 
              if(check_len > 0)
              {
+
+                 var addr_checked = $(":input:radio[name=addr]:checked").val();
                  $("input[type=hidden][name=len]").val(check_len);
+                 $("input[type=hidden][name=addr_num]").val(addr_checked);
                  document.getElementById("order_form").submit();
              }
          }
@@ -418,6 +419,7 @@
 				{
 				    // 여러 상품 중 하나만 배송비 표시하기 위한 변수
 				    prd_price = document.getElementById(prd_price_name).innerText;
+				    prd_price = removeComma(prd_price);
 				    count = document.getElementById(quantity_name).value;
                     prd_total_price =  parseInt(prd_price) * count;
                     if(first == 1)

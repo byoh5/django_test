@@ -9,6 +9,7 @@ pay_fail = 1
 def payment(request):
     user_id = request.session.get('user_id')
     order_len = request.POST['len']
+    addr_num = request.POST['addr_num']
     prd_price = int(request.POST['total_prd_price'])
     option_price = int(request.POST['total_option_price'])
     prd_total_price = int(request.POST['total_option_prd_price'])
@@ -21,7 +22,7 @@ def payment(request):
         idx = request.POST['orderIdxs_' + str(cnt)]
         prd_count = request.POST['prodQuantity_' + str(cnt)]
         prd_total_count += int(prd_count)
-        prd_title = update_order_idx(idx, user_id, prd_count)  # count 변경 되었을 수 있으니 정보 update 및 상품 title get
+        prd_title = update_order_idx(idx, user_id, prd_count, addr_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
         order_list += idx + ","
 
     if prd_total_count > 1:
@@ -30,7 +31,11 @@ def payment(request):
     regi_info = select_register(user_id)
 
     if regi_info.count() is not 0:
-        addr = regi_info[0].regi_add02 + " " + regi_info[0].regi_add03
+        if int(addr_num) == 1:
+            addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[0].regi_receiver1_add01 + ")"
+        else:
+            addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
+                0].regi_receiver2_add01 + ")"
 
         pay_info = PayTB(user_id=user_id, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
                          prd_price=prd_price, delivery_price=option_price, prd_total_price=prd_total_price,

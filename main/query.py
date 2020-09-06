@@ -84,7 +84,7 @@ def update_order_prdCode(order_prd_info):
     new_orderPrd.count = new_orderPrd.count + 1
     new_orderPrd.save()
 
-def update_order_idx(idx, user_id, count):
+def update_order_idx(idx, user_id, count, addr_num):
     order_info = select_order_idx(idx, user_id)
     prd_title = ""
 
@@ -92,6 +92,7 @@ def update_order_idx(idx, user_id, count):
         prd_title = order_info[0].prd.title
         new_order = order_info[0]
         new_order.count = count
+        new_order.delevery_addr_num = addr_num
         new_order.save()
 
     return prd_title
