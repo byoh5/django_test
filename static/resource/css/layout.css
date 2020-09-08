@@ -1928,6 +1928,10 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	color:red;
 }
 
+[data-ml-modal] .terms_area {
+    font-size:0.65em;
+}
+
 
 	/* test make */
 select.inp_mypage {
