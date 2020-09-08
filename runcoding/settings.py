@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'gmailapi_backend',
 
     #allauth
     # 'allauth',
@@ -139,19 +140,22 @@ TIME_ZONE = 'Asia/Seoul'
 USE_TZ = True
 USE_I18N = True
 USE_L10N = True
-
+#
 EMAIL_HOST = 'smtp.gmail.com'
 # 메일을 호스트하는 서버
 EMAIL_PORT = '587'
 # gmail과의 통신하는 포트
-EMAIL_HOST_USER = '********@gmail.com'
+EMAIL_HOST_USER = 'runcoding.authteam@gmail.com'
 # 발신할 이메일
-EMAIL_HOST_PASSWORD = '********'
+EMAIL_HOST_PASSWORD = 'run!auth'
 # 발신할 메일의 비밀번호
 EMAIL_USE_TLS = True
 # TLS 보안 방법
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+GMAIL_API_CLIENT_ID = '575307640930-h202lu1qba9mm0ahgjrjltma77hgbb2f.apps.googleusercontent.com'
+GMAIL_API_CLIENT_SECRET = 'UJsPEKGoQDS8yIN8CIAWMqTz'
+# GMAIL_API_REFRESH_TOKEN = 'refresh_token'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

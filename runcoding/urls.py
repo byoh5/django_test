@@ -55,6 +55,9 @@ urlpatterns = [
     path('my_modify_addr2/', mypage_profile_modify_addr2),
     path('my_modify_pw/', mypage_profile_modify_pw),
 
+    path('send_email/', MailView),
+    path('find_pass/', find_pass_viaEmail),
+
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
 ]

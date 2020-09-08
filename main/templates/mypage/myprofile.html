@@ -176,10 +176,12 @@
 	    if($('[name=regi_add01]').val() == "" || $('[name=regi_add02]').val() == "" || $('[name=regi_add03]').val() == "")
 	    {
              alert("주소를 바르게 입력해주세요.");
+              return false;
 	    }
 	    else if($('[name=regi_receiver1_name]').val() == "")
 	    {
             alert("이름을 입력해주세요.");
+             return false;
 	    }
 	    else
 	    {
