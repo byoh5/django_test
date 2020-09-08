@@ -144,13 +144,14 @@
                         }
                         else if(result == 204)
                         {
-                            $("#res_msg").text("가입자가 아닙니다. 회원가입을 해주세요.");
+                            alert("가입자가 아닙니다. 회원가입을 해주세요.");
+                            return false;
                         }
                         else
                         {
-                            $("#res_msg").text("회원 정보를 다시 확인해주세요.");
+                            alert("회원 정보를 다시 확인해주세요.");
+                            return false;
                         }
-                       $('div.modal').modal();
                     }
              });
         }
