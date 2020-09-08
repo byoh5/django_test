@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'gmailapi_backend',
 
     #allauth
     # 'allauth',
@@ -152,10 +151,6 @@ EMAIL_HOST_PASSWORD = 'run!auth'
 EMAIL_USE_TLS = True
 # TLS 보안 방법
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-GMAIL_API_CLIENT_ID = '575307640930-h202lu1qba9mm0ahgjrjltma77hgbb2f.apps.googleusercontent.com'
-GMAIL_API_CLIENT_SECRET = 'UJsPEKGoQDS8yIN8CIAWMqTz'
-# GMAIL_API_REFRESH_TOKEN = 'refresh_token'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
