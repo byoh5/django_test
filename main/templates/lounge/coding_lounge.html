@@ -20,15 +20,17 @@
 <!-- codingLounge list -->
         <div class="codingLounge_list">
             <ul class="thumb_list">
+                 {% for loungeList in lounge_list %}
                 <li>
-                    <img src="{% static 'resource/img/Trashcan/trashcan_main.jpg' %}" alt="코딩 라운지 리스트 썸네일">
+                    <a href="javascript:void(0);" onclick="javascript:goloungeView('{{loungeList.video_id}}');" class="btn brd_detail">
+                        <img src="/static/resource/img/lounge/{{loungeList.data_name}}/{{loungeList.img}}" alt="코딩 라운지 리스트 썸네일">
+                    </a>
                     <div class="text_area">
-                        <span class="title">스마트 휴지통 뽐내기</span>
-<!--                        <p class="writer">런코딩</p>-->
-<!--                        <p class="date">2020.06.30</p>-->
-                        <a href="/lounge_view/" class="btn brd_detail">같이 보기</a>
+                        <span class="title">{{loungeList.title}}</span>
+                        <p class="writer">Project by {{loungeList.user}}</p>
                     </div>
                 </li>
+                {%endfor%}
             </ul>
 <!--            <div class="paging_area">-->
 <!--                <a><img src="{% static 'resource/img/sub/go_first.png' %}"></a>-->
@@ -44,6 +46,25 @@
 
     {% include "common/banner_bottom.html" %}
     {% include "common/footer.html" %}
+
+    <script>
+        function goloungeView(video)
+        {
+            alert(video);
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "lounge_form");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/lounge_view/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'lounge_video', value : video }));
+
+            newForm.appendTo('body');
+            newForm.submit();
+        }
+
+    </script>
 
 
 </body>

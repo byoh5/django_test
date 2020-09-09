@@ -94,3 +94,14 @@ class MyClassListTB(models.Model):
     start_time = models.DateTimeField(default=timezone.now)
     expire_time = models.DateTimeField(default='')
     dbstat = models.CharField(max_length=50, default='A')
+    
+class loungeListTB(models.Model):
+    loungeList_idx = models.AutoField(primary_key=True)
+    img = models.CharField(max_length=150) #preview
+    title = models.CharField(max_length=50)
+    user = models.CharField(max_length=50)
+    data_name = models.CharField(max_length=50, default='') #directory name
+    description = models.CharField(max_length=50)
+    video_id = models.CharField(max_length=150, default='')
+    dbstat = models.CharField(max_length=50, default='A')
+

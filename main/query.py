@@ -53,6 +53,10 @@ def select_downdata(prdCode):
     downdata_info = ItemDowndataTB.objects.filter(prd_code=prdCode)
     return downdata_info
 
+def select_lounge():
+    lounge_info = loungeListTB.objects.filter(dbstat='A')
+    return lounge_info
+
 def update_user_addr(user_id, name, add01,add02,add03):
     user_info = select_register(user_id)
 
