@@ -104,6 +104,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 .sub_visual .section_wrap img.subVisual.codingLounge,
 .sub_visual .section_wrap img.subVisual.myClass,
+.sub_visual .section_wrap img.subVisual.order,
 .sub_visual .section_wrap img.subVisual.review {
 	position:absolute;
 	bottom:-2em;
