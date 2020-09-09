@@ -71,7 +71,7 @@
                                         {% csrf_token %}
                                         <input type="hidden" id="prd_code" name="prd_code" value={{prd_detail.prd_code}}> <!--arduino-AI-trashcan -->
                                      </form>
-                                    <p><span class="price">{{prd_detail.price}}</span> won</p>
+                                    <p><span class="price" id="prd_price">{{prd_detail.price}}</span> 원</p>
                                 </li>
                                 <li>
                                     <span class="li_title">키트명</span>
@@ -84,6 +84,14 @@
                                 <li>
                                     <span class="li_title">학습 기간</span>
                                     <p>{{prd_detail.period}}개월</p>
+                                </li>
+                                <li>
+                                    <span class="li_title">필수옵션</span>
+                                    <p>{{prd_detail.option}}</p>
+                                </li>
+                                <li>
+                                    <span class="li_title">베송비</span>
+                                    <p>3,000 원</p>
                                 </li>
                             </ul>
                         </div>
@@ -138,14 +146,22 @@
              }
          }
 
-          $(document).ready(function() {
-          var msg = $("input[type=hidden][name=message]").val();
-            if (msg == 1)
-            {
-                $("#res_msg").text("장바구니에 담겼습니다.");
-                $('div.modal').modal();
-            }
+         function numberWithCommas(x)
+         {
+              return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+         }
 
+          $(document).ready(function()
+          {
+               price_format = numberWithCommas(document.getElementById("prd_price").innerText);
+               document.getElementById("prd_price").innerText = price_format;
+
+              var msg = $("input[type=hidden][name=message]").val();
+              if (msg == 1)
+              {
+                  $("#res_msg").text("장바구니에 담겼습니다.");
+                  $('div.modal').modal();
+              }
          });
     </script>
 
