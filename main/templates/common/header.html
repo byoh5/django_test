@@ -33,7 +33,7 @@
     {
          if($("input[type=hidden][name=clientId]").val() == "")
          {
-                $("#res_msg").text("가입자가 아닙니다. 회원가입을 해주세요.");
+                $("#res_msg").text("회원만 접근이 가능합니다. 로그인 후 이용해주세요.");
                 $('div.modal').modal();
                 return false;
          }
@@ -46,7 +46,7 @@
 
     // 우측 클릭 방지
     document.onmousedown=disableclick;
-    status="Right click is not available.";
+    status="오른쪽 마우스 사용을 할 수 없습니다.";
 
     function disableclick(event){
         if (event.button==2) {

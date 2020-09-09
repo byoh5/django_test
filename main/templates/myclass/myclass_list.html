@@ -31,8 +31,8 @@
                     <img src={{list_detail.prd.img}} alt="코딩 라운지 리스트 썸네일">
                     <div class="text_area">
                         <span class="title">{{list_detail.prd.title}}</span>
-                        <p class="writer">{{list_detail.start_time | date:'y-m-d' }}</p>
-                        <p class="date"> ~ {{list_detail.expire_time | date:'y-m-d' }}</p>
+                        <p class="writer">{{list_detail.start_time | date:'y-m-d' }} ~ </p>
+                        <p class="date"> {{list_detail.expire_time | date:'y-m-d' }}</p>
                         <a href="javascript:void(0);" onclick="javascript:goMyClass({{list_detail.prd.prd_code}});" class="btn brd_detail">강의 보기</a>
                     </div>
                 </li>
