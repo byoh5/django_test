@@ -42,6 +42,7 @@ class PrdTB(models.Model):
     option = models.CharField(max_length=50)
     goal = models.CharField(max_length=150)
     url = models.CharField(max_length=50, default = '')
+    keyword = models.CharField(max_length=50, default = '') #search 용
     dbstat = models.CharField(max_length=50, default='A')
 
 class ItemDowndataTB(models.Model):

@@ -65,15 +65,18 @@
         <div class="search_area">
             <span>SEARCH</span>
             <div class="input_area">
-                <input type="text" name="src_inp" id="src_inp" placeholder="검색어 입력">
-                <button type="button"><img src="{% static 'resource/img/sub/ico_search.png' %}" alt="검색"></button>
+                <form id="search_form" method="post" action="/search/">
+                    {% csrf_token %}
+                    <input type="text" name="src_inp" id="src_inp" placeholder="검색어 입력">
+                </form>
+                <button type="button" onclick="javascript:goSearch();"><img src="{% static 'resource/img/sub/ico_search.png' %}" alt="검색"></button>
             </div>
         </div>
         <div class="category">
             <span>CATEGORIES</span>
-            <!--<button type="button" class="btn_filter" onclick="location.href=''">전체</button>-->
-            <button type="button" style="cursor:pointer" class="btn_filter " onclick=location.href="/trashcan_arduino/">아두이노</button>
-            <button type="button" style="cursor:pointer" class="btn_filter " onclick=location.href="/trashcan_mblock/">엠블럭</button>
+            <button type="button" style="cursor:pointer" class="btn_filter" onclick="javascript:goSearchCategory('all');">전체</button>
+            <button type="button" style="cursor:pointer" class="btn_filter" onclick="javascript:goSearchCategory('아두이노');">아두이노</button>
+            <button type="button" style="cursor:pointer" class="btn_filter" onclick="javascript:goSearchCategory('엠블럭');">엠블럭</button>
         </div>
     </div>
 </div>
@@ -119,6 +122,17 @@
     {
          $("input[type=hidden][name=detail_prd_code]").val(prdCode);
         document.getElementById('class_form').submit();
+    }
+
+    function goSearchCategory(keyword)
+    {
+        $("input[type=text][name=src_inp]").val(keyword);
+        goSearch();
+    }
+
+    function goSearch()
+    {
+        document.getElementById('search_form').submit();
     }
 
 </script>

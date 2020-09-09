@@ -25,6 +25,7 @@ from main.codeView.mypage import *
 from main.codeView.order import *
 from main.codeView.payment import *
 from main.codeView.regi import *
+from main.codeView.search import *
 
 urlpatterns = [
     path('regi/', register_page),
@@ -57,6 +58,8 @@ urlpatterns = [
 
     path('send_email/', MailView),
     path('find_pass/', find_pass_viaEmail),
+
+    path('search/', search_prd),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),

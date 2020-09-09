@@ -29,6 +29,10 @@ def select_prd(prd_code):
     prd_info = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
     return prd_info
 
+def select_prd_keyword(keyword):
+    prd_info = PrdTB.objects.filter(keyword=keyword, dbstat='A')
+    return prd_info
+
 def select_pay(pay_idx):
     pay_info = PayTB.objects.filter(pay_idx=pay_idx)
     return pay_info
