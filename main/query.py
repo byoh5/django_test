@@ -61,6 +61,10 @@ def select_lounge():
     lounge_info = loungeListTB.objects.filter(dbstat='A')
     return lounge_info
 
+def select_comunity():
+    comunity_info = comunityTB.objects.filter(dbstat='A')
+    return comunity_info
+
 def update_user_addr(user_id, name, add01,add02,add03):
     user_info = select_register(user_id)
 

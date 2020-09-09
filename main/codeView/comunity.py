@@ -4,5 +4,9 @@ from main.models import *
 
 
 def comunity_page(request):
-    return render(request, 'comunity/coding_comunity.html')
+    comunity_info = select_comunity()
+    context = {
+        "comunity_list": comunity_info,
+    }
+    return render(request, 'comunity/coding_comunity.html', context)
 
