@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from main.query import *
 from main.models import *
+import bcrypt
 
 def mypage_profile(request):
     user_id = request.session.get('user_id')
