@@ -26,7 +26,7 @@
             </li>
 
              <li class="">
-                 <a href="#"><div class="text_area" >All</div></a>
+                 <a href="javascript:getWithCategory('all');"><div class="text_area" >All</div></a>
             </li>
             {% for categoryList in category_list %}
             <li class="">
@@ -36,10 +36,8 @@
             <li class="">
             </li>
         </ul>
-        <div class="accordion">
-            <input type="hidden" id="category" name="category" value="all">
+        <div class="accordion" style="padding-left:25px;">
              {% for comunityList in comunity_list %}
-
                 <input type="checkbox" id="{{comunityList.label_name}}">
                 <label for="{{comunityList.label_name}}">{{forloop.counter}}. {{comunityList.title}}<em></em></label>
                 <div>
@@ -65,7 +63,17 @@
     <script>
         function getWithCategory(data)
         {
-             $("input[type=hidden][name=category]").val(data);
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "comunity");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/get_category/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'category_idx', value : data }));
+
+            newForm.appendTo('body');
+            newForm.submit();
 
         }
 

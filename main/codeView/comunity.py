@@ -14,4 +14,13 @@ def comunity_page(request):
 
 def comunity_page_category(request):
     category_idx = request.POST['category_idx']
-    print(category_idx)
+    category_info = select_category()
+    if category_idx != 'all':
+        comunity_info = select_comunity_category(category_idx)
+    else:
+        comunity_info = select_comunity()
+    context = {
+        "comunity_list": comunity_info,
+        "category_list": category_info,
+    }
+    return render(request, 'comunity/coding_comunity.html', context)

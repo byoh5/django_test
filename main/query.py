@@ -71,9 +71,9 @@ def select_category():
     category_info = categoryTB.objects.filter(dbstat='A')
     return category_info
 
-def select_comunity_category():
-    comunity_info = select_comunity()
-
+def select_comunity_category(idx):
+    comunity_info = comunityTB.objects.filter(category__category_idx=idx, dbstat='A')
+    return comunity_info
 
 def update_user_addr(user_id, name, add01,add02,add03):
     user_info = select_register(user_id)

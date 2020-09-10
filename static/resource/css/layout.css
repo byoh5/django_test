@@ -2034,7 +2034,7 @@ input[id*="answer"] {
     height: 50px;
     color: #454d5b;
     line-height: 50px;
-    padding: 0 10px;
+    padding: 0 20px;
     margin-bottom: 0px;
     font-size: 13px;
     font-weight: 700;
@@ -2042,6 +2042,8 @@ input[id*="answer"] {
     background: #fff;
     cursor: pointer;
     transform: rotate(0deg);
+    max-width: 1110px;
+    width:100%;
 }
 
 input[id*="answer"] + label {
@@ -2063,8 +2065,8 @@ input[id*="answer"] + label em {
     position:absolute;
     top:50%;
     right:10px;
-    width:30px;
-    height:30px;
+    width:24px;
+    height:23px;
     margin-top:-15px;
     display:inline-block;
     background:url("../img/sub/arrow.png"); 0 0 no-repeat;

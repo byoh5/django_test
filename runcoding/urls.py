@@ -42,7 +42,7 @@ urlpatterns = [
     path('myclass_list/', myclass_list_page),
 
     path('comunity/', comunity_page),
-    path('getWithCategory/', comunity_page_category),
+    path('get_category/', comunity_page_category),
 
     path('lounge/', lounge_page),
     path('lounge_view/', loungeView_page),
