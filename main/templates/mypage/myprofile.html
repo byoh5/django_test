@@ -233,21 +233,21 @@
 
 	function changePW()
 	{
-	    var id_pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+	    var pass_patten = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/; // 숫자, 특문 1회이상/ 영문 2개이상 8자리 이상
 	    var pass = document.getElementById('newPW');
         var pass_chk = document.getElementById('newChPW');
 
 	    if(pass.value.length == 0 || pass_chk.value.length < 8)
         {
-            alert("비밀번호는 8~12자의 영문과 숫자로만 입력하세요");
+            alert("비밀번호는 8자 이상 필요합니다.");
             pass.focus();
             return false;
         }
         else
         {
-            if(!id_pass_patten.test(pass.value))
+            if(!pass_patten.test(pass.value))
             {
-                alert("비밀번호는 8~12자의 영문과 숫자로만 입력하세요");
+                alert("비밀번호는 영문 + 숫자 + 특수문자가 필요합니다.");
                 pass.focus();
                 return false;
             }

@@ -24,7 +24,7 @@
                             <li>
                                 <span>이메일</span>
                                 <div class="input_area">
-                                     <input type="email" name="regi_email" id="regi_email" class="register" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="정확히 입력해주세요." required>
+                                     <input type="email" name="regi_email" id="regi_email" class="register" placeholder="정확히 입력해주세요." required>
                                     <button type="button" class="btn register w30" id="popbutton" onClick="javascript:regi_checkId();">중복체크</button>
                                 </div>
                             </li>
@@ -52,13 +52,13 @@
                             <li>
                                 <span>비밀번호</span>
                                 <div class="input_area">
-                                    <input type="password" name="regi_pass" id="regi_pass" class="login_inp"  onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g," placeholder="영문 + 숫자 8자 이상 입력해주세요." required>
+                                    <input type="password" name="regi_pass" id="regi_pass" class="login_inp" placeholder="영문 + 숫자 + 특수문자 8자 이상 입력해주세요." required>
                                 </div>
                             </li>
                             <li>
                                 <span>비밀번호 확인</span>
                                 <div class="input_area">
-                                    <input type="password" name="regi_pass_chk" id="regi_pass_chk" class="login_inp" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,"  placeholder="비밀번호를 다시 입력해주세요." required>
+                                    <input type="password" name="regi_pass_chk" id="regi_pass_chk" class="login_inp" placeholder="영문 + 숫자 + 특수문자 8자 이상 입력해주세요." required>
                                 </div>
                             </li>
                         </ul>
@@ -148,8 +148,7 @@
 
     function regi_submit()
     {
-        //(아이디는 8~12자의 영문 대소문자와 숫자로만 입력) (패스워드는 8~12자의 영문 대소문자와 숫자로만 입력)
-        var pass_patten = /^[a-zA-Z0-9]{8,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+        var pass_patten = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/; // 숫자, 특문 1회이상/ 영문 2개이상 8자리 이상
         var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
 
         var name = document.getElementById('regi_name');
@@ -209,7 +208,7 @@
 
        if(pass.value.length == 0 || pass_chk.value.length < 8)
         {
-            $("#res_msg").text("비밀번호는 8~12자의 영문과 숫자로만 입력하세요.");
+            $("#res_msg").text("비밀번호는 8자 이상 필요합니다.");
             $('div.modal').modal();
             return false;
         }
@@ -217,7 +216,7 @@
         {
             if(!pass_patten.test(pass.value))
             {
-                $("#res_msg").text("비밀번호는 8~12자의 영문과 숫자로만 입력하세요.");
+                $("#res_msg").text("비밀번호는 영문 + 숫자 + 특수문자가 필요합니다.");
                 $('div.modal').modal();
                 return false;
             }
