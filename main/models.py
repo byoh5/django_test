@@ -109,6 +109,7 @@ class loungeListTB(models.Model):
 class comunityTB(models.Model):
     comunity_idx = models.AutoField(primary_key=True)
     label_name = models.CharField(max_length=50, default='') # 페이지에서 title과 des를 연결해줄 이름
+    category = models.CharField(max_length=50, default='')
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
     sub_description1 = models.CharField(max_length=500, default='', blank=True)
