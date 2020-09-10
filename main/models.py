@@ -106,12 +106,18 @@ class loungeListTB(models.Model):
     video_id = models.CharField(max_length=150, default='')
     dbstat = models.CharField(max_length=50, default='A')
 
+class categoryTB(models.Model):
+    category_idx = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50, default='')
+    dbstat = models.CharField(max_length=50, default='A')
+
 class comunityTB(models.Model):
     comunity_idx = models.AutoField(primary_key=True)
     label_name = models.CharField(max_length=50, default='') # 페이지에서 title과 des를 연결해줄 이름
-    category = models.CharField(max_length=50, default='')
+    category = models.ForeignKey(categoryTB, on_delete=models.PROTECT, default='', blank=True)
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=500)
     sub_description1 = models.CharField(max_length=500, default='', blank=True)
     sub_description2 = models.CharField(max_length=500, default='', blank=True)
     dbstat = models.CharField(max_length=50, default='A')
+

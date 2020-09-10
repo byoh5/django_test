@@ -20,9 +20,26 @@
 <!-- sub visual -->
 
 <!-- community table -->
-<div class="community_area">
+<div class="board_community">
+        <ul class="">
+            <li class="">
+            </li>
+
+             <li class="">
+                 <a href="#"><div class="text_area" >All</div></a>
+            </li>
+            {% for categoryList in category_list %}
+            <li class="">
+               <a href="javascript:void(0);" onclick="javascript:getWithCategory({{categoryList.category_idx}});"><div class="text_area">{{categoryList.name}}</div></a>
+            </li>
+            {%endfor%}
+            <li class="">
+            </li>
+        </ul>
         <div class="accordion">
+            <input type="hidden" id="category" name="category" value="all">
              {% for comunityList in comunity_list %}
+
                 <input type="checkbox" id="{{comunityList.label_name}}">
                 <label for="{{comunityList.label_name}}">{{forloop.counter}}. {{comunityList.title}}<em></em></label>
                 <div>
@@ -44,6 +61,15 @@
 
     {% include "common/banner_bottom.html" %}
     {% include "common/footer.html" %}
+
+    <script>
+        function getWithCategory(data)
+        {
+             $("input[type=hidden][name=category]").val(data);
+
+        }
+
+    </script>
 
 
 </body>
