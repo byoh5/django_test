@@ -26,12 +26,12 @@ def order(request):
     messages = 0
     if login_info.count() is not 0:
         order_prd_info = select_order_prdCode(user_id, prd_code)
-        if order_prd_info.count() is not 0:
+        if order_prd_info.count() is not 0: # 장바구니에 같은 prd가 있으면 count +
             update_order_prdCode(order_prd_info)
             messages = 1  # 성공
         else:
             prd_info = select_prd(prd_code)
-            order = OrderTB(user_id=user_id, prd_code=prd_code, prd=prd_info[0])
+            order = OrderTB(user_id=user_id, prd=prd_info[0])
             order.save()
             messages = 1  # 성공
 

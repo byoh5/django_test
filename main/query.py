@@ -11,7 +11,7 @@ def select_order_idx(idx, user_id):
     return order_info
 
 def select_order_prdCode(user_id, prd_code):
-    order_info = OrderTB.objects.filter(user_id=user_id, prd_code=prd_code, dbstat='A')
+    order_info = OrderTB.objects.filter(user_id=user_id, prd__prd_code=prd_code, dbstat='A')
     return order_info
 
 def select_login(user_id):
@@ -40,7 +40,7 @@ def select_pay(pay_idx):
     return pay_info
 
 def select_pay_user(user_id):
-    pay_info = PayTB.objects.filter(user_id=user_id)
+    pay_info = PayTB.objects.filter(pay_user__regi_email=user_id)
     return pay_info
 
 def select_myclass_list(user_id):
@@ -52,7 +52,7 @@ def select_class_list():
     return prd_info
 
 def select_class_detail(prd_code):
-    item_info = ItemTB.objects.filter(prd_code=prd_code)
+    item_info = ItemTB.objects.filter(prd__prd_code=prd_code).order_by('order')
     return item_info
 
 def select_downdata(prdCode):

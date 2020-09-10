@@ -50,7 +50,7 @@
                                     <ul class="submenu">
                                          {% for item_detail in myclass_detail %}
                                        <li>
-                                             <a href="javascript:getVideo('{{item_detail.prd_code}}', '{{item_detail.data}}');" class="classList">
+                                             <a href="javascript:getVideo('{{item_detail.prd.prd_code}}', '{{item_detail.data}}');" class="classList">
                                                  {{forloop.counter}}. {{item_detail.title}}</a>
                                        </li>
                                         {% endfor %}

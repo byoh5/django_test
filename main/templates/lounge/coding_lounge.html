@@ -19,7 +19,7 @@
 
 <!-- codingLounge list -->
         <div class="codingLounge_list">
-            <ul class="thumb_list">
+            <ul class="thumb_list pagination">
                  {% for loungeList in lounge_list %}
                 <li>
                     <a href="javascript:void(0);" onclick="javascript:goloungeView('{{loungeList.video_id}}');" class="btn brd_detail">
@@ -32,15 +32,15 @@
                 </li>
                 {%endfor%}
             </ul>
-<!--            <div class="paging_area">-->
-<!--                <a><img src="{% static 'resource/img/sub/go_first.png' %}"></a>-->
-<!--                <a><img src="{% static 'resource/img/sub/go_prev.png' %}"></a>-->
-<!--                <a class="active">1</a>-->
-<!--                <a>2</a>-->
-<!--                <a>3</a>-->
-<!--                <a><img src="{% static 'resource/img/sub/go_next.png' %}"></a>-->
-<!--                <a><img src="{% static 'resource/img/sub/go_last.png' %}"></a>-->
-<!--            </div>-->
+            <div class="paging_area">
+                <a><img src="{% static 'resource/img/sub/go_first.png' %}"></a>
+                <a><img src="{% static 'resource/img/sub/go_prev.png' %}"></a>
+                <a class="active">1</a>
+                <a>2</a>
+                <a>3</a>
+                <a><img src="{% static 'resource/img/sub/go_next.png' %}"></a>
+                <a><img src="{% static 'resource/img/sub/go_last.png' %}"></a>
+            </div>
         </div>
 
 

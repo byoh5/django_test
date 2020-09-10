@@ -4,6 +4,7 @@ from main.models import *
 
 def lounge_page(request):
     lounge_info = select_lounge()
+    count = lounge_info.count()
     context = {
         "lounge_list": lounge_info,
     }

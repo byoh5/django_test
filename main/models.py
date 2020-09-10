@@ -55,7 +55,6 @@ class ItemDowndataTB(models.Model):
 
 class ItemTB(models.Model): #curriculum
     item_idx = models.AutoField(primary_key=True)
-    prd_code = models.CharField(max_length=50, default='')
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT)
     title = models.CharField(max_length=50)
     time = models.CharField(max_length=50)
@@ -65,7 +64,6 @@ class ItemTB(models.Model): #curriculum
 class OrderTB(models.Model):
     order_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50, default = '') #LoginTB.euser_id
-    prd_code = models.CharField(max_length=50, default = '') #prdTB.prd_code
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True) #개월 기준
     count = models.IntegerField(default='1')
     delivery = models.CharField(max_length=50, default='기본배송')
@@ -76,7 +74,6 @@ class OrderTB(models.Model):
 
 class PayTB(models.Model):
     pay_idx = models.AutoField(primary_key=True)
-    user_id = models.CharField(max_length=50)
     pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
     order_id = models.CharField(max_length=50, default='') #order_idx
     prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개

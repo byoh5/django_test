@@ -37,7 +37,7 @@ def payment(request):
             addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
                 0].regi_receiver2_add01 + ")"
 
-        pay_info = PayTB(user_id=user_id, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
+        pay_info = PayTB(pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
                          prd_price=prd_price, delivery_price=option_price, prd_total_price=prd_total_price,
                          delivery_addr=addr)
         pay_info.save()
@@ -73,7 +73,7 @@ def pay_result(request):
 
                     if order_info.count() is not 0:
                         # insert myclass_list
-                        period = order_info[0].prd.period * 60
+                        period = order_info[0].prd.period * 30  # preiod * 개월(30)
                         expireTime = timezone.now() + timezone.timedelta(days=period)
                         myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
                                                           expire_time=expireTime)
