@@ -1083,15 +1083,17 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	width:100%;
 	max-width:1160px;
 }
+
 .board_community ul {
 	display:flex;
 	justify-content:flex-start;
 	align-items:center;
+	padding-bottom:40px;
 }
+
 .board_community ul li {
 	margin-right:20px;
-	width:calc((100% - 20px) / 2);
-	border:1px solid #dcdcdc;
+	width:calc((100% - 20px) / 5);
 	border-radius:5px;
 }
 .board_community ul li:nth-child(2n) {
@@ -1102,8 +1104,9 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	display:flex;
 	justify-content:flex-start;
 	align-items:stretch;
-	padding:20px;
 	width:100%;
+	font-size:14px;
+	color:gray;
 }
 .board_community ul li a img {
 	margin-right:20px;
@@ -1112,6 +1115,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 .board_community ul li a .text_area {
 	position:relative;
 	width:calc(100% - 20px - 4.583em);
+	text-align:center;
 }
 .board_community ul li a .text_area span.brdList_title {
 	display:block;
