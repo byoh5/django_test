@@ -1,5 +1,6 @@
 from main.models import *
 from django.utils import timezone
+from django.db.models import Q
 
 def select_order(user_id):
     order_info = OrderTB.objects.filter(user_id=user_id, dbstat='A')
@@ -30,7 +31,8 @@ def select_prd(prd_code):
     return prd_info
 
 def select_prd_keyword(keyword):
-    prd_info = PrdTB.objects.filter(keyword=keyword, dbstat='A')
+    prd_info = PrdTB.objects.filter(Q(keyword=keyword, dbstat='A') | Q(title__icontains=keyword, dbstat='A') | Q(title2__icontains=keyword, dbstat='A') | Q(title3__icontains=keyword, dbstat='A'))
+    print(prd_info.query)
     return prd_info
 
 def select_pay(pay_idx):
