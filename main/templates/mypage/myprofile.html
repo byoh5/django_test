@@ -28,13 +28,16 @@
                         <a href="#phone" class="btn edit">변경</a>
                     </li>
                     <li class="address">
-                        <span class="infoTit">({{userInfo.regi_receiver1_name}}) 기본배송지</span>
-                        <p>{{userInfo.regi_receiver1_add02}} {{userInfo.regi_receiver1_add03}}</p>
+                        <span class="infoTit">({{userInfo.regi_name}}) 기본배송지</span>
+                        <p>({{userInfo.regi_receiver1_add01}}) {{userInfo.regi_receiver1_add02}} {{userInfo.regi_receiver1_add03}}</p>
                         <a href="#address1" class="btn edit">변경</a>
                     </li>
                      <li class="address">
                         <span class="infoTit">({{userInfo.regi_receiver2_name}}) 배송지</span>
-                        <p>{{userInfo.regi_receiver2_add02}} {{userInfo.regi_receiver2_add03}}</p>
+                         {% if userInfo.regi_receiver2_name != "" %}
+                        <span><p>{{userInfo.regi_receiver2_phone}}</p></span>
+                        <p>({{userInfo.regi_receiver2_add01}}) {{userInfo.regi_receiver2_add02}} {{userInfo.regi_receiver2_add03}}</p>
+                         {% endif %}
                         <a href="#address2" class="btn edit">변경</a>
                     </li>
                     <li class="password">
@@ -80,16 +83,12 @@
                 <h3>주소 변경</h3>
                 <div class="modal-content">
                     <span>변경할 주소를 입력해주세요.</span>
-                     <div class="input_area" style="margin-bottom:10px">
-                         <input type="text" name="regi_receiver1_name" id="regi_name" class="w50" placeholder="받는 분 이름을 작성해주세요.">
-                         <string class="w30" ></string>
-                     </div>
-                        <div class="input_area address">
-                            <input type="text" name="regi_add01" id="regi_add01" class="login_inp add01 w50">
-                            <button class="btn address w30" onClick="javascript:getAddress();">주소 찾기</button>
-                            <input type="text" name="regi_add02" id="regi_add02" class="login_inp add02 w80">
-                            <input type="text" name="regi_add03" id="regi_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
-                        </div>
+                    <div class="input_area address">
+                        <input type="text" name="regi_add01" id="regi_add01" class="login_inp add01 w50">
+                        <button class="btn address w30" onClick="javascript:getAddress();">주소 찾기</button>
+                        <input type="text" name="regi_add02" id="regi_add02" class="login_inp add02 w80">
+                        <input type="text" name="regi_add03" id="regi_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
+                    </div>
                     <div class="btn_area">
                         <a href="#" class="btn cancle">변경 취소</a>
                         <a href="javascript:void(0);" onclick="javascript:changeAddr();" class="btn apply">변경사항 적용</a>
@@ -105,17 +104,17 @@
                 <a href="#" class="modal-close">×</a>
                 <h3>주소 변경</h3>
                 <div class="modal-content">
-                    <span>변경할 주소를 입력해주세요.</span>
-                     <div class="input_area" style="margin-bottom:10px">
-                         <input type="text" name="regi_receiver2_name" id="regi_receiver2_name" class="w50" placeholder="받는 분 이름을 작성해주세요.">
-                         <string class="w30" ></string>
-                     </div>
+                    <span>추가 배송지 정보를 입력해주세요.</span>
                         <div class="input_area address">
                             <input type="text" name="regi_receiver2_add01" id="regi_receiver2_add01" class="login_inp add01 w50">
                             <button class="btn address w30" onClick="javascript:getAddress(2);">주소 찾기</button>
                             <input type="text" name="regi_receiver2_add02" id="regi_receiver2_add02" class="login_inp add02 w80">
                             <input type="text" name="regi_receiver2_add03" id="regi_receiver2_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
                         </div>
+                        <div class="input_area" style="margin-left:10px; margin-top:10px">
+                             <input type="text" name="regi_receiver2_name" id="regi_receiver2_name" class="w40" style="margin-right:10px;" placeholder="받는 분 이름을 작성해주세요.">
+                             <input type="text" name="regi_receiver2_phone" id="regi_receiver2_phone" class="w40" style="margin-right:10px;" placeholder="받는 분 휴대폰 번호를 작성해주세요.">
+                         </div>
                     <div class="btn_area">
                         <a href="#" class="btn cancle">변경 취소</a>
                         <a href="javascript:void(0);" onclick="javascript:changeAddr2();" class="btn apply">변경사항 적용</a>
@@ -178,11 +177,6 @@
              alert("주소를 바르게 입력해주세요.");
               return false;
 	    }
-	    else if($('[name=regi_receiver1_name]').val() == "")
-	    {
-            alert("이름을 입력해주세요.");
-             return false;
-	    }
 	    else
 	    {
             var newForm = $('<form></form>');
@@ -192,7 +186,6 @@
             newForm.attr("action", "/my_modify_addr/");
 
             newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver1_name', value : $('[name=regi_receiver1_name]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_add01', value : $('[name=regi_add01]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_add02', value : $('[name=regi_add02]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_add03', value : $('[name=regi_add03]').val()}));
@@ -201,6 +194,37 @@
             newForm.submit();
         }
 	}
+
+
+    function chkItemPhone(temp)
+    {
+        var number = temp.replace(/[^0-9]/g, "");
+        var phone = "";
+
+        if (number.length < 9) {
+            return number;
+        } else if (number.length < 10) {
+            phone += number.substr(0, 2);
+            phone += "-";
+            phone += number.substr(2, 3);
+            phone += "-";
+            phone += number.substr(5);
+        } else if (number.length < 11) {
+            phone += number.substr(0, 3);
+            phone += "-";
+            phone += number.substr(3, 3);
+            phone += "-";
+            phone += number.substr(6);
+        } else {
+            phone += number.substr(0, 3);
+            phone += "-";
+            phone += number.substr(3, 4);
+            phone += "-";
+            phone += number.substr(7);
+        }
+
+        return phone;
+    }
 
 	function changeAddr2()
 	{
@@ -212,6 +236,10 @@
 	    {
             alert("이름을 입력해주세요.");
 	    }
+	    else if($('[name=regi_receiver2_phone]').val() == "")
+	    {
+            alert("휴대폰 정보를 입력해주세요.");
+	    }
 	    else
 	    {
             var newForm = $('<form></form>');
@@ -220,8 +248,11 @@
             newForm.attr("method", "post");
             newForm.attr("action", "/my_modify_addr2/");
 
+            var phoneVal = chkItemPhone($('[name=regi_receiver2_phone]').val());
+
             newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_name', value : $('[name=regi_receiver2_name]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_phone', value : phoneVal}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add01', value : $('[name=regi_receiver2_add01]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add02', value : $('[name=regi_receiver2_add02]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add03', value : $('[name=regi_receiver2_add03]').val()}));

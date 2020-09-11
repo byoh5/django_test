@@ -46,11 +46,12 @@ def mypage_profile_modify_addr(request):
 def mypage_profile_modify_addr2(request):
     user_id = request.session.get('user_id')
     receiver2_name = request.POST['regi_receiver2_name']
+    receiver2_phone = request.POST['regi_receiver2_phone']
     receiver2_add01 = request.POST['regi_receiver2_add01']
     receiver2_add02 = request.POST['regi_receiver2_add02']
     receiver2_add03 = request.POST['regi_receiver2_add03']
 
-    update_user_addr2(user_id, receiver2_name, receiver2_add01, receiver2_add02, receiver2_add03)
+    update_user_addr2(user_id, receiver2_name,  receiver2_phone, receiver2_add01, receiver2_add02, receiver2_add03)
 
     user_info = select_register(user_id)
     context = {
