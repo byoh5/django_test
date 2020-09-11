@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from main.query import *
 from main.models import *
-
+import string
+import random
 
 pay_ok = 0
 pay_fail = 1
@@ -32,14 +33,28 @@ def payment(request):
 
     if regi_info.count() is not 0:
         if int(addr_num) == 1:
+            phone = regi_info[0].regi_phone
+            name = regi_info[0].regi_receiver1_name
             addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[0].regi_receiver1_add01 + ")"
         else:
+            name = regi_info[0].regi_receiver2_name
+            phone = regi_info[0].regi_receiver2_phone
             addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
                 0].regi_receiver2_add01 + ")"
 
-        pay_info = PayTB(pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
+
+        number_pool = string.digits
+        _LENGTH = 12
+        pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
+                  + str(timezone.now().hour) + str(timezone.now().minute) + str(timezone.now().second) + "-"
+        for i in range(_LENGTH):
+            pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
+
+        print(pay_num)
+
+        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
                          prd_price=prd_price, delivery_price=option_price, prd_total_price=prd_total_price,
-                         delivery_addr=addr)
+                         delivery_name=name, delivery_addr=addr, delivery_phone=phone)
         pay_info.save()
 
         context = {

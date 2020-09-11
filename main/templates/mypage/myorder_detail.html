@@ -1,0 +1,100 @@
+{% load static %}
+{% include "common/header.html" %}
+
+
+    <div class="wrap mypage">
+
+        <!-- mypage tabs -->
+        <div class="tabs mypage">
+            <ul>
+                 <li><a href="/myprofile/">내 프로필</a></li>
+                 <li class="active"><a href="/myorder/">주문내역</a></li>
+            </ul>
+        </div>
+
+        <!-- mypage content -->
+        <div class="mypage_area membership">
+            <div class="membership_area">
+                <ul>
+                    <li class="mypageTbl orderList">
+                        <h3>주문내역 상세</h3>
+
+                        <div class="order_detail">
+                            <ul>
+                                {% for payUserInfo in pay_detail %}
+                                <li>
+                                    <span>주문번호</span>
+                                    <p>{{payUserInfo.pay_num}}</p>
+                                </li>
+                                <li>
+                                    <span>주문일자</span>
+                                    <p>{{payUserInfo.pay_time}}</p>
+                                </li>
+                                <li>
+                                    <span>주문자</span>
+                                    <p>{{payUserInfo.pay_user.regi_name}}</p>
+                                </li>
+                                <li>
+                                    <span>주문처리상태</span>
+                                    <p>배송완료</p>
+                                </li>
+                                <li>
+                                    <span>주문상품</span>
+                                    <p>{{payUserInfo.prd_info}}</p>
+                                </li>
+                                <li>
+                                    <span>결제정보</span>
+                                    <ul class="meansInfo">
+                                        <li>
+                                            <span>결제수단</span>
+                                            <p>카드 결제</p>
+                                        </li>
+                                        <li class="total">
+                                            <span>총 결제금액</span>
+                                            <p>{{payUserInfo.prd_total_price}}</p>
+                                        </li>
+                                        <li>
+                                            <span>주문금액</span>
+                                            <p>{{payUserInfo.prd_price}}</p>
+                                        </li>
+                                        <li>
+                                            <span>배송비</span>
+                                            <p>{{payUserInfo.delivery_price}}</p>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span>배송지 정보</span>
+                                    <ul class="address">
+                                        <li>
+                                            <span>이름</span>
+                                            <p>{{payUserInfo.delivery_name}}</p>
+                                        </li>
+                                        <li>
+                                            <span>주소</span>
+                                            <p>{{payUserInfo.delivery_addr}}</p>
+                                        </li>
+                                        <li>
+                                            <span>휴대전화</span>
+                                            <p>{{payUserInfo.delivery_phone}}</p>
+                                        </li>
+                                    </ul>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="mypageBtn">
+                                <a href="/myorder/" class="btn means">목록으로</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        {% include "common/footer.html" %}
+
+    </div>
+
+
+</body></html>

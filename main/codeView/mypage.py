@@ -19,6 +19,15 @@ def mypage_order(request):
     }
     return render(request, 'mypage/myorder.html', context)
 
+def mypage_order_detail(request):
+    pay_idx = request.POST['pay_idx']
+    pay_info = select_pay(pay_idx)
+    print(pay_info[0].pay_num)
+    context = {
+        "pay_detail": pay_info,
+    }
+    return render(request, 'mypage/myorder_detail.html', context)
+
 def mypage_profile_modify_addr(request):
     user_id = request.session.get('user_id')
     name = request.POST['regi_receiver1_name']

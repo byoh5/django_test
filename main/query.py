@@ -40,7 +40,7 @@ def select_pay(pay_idx):
     return pay_info
 
 def select_pay_user(user_id):
-    pay_info = PayTB.objects.filter(pay_user__regi_email=user_id)
+    pay_info = PayTB.objects.filter(pay_user__regi_email=user_id).order_by('-pay_idx')
     return pay_info
 
 def select_myclass_list(user_id):

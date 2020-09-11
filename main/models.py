@@ -12,6 +12,7 @@ class RegisterTB(models.Model):
     regi_receiver1_add02 = models.CharField(max_length=50)
     regi_receiver1_add03 = models.CharField(max_length=50)
     regi_receiver2_name = models.CharField(max_length=50, default='')
+    regi_receiver2_phone = models.CharField(max_length=50, default='')
     regi_receiver2_add01 = models.CharField(max_length=50, default='')
     regi_receiver2_add02 = models.CharField(max_length=50, default='')
     regi_receiver2_add03 = models.CharField(max_length=50, default='')
@@ -74,13 +75,16 @@ class OrderTB(models.Model):
 
 class PayTB(models.Model):
     pay_idx = models.AutoField(primary_key=True)
+    pay_num = models.CharField(max_length=50, default='')
     pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
     order_id = models.CharField(max_length=50, default='') #order_idx
     prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
     prd_price = models.IntegerField(default='0') # product total
     delivery_price = models.IntegerField(default='0')
     prd_total_price = models.IntegerField(default='0')  # product total + delivary
+    delivery_name = models.CharField(max_length=50, default='')
     delivery_addr = models.CharField(max_length=150, default='')
+    delivery_phone = models.CharField(max_length=50, default='')
     pay_result = models.IntegerField(default='100') # 0: 성공 1: 실패
     pay_result_info = models.CharField(max_length=300, default='') #pay_msg
     pay_time = models.DateTimeField(default=timezone.now)
