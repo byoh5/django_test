@@ -32,7 +32,6 @@ def select_prd(prd_code):
 
 def select_prd_keyword(keyword):
     prd_info = PrdTB.objects.filter(Q(keyword=keyword, dbstat='A') | Q(title__icontains=keyword, dbstat='A') | Q(title2__icontains=keyword, dbstat='A') | Q(title3__icontains=keyword, dbstat='A'))
-    print(prd_info.query)
     return prd_info
 
 def select_pay(pay_idx):
@@ -60,8 +59,29 @@ def select_downdata(prdCode):
     return downdata_info
 
 def select_lounge():
-    lounge_info = loungeListTB.objects.filter(dbstat='A')
+    lounge_info = loungeListTB.objects.filter(dbstat='A').order_by('-loungeList_idx')
     return lounge_info
+
+def select_lounge_search(sort, category, keyword):
+    sort_order = 'loungeList_idx'
+    if sort == 'new':
+        sort_order = '-loungeList_idx'
+
+    query_search = Q()
+
+    if int(category) > 0:
+        query_search.add(Q(loungeList_idx=category), query_search.AND)
+
+    if keyword is not "":
+        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword), query_search.AND)
+
+    lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by(sort_order)
+
+    return lounge_info
+
+def select_lounge_categoy():
+    category_info = loungeListTB.objects.filter(dbstat='A').only("data_name", "loungeList_idx")
+    return category_info
 
 def select_comunity():
     comunity_info = comunityTB.objects.filter(dbstat='A')

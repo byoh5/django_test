@@ -95,7 +95,7 @@ class MyClassListTB(models.Model):
     start_time = models.DateTimeField(default=timezone.now)
     expire_time = models.DateTimeField(default='')
     dbstat = models.CharField(max_length=50, default='A')
-    
+
 class loungeListTB(models.Model):
     loungeList_idx = models.AutoField(primary_key=True)
     img = models.CharField(max_length=150) #preview

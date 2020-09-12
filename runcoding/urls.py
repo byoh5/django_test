@@ -63,6 +63,7 @@ urlpatterns = [
     path('find_pass/', find_pass_viaEmail),
 
     path('search/', search_prd),
+    path('search_lounge/', search_lounge),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
