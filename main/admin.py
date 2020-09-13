@@ -1,27 +1,28 @@
 from django.contrib import admin
 from main.models import *
-from .models import RegisterTB
-from .models import LoginTB
-from .models import PrdTB
-from .models import ItemTB
-from .models import OrderTB
-from .models import PayTB
-from .models import MyClassListTB
-from .models import ItemDowndataTB
-from .models import loungeListTB
-from .models import comunityTB
-from .models import categoryTB
+# from .models import RegisterTB
+# from .models import LoginTB
+# from .models import PrdTB
+# from .models import ItemTB
+# from .models import OrderTB
+# from .models import PayTB
+# from .models import MyClassListTB
+# from .models import ItemDowndataTB
+# from .models import loungeListTB
+# from .models import comunityTB
+# from .models import categoryTB
 
 # Register your models here.
 
-class RegisterAdmin(admin.ModelAdmin):
-    list_display = ['regi_idx', 'regi_email', 'regi_name', 'regi_phone', 'stime', 'dbstat'] # 커스터마이징 코드
-    list_display_links = ['regi_email', 'regi_name']
-
-    list_filter = ['stime', 'dbstat']
-    search_fields = ['regi_email', 'regi_name']
-
-admin.site.register(RegisterTB, RegisterAdmin)
+admin.site.register(RegisterTB)
+# class RegisterAdmin(admin.ModelAdmin):
+#     list_display = ['regi_idx', 'regi_email', 'regi_name', 'regi_phone', 'stime', 'dbstat'] # 커스터마이징 코드
+#     list_display_links = ['regi_email', 'regi_name']
+#
+#     list_filter = ['stime', 'dbstat']
+#     search_fields = ['regi_email', 'regi_name']
+#
+# admin.site.register(RegisterTB, RegisterAdmin)
 
 # class LoginAdmin(admin.ModelAdmin):
 #     list_display = ['user_id', 'login_time', 'dbstat'] # 커스터마이징 코드
