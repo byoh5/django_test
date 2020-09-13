@@ -49,14 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'rangefilter',
 
-    #allauth
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    #
-    # #provider
-    # 'allauth.socialaccount.providers.naver',
 ]
 
 
