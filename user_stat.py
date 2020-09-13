@@ -21,7 +21,7 @@ def user_stat():
     pay_fail_cnt = PayTB.objects.filter(pay_time__year=year, pay_time__month=month, pay_time__day=day, pay_result=1).count()
     pre_pay_cnt = PayTB.objects.filter(pay_time__year=year, pay_time__month=month, pay_time__day=day, pay_result=100).count()
 
-    stat_info = statTB.objects.filter(stime__year=year, stime__month=month, stime__day=day)
+    stat_info = statTB.objects.filter(stime__year=year, stime__month=month, stime__day=day+1)
 
     if stat_info.count() == 1:
         new_stat = stat_info[0]
