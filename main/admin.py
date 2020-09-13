@@ -25,7 +25,7 @@ class LoginAdmin(admin.ModelAdmin):
 admin.site.register(LoginTB,LoginAdmin)
 
 class PrdAdmin(admin.ModelAdmin):
-    list_display = ['prd_code', 'title', 'period', 'price', 'dbstat'] # 커스터마이징 코드
+    list_display = ['prd_code', 'title', 'period', 'price', 'keyword', 'dbstat'] # 커스터마이징 코드
     list_display_links = ['prd_code']
     list_filter = ('dbstat',
                    'prd_code',)
