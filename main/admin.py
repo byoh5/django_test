@@ -133,3 +133,9 @@ class categoryAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 admin.site.register(categoryTB, categoryAdmin)
+
+class statAdmin(admin.ModelAdmin):
+    list_display = ['register_cnt', 'login_cnt', 'pay_suc_cnt', 'pay_fail_cnt' , 'pre_pay_cnt', 'expire_cnt', 'stime']  # 커스터마이징 코드
+    list_filter = ['stime']
+
+admin.site.register(statTB, statAdmin)

@@ -43,7 +43,6 @@ class PrdTB(models.Model):
     price = models.IntegerField(null=True)
     option = models.CharField(max_length=50)
     goal = models.CharField(max_length=150)
-    url = models.CharField(max_length=50, default = '')
     keyword = models.CharField(max_length=50, default = '') #search 용
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
@@ -145,3 +144,13 @@ class comunityTB(models.Model):
     dbstat = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
+
+class statTB(models.Model):
+    stat_idx = models.AutoField(primary_key=True)
+    register_cnt = models.IntegerField(default='0')
+    login_cnt = models.IntegerField(default='0')
+    pay_suc_cnt = models.IntegerField(default='0')
+    pay_fail_cnt = models.IntegerField(default='0')
+    pre_pay_cnt = models.IntegerField(default='0')
+    expire_cnt = models.IntegerField(default='0')
+    stime = models.DateTimeField(default=timezone.now)
