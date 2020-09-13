@@ -14,15 +14,14 @@ from main.models import *
 
 # Register your models here.
 
-admin.site.register(RegisterTB)
-# class RegisterAdmin(admin.ModelAdmin):
-#     list_display = ['regi_idx', 'regi_email', 'regi_name', 'regi_phone', 'stime', 'dbstat'] # 커스터마이징 코드
-#     list_display_links = ['regi_email', 'regi_name']
-#
-#     list_filter = ['stime', 'dbstat']
-#     search_fields = ['regi_email', 'regi_name']
-#
-# admin.site.register(RegisterTB, RegisterAdmin)
+class RegisterAdmin(admin.ModelAdmin):
+    list_display = ['regi_idx', 'regi_email', 'regi_name', 'regi_phone', 'stime', 'dbstat'] # 커스터마이징 코드
+    list_display_links = ['regi_email', 'regi_name']
+
+    list_filter = ['stime', 'dbstat']
+    search_fields = ['regi_email', 'regi_name']
+
+admin.site.register(RegisterTB, RegisterAdmin)
 
 # class LoginAdmin(admin.ModelAdmin):
 #     list_display = ['user_id', 'login_time', 'dbstat'] # 커스터마이징 코드
