@@ -7,9 +7,14 @@ import random
 pay_ok = 0
 pay_fail = 1
 
+pay_status_ok = 1
+pay_status_delivery = 2
+pay_status_delivery_done = 3
+pay_status_prepay = 4
+
 def payment(request):
     user_id = request.session.get('user_id')
-    order_len = request.POST['len']
+    order_idx = request.POST['idx']
     addr_num = request.POST['addr_num']
     prd_price = int(request.POST['total_prd_price'])
     option_price = int(request.POST['total_option_price'])
@@ -19,12 +24,17 @@ def payment(request):
     prd_title = ""
     prd_total_count = 0
 
-    for cnt in range(int(order_len)):
-        idx = request.POST['orderIdxs_' + str(cnt)]
-        prd_count = request.POST['prodQuantity_' + str(cnt)]
-        prd_total_count += int(prd_count)
-        prd_title = update_order_idx(idx, user_id, prd_count, addr_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
-        order_list += idx + ","
+    split_order = order_idx.split(',')
+
+    # product -> myclass에 넣고, 장바구니 정리하기
+    for data in split_order:
+        if len(data) > 0:
+            idx = request.POST['orderIdxs_' + str(data)]
+            prd_count = request.POST['prodQuantity_' + str(data)]
+            prd_total_count += int(prd_count)
+            prd_title = update_order_idx(idx, user_id, prd_count,
+                                         addr_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+            order_list += idx + ","
 
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
@@ -34,7 +44,7 @@ def payment(request):
     if regi_info.count() is not 0:
         if int(addr_num) == 1:
             phone = regi_info[0].regi_phone
-            name = regi_info[0].regi_receiver1_name
+            name = regi_info[0].regi_name
             addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[0].regi_receiver1_add01 + ")"
         else:
             name = regi_info[0].regi_receiver2_name
@@ -49,8 +59,6 @@ def payment(request):
                   + str(timezone.now().hour) + str(timezone.now().minute) + str(timezone.now().second) + "-"
         for i in range(_LENGTH):
             pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
-
-        print(pay_num)
 
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
                          prd_price=prd_price, delivery_price=option_price, prd_total_price=prd_total_price,
@@ -79,6 +87,8 @@ def pay_result(request):
         update_pay.pay_result = pay_result
 
         if pay_result == pay_ok:
+            pay_userStatus_info = select_userStatue(pay_status_ok) # 구매성공
+            update_pay.pay_user_status = pay_userStatus_info[0]
             split_order = update_pay.order_id.split(',')
 
             # product -> myclass에 넣고, 장바구니 정리하기

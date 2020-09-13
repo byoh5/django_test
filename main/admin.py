@@ -3,7 +3,7 @@ from main.models import *
 # Register your models here.
 
 class RegisterAdmin(admin.ModelAdmin):
-    list_display = ['regi_idx', 'regi_email', 'regi_name', 'regi_phone', 'stime', 'dbstat'] # 커스터마이징 코드
+    list_display = ['regi_idx', 'regi_email', 'regi_name', 'regi_phone', 'stime', 'dbstat', 'modified'] # 커스터마이징 코드
     list_display_links = ['regi_email', 'regi_name']
 
     list_filter = ['stime', 'dbstat']
@@ -42,7 +42,7 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(ItemTB, ItemAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['user_id', 'get_name', 'count', 'order_time', 'dbstat'] # 커스터마이징 코드
+    list_display = ['order_idx', 'user_id', 'get_name', 'count', 'order_time', 'dbstat'] # 커스터마이징 코드
 
     def get_name(self, obj):
         return obj.prd.prd_code
@@ -55,19 +55,29 @@ class OrderAdmin(admin.ModelAdmin):
 
 admin.site.register(OrderTB, OrderAdmin)
 
+class UserStatusAdmin(admin.ModelAdmin):
+    list_display = ['userStatus_idx', 'userStatus', 'dbstat']
+
+    list_display_links = ['userStatus']
+    search_fields = ['userStatus']
+
+
+admin.site.register(UserStatusTB, UserStatusAdmin)
+
+
 class PayAdmin(admin.ModelAdmin):
-    list_display = ['pay_num', 'get_name', 'prd_info', 'prd_total_price', 'pay_result', 'pay_time'] # 커스터마이징 코드
+    list_display = ['pay_num', 'get_name', 'pay_user_status', 'prd_info', 'prd_total_price', 'pay_result', 'pay_time'] # 커스터마이징 코드
 
     list_filter = ['pay_time', 'pay_result']
-    # list_editable = ('prd_total_price',)
+    list_editable = ('pay_user_status',)
 
     def get_name(self, obj):
         return obj.pay_user.regi_email
-
     get_name.short_description = 'pay_user'  # Renames column head
 
     list_display_links = ['pay_num']
-    search_fields = ['pay_user']
+    search_fields = ['pay_num']
+    ordering = ['-pay_idx',]
 
 admin.site.register(PayTB, PayAdmin)
 

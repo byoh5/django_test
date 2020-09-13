@@ -34,6 +34,10 @@ def select_prd_keyword(keyword):
     prd_info = PrdTB.objects.filter(Q(keyword=keyword, dbstat='A') | Q(title__icontains=keyword, dbstat='A') | Q(title2__icontains=keyword, dbstat='A') | Q(title3__icontains=keyword, dbstat='A'))
     return prd_info
 
+def select_userStatue(userStatus_idx):
+    userStatus_info = UserStatusTB.objects.filter(userStatus_idx=userStatus_idx)
+    return userStatus_info
+
 def select_pay(pay_idx):
     pay_info = PayTB.objects.filter(pay_idx=pay_idx)
     return pay_info

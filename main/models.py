@@ -17,6 +17,7 @@ class RegisterTB(models.Model):
     regi_receiver2_add03 = models.CharField(max_length=50, default='', blank=True)
     regi_pass = models.CharField(max_length=150)
     stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
 class LoginTB(models.Model):
@@ -25,6 +26,8 @@ class LoginTB(models.Model):
     session_id = models.CharField(max_length=150)
     login_time = models.DateTimeField(default=timezone.now)
     logout_time = models.DateTimeField(null=True)
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
 #kit1 : trashcan
@@ -42,6 +45,8 @@ class PrdTB(models.Model):
     goal = models.CharField(max_length=150)
     url = models.CharField(max_length=50, default = '')
     keyword = models.CharField(max_length=50, default = '') #search 용
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
 class ItemDowndataTB(models.Model):
@@ -49,6 +54,8 @@ class ItemDowndataTB(models.Model):
     downdata = models.CharField(max_length=50, default='')
     downdata_name = models.CharField(max_length=50, default='')
     prd_code = models.CharField(max_length=50, default='')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
 
@@ -59,6 +66,8 @@ class ItemTB(models.Model): #curriculum
     time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
 
 class OrderTB(models.Model):
     order_idx = models.AutoField(primary_key=True)
@@ -69,12 +78,21 @@ class OrderTB(models.Model):
     delivery_price = models.IntegerField(default='3000')
     delevery_addr_num = models.IntegerField(default='0')
     order_time = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
+
+class UserStatusTB(models.Model):
+    userStatus_idx = models.AutoField(primary_key=True)
+    userStatus = models.CharField(max_length=500, default='4')
+    dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
 
 class PayTB(models.Model):
     pay_idx = models.AutoField(primary_key=True)
     pay_num = models.CharField(max_length=50, default='')
     pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
+    pay_user_status = models.ForeignKey(UserStatusTB, on_delete=models.PROTECT, null=True)
     order_id = models.CharField(max_length=50, default='') #order_idx
     prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
     prd_price = models.IntegerField(default='0') # product total
@@ -86,14 +104,16 @@ class PayTB(models.Model):
     pay_result = models.IntegerField(default='100') # 0: 성공 1: 실패
     pay_result_info = models.CharField(max_length=300, default='') #pay_msg
     pay_time = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
 
 class MyClassListTB(models.Model):
     myclassList_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50)
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True)
+    dbstat = models.CharField(max_length=50, default='A')
     start_time = models.DateTimeField(default=timezone.now)
     expire_time = models.DateTimeField(default='')
-    dbstat = models.CharField(max_length=50, default='A')
+    modified = models.DateTimeField(auto_now=True, blank=True)
 
 class loungeListTB(models.Model):
     loungeList_idx = models.AutoField(primary_key=True)
@@ -104,11 +124,15 @@ class loungeListTB(models.Model):
     description = models.CharField(max_length=50, default='', blank=True)
     video_id = models.CharField(max_length=150, default='')
     dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
 
 class categoryTB(models.Model):
     category_idx = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, default='')
     dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
 
 class comunityTB(models.Model):
     comunity_idx = models.AutoField(primary_key=True)
@@ -119,4 +143,5 @@ class comunityTB(models.Model):
     sub_description1 = models.CharField(max_length=500, default='', blank=True)
     sub_description2 = models.CharField(max_length=500, default='', blank=True)
     dbstat = models.CharField(max_length=50, default='A')
-
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)

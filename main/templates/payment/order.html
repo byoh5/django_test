@@ -61,13 +61,13 @@
                                               <tbody class="order-option">
                                               {% for orderDetail in order_detail %}
                                                 <tr>
-                                                    <input type="hidden" id="len" name="len" value="0">
+                                                    <input type="hidden" id="idx" name="idx" value="0">
                                                     <input type="hidden" id="addr_num" name="addr_num" value="0">
                                                     <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
                                                     <input type="hidden" id="total_option_price" name="total_option_price" value="0">
                                                     <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
                                                     <td>
-                                                        <input type="hidden" name="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
+                                                        <input type="hidden" name="orderIdxs_{{forloop.counter0}}" id="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
                                                         <input type="hidden" id="len" name="len" value="0">
                                                         <input type="checkbox" name="idxs[]" value={{forloop.counter0}} checked onClick="javascript:check();">
                                                     </td>
@@ -343,7 +343,7 @@
          function goPay()
          {
             var chks = document.getElementsByName('idxs[]');
-            var check_len = 0;
+            var order_idx = '';
              for (var i=0,m=chks.length;i<m ;i++)
              {
                 if (chks[i].checked == true)
@@ -357,15 +357,16 @@
                          return false;
                     }
                     else
-                        check_len++;
+                    {
+                        order_idx = i + ",";
+                    }
                 }
              }
 
-             if(check_len > 0)
+             if(order_idx != "")
              {
-
                  var addr_checked = $(":input:radio[name=addr]:checked").val();
-                 $("input[type=hidden][name=len]").val(check_len);
+                 $("input[type=hidden][name=idx]").val(order_idx);
                  $("input[type=hidden][name=addr_num]").val(addr_checked);
                  document.getElementById("order_form").submit();
              }
