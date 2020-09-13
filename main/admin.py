@@ -1,6 +1,17 @@
 from django.contrib import admin
 from main.models import *
 from .models import RegisterTB
+from .models import LoginTB
+from .models import PrdTB
+from .models import ItemTB
+from .models import OrderTB
+from .models import PayTB
+from .models import MyClassListTB
+from .models import ItemDowndataTB
+from .models import loungeListTB
+from .models import comunityTB
+from .models import categoryTB
+
 # Register your models here.
 
 class RegisterAdmin(admin.ModelAdmin):
