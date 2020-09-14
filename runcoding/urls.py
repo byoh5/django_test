@@ -60,6 +60,7 @@ urlpatterns = [
     path('my_modify_pw/', mypage_profile_modify_pw),
 
     path('send_email/', MailView),
+    path('contact_email/', contact_email),
     path('find_pass/', find_pass_viaEmail),
 
     path('search/', search_prd),

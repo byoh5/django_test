@@ -219,9 +219,52 @@
             <div class="input_area">
                 <input type="text" name="contact" id="email" placeholder="이메일 주소">
                 <textarea rows="5" name="contact" id="text" placeholder="문의 내용"></textarea>
-                <button type="button" name="contact" class="submit">문의하기</button>
+                <button type="button" name="contact" class="submit" onclick="javascript:sendEmail();">문의하기</button>
             </div>
         </div>
     </section>
 
+    <script>
+        function sendEmail()
+        {
+            var email = document.getElementById('email');
+            var text = document.getElementById('text');
+
+            var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
+            if(!email_patten.test(email.value))
+            {
+                alert("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
+                email.value = '';
+                email.focus();
+                return false;
+            }
+
+            if(text.value == "")
+            {
+                alert("문의 내용을 작성해 주세요.");
+                text.value = '';
+                text.focus();
+                return false;
+            }
+
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "email_form");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/contact_email/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'email', value : email.value}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'text', value : text.value}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+
+        }
+
+    </script>
+
     {% include "common/footer.html" %}
+
+
+</body></html>
