@@ -3,6 +3,11 @@ from main.query import *
 from main.models import *
 import bcrypt
 
+message_ok = 200
+message_diff_pass = 202
+message_no_regi = 204
+message_exist_id = 208
+
 def mypage_profile(request):
     user_id = request.session.get('user_id')
     user_info = select_register(user_id)

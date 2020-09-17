@@ -135,7 +135,10 @@ class categoryAdmin(admin.ModelAdmin):
 admin.site.register(categoryTB, categoryAdmin)
 
 class statAdmin(admin.ModelAdmin):
-    list_display = ['register_cnt', 'login_cnt', 'pay_suc_cnt', 'pay_fail_cnt' , 'pre_pay_cnt', 'expire_cnt', 'stime']  # 커스터마이징 코드
+    list_display = ['register_cnt', 'login_cnt', 'pay_suc_cnt', 'pay_fail_cnt', 'pre_pay_cnt', 'expire_cnt', 'stime']  # 커스터마이징 코드
     list_filter = ['stime']
 
 admin.site.register(statTB, statAdmin)
+
+admin.site.register(danal_confirmTB)
+admin.site.register(runcodingTB)

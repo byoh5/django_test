@@ -70,7 +70,6 @@ def find_pass_viaEmail(request):
                     newPW += random.choice(number_pool)
                 else:
                     newPW += random.choice(string_pool)  # 랜덤한 문자열 하나 선택
-            print(newPW)
 
             new_user = regi_info[0]
             password_encrypt = bcrypt.hashpw(newPW.encode('utf-8'), bcrypt.gensalt())

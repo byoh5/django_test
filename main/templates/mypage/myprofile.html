@@ -1,6 +1,9 @@
 {% load static %}
 {% include "common/header.html" %}
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.4.js"></script>
+
     <div class="wrap mypage">
 
         <!-- mypage tabs -->
@@ -17,6 +20,7 @@
             <div class="info_area">
                 <ul>
                      {% for userInfo in user_detail %}
+                    <input type="hidden" id="idx" name="idx" value="{{userInfo.regi_idx}}">
                     <li class="email">
                         <span class="infoTit">name / email</span>
                         <p>{{userInfo.regi_name}} / {{userInfo.regi_email}}</p>
@@ -62,10 +66,10 @@
                 <a href="#!" class="modal-close">×</a>
                 <h3>전화번호 변경</h3>
                 <div class="modal-content">
-                    <span>변경할 휴대폰 번호를 입력해주세요.</span>
+                    <span>변경할 가입자 휴대폰 번호를 입력해주세요.</span>
                     <div class="input_area">
-                        <input type="text" name="change_phone" id="" class="login_inp" placeholder="전화번호를 -없이 숫자만 입력해주세요.">
-                        <a href="#" class="btn certified">휴대폰 인증</a>
+                        <input type="text" name="change_phone" id="change_phone" class="login_inp" placeholder="전화번호를 -없이 숫자만 입력해주세요.">
+                        <a href="javascript:void(0);" onclick="javascript:goAuthPhone();" class="btn certified">휴대폰 인증</a>
                     </div>
                     <div class="btn_area">
                         <a href="#" class="btn cancle">변경 취소</a>
@@ -130,12 +134,24 @@
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/animate.min.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/jquery.modal.css" />
+<script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/jquery.modal.js"></script>
+<script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
+
     <script>
     $(document).ready(function() {
         var msg = $("input[type=hidden][name=msg]").val();
         if(msg == 202)
-            alert("입력하신 이전 비밀번호가 다릅니다");
-            return true;
+        {
+             $("#res_msg").text("입력하신 이전 비밀번호가 다릅니다");
+             $('div.modal').modal();
+        }
+        else if (msg == 401)
+        {
+            $("#res_msg").text("변경될 휴대폰 번호가 가입자 명의가 아닙니다. 다시 확인해 주세요.");
+            $('div.modal').modal();
+        }
     });
 
 
@@ -175,7 +191,7 @@
 	    if($('[name=regi_add01]').val() == "" || $('[name=regi_add02]').val() == "" || $('[name=regi_add03]').val() == "")
 	    {
              alert("주소를 바르게 입력해주세요.");
-              return false;
+             return false;
 	    }
 	    else
 	    {
@@ -306,6 +322,61 @@
         newForm.appendTo('body');
         newForm.submit();
 	}
+
+    function confirmSubmit(run_uid)
+    {
+        var index = document.getElementById('idx').value;
+        var new_phone = document.getElementById('change_phone').value;
+
+        var newForm = $('<form></form>');
+
+        newForm.attr("name", "confirm_user");
+        newForm.attr("method", "post");
+        newForm.attr("action", "/confirm/");
+
+        var run_uid = 'imp_320707046511';
+        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'run_uid', value : run_uid}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'regi_idx', value : index}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'new_phone', value : new_phone}));
+
+        newForm.appendTo('body');
+        newForm.submit();
+    }
+
+	function goAuthPhone()
+	{
+	    var new_phone = document.getElementById('change_phone').value;
+	    if(new_phone == "")
+	    {
+	        alert("변경할 휴대폰 번호를 입력해 주세요");
+	        return false;
+	    }
+
+	    imp_uid = "";
+	    IMP.init('imp08800373');
+	    IMP.certification({
+            merchant_uid : 'merchant_' + new Date().getTime() //본인인증과 연관된 가맹점 내부 주문번호가 있다면 넘겨주세요
+        }, function(rsp) {
+            if ( rsp.success )
+            {
+                 // 인증성공
+                imp_uid = rsp.imp_uid;
+
+                confirmSubmit(imp_uid);
+            }
+            else
+            {
+                 // 인증취소 또는 인증실패
+                var msg = '인증에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+
+                alert(msg);
+            }
+        });
+    }
+
+
     </script>
 
 

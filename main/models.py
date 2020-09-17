@@ -16,6 +16,8 @@ class RegisterTB(models.Model):
     regi_receiver2_add02 = models.CharField(max_length=50, default='', blank=True)
     regi_receiver2_add03 = models.CharField(max_length=50, default='', blank=True)
     regi_pass = models.CharField(max_length=150)
+    imp_birth = models.CharField(max_length=50, default='', blank=True)
+    imp_gender = models.CharField(max_length=50, default='', blank=True)
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
@@ -154,3 +156,21 @@ class statTB(models.Model):
     pre_pay_cnt = models.IntegerField(default='0')
     expire_cnt = models.IntegerField(default='0')
     stime = models.DateTimeField(default=timezone.now)
+
+class danal_confirmTB(models.Model):
+    confirm_idx = models.AutoField(primary_key=True)
+    imp_uid = models.CharField(max_length=150)
+    regi_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, default='', blank=True)
+    imp_name = models.CharField(max_length=50, default='', blank=True)
+    access_token = models.CharField(max_length=150)
+    new_phone = models.CharField(max_length=50, default='', blank=True)
+    stime = models.DateTimeField(default=timezone.now)
+    dbstat = models.CharField(max_length=50, default='A')
+
+class runcodingTB(models.Model):
+    runcoding_idx = models.AutoField(primary_key=True)
+    mail = models.CharField(max_length=50)
+    mail_pass = models.CharField(max_length=150)
+    mail_port = models.CharField(max_length=50)
+    imp_key = models.CharField(max_length=150)
+    imp_secret = models.CharField(max_length=300)

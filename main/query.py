@@ -26,6 +26,10 @@ def select_register_all(regi_email):
     regi_info = RegisterTB.objects.filter(regi_email=regi_email)
     return regi_info
 
+def select_register_idx(idx):
+    regi_info = RegisterTB.objects.filter(regi_idx=idx, dbstat='A')
+    return regi_info
+
 def select_prd(prd_code):
     prd_info = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
     return prd_info
@@ -51,7 +55,7 @@ def select_myclass_list(user_id):
     return myclass_list_info
 
 def select_class_list():
-    prd_info = PrdTB.objects.filter(dbstat='A')
+    prd_info = PrdTB.objects.filter(dbstat='A').order_by('-prd_idx')
     return prd_info
 
 def select_class_detail(prd_code):
@@ -98,6 +102,10 @@ def select_category():
 def select_comunity_category(idx):
     comunity_info = comunityTB.objects.filter(category__category_idx=idx, dbstat='A')
     return comunity_info
+
+def select_runcoding():
+    runcoding_info = runcodingTB.objects.filter(runcoding_idx=1)
+    return runcoding_info
 
 def update_user_addr(user_id, add01,add02,add03):
     user_info = select_register(user_id)
