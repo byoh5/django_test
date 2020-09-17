@@ -30,9 +30,10 @@ def UserRegister(request):
 
     if regi_info.count() is 0:
         password = request.POST['regi_pass']
+        phone = changePhone_format(request.POST['regi_phone'])
         password_encrypt = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         regi_new = RegisterTB(regi_email=request.POST['regi_email'], regi_name=request.POST['regi_name'],
-                       regi_phone=request.POST['regi_phone'],
+                       regi_phone=phone,
                        regi_receiver1_add01=request.POST['regi_add01'], regi_receiver1_add02=request.POST['regi_add02'],
                        regi_receiver1_add03=request.POST['regi_add03'], regi_pass=password_encrypt.decode('utf-8'))
         regi_new.save()

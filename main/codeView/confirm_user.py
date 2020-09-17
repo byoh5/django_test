@@ -11,7 +11,7 @@ response_ok = 200
 def getConfirm(request):
     run_uid = request.POST['run_uid']
     regi_idx = request.POST['regi_idx']
-    new_phone = request.POST['new_phone']
+    new_phone = changePhone_format(request.POST['new_phone'])
 
     regi_info = select_register_idx(regi_idx)
     runcoding = select_runcoding()

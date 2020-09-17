@@ -166,3 +166,25 @@ def delete_login(user_id):
         new_login.logout_time = timezone.now()
         new_login.save()
 
+def changePhone_format(number):
+   phone = ""
+   if len(number) < 10 : #010-123-123
+        phone += number[0:3]
+        phone += "-"
+        phone += number[3:6]
+        phone += "-"
+        phone += number[6:9]
+   elif  len(number) < 11 : #010-123-1234
+        phone += number[0:3]
+        phone += "-"
+        phone += number[3:6]
+        phone += "-"
+        phone += number[6:10]
+   else:
+        phone += number[0:3]
+        phone += "-"
+        phone += number[3:7]
+        phone += "-"
+        phone += number[7:11]
+
+   return phone

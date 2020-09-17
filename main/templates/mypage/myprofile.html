@@ -211,37 +211,6 @@
         }
 	}
 
-
-    function chkItemPhone(temp)
-    {
-        var number = temp.replace(/[^0-9]/g, "");
-        var phone = "";
-
-        if (number.length < 9) {
-            return number;
-        } else if (number.length < 10) {
-            phone += number.substr(0, 2);
-            phone += "-";
-            phone += number.substr(2, 3);
-            phone += "-";
-            phone += number.substr(5);
-        } else if (number.length < 11) {
-            phone += number.substr(0, 3);
-            phone += "-";
-            phone += number.substr(3, 3);
-            phone += "-";
-            phone += number.substr(6);
-        } else {
-            phone += number.substr(0, 3);
-            phone += "-";
-            phone += number.substr(3, 4);
-            phone += "-";
-            phone += number.substr(7);
-        }
-
-        return phone;
-    }
-
 	function changeAddr2()
 	{
 	    if($('[name=regi_receiver2_add01]').val() == "" || $('[name=regi_receiver2_add02]').val() == "" || $('[name=regi_receiver2_add03]').val() == "")
@@ -323,10 +292,9 @@
         newForm.submit();
 	}
 
-    function confirmSubmit(run_uid)
+    function confirmSubmit(run_uid, phone)
     {
         var index = document.getElementById('idx').value;
-        var new_phone = document.getElementById('change_phone').value;
 
         var newForm = $('<form></form>');
 
@@ -334,11 +302,10 @@
         newForm.attr("method", "post");
         newForm.attr("action", "/confirm/");
 
-        var run_uid = 'imp_320707046511';
         newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
         newForm.append($('<input/>', {type: 'hidden', name: 'run_uid', value : run_uid}));
         newForm.append($('<input/>', {type: 'hidden', name: 'regi_idx', value : index}));
-        newForm.append($('<input/>', {type: 'hidden', name: 'new_phone', value : new_phone}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'new_phone', value : phone}));
 
         newForm.appendTo('body');
         newForm.submit();
@@ -352,6 +319,16 @@
 	        alert("변경할 휴대폰 번호를 입력해 주세요");
 	        return false;
 	    }
+	    else
+	    {
+	        var phone_num = new_phone.replace(/[^0-9]/g, "");
+
+             if (phone_num.length < 9)
+             {
+                alert("휴대폰 번호를 정확히 입력하세요.");
+                return false;
+             }
+	    }
 
 	    imp_uid = "";
 	    IMP.init('imp08800373');
@@ -362,8 +339,7 @@
             {
                  // 인증성공
                 imp_uid = rsp.imp_uid;
-
-                confirmSubmit(imp_uid);
+                confirmSubmit(imp_uid, phone_num);
             }
             else
             {

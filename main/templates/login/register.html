@@ -146,36 +146,6 @@
         }
     }
 
-    function chkItemPhone(temp)
-    {
-        var number = temp.replace(/[^0-9]/g, "");
-        var phone = "";
-
-        if (number.length < 9) {
-            return number;
-        } else if (number.length < 10) {
-            phone += number.substr(0, 2);
-            phone += "-";
-            phone += number.substr(2, 3);
-            phone += "-";
-            phone += number.substr(5);
-        } else if (number.length < 11) {
-            phone += number.substr(0, 3);
-            phone += "-";
-            phone += number.substr(3, 3);
-            phone += "-";
-            phone += number.substr(6);
-        } else {
-            phone += number.substr(0, 3);
-            phone += "-";
-            phone += number.substr(3, 4);
-            phone += "-";
-            phone += number.substr(7);
-        }
-
-        return phone;
-    }
-
     function regi_submit()
     {
         var pass_patten = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/; // 숫자, 특문 1회이상/ 영문 2개이상 8자리 이상
@@ -229,8 +199,15 @@
         }
         else
         {
-            phoneVal = chkItemPhone(phone.value);
-            phone.value = phoneVal;
+             var phone_num = phone.value.replace(/[^0-9]/g, "");
+
+             if (phone_num.length < 9)
+             {
+                $("#res_msg").text("휴대폰 번호를 정확히 입력하세요.");
+                $('div.modal').modal();
+                return false;
+             }
+             phone.value = phone_num;
         }
 
         if(address01.value == "" || address02.value == "" || address03.value == "")
