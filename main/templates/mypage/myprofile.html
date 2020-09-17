@@ -47,9 +47,9 @@
                     <li class="password">
                         <span class="infoTit">비밀번호 변경 </span>
                         <div class="input_area">
-                            <input type="password" name="beforePW" id="beforePW" placeholder="이전 비밀번호">
-                            <input type="password" name="newPW" id="newPW" placeholder="새 비밀번호">
-                            <input type="password" name="newChPW" id="newChPW" placeholder="새 비밀번호 확인">
+                            <input type="password" name="beforePW" id="beforePW" onkeyup="enterkey();"  placeholder="이전 비밀번호">
+                            <input type="password" name="newPW" id="newPW" onkeyup="enterkey();"  placeholder="새 비밀번호">
+                            <input type="password" name="newChPW" id="newChPW" onkeyup="enterkey();"  placeholder="새 비밀번호 확인">
                             <a href="javascript:changePW();" class="btn editPW">비밀번호 변경</a>
                         </div>
                     </li>
@@ -154,6 +154,14 @@
         }
     });
 
+    function enterkey()
+    {
+        if (window.event.keyCode == 13) {
+
+             // 엔터키가 눌렸을 때 실행할 내용
+             changePW();
+        }
+    }
 
     function getAddress(data)
     {
@@ -255,23 +263,23 @@
 
 	    if(pass.value.length == 0 || pass_chk.value.length < 8)
         {
-            alert("비밀번호는 8자 이상 필요합니다.");
-            pass.focus();
+            $("#res_msg").text("비밀번호는 8자 이상 필요합니다.");
+            $('div.modal').modal();
             return false;
         }
         else
         {
             if(!pass_patten.test(pass.value))
             {
-                alert("비밀번호는 영문 + 숫자 + 특수문자가 필요합니다.");
-                pass.focus();
+                $("#res_msg").text("비밀번호는 영문 + 숫자 + 특수문자가 필요합니다.");
+                $('div.modal').modal();
                 return false;
             }
 
             if(pass.value != pass_chk.value)
             {
-                alert("비밀번호와 비밀번호 확인 번호가 다릅니다.");
-                pass_chk.focus();
+                $("#res_msg").text("비밀번호와 비밀번호 확인 번호가 다릅니다.");
+                $('div.modal').modal();
                 pass_chk.value = "";
                 return false;
             }
