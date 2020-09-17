@@ -389,13 +389,13 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	position:relative;
 	display:block;
 	margin-bottom:0.5em;
-	padding-left:0.75em;
+	padding-left:1.7em;
 	font-size:0.66em;
 	color:#646464;
 }
 .precaution ul li:before {
 	position:absolute;
-	content:'·';
+	content:url("../img/sub/ico_down.png");
 	top:0;
 	left:0;
 }
