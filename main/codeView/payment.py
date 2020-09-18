@@ -17,7 +17,7 @@ def payment(request):
     order_idx = request.POST['idx']
     addr_num = request.POST['addr_num']
     prd_price = int(request.POST['total_prd_price'])
-    option_price = int(request.POST['total_option_price'])
+    delivery_price = int(request.POST['total_delivery_price'])
     prd_total_price = int(request.POST['total_option_prd_price'])
 
     order_list = ""
@@ -61,7 +61,7 @@ def payment(request):
             pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
 
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
-                         prd_price=prd_price, delivery_price=option_price, prd_total_price=prd_total_price,
+                         prd_price=prd_price, delivery_price=delivery_price, prd_total_price=prd_total_price,
                          delivery_name=name, delivery_addr=addr, delivery_phone=phone)
         pay_info.save()
 

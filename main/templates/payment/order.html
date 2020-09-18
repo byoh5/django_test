@@ -49,7 +49,7 @@
                                                 <th class="text-center">&nbsp;</th>
                                                 <th class="text-center">&nbsp;</th>
                                                 <th class="text-left">상품</th>
-                                                <th class="text-left">옵션 선택</th>
+                                                <th class="text-center">옵션 선택</th>
                                                 <th class="text-center">판매가</th>
                                                 <th class="text-center">수량선택</th>
                                                 <th class="text-left">배송구분</th>
@@ -64,8 +64,9 @@
                                                     <input type="hidden" id="idx" name="idx" value="0">
                                                     <input type="hidden" id="addr_num" name="addr_num" value="0">
                                                     <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
-                                                    <input type="hidden" id="total_option_price" name="total_option_price" value="0">
+                                                    <input type="hidden" id="total_delivery_price" name="total_delivery_price" value="0">
                                                     <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
+                                                    <input type="hidden" id="option_price" name="option_price" value="0">
                                                     <td>
                                                         <input type="hidden" name="orderIdxs_{{forloop.counter0}}" id="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
                                                         <input type="hidden" id="len" name="len" value="0">
@@ -86,9 +87,9 @@
                                                     <td>
                                                         <div id="prdModify">
                                                             <li>
-                                                                <select id="options_{{forloop.counter0}}" name="options_{{forloop.counter0}}" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                                    <option value="">------필수옵션-------</option>
-                                                                    <option value="20200905">{{orderDetail.prd.option}}</option>
+                                                                <select id="options_{{forloop.counter0}}" name="options_{{forloop.counter0}}" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, {{forloop.counter0}})">
+                                                                    <option value="">----------------옵션------</option>
+                                                                    <option value={{orderDetail.prd.option_price}}>{{orderDetail.prd.option}}(+{{orderDetail.prd.option_price}})</option>
                                                                 </select>
                                                             </li>
                                                         </div>
@@ -116,7 +117,7 @@
                                                        <strong>{{orderDetail.delivery}}</strong>
                                                     </td>
                                                     <td>
-                                                       <div id="prd_option_price_{{forloop.counter0}}" style="float:left;">
+                                                       <div id="prd_delivery_price_{{forloop.counter0}}" style="float:left;">
                                                             {% if forloop.counter0 == 0 %}
                                                             <strong>{{orderDetail.delivery_price}}</strong>
                                                             {% else %}
@@ -170,7 +171,6 @@
                                              <tr>
                                                  <td>
                                                     <div id="div_total_prd_price" class="box" style="padding-left:30%; float:left; margin-right:10px;">
-                                                        <strong>90000</strong>
                                                         <span class="tail displaynone"></span>
                                                     </div>
                                                      <div style="float:left;">
@@ -178,8 +178,7 @@
                                                      </div>
                                                  </td>
                                                  <td >
-                                                    <div id="div_total_option_price" class="box" style="padding-left:35%; float:left; margin-right:10px;">
-                                                        <strong>3000</strong>
+                                                    <div id="div_total_delivery_price" class="box" style="padding-left:35%; float:left; margin-right:10px;">
                                                         <span class="tail displaynone"></span>
                                                     </div>
                                                      <div style="float:left;">
@@ -188,7 +187,6 @@
                                                  </td>
                                                  <td >
                                                     <div id="div_total_option_prd_price" class="box"  style="padding-left:40%; float:left; margin-right:10px;">
-                                                        <strong>93000</strong>
                                                         <span class="tail displaynone"></span>
                                                     </div>
                                                      <div style="float:left;">
@@ -340,6 +338,27 @@
              }
          });
 
+         function myOption(option_val, idx)
+         {
+            var chks = document.getElementsByName('idxs[]');
+            var already_option_price = $("input[type=hidden][name=option_price]").val();
+
+            already_option_price *= 1
+            if(option_val == "")
+                option_val = -already_option_price;
+
+            option_val *= 1;
+
+            if(chks[idx].checked == true)
+            {
+                total_prd_price = document.getElementById("div_total_prd_price").innerText;
+                addOption_price = removeComma(total_prd_price) + option_val;
+
+                $("input[type=hidden][name=option_price]").val(option_val);
+                all_total_price(addOption_price);
+            }
+         }
+
          function goPay()
          {
             var chks = document.getElementsByName('idxs[]');
@@ -352,7 +371,7 @@
                     var select_id = document.getElementById(prd_option_name);
                     if(select_id.selectedIndex == 0)
                     {
-                         $("#res_msg").text("필수 옵션을 선택해 주세요.");
+                         $("#res_msg").text("옵션을 선택해 주세요.");
                          $('div.modal').modal();
                          return false;
                     }
@@ -399,20 +418,23 @@
 
             var prd_price = 0;
             var prd_total_price = 0;
+            var delivery = 0;
             var option = 0;
             var count = 1;
             var first = 1;
 
             var prd_price_name;
             var quantity_name;
-            var prd_option_name;
+            var prd_delivery_name;
             var total_summary_price = 0;
+            var prd_option_name;
 
             for (var i=0,m=chks.length;i<m ;i++)
             {
                 prd_price_name = "prd_price_" + i;
                 quantity_name = "prodQuantity_" + i;
-                prd_option_name ="prd_option_price_" + i;
+                prd_delivery_name ="prd_delivery_price_" + i;
+                prd_option_name = "options_" + i;
 
                 prd_price_format = numberWithCommas(document.getElementById(prd_price_name).innerText);
 
@@ -422,39 +444,60 @@
 				    prd_price = document.getElementById(prd_price_name).innerText;
 				    prd_price = removeComma(prd_price);
 				    count = document.getElementById(quantity_name).value;
-                    prd_total_price =  parseInt(prd_price) * count;
+
+                    option = document.getElementById(prd_option_name).value;
+                    option *= 1;
+
+				    prd_total_price =  (parseInt(prd_price) * count);
+				    if(option > 0)
+				        prd_total_price += option;
+
                     if(first == 1)
                     {
-                        option = 3000
-                        document.getElementById(prd_option_name).innerHTML = "<strong>" + numberWithCommas(option) + "</<strong>";
+                        delivery = 3000;
+                        document.getElementById(prd_delivery_name).innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
                         first++;
                     }
                     else
-                        document.getElementById(prd_option_name).innerHTML = "<strong>" + 0 + "</<strong>";
+                    {
+                        delivery = 0;
+                        document.getElementById(prd_delivery_name).innerHTML = "<strong>" + delivery + "</<strong>";
+                     }
 
                     total_summary_price += prd_total_price;
 				}
 				else
-				    document.getElementById(prd_option_name).innerHTML = "<strong>" + 0 + "</<strong>";
+				{
+				    delivery = 0;
+				    document.getElementById(prd_delivery_name).innerHTML = "<strong>" + delivery + "</<strong>";
+				}
 
 				document.getElementById(prd_price_name).innerText = prd_price_format;
 			}
 
-			 if (total_summary_price >= 100000 || total_summary_price == 0)
-                document.getElementById("div_total_option_price").innerHTML = "<strong>" + numberWithCommas(option) + "</<strong>";
+			all_total_price(total_summary_price);
+        }
+
+        function all_total_price(total_summary_price)
+        {
+            if (total_summary_price >= 100000 || total_summary_price == 0)
+			 {
+			    delivery = 0;
+                document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
+             }
              else
              {
-                option = 3000
-                document.getElementById("div_total_option_price").innerHTML = "<strong>" + numberWithCommas(option) + "</<strong>";
+                delivery = 3000;
+                document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
              }
 
-            var total = total_summary_price + parseInt(option);
+            var total = total_summary_price + parseInt(delivery);
 
             document.getElementById("div_total_prd_price").innerHTML = "<strong>" + numberWithCommas(total_summary_price) + "</<strong>";
 			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
 
 			$("input[type=hidden][name=total_prd_price]").val(total_summary_price);
-			$("input[type=hidden][name=total_option_price]").val(option);
+			$("input[type=hidden][name=total_delivery_price]").val(delivery);
             $("input[type=hidden][name=total_option_prd_price]").val(total);
         }
 

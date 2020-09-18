@@ -10,9 +10,9 @@ from main.models import MyClassListTB
 from main.models import statTB
 
 def expire_user_class():
-    year = timezone.now().year
-    month = timezone.now().month
-    day = timezone.now().day-1
+    year = timezone.localtime().year
+    month = timezone.localtime().month
+    day = timezone.localtime().day-1
     expire_target = MyClassListTB.objects.filter(dbstat='A', expire_time__year=year, expire_time__month=month, expire_time__day=day)
 
     if expire_target.count() != 0:

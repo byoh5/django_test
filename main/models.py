@@ -44,6 +44,7 @@ class PrdTB(models.Model):
     class_count = models.IntegerField(null=True)
     price = models.IntegerField(null=True)
     option = models.CharField(max_length=50)
+    option_price = models.IntegerField(null=True)
     goal = models.CharField(max_length=150)
     keyword = models.CharField(max_length=50, default = '') #search 용
     stime = models.DateTimeField(default=timezone.now)
