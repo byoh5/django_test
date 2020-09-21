@@ -86,8 +86,20 @@
                                     <p>{{prd_detail.period}}개월</p>
                                 </li>
                                 <li>
-                                    <span class="li_title">옵션</span>
-                                    <p>{{prd_detail.option}}</p>
+                                    <span class="li_title">옵션 </span>
+
+                                    {% if prd_detail.option1 != "" %}
+                                    <p> {{prd_detail.option1}} (+ {{prd_detail.option1_price}}원) </p>
+                                    {% endif %}
+
+                                    {% if prd_detail.option2 != "" %}
+                                    <p> {{prd_detail.option2}} (+ {{prd_detail.option2_price}}원) </p>
+                                    {% endif %}
+
+                                    {% if prd_detail.option3 != "" %}
+                                    <p> {{prd_detail.option3}} (+ {{prd_detail.option3_price}}원) </p>
+                                    {% endif %}
+
                                 </li>
                                 <li>
                                     <span class="li_title">베송비</span>
