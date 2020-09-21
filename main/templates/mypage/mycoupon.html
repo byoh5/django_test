@@ -1,0 +1,122 @@
+{% load static %}
+{% include "common/header.html" %}
+
+    <div class="wrap mypage">
+
+        <!-- mypage tabs -->
+        <div class="tabs mypage">
+            <ul>
+                <li><a href="/myprofile/">내 프로필</a></li>
+                <li class="active"><a href="/coupon/">내 쿠폰</a></li>
+                <li><a href="/myorder/">주문내역</a></li>
+
+            </ul>
+        </div>
+
+        <!-- mypage content -->
+        <div class="mypage_area membership">
+            <div class="membership_area">
+                <ul>
+                    <li class="mypageTbl coupon">
+                        <h3>
+                            쿠폰
+                            <div class="mypageBtn">
+                                <a href="#addCoupon" class="btn coupon">쿠폰 등록</a>
+                            </div>
+                        </h3>
+
+                        {% if coupon_detail.count == 0 %}
+                         <ul class="list">
+                              <li class="tbody">
+                                  <span><strong>등록된 쿠폰이 없습니다.</strong></span>
+                              </li>
+                         </ul>
+                        {% else %}
+                        <ul class="list">
+                            <li class="thead">
+                                <span class="name">쿠폰 이름</span>
+                                <span class="issueDate">발급일</span>
+                                <span class="endDate">만료일</span>
+                                <span class="condition">사용여부</span>
+                            </li>
+                            {% for couponList in coupon_detail %}
+                            <li class="tbody">
+                                <span class="name">{{couponList.coupon.coupon_name}}</span>
+                                <span class="issueDate">{{couponList.stime  | date:'y-m-d' }}</span>
+                                <span class="endDate">{{couponList.expire | date:'y-m-d' }}</span>
+                                {% if couponList.used %}
+                                <span class="condition ready">사용</span>
+                                {% else %}
+                                <span class="condition ready">미사용</span>
+                                 {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 쿠폰 등록 팝업 -->
+        <div data-ml-modal="" id="addCoupon">
+            <a href="#" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg mypage">
+                <a href="#" class="modal-close">×</a>
+                <h3>쿠폰 등록</h3>
+                <div class="modal-content">
+                    <span>발급받은 쿠폰번호를 입력해주세요.</span>
+                    <div class="input_area">
+                       <input type="text" name="add_coupon_num" id="add_coupon_num" class="login_inp">
+                    </div>
+                    <div class="btn_area">
+                        <a href="#" class="btn cancle">취소</a>
+                        <a href="javascript:add_coupon();" class="btn apply">확인</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="msg" name="msg" value="{{message}}">
+
+       {% include "common/footer.html" %}
+
+        <script>
+
+        $(document).ready(function() {
+            var msg = $("input[type=hidden][name=msg]").val();
+            if(msg == 302)
+            {
+                 $("#res_msg").text("입력하신 쿠폰 번호가 잘못 되었습니다. 다시 확인해 주세요.");
+                 $('div.modal').modal();
+            }
+            else if(msg == 304)
+            {
+                 $("#res_msg").text("입력하신 쿠폰은 유효기간이 만료 되었습니다.");
+                 $('div.modal').modal();
+            }
+            else if(msg == 306)
+            {
+                 $("#res_msg").text("입력하신 쿠폰은 이미 등록되었습니다.");
+                 $('div.modal').modal();
+            }
+
+        });
+
+        function add_coupon()
+        {
+             var newForm = $('<form></form>');
+
+            newForm.attr("name", "add_coupon");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/add_coupon/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'add_coupon_num', value : $('[name=add_coupon_num]').val()}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+        }
+
+        </script>
+
+</body></html>

@@ -56,9 +56,13 @@ urlpatterns = [
     path('myprofile/', mypage_profile),
     path('myorder/', mypage_order),
     path('myorder_detail/', mypage_order_detail),
+
     path('my_modify_addr/', mypage_profile_modify_addr),
     path('my_modify_addr2/', mypage_profile_modify_addr2),
     path('my_modify_pw/', mypage_profile_modify_pw),
+
+    path('coupon/', mypage_coupon_list),
+    path('add_coupon/', mypage_add_coupon),
 
     path('contact_email/', contact_email),
     path('find_pass/', find_pass_viaEmail),

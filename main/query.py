@@ -14,10 +14,6 @@ def select_order_prdCode(user_id, prd_code):
     order_info = OrderTB.objects.filter(user_id=user_id, prd__prd_code=prd_code, dbstat='A')
     return order_info
 
-def select_login(user_id):
-    login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
-    return login_info
-
 def select_register(regi_email):
     regi_info = RegisterTB.objects.filter(regi_email=regi_email, dbstat='A')
     return regi_info
@@ -106,6 +102,22 @@ def select_comunity_category(idx):
 def select_runcoding():
     runcoding_info = runcodingTB.objects.filter(runcoding_idx=1)
     return runcoding_info
+
+def select_myCoupon(user_id):
+    myCoupon_info = myCouponTB.objects.filter(user__regi_email=user_id, dbstat='A')
+    return myCoupon_info
+
+def select_myCoupon_couponNum(user_id, coupon_num):
+    myCoupon_info = myCouponTB.objects.filter(user__regi_email=user_id, coupon__coupon_num=coupon_num, dbstat='A')
+    return myCoupon_info
+
+def select_coupon(coupon_num):
+    coupon_info = couponTB.objects.filter(coupon_num=coupon_num, dbstat='A')
+    return coupon_info
+
+def select_coupon_all(coupon_num):
+    coupon_info = couponTB.objects.filter(coupon_num=coupon_num)
+    return coupon_info
 
 def update_user_addr(user_id, add01,add02,add03):
     user_info = select_register(user_id)

@@ -8,6 +8,11 @@ message_diff_pass = 202
 message_no_regi = 204
 message_exist_id = 208
 
+message_coupon_ok = 300
+message_coupon_diff = 302
+message_coupon_expired = 304
+message_coupon_already_used = 306
+
 def mypage_profile(request):
     user_id = request.session.get('user_id')
     user_info = select_register(user_id)
@@ -90,3 +95,43 @@ def mypage_profile_modify_pw(request):
 
             return render(request, 'mypage/myprofile.html', context)
 
+def mypage_coupon_list(request):
+    user_id = request.session.get('user_id')
+    myCoupon_info = select_myCoupon(user_id)
+    context = {
+        "coupon_detail": myCoupon_info,
+    }
+    return render(request, 'mypage/mycoupon.html', context)
+
+def mypage_add_coupon(request):
+    user_id = request.session.get('user_id')
+    coupon_num = request.POST['add_coupon_num']
+
+    add_coupon_info = select_coupon_all(coupon_num)
+    if add_coupon_info.count() == 1:
+        if add_coupon_info[0].dbstat == 'A':
+            coupon_user = select_myCoupon_couponNum(user_id, coupon_num)
+
+            if coupon_user.count() > 0:
+                message = message_coupon_already_used
+            else:
+                user_info = select_register(user_id)
+
+                period = add_coupon_info[0].period * 30  # preiod * 개월(30)
+                expireTime = timezone.now() + timezone.timedelta(days=period)
+
+                my_addCoupon = myCouponTB(user=user_info[0],coupon=add_coupon_info[0],expire=expireTime)
+                my_addCoupon.save()
+
+                message = message_coupon_ok
+        else:
+            message = message_coupon_expired
+    else:
+        message = message_coupon_diff
+
+    myCoupon_info = select_myCoupon(user_id)
+    context = {
+        "coupon_detail": myCoupon_info,
+        "message": message,
+    }
+    return render(request, 'mypage/mycoupon.html', context)

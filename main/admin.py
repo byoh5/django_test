@@ -142,3 +142,40 @@ admin.site.register(statTB, statAdmin)
 
 admin.site.register(danal_confirmTB)
 admin.site.register(runcodingTB)
+
+class couponAdmin(admin.ModelAdmin):
+    list_display = ['coupon_num', 'type', 'discount','expire']  # 커스터마이징 코드
+
+    list_filter = ['expire']
+
+    def get_code(self, obj):
+        return obj.prd.prd_code
+
+    get_code.short_description = 'prd_code'  # Renames column head
+
+    list_display_links = ['coupon_num']
+    search_fields = ['coupon_num']
+    ordering = ['-coupon_idx']
+
+admin.site.register(couponTB, couponAdmin)
+
+class myCouponAdmin(admin.ModelAdmin):
+    list_display = ['myCoupon_idx', 'get_id', 'get_coupon', 'used','expire', 'dbstat']  # 커스터마이징 코드
+
+    list_filter = ['used', 'expire', 'dbstat']
+
+    def get_id(self, obj):
+        return obj.user.regi_email
+
+    get_id.short_description = 'user'  # Renames column head
+
+    def get_coupon(self, obj):
+        return obj.coupon.coupon_num
+
+    get_coupon.short_description = 'coupon'  # Renames column head
+
+    list_display_links = ['myCoupon_idx']
+    search_fields = ['get_id', 'get_coupon']
+    ordering = ['-myCoupon_idx']
+
+admin.site.register(myCouponTB, myCouponAdmin)

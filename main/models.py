@@ -179,3 +179,23 @@ class runcodingTB(models.Model):
     mail_port = models.CharField(max_length=50)
     imp_key = models.CharField(max_length=150)
     imp_secret = models.CharField(max_length=300)
+
+class couponTB(models.Model):
+    coupon_idx = models.AutoField(primary_key=True)
+    coupon_num = models.CharField(max_length=150, unique=True)
+    coupon_name = models.CharField(max_length=150, default='')
+    type = models.IntegerField(default='0') # 1: discount 2: product
+    discount = models.IntegerField(default='0', blank=True)
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, default='', blank=True, null=True)
+    period = models.IntegerField(default='1', null=True) # 쿠폰 사용의 유효기간 (사용자마다 몇개월 안에 사용 )
+    expire = models.DateTimeField(default='') # 쿠폰 등록의 유효기간
+    dbstat = models.CharField(max_length=50, default='A')
+
+class myCouponTB(models.Model):
+    myCoupon_idx = models.AutoField(primary_key=True)
+    user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, default='')
+    coupon = models.ForeignKey(couponTB, on_delete=models.PROTECT, default='')
+    used = models.BooleanField(default=False)
+    dbstat = models.CharField(max_length=50, default='A')
+    expire = models.DateTimeField(default='')
+    stime = models.DateTimeField(default=timezone.now)
