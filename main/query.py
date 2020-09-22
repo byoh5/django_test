@@ -26,6 +26,10 @@ def select_register_idx(idx):
     regi_info = RegisterTB.objects.filter(regi_idx=idx, dbstat='A')
     return regi_info
 
+def select_login(user_id):
+    login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
+    return login_info
+
 def select_prd(prd_code):
     prd_info = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
     return prd_info
@@ -107,6 +111,10 @@ def select_myCoupon(user_id):
     myCoupon_info = myCouponTB.objects.filter(user__regi_email=user_id, dbstat='A')
     return myCoupon_info
 
+def select_myCoupon_notUsed(user_id):
+    myCoupon_info = myCouponTB.objects.filter(user__regi_email=user_id, used=False, dbstat='A')
+    return myCoupon_info
+
 def select_myCoupon_couponNum(user_id, coupon_num):
     myCoupon_info = myCouponTB.objects.filter(user__regi_email=user_id, coupon__coupon_num=coupon_num, dbstat='A')
     return myCoupon_info
@@ -162,6 +170,14 @@ def update_order_idx(idx, user_id, count, addr_num):
         new_order.save()
 
     return prd_title
+
+def update_myCoupon(user_id, coupon_num):
+    myCoupon_info = select_myCoupon_couponNum(user_id, coupon_num)
+
+    if myCoupon_info.count() is not 0:
+        update_myCoupon = myCoupon_info[0]
+        update_myCoupon.used = True
+        update_myCoupon.save()
 
 def delete_order_idx(order_info):
     if order_info.count() is not 0:

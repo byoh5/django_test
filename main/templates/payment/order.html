@@ -66,6 +66,8 @@
                                                     <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
                                                     <input type="hidden" id="total_delivery_price" name="total_delivery_price" value="0">
                                                     <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
+                                                    <input type="hidden" id="total_option_coupon_prd_price" name="total_option_coupon_prd_price" value="0">
+                                                    <input type="hidden" id="coupon_num" name="coupon_num" value="0">
                                                     <td>
                                                         <input type="hidden" name="orderIdxs_{{forloop.counter0}}" id="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
                                                         <input type="hidden" id="len" name="len" value="0">
@@ -79,6 +81,7 @@
                                                          </div>
                                                     </td>
                                                     <td>
+                                                        <input type="hidden" id="prd_code_{{forloop.counter0}}" name="prd_code_{{forloop.counter0}}" value="{{orderDetail.prd.prd_code}}">
                                                          <div class="pull-left">
                                                              <span>{{orderDetail.prd.title}}</span>
                                                          </div>
@@ -223,6 +226,58 @@
                     </div>
                  </tr>
 
+                 <!-- 쿠폰 -->
+                   <tr class="row">
+                      <div class="col-xs-offset-1 col-xs-10">
+                          <div class="row">
+                              <div class="col-xs-12">
+                                 <div class="border-radius-none margin-top-30">
+                                      <div>
+                                          <div class="margin-top-40 xans-order-totalsummary bg-color-gray">
+                                              <table summary>
+                                                 <colgroup>
+                                                     <col style="width:47%;">
+                                                     <col style="width:auto;">
+                                                 </colgroup>
+                                                 <thead>
+                                                    <tr>
+                                                        <th scope="col" class="text-center">
+                                                            <span>쿠폰 선택</span>
+                                                        </th>
+                                                         <th scope="col" class="text-center">
+                                                            <span>최종 결제 금액</span>
+                                                        </th>
+                                                    </tr>
+                                                 </thead>
+                                                 <tbody>
+                                                     <tr>
+                                                         <td>
+                                                             <select id="coupon" name="coupon" style="float:center; width:80%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myCoupon(this.value)">
+                                                                <option value="0">&nbsp;&nbsp;----------------&nbsp;사용 가능한 쿠폰을 선택하세요.&nbsp;------------</option>
+                                                                  {% for couponList in coupon_detail %}
+                                                                     <option value={{couponList.coupon.coupon_num}},{{couponList.coupon.discount}},{{couponList.coupon.delivery_price}},{{couponList.coupon.prd.prd_code}},{{couponList.coupon.prd.title}}>{{couponList.coupon.coupon_name}} [유효기한 : {{couponList.expire | date:'y-m-d' }} 까지]</option>
+                                                                  {% endfor %}
+                                                             </select>
+                                                         </td>
+                                                         <td style="background-color: #fffdec !important; ">
+                                                              <div id="coupon_total_price" class="box" style="padding-left:40%; float:left; margin-right:10px;">
+                                                                <span class="tail displaynone"></span>
+                                                              </div>
+                                                              <div style="float:left;">
+                                                                <strong>원</strong>
+                                                              </div>
+                                                         </td>
+                                                    </tr>
+                                                 </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                 </div>
+                              </div>
+                          </div>
+                      </div>
+                   </tr>
+
                  <!-- 결제방법 -->
                  <tr class="row">
                   <div class="col-xs-offset-1 col-xs-10">
@@ -323,7 +378,9 @@
 {% include "common/banner_bottom.html" %}
 {% include "common/footer.html" %}
     <script>
-        function removeComma(str)
+
+
+       function removeComma(str)
        {
           n = parseInt(str.replace(/,/g,""));
           return n;
@@ -357,6 +414,100 @@
              }
          });
 
+         function myCoupon(value)
+         {
+            if(value != "0")
+            {
+                var total_price = $("input[type=hidden][name=total_prd_price]").val();
+
+                delivery = {{delivery_price}};
+                if($("input[type=hidden][name=total_delivery_price]").val() == 0)
+                {
+                    $("input[type=hidden][name=total_delivery_price]").val(delivery);
+                    document.getElementById("div_total_delivery_price").innerHTML = "<strong>"+ numberWithCommas(delivery) + "</<strong>";
+                }
+
+                var pay_price = 0;
+
+                var data = value.split(",");
+                var coupon_num = data[0];
+                var discount = data[1];
+                var delivery_price = data[2];
+                var prdCode = data[3];
+                var title = data[4];
+
+                discount *= 1;
+                total_price *= 1;
+                delivery *= 1;
+
+                if(prdCode != "")
+                {
+                    var chks = document.getElementsByName('idxs[]');
+                    var prd_selected = 0;
+                    var prd_price = 0;
+                     for (var i=0,m=chks.length;i<m ;i++)
+                     {
+                        if (chks[i].checked == true)
+                        {
+                            var prd_code = document.getElementById("prd_code_" + i).value;
+
+                            if(prd_code == prdCode)
+                            {
+                                prd_price = removeComma(document.getElementById("prd_price_" + i).innerText);
+                                prd_price *= 1;
+                                prd_selected = 1;
+                            }
+                        }
+                     }
+
+                     if(prd_selected == 1)
+                     {
+                        if(discount == 100)
+                        {
+                            pay_price = total_price - prd_price;
+                            if(delivery_price == 'False')
+                            {
+                                delivery = 0;
+                                $("input[type=hidden][name=total_delivery_price]").val(delivery);
+                                document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + delivery + "</<strong>";
+                            }
+
+                        }
+                        else
+                            pay_price = total_price - (Math.ceil(prd_price * ((100 - discount) / 100)));
+                    }
+                    else
+                    {
+                        document.getElementById("coupon").selectedIndex = 0;
+                        $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);
+                        $("input[type=hidden][name=coupon_num]").val(0);
+
+                        var price = document.getElementById("div_total_option_prd_price").innerText;
+                        document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(price) + "</<strong>";
+
+                        $("#res_msg").text("적용 가능한 키트상품이 없습니다. 다시 확인 후 사용해주세요.");
+                        $('div.modal').modal();
+                        return false;
+                    }
+                }
+                else if(discount > 0)
+                {
+                   pay_price = Math.ceil(total_price * ((100 - discount) / 100));
+                }
+
+                pay_price += delivery;
+                $("input[type=hidden][name=total_option_coupon_prd_price]").val(pay_price);
+                alert(coupon_num);
+                $("input[type=hidden][name=coupon_num]").val(coupon_num);
+                document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(pay_price) + "</<strong>";
+            }
+            else
+            {
+                var price = document.getElementById("div_total_option_prd_price").innerText;
+                document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(price) + "</<strong>";
+            }
+         }
+
          function myOption(option_val, idx, num)
          {
             var chks = document.getElementsByName('idxs[]');
@@ -375,6 +526,10 @@
 
                 document.getElementById(option_name).value = option_val;
                 all_total_price(addOption_price);
+
+                document.getElementById("coupon").selectedIndex = 0;
+                $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);
+                $("input[type=hidden][name=coupon_num]").val(0);
             }
          }
 
@@ -495,18 +650,24 @@
                         var option1 = option1.value;
                         option1 *= 1;
                         option += option1;
+                        var minus_option1_name = "minus_" + i +"_1";
+                        document.getElementById(minus_option1_name).value = option1;
                     }
                     if(option2 != null && option2.selectedIndex > 0)
                     {
                         var option2 = option2.value;
                         option2 *= 1;
                         option += option2;
+                        var minus_option2_name = "minus_" + i +"_2";
+                        document.getElementById(minus_option2_name).value = option2;
                     }
                     if(option3 != null && option3.selectedIndex > 0)
                     {
                         var option3 = option3.value;
                         option3 *= 1;
                         option += option3;
+                        var minus_option3_name = "minus_" + i +"_3";
+                        document.getElementById(minus_option3_name).value = option3;
                     }
 
                     prd_total_price = parseInt(prd_price);
@@ -518,7 +679,7 @@
 
                     if(first == 1)
                     {
-                        delivery = 3000;
+                        delivery = {{delivery_price}};
                         document.getElementById(prd_delivery_name).innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
                         first++;
                     }
@@ -544,25 +705,22 @@
 
         function all_total_price(total_summary_price)
         {
-            if (total_summary_price >= 100000 || total_summary_price == 0)
-			 {
-			    delivery = 0;
-                document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
-             }
-             else
-             {
-                delivery = 3000;
-                document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
-             }
+            delivery = {{delivery_price}};
+            document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
 
             var total = total_summary_price + parseInt(delivery);
 
             document.getElementById("div_total_prd_price").innerHTML = "<strong>" + numberWithCommas(total_summary_price) + "</<strong>";
 			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
+			document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
 
 			$("input[type=hidden][name=total_prd_price]").val(total_summary_price);
 			$("input[type=hidden][name=total_delivery_price]").val(delivery);
             $("input[type=hidden][name=total_option_prd_price]").val(total);
+
+            document.getElementById("coupon").selectedIndex = 0;
+            $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);
+            $("input[type=hidden][name=coupon_num]").val(0);
         }
 
         function check()

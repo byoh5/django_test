@@ -49,6 +49,14 @@
                                             <span>결제수단</span>
                                             <p>카드 결제</p>
                                         </li>
+                                        <li>
+                                            <span>쿠폰</span>
+                                            {% if payUserInfo.coupon_num != "" %}
+                                            <p><strong>{{mycoupon_name}}</strong> 사용.</p>
+                                            {% else %}
+                                             <p>X</p>
+                                            {% endif %}
+                                        </li>
                                         <li class="total">
                                             <span>총 결제금액</span>
                                             <p>{{payUserInfo.prd_total_price}}</p>

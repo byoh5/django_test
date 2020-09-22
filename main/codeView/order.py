@@ -11,11 +11,14 @@ def order_page(request):
     else:
         order_info = select_order(userid)
         user_info = select_register(userid)
+        coupon_info = select_myCoupon_notUsed(userid)
         context = {
             "order_detail": order_info,
             "user_detail": user_info,
+            "coupon_detail": coupon_info,
             "pay_result": '',
             "pay_msg": '',
+            "delivery_price": order_info[0].delivery_price,
         }
         return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
 

@@ -94,24 +94,6 @@ class UserStatusTB(models.Model):
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
-class PayTB(models.Model):
-    pay_idx = models.AutoField(primary_key=True)
-    pay_num = models.CharField(max_length=50, default='')
-    pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
-    pay_user_status = models.ForeignKey(UserStatusTB, on_delete=models.PROTECT, null=True)
-    order_id = models.CharField(max_length=50, default='') #order_idx
-    prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
-    prd_price = models.IntegerField(default='0') # product total
-    delivery_price = models.IntegerField(default='0')
-    prd_total_price = models.IntegerField(default='0')  # product total + delivary
-    delivery_name = models.CharField(max_length=50, default='')
-    delivery_addr = models.CharField(max_length=150, default='')
-    delivery_phone = models.CharField(max_length=50, default='')
-    pay_result = models.IntegerField(default='100') # 0: 성공 1: 실패
-    pay_result_info = models.CharField(max_length=300, default='') #pay_msg
-    pay_time = models.DateTimeField(default=timezone.now)
-    modified = models.DateTimeField(auto_now=True, blank=True)
-
 class MyClassListTB(models.Model):
     myclassList_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50)
@@ -184,7 +166,7 @@ class couponTB(models.Model):
     coupon_idx = models.AutoField(primary_key=True)
     coupon_num = models.CharField(max_length=150, unique=True)
     coupon_name = models.CharField(max_length=150, default='')
-    type = models.IntegerField(default='0') # 1: discount 2: product
+    delivery_price = models.BooleanField(default=False) #False:배송비무료 , True:기존정책
     discount = models.IntegerField(default='0', blank=True)
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, default='', blank=True, null=True)
     period = models.IntegerField(default='1', null=True) # 쿠폰 사용의 유효기간 (사용자마다 몇개월 안에 사용 )
@@ -199,3 +181,22 @@ class myCouponTB(models.Model):
     dbstat = models.CharField(max_length=50, default='A')
     expire = models.DateTimeField(default='')
     stime = models.DateTimeField(default=timezone.now)
+
+class PayTB(models.Model):
+    pay_idx = models.AutoField(primary_key=True)
+    pay_num = models.CharField(max_length=50, default='')
+    pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
+    pay_user_status = models.ForeignKey(UserStatusTB, on_delete=models.PROTECT, null=True)
+    order_id = models.CharField(max_length=50, default='') #order_idx
+    coupon_num = models.CharField(max_length=150, default='', null=True)
+    prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
+    prd_price = models.IntegerField(default='0') # product total
+    delivery_price = models.IntegerField(default='0')
+    prd_total_price = models.IntegerField(default='0')  # product total + delivary
+    delivery_name = models.CharField(max_length=50, default='')
+    delivery_addr = models.CharField(max_length=150, default='')
+    delivery_phone = models.CharField(max_length=50, default='')
+    pay_result = models.IntegerField(default='100') # 0: 성공 1: 실패
+    pay_result_info = models.CharField(max_length=300, default='') #pay_msg
+    pay_time = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)

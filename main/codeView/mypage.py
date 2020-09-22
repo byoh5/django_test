@@ -31,10 +31,18 @@ def mypage_order(request):
 
 def mypage_order_detail(request):
     pay_idx = request.POST['pay_idx']
+    user_id = request.session.get('user_id')
+
     pay_info = select_pay(pay_idx)
-    print(pay_info[0].pay_num)
+    mycoupon_name = ""
+
+    if pay_info[0].coupon_num != "" :
+        mycoupon_info = select_myCoupon_couponNum(user_id, pay_info[0].coupon_num)
+        mycoupon_name = mycoupon_info[0].coupon.coupon_name
+
     context = {
         "pay_detail": pay_info,
+        "mycoupon_name": mycoupon_name,
     }
     return render(request, 'mypage/myorder_detail.html', context)
 

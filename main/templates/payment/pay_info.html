@@ -34,38 +34,47 @@
     var buyer_addr = buyer_addr2.concat(" ", buyer_addr3);
     var buyer_postcode = '{{payment.pay_user.regi_add01}}';
 
-    var IMP = window.IMP; // 생략가능
-    IMP.init('imp08800373'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+    if(price > 0)
+    {
+        var IMP = window.IMP; // 생략가능
+        IMP.init('imp08800373'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
-    IMP.request_pay({
-    pg : 'kcp', // version 1.1.0부터 지원.
-    pay_method : 'card',
-    merchant_uid : 'merchant_' + new Date().getTime(),
-    name : title,
-    amount : price,
-    buyer_email : email,
-    buyer_name : buyer_name,
-    buyer_tel : phone,
-    buyer_addr : buyer_addr,
-    buyer_postcode : buyer_postcode,
-    }, function(rsp) {
-        if ( rsp.success ) {
-            var msg = '결제가 완료되었습니다.';
-            msg += '고유ID : ' + rsp.imp_uid;
-            msg += '상점 거래ID : ' + rsp.merchant_uid;
-            msg += '결제 금액 : ' + rsp.paid_amount;
-            msg += '카드 승인번호 : ' + rsp.apply_num;
-            $("input[type=hidden][name=pay_result]").val('0');
+        IMP.request_pay({
+        pg : 'kcp', // version 1.1.0부터 지원.
+        pay_method : 'card',
+        merchant_uid : 'merchant_' + new Date().getTime(),
+        name : title,
+        amount : price,
+        buyer_email : email,
+        buyer_name : buyer_name,
+        buyer_tel : phone,
+        buyer_addr : buyer_addr,
+        buyer_postcode : buyer_postcode,
+        }, function(rsp) {
+            if ( rsp.success ) {
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+                $("input[type=hidden][name=pay_result]").val('0');
 
-        } else {
-            var msg = '결제에 실패하였습니다.';
-            msg += '에러내용 : ' + rsp.error_msg;
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
 
-            $("input[type=hidden][name=pay_result]").val('1');
-        }
-         $("input[type=hidden][name=pay_msg]").val(msg);
-         document.getElementById("result_form").submit();
-    });
+                $("input[type=hidden][name=pay_result]").val('1');
+            }
+             $("input[type=hidden][name=pay_msg]").val(msg);
+             document.getElementById("result_form").submit();
+        });
+    }
+    else if(price == 0)
+    {
+        $("input[type=hidden][name=pay_result]").val('0');
+        $("input[type=hidden][name=pay_msg]").val("쿠폰 결제 되었습니다. (결제금액은 0원)");
+        document.getElementById("result_form").submit();
+    }
 
 </script>
 

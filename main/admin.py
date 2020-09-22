@@ -144,7 +144,7 @@ admin.site.register(danal_confirmTB)
 admin.site.register(runcodingTB)
 
 class couponAdmin(admin.ModelAdmin):
-    list_display = ['coupon_num', 'type', 'discount','expire']  # 커스터마이징 코드
+    list_display = ['coupon_num', 'coupon_name', 'delivery_price', 'period', 'discount','expire']  # 커스터마이징 코드
 
     list_filter = ['expire']
 
@@ -153,7 +153,7 @@ class couponAdmin(admin.ModelAdmin):
 
     get_code.short_description = 'prd_code'  # Renames column head
 
-    list_display_links = ['coupon_num']
+    list_display_links = ['coupon_num','coupon_name' ]
     search_fields = ['coupon_num']
     ordering = ['-coupon_idx']
 
@@ -174,7 +174,7 @@ class myCouponAdmin(admin.ModelAdmin):
 
     get_coupon.short_description = 'coupon'  # Renames column head
 
-    list_display_links = ['myCoupon_idx']
+    list_display_links = ['myCoupon_idx', 'expire']
     search_fields = ['get_id', 'get_coupon']
     ordering = ['-myCoupon_idx']
 

@@ -44,7 +44,7 @@
                                 <span class="name">{{couponList.coupon.coupon_name}}</span>
                                 <span class="issueDate">{{couponList.stime  | date:'y-m-d' }}</span>
                                 <span class="endDate">{{couponList.expire | date:'y-m-d' }}</span>
-                                {% if couponList.used %}
+                                {% if couponList.used == True %}
                                 <span class="condition ready">사용</span>
                                 {% else %}
                                 <span class="condition ready">미사용</span>

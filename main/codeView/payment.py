@@ -19,10 +19,14 @@ def payment(request):
     prd_price = int(request.POST['total_prd_price'])
     delivery_price = int(request.POST['total_delivery_price'])
     prd_total_price = int(request.POST['total_option_prd_price'])
+    coupon_prd_total_price = int(request.POST['total_option_coupon_prd_price'])
 
     order_list = ""
     prd_title = ""
     prd_total_count = 0
+
+    coupon_num = request.POST['coupon_num']
+    pay_price = coupon_prd_total_price
 
     split_order = order_idx.split(',')
 
@@ -52,7 +56,6 @@ def payment(request):
             addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
                 0].regi_receiver2_add01 + ")"
 
-
         number_pool = string.digits
         _LENGTH = 12
         pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
@@ -60,8 +63,8 @@ def payment(request):
         for i in range(_LENGTH):
             pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
 
-        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, prd_info=prd_title,
-                         prd_price=prd_price, delivery_price=delivery_price, prd_total_price=prd_total_price,
+        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num, prd_info=prd_title,
+                         prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
                          delivery_name=name, delivery_addr=addr, delivery_phone=phone)
         pay_info.save()
 
@@ -88,8 +91,11 @@ def pay_result(request):
 
         if pay_result == pay_ok:
             pay_userStatus_info = select_userStatue(pay_status_ok) # 구매성공
+            print(pay_info[0].coupon_num)
+            update_myCoupon(user_id, pay_info[0].coupon_num)
             update_pay.pay_user_status = pay_userStatus_info[0]
             split_order = update_pay.order_id.split(',')
+
 
             # product -> myclass에 넣고, 장바구니 정리하기
             for data in split_order:
@@ -119,11 +125,14 @@ def pay_result(request):
     else:
         order_info = select_order(user_id)
         user_info = select_register(user_id)
+        coupon_info = select_myCoupon_notUsed(user_id)
         context = {
             "order_detail": order_info,
             "user_detail": user_info,
+            "coupon_detail": coupon_info,
             "pay_result": pay_result,
             "pay_msg": pay_msg,
+            "delivery_price": order_info[0].delivery_price,
         }
 
         return render(request, 'payment/order.html', context)
