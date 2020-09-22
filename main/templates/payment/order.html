@@ -497,7 +497,6 @@
 
                 pay_price += delivery;
                 $("input[type=hidden][name=total_option_coupon_prd_price]").val(pay_price);
-                alert(coupon_num);
                 $("input[type=hidden][name=coupon_num]").val(coupon_num);
                 document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(pay_price) + "</<strong>";
             }

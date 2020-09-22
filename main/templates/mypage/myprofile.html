@@ -20,7 +20,7 @@
             <div class="info_area">
                 <ul>
                      {% for userInfo in user_detail %}
-                    <input type="hidden" id="idx" name="idx" value="{{userInfo.regi_idx}}">
+
                     <li class="email">
                         <span class="infoTit">name / email</span>
                         <p>{{userInfo.regi_name}} / {{userInfo.regi_email}}</p>
@@ -53,6 +53,8 @@
                             <a href="javascript:changePW();" class="btn editPW">비밀번호 변경</a>
                         </div>
                     </li>
+
+                    <input type="hidden" id="idx" name="idx" value="{{userInfo.regi_idx}}">
                     {% endfor %}
                 </ul>
             </div>
