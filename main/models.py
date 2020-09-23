@@ -32,7 +32,6 @@ class LoginTB(models.Model):
     modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
-#kit1 : trashcan
 class PrdTB(models.Model):
     prd_idx = models.AutoField(primary_key=True)
     prd_code = models.CharField(max_length=50, default='') #year(2020) + month(08) + arduino(001), mblock(002), AI(300), kit count(1)
@@ -40,9 +39,9 @@ class PrdTB(models.Model):
     title2 = models.CharField(max_length=50, default='') #detail page title
     title3 = models.CharField(max_length=50, default='') #detail sub page title
     img = models.CharField(max_length=50)
-    period = models.IntegerField(null=True)
-    class_count = models.IntegerField(null=True)
-    price = models.IntegerField(null=True)
+    period = models.IntegerField(default='0')
+    class_count = models.IntegerField(default='0')
+    price = models.IntegerField(default='0')
     option1 = models.CharField(max_length=50, blank=True)
     option1_price = models.IntegerField(null=True, blank=True)
     option2 = models.CharField(max_length=50, blank=True)
