@@ -2,6 +2,7 @@ from django.shortcuts import render
 from main.query import *
 from main.models import *
 
+message_no_login = 210
 
 def order_page(request):
     session = request.session.get('client_id')
@@ -9,21 +10,29 @@ def order_page(request):
     if session is None:
         return render(request, 'login/login.html')
     else:
-        order_info = select_order(userid)
-        delivery = 0;
-        if order_info.count() is not 0:
-            delivery = order_info[0].delivery_price
-        user_info = select_register(userid)
-        coupon_info = select_myCoupon_notUsed(userid)
-        context = {
-            "order_detail": order_info,
-            "user_detail": user_info,
-            "coupon_detail": coupon_info,
-            "pay_result": '',
-            "pay_msg": '',
-            "delivery_price": delivery,
-        }
-        return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
+        loginUser_info = select_login(userid)
+
+        if loginUser_info[0].session_id == session:
+            order_info = select_order(userid)
+            delivery = 0;
+            if order_info.count() is not 0:
+                delivery = order_info[0].delivery_price
+            user_info = select_register(userid)
+            coupon_info = select_myCoupon_notUsed(userid)
+            context = {
+                "order_detail": order_info,
+                "user_detail": user_info,
+                "coupon_detail": coupon_info,
+                "pay_result": '',
+                "pay_msg": '',
+                "delivery_price": delivery,
+            }
+            return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
+        else:
+            context = {
+                "msg": message_no_login,
+            }
+            return render(request, 'login/login.html', context)
 
 def order(request):
     user_id = request.session.get('user_id')
