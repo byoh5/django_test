@@ -525,10 +525,6 @@
 
                 document.getElementById(option_name).value = option_val;
                 all_total_price(addOption_price);
-
-                document.getElementById("coupon").selectedIndex = 0;
-                $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);
-                $("input[type=hidden][name=coupon_num]").val(0);
             }
          }
 
@@ -575,10 +571,14 @@
 
              if(order_idx != "")
              {
+
+                alert($("input[type=hidden][name=total_prd_price]").val());
+                alert($("input[type=hidden][name=total_option_prd_price]").val());
                  var addr_checked = $(":input:radio[name=addr]:checked").val();
                  $("input[type=hidden][name=idx]").val(order_idx);
                  $("input[type=hidden][name=addr_num]").val(addr_checked);
                  document.getElementById("order_form").submit();
+
              }
          }
 
@@ -713,6 +713,8 @@
 			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
 			document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
 
+            alert(delivery);
+            alert(total);
 			$("input[type=hidden][name=total_prd_price]").val(total_summary_price);
 			$("input[type=hidden][name=total_delivery_price]").val(delivery);
             $("input[type=hidden][name=total_option_prd_price]").val(total);

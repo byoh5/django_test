@@ -26,7 +26,10 @@ def payment(request):
     prd_total_count = 0
 
     coupon_num = request.POST['coupon_num']
-    pay_price = coupon_prd_total_price
+    if coupon_prd_total_price == 0:
+        pay_price = prd_total_price
+    else:
+        pay_price = coupon_prd_total_price
 
     split_order = order_idx.split(',')
 
