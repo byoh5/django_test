@@ -16,6 +16,7 @@
             </div>
         </section>
 </div>
+<input type="hidden" id="imp" name="imp" value="{{imp}}">
 <form id="result_form" method="post" action="/pay_result/" >
     {% csrf_token %}
     <input type="hidden" id="pay" name="pay" value={{payment.pay_idx}}>
@@ -36,11 +37,11 @@
 
     if(price > 0)
     {
-        var IMP = window.IMP; // 생략가능
-        IMP.init('imp08800373'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-
+        var IMP = window.IMP;
+	    imp_id = $('[name=imp]').val();
+        IMP.init(imp_id);
         IMP.request_pay({
-        pg : 'kcp', // version 1.1.0부터 지원.
+        pg : 'kcp',
         pay_method : 'card',
         merchant_uid : 'merchant_' + new Date().getTime(),
         name : title,

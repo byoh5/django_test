@@ -133,6 +133,7 @@
     </div>
 
     <input type="hidden" id="msg" name="msg" value="{{message}}">
+    <input type="hidden" id="imp" name="imp" value="{{imp}}">
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -346,7 +347,8 @@
 	    }
 
 	    imp_uid = "";
-	    IMP.init('imp08800373');
+	    imp_id = $('[name=imp]').val();
+	    IMP.init(imp_id);
 	    IMP.certification({
             merchant_uid : 'merchant_' + new Date().getTime()
         }, function(rsp) {

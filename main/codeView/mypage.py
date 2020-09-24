@@ -12,12 +12,14 @@ message_coupon_ok = 300
 message_coupon_diff = 302
 message_coupon_expired = 304
 message_coupon_already_used = 306
+imp_id = 'imp08800373'
 
 def mypage_profile(request):
     user_id = request.session.get('user_id')
     user_info = select_register(user_id)
     context = {
         "user_detail": user_info,
+        "imp": imp_id,
     }
     return render(request, 'mypage/myprofile.html', context)
 
@@ -58,6 +60,7 @@ def mypage_profile_modify_addr(request):
     user_info = select_register(user_id)
     context = {
         "user_detail": user_info,
+        "imp": imp_id,
     }
     return render(request, 'mypage/myprofile.html', context)
 
@@ -74,6 +77,7 @@ def mypage_profile_modify_addr2(request):
     user_info = select_register(user_id)
     context = {
         "user_detail": user_info,
+        "imp": imp_id,
     }
     return render(request, 'mypage/myprofile.html', context)
 
@@ -99,6 +103,7 @@ def mypage_profile_modify_pw(request):
             context = {
                 "user_detail": user_info,
                 "message": message_diff_pass,
+                "imp": imp_id,
             }
 
             return render(request, 'mypage/myprofile.html', context)
@@ -143,3 +148,4 @@ def mypage_add_coupon(request):
         "message": message,
     }
     return render(request, 'mypage/mycoupon.html', context)
+

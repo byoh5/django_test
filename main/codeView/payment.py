@@ -12,6 +12,8 @@ pay_status_delivery = 2
 pay_status_delivery_done = 3
 pay_status_prepay = 4
 
+imp_id = 'imp08800373'
+
 def payment(request):
     user_id = request.session.get('user_id')
     order_idx = request.POST['idx']
@@ -73,6 +75,7 @@ def payment(request):
 
         context = {
             "payment": pay_info,
+            "imp": imp_id,
         }
 
         return render(request, 'payment/pay_info.html', context)
