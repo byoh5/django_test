@@ -5,7 +5,8 @@ from main.query import *
 from main.models import *
 import bcrypt
 
-response_fail = 401 # 인증된 이름이 가입자와 다름
+response_fail_dif_user = 401 # 인증된 이름이 가입자와 다름
+response_fail_diff_phone = 404
 response_ok = 200
 
 def getConfirm(request):
@@ -36,20 +37,39 @@ def getConfirm(request):
     json_user_msg_res = json_user_msg["response"]
 
     name = json_user_msg_res["name"]
+    phone = json_user_msg_res["phone"]
+    birthday = json_user_msg_res["birthday"]
+    gender = json_user_msg_res["gender"]
+    carrier = json_user_msg_res["carrier"]
+
+    danal_new_phone = new_phone + "(" + carrier + ")"
 
     # runcoding db save
-    confirm = danal_confirmTB(imp_uid=run_uid, regi_user=regi_info[0], access_token=access_token, new_phone=new_phone, imp_name=name )
+    confirm = danal_confirmTB(imp_uid=run_uid, regi_user=regi_info[0], access_token=access_token, new_phone=danal_new_phone, imp_name=name )
     confirm.save()
 
     msg = response_ok
-    if regi_info[0].regi_name == name:
+
+    phone_split = new_phone.split('-')
+    phone_format = ""
+    for data in phone_split:
+        if len(data) > 0:
+            phone_format += data
+
+    if phone != phone_format:
+        msg = response_fail_diff_phone
+
+    elif regi_info[0].regi_name != name:
+        msg = response_fail_dif_user
+
+    elif regi_info[0].regi_name == name and phone == phone_format:
         new_regi = regi_info[0]
-        new_regi.regi_phone = confirm.new_phone
+        new_regi.regi_phone = new_phone
+        new_regi.imp_birth = birthday
+        new_regi.imp_gender = gender
         new_regi.save()
 
         regi_info = select_register_idx(regi_idx)
-    else:
-        msg = response_fail
 
     context = {
         "user_detail": regi_info,

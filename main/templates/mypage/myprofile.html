@@ -154,6 +154,11 @@
             $("#res_msg").text("변경될 휴대폰 번호가 가입자 명의가 아닙니다. 다시 확인해 주세요.");
             $('div.modal').modal();
         }
+        else if (msg == 404)
+        {
+            $("#res_msg").text("입력한 번호와 인증받은 번호가 다릅니다. 다시 확인해 주세요.");
+            $('div.modal').modal();
+        }
     });
 
     function enterkey()
@@ -343,7 +348,7 @@
 	    imp_uid = "";
 	    IMP.init('imp08800373');
 	    IMP.certification({
-            merchant_uid : 'merchant_' + new Date().getTime() //본인인증과 연관된 가맹점 내부 주문번호가 있다면 넘겨주세요
+            merchant_uid : 'merchant_' + new Date().getTime()
         }, function(rsp) {
             if ( rsp.success )
             {
