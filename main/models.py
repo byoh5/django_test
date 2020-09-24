@@ -16,10 +16,11 @@ class RegisterTB(models.Model):
     regi_receiver2_add02 = models.CharField(max_length=50, default='', blank=True)
     regi_receiver2_add03 = models.CharField(max_length=50, default='', blank=True)
     regi_pass = models.CharField(max_length=150)
+    level = models.IntegerField(default=0)
     imp_birth = models.CharField(max_length=50, default='', blank=True)
     imp_gender = models.CharField(max_length=50, default='', blank=True)
     stime = models.DateTimeField(default=timezone.now)
-    modified = models.DateTimeField(auto_now=True, blank=True)
+    modified = models.DateTimeField(auto_now=True, blank=True)cd
     dbstat = models.CharField(max_length=50, default='A')
 
 class LoginTB(models.Model):
