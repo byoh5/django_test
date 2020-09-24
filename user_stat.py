@@ -16,7 +16,7 @@ def user_stat():
     month = timezone.localtime().month
     day = timezone.localtime().day-1
     register_cnt = RegisterTB.objects.filter(dbstat='A', stime__year=year, stime__month=month, stime__day=day).count()
-    login_cnt = LoginTB.objects.filter(dbstat='A', login_time__year=year, login_time__month=month, login_time__day=day).count()
+    login_cnt = LoginTB.objects.filter(login_time__year=year, login_time__month=month, login_time__day=day).count()
     pay_suc_cnt = PayTB.objects.filter(pay_time__year=year, pay_time__month=month, pay_time__day=day, pay_result=0).count()
     pay_fail_cnt = PayTB.objects.filter(pay_time__year=year, pay_time__month=month, pay_time__day=day, pay_result=1).count()
     pre_pay_cnt = PayTB.objects.filter(pay_time__year=year, pay_time__month=month, pay_time__day=day, pay_result=100).count()
