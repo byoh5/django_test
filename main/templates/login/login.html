@@ -55,23 +55,10 @@
 
 <script>
 
-    $(document).ready(function() {
-        var msg = {{msg}};
-        if(msg == 210)
-        {
-            $("#res_msg").text("로그인 세션이 만료 되었습니다. 다시 로그인 해주세요~");
-            $('div.modal').modal();
-            return false;
-        }
-    });
-
     function enterkey()
     {
-        if (window.event.keyCode == 13) {
-
-             // 엔터키가 눌렸을 때 실행할 내용
+        if (window.event.keyCode == 13)
              login_submit();
-        }
     }
 
     function login_submit()
