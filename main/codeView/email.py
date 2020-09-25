@@ -20,19 +20,25 @@ message_exist_id = 208
 
 # smtp 버전 안정성 하
 
-def sendEmail(to, subject, newPass):
+def sendEmailWithHtml(to, subject, html_content):
 
     text_content = ''
-    html_content = '안녕하세요. 런코딩 입니다. <br/><br/>임시로 발급된 비밀번호는 <strong>['+ newPass + ']</strong> 입니다. <br/> 로그인 후, 비밀번호를 다시 설정해 주세요. <br /><br /> 런코딩 드림.<br />'
     msg = EmailMultiAlternatives(subject, text_content, '', [to])
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
     return HTTP_200_OK
 
+def sendEmail(to, subject, message):
+    subject = subject
+    message = message
+    mail = EmailMessage(subject, message, to=[to])
+    mail.send()
+    return HTTP_200_OK
+
 def contact_email(request):
     email = request.POST['email']
-    text = email + request.POST['text']
+    text = request.POST['text']
 
     sendEmail("runcoding@naver.com", email, text)
     return render(request, 'main/index_runcoding.html')
@@ -59,6 +65,8 @@ def find_pass_viaEmail(request):
             new_user.regi_pass = password_encrypt.decode('utf-8')
             new_user.save()
 
-            result = sendEmail(find_loginId, '런코딩에서 임시 비밀번호를 발송해 드렸습니다.', newPW)
+            html_content = '안녕하세요. 런코딩 입니다. <br/><br/>임시로 발급된 비밀번호는 <strong>[' + newPW + ']</strong> 입니다. <br/> 로그인 후, 비밀번호를 다시 설정해 주세요. <br /><br /> 런코딩 드림.<br />'
+
+            result = sendEmailWithHtml(find_loginId, '런코딩에서 임시 비밀번호를 발송해 드렸습니다.', html_content)
             if result == 200:
                 return HttpResponse(message_ok)

@@ -44,17 +44,6 @@
 
     }
 
-    function click() {
-     if((event.ctrlKey) || (event.shiftKey)) {
-        $("#res_msg").text("사용할 수 없습니다.");
-            $('div.modal').modal();
-            return false;
-     }
-   }
-    document.onmousedown=click;
-    document.onkeydown=click;
-
-
     // 우측 클릭 방지
     document.onmousedown=disableclick;
     status="오른쪽 마우스 사용을 할 수 없습니다.";

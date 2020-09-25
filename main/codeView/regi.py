@@ -37,6 +37,8 @@ def UserRegister(request):
                        regi_receiver1_add01=request.POST['regi_add01'], regi_receiver1_add02=request.POST['regi_add02'],
                        regi_receiver1_add03=request.POST['regi_add03'], regi_pass=password_encrypt.decode('utf-8'))
         regi_new.save()
+
+        #메일전송
         return render(request, 'login/login.html')  # 로그인페이지호출
     else:
         return HttpResponse(message_exist_id)  # register page에서 메시지 출력 이미 가입자입니다.
