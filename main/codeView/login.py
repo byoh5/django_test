@@ -36,7 +36,10 @@ def login(request):
                 q = LoginTB(user_id=login_id, session_id=session) #새로운 로그인 정보 등록
                 q.save()
 
+                order_info = select_order(login_id)
+
                 request.session['client_id'] = session #쿠기에 정보 저장
+                request.session['order_count'] = order_info.count()
                 request.session['user_id'] = login_id
                 return HttpResponse(message_ok)
             else:
