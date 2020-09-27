@@ -76,7 +76,7 @@
                                                     </td>
                                                     <td>
                                                          <div class="pull-left">
-                                                               <a href='{{orderDetail.prd.urls}}'>
+                                                               <a href='javascript:goDetailPage({{orderDetail.prd.prd_code}});'>
                                                                    <img class="width-120px border-radius" src={{orderDetail.prd.img}} onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
                                                                </a>
                                                          </div>
@@ -723,6 +723,22 @@
         function check()
         {
 			total_count();
+		}
+
+		function goDetailPage(prdCode)
+		{
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "class_detail");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/class_detail/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'detail_prd_code', value : prdCode}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+
 		}
 
 

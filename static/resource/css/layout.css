@@ -395,6 +395,66 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 .precaution ul li:before {
 	position:absolute;
+	content:"-";
+	top:0;
+	left:0;
+}
+
+.codingKit_list .lecture_list.detail .class_list_precaution {
+	margin:0 0.83em 2.083em;
+	padding:2.083em 0;
+	border-bottom:1px solid #dcdcdc;
+}
+.class_list_precaution .cautionTitle {
+	position:relative;
+	padding-left:1.5em;
+	font-size:0.83em;
+	font-weight:600;
+	color:#b14739;
+}
+.class_list_precaution .cautionTitle:before {
+	position:absolute;
+	content:'!';
+	top:50%;
+	left:0;
+	width:1.5em;
+	height:1.5em;
+	font-size:0.75em;
+	line-height:1.5em;
+	text-align:center;
+	color:#fff;
+	background-color:#b14739;
+	border-radius:50%;
+	transform:translateY(-50%);
+}
+.class_list_precaution .summaryTitle {
+	position:relative;
+	padding-left:1.5em;
+	font-size:0.83em;
+	font-weight:600;
+	color:#323232;
+}
+.class_list_precaution .summaryTitle:before {
+	position:absolute;
+	content:url("../img/sub/ico_curriculum.png");
+	top:50%;
+	left:0;
+	transform:translateY(-40%);
+}
+.class_list_precaution ul {
+	margin-top:0.5em;
+	padding-left:1.25em;
+}
+.class_list_precaution ul li {
+	position:relative;
+	display:block;
+	margin-bottom:0.5em;
+	padding-left:1.7em;
+	font-size:0.66em;
+	color:#646464;
+}
+.class_list_precaution ul li:before {
+	position:absolute;
 	content:url("../img/sub/ico_down.png");
 	top:0;
 	left:0;
@@ -2101,7 +2161,7 @@ input[id*="answer"] {
     line-height: 50px;
     padding: 0 20px;
     margin-bottom: 0px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     border-top: 1px solid #e3e3e2;
     background: #fff;
