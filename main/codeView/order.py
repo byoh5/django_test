@@ -2,7 +2,7 @@ from django.shortcuts import render
 from main.query import *
 from main.models import *
 
-message_no_login = 210
+
 
 def order_page(request):
     session = request.session.get('client_id')
@@ -10,9 +10,7 @@ def order_page(request):
     if session is None:
         return render(request, 'login/login.html')
     else:
-        loginUser_info = select_login(userid)
-
-        if loginUser_info[0].session_id == session:
+        if checkSession(session, userid):
             order_info = select_order(userid)
             delivery = 0;
             if order_info.count() is not 0:
@@ -31,14 +29,12 @@ def order_page(request):
             }
             return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
         else:
-            context = {
-                "msg": message_no_login,
-            }
-            return render(request, 'login/login.html', context)
+            return disableSession(userid, request)
 
 def order(request):
     user_id = request.session.get('user_id')
     prd_code = request.POST['prd_code']
+    flag = int(request.POST['flag'])
     login_info = select_login(user_id)
     messages = 0
     if login_info.count() is not 0:
@@ -54,13 +50,20 @@ def order(request):
 
         new_order_info = select_order(user_id)
         request.session['order_count'] = new_order_info.count()
-    items_info = select_class_detail(prd_code)
-    context = {
-        "message": messages,
-        "class_items_detail": items_info,
-        "prd_detail": items_info[0].prd,
-    }
-    return render(request, 'class/class_detail.html', context)
+
+        if flag == 1:
+            items_info = select_class_detail(prd_code)
+            context = {
+                "message": messages,
+                "class_items_detail": items_info,
+                "prd_detail": items_info[0].prd,
+            }
+            return render(request, 'class/class_detail.html', context)
+
+        elif flag == 2:
+            return order_page(request)
+    else:
+        return render(request, 'login/login.html')
 
 def order_delete(request):
     order_idx = request.POST['order_idx']

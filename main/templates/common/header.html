@@ -33,9 +33,8 @@
     {
          if($("input[type=hidden][name=clientId]").val() == "")
          {
-                $("#res_msg").text("회원만 접근이 가능합니다. 로그인 후 이용해주세요.");
-                $('div.modal').modal();
-                return false;
+            $("#res_msg").text("회원만 접근이 가능합니다. 로그인 후 이용해주세요.");
+            $('div.modal').modal();
          }
          else
          {

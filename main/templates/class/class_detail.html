@@ -70,6 +70,7 @@
                                     <form id="prd_form" method="post" action="/run_order/">
                                         {% csrf_token %}
                                         <input type="hidden" id="prd_code" name="prd_code" value={{prd_detail.prd_code}}> <!--arduino-AI-trashcan -->
+                                        <input type="hidden" id="flag" name="flag" value="0">
                                      </form>
                                     <p><span class="price" id="prd_price">{{prd_detail.price}}</span> 원</p>
                                 </li>
@@ -151,10 +152,8 @@
             }
             else
             {
-                if(flag == 1)
-                    document.getElementById("prd_form").submit();
-                if(flag == 2)
-                    location.href = "/order/"
+                $("input[type=hidden][name=flag]").val(flag)
+                document.getElementById("prd_form").submit();
              }
          }
 

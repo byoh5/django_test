@@ -1,6 +1,7 @@
 from main.models import *
 from django.utils import timezone
 from django.db.models import Q
+from django.shortcuts import render
 
 def select_order(user_id):
     order_info = OrderTB.objects.filter(user_id=user_id, dbstat='A')
@@ -216,3 +217,24 @@ def changePhone_format(number):
         phone += number[7:11]
 
    return phone
+
+def checkSession(session, user_id):
+    loginUser_info = select_login(user_id)
+
+    if loginUser_info.count() is not 0 and session is not None:
+        if loginUser_info[0].session_id == session:
+            return 1
+        else:
+            return 0
+    else:
+        return 0
+
+message_no_login = 210
+def disableSession(userid, request):
+    delete_login(userid)
+    request.session['client_id'] = ''
+    request.session['user_id'] = ''
+    context = {
+        "msg": message_no_login,
+    }
+    return render(request, 'login/login.html', context)
