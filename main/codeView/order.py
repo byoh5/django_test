@@ -19,6 +19,7 @@ def order_page(request):
                 delivery = order_info[0].delivery_price
             user_info = select_register(userid)
             coupon_info = select_myCoupon_notUsed(userid)
+            request.session['order_count'] = order_info.count()
             context = {
                 "order_detail": order_info,
                 "user_detail": user_info,
@@ -26,6 +27,7 @@ def order_page(request):
                 "pay_result": '',
                 "pay_msg": '',
                 "delivery_price": delivery,
+
             }
             return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
         else:
@@ -50,6 +52,8 @@ def order(request):
             order.save()
             messages = 1  # 성공
 
+        new_order_info = select_order(user_id)
+        request.session['order_count'] = new_order_info.count()
     items_info = select_class_detail(prd_code)
     context = {
         "message": messages,
@@ -57,3 +61,32 @@ def order(request):
         "prd_detail": items_info[0].prd,
     }
     return render(request, 'class/class_detail.html', context)
+
+def order_delete(request):
+    order_idx = request.POST['order_idx']
+    user_id = request.session.get('user_id')
+    split_order = order_idx.split(',')
+
+    for idx in split_order:
+        if len(idx) > 0:
+            order_info = select_order_idx(idx, user_id)
+            delete_order_idx(order_info)
+
+    new_order_info = select_order(user_id)
+    delivery = 0;
+    if new_order_info.count() is not 0:
+        delivery = new_order_info[0].delivery_price
+
+    user_info = select_register(user_id)
+    coupon_info = select_myCoupon_notUsed(user_id)
+    request.session['order_count'] = new_order_info.count()
+    context = {
+        "order_detail": new_order_info,
+        "user_detail": user_info,
+        "coupon_detail": coupon_info,
+        "pay_result": '',
+        "pay_msg": '',
+        "delivery_price": delivery,
+
+    }
+    return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax

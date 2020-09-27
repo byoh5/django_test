@@ -369,7 +369,8 @@
                     </tr>
                 </div>
                 <div class="btn-center" style="margin-bottom:40px">
-                    <a href="#" class="btn order_complete" onClick="javascript:goPay();">주문하기</a>
+                    <a href="javascript:void(0);" class="btn order_del" onClick="javascript:goDelete();">삭제하기</a>
+                    <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay();">주문하기</a>
                 </div>
              </tr>
          </div>
@@ -565,7 +566,7 @@
                     }
                     else
                     {
-                        order_idx = i + ",";
+                        order_idx += i + ",";
                     }
                 }
              }
@@ -741,7 +742,31 @@
 
 		}
 
+        function goDelete()
+        {
+            var chks = document.getElementsByName('idxs[]');
+            var order_idx = '';
+            for (var i=0,m=chks.length;i<m ;i++)
+            {
+                if (chks[i].checked == true)
+                {
+                    var order_idx_val= document.getElementById("orderIdxs_" + i).value;
+                    order_idx += order_idx_val + ",";;
+               }
+            }
 
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "order_delete");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/order_del/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'order_idx', value : order_idx}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+        }
     </script>
 </body>
 </html>

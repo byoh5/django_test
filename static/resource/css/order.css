@@ -348,13 +348,13 @@ div, header, section, nav, input, ul, li {
 	border-radius: 5em;
 }
 
-.order_save {
+.order_del {
     display: table;
 	margin: 1em auto 0;
 	padding: 1em 3.5em;
 	color: #fff;
 	font-size: 0.66em;
-	background-color: #f9c446;
+	background-color: #646464;
 	border-radius: 5em;
 }
 
