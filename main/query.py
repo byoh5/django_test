@@ -154,9 +154,12 @@ def update_user_addr2(user_id, name, phone, add01,add02,add03):
 
         return new_user
 
-def update_order_prdCode(order_prd_info):
+def update_order_prdCode(order_prd_info, count, option1, option2, option3):
     new_orderPrd = order_prd_info[0]
-    new_orderPrd.count = new_orderPrd.count + 1
+    new_orderPrd.count = new_orderPrd.count + int(count)
+    new_orderPrd.option1 = option1
+    new_orderPrd.option2 = option2
+    new_orderPrd.option3 = option3
     new_orderPrd.save()
 
 def update_order_idx(idx, user_id, count, addr_num):

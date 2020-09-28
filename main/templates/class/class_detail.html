@@ -71,8 +71,12 @@
                                         {% csrf_token %}
                                         <input type="hidden" id="prd_code" name="prd_code" value={{prd_detail.prd_code}}> <!--arduino-AI-trashcan -->
                                         <input type="hidden" id="flag" name="flag" value="0">
+                                        <input type="hidden" id="option1" name="option1" value="-1">
+                                        <input type="hidden" id="option2" name="option2" value="-1">
+                                        <input type="hidden" id="option3" name="option3" value="-1">
+                                        <input type="hidden" id="count" name="count" value="1">
                                      </form>
-                                    <p><span class="price" id="prd_price">{{prd_detail.price}}</span> 원</p>
+                                    <p><span id="prd_price">{{prd_detail.price}}</span> 원</p>
                                 </li>
                                 <li>
                                     <span class="li_title">키트명</span>
@@ -87,31 +91,55 @@
                                     <p>{{prd_detail.period}}개월</p>
                                 </li>
                                 <li>
+                                   <span class="li_title" style="float:left; padding-right:110px;">수량</span>
+
+                                    <input type="text" name="prodQuantity" id="prodQuantity" class="input quantity" style="width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px; float:left;" value="1" >
+                                    <a href="javascript:up('10');" style="color: #000; ">
+                                        <img src="{% static 'resource/img/sub/btn_quantity_up.gif' %}" alt="증가" class="QuantityUp">
+                                    </a>
+                                    <a href="javascript:down('1');" style="color: #000;" >
+                                        <img src="{% static 'resource/img/sub/btn_quantity_down.gif' %}" alt="감소" class="QuantityDown">
+                                    </a>
+                                </li>
+                                <li>
                                     <span class="li_title">옵션 </span>
 
                                     {% if prd_detail.option1 != "" %}
-                                    <p> {{prd_detail.option1}} (+ {{prd_detail.option1_price}}원) </p>
+                                     <select id="options_1" name="options_1" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, 1);">
+                                        <option value="0">----------------옵션------</option>
+                                        <option value="0">선택없음</option>
+                                        <option value={{prd_detail.option1_price}}>{{prd_detail.option1}} (+{{prd_detail.option1_price}})</option>
+                                     </select>
                                     {% endif %}
 
                                     {% if prd_detail.option2 != "" %}
-                                    <p> {{prd_detail.option2}} (+ {{prd_detail.option2_price}}원) </p>
+                                     <select id="options_2" name="options_2" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, 2);">
+                                        <option value="0">----------------옵션------</option>
+                                        <option value="0">선택없음</option>
+                                        <option value={{prd_detail.option2_price}}>{{prd_detail.option2}} (+{{prd_detail.option2_price}})</option>
+                                     </select>
                                     {% endif %}
 
                                     {% if prd_detail.option3 != "" %}
-                                    <p> {{prd_detail.option3}} (+ {{prd_detail.option3_price}}원) </p>
+                                     <select id="options_3" name="options_3" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, 3);">
+                                        <option value="0">----------------옵션------</option>
+                                        <option value="0">선택없음</option>
+                                        <option value={{prd_detail.option3_price}}>{{prd_detail.option3}} (+{{prd_detail.option3_price}})</option>
+                                     </select>
                                     {% endif %}
 
                                 </li>
                                 <li>
-                                    <span class="li_title">베송비</span>
-                                    <p>3,000 원</p>
+                                   <span class="li_title">총 상품 금액</span>
+                                   <p><span class="price" id="total_price">{{prd_detail.price}}</span> 원</p>
                                 </li>
                             </ul>
                         </div>
                     </div>
+                    <div></div>
                     <div class="btn_area">
-                        <a href="#" class="btn cart" onClick="javascript:goOrder(1);">장바구니 담기</a>
-                        <a class="btn buy" href="#" onClick="javascript:goOrder(2);">바로구매</a>
+                        <a href="javascript:void(0);" class="btn cart" onClick="javascript:goOrder(1);">장바구니 담기</a>
+                        <a class="btn buy" href="javascript:void(0);" onClick="javascript:goOrder(2);">바로구매</a>
                     </div>
                     <input type="hidden" name="message" value="{{message}}" readonly>
                 </div>
@@ -152,7 +180,10 @@
             }
             else
             {
-                $("input[type=hidden][name=flag]").val(flag)
+                var quantity = document.getElementById("prodQuantity").value;
+
+                $("input[type=hidden][name=flag]").val(flag);
+                $("input[type=hidden][name=count]").val(quantity);
                 document.getElementById("prd_form").submit();
              }
          }
@@ -162,10 +193,17 @@
               return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
          }
 
+         function removeComma(str)
+        {
+          n = parseInt(str.replace(/,/g,""));
+          return n;
+        }
+
           $(document).ready(function()
           {
                price_format = numberWithCommas(document.getElementById("prd_price").innerText);
                document.getElementById("prd_price").innerText = price_format;
+               document.getElementById("total_price").innerText = price_format;
 
               var msg = $("input[type=hidden][name=message]").val();
               if (msg == 1)
@@ -174,6 +212,66 @@
                   $('div.modal').modal();
               }
          });
+
+
+         function myOption(option_val, num)
+         {
+            if(num == 1)
+            {
+                $("input[type=hidden][name=option1]").val(option_val)
+            }
+            if(num == 2)
+            {
+                $("input[type=hidden][name=option2]").val(option_val)
+            }
+            if(num == 3)
+            {
+                $("input[type=hidden][name=option3]").val(option_val)
+            }
+
+            totalPrice();
+         }
+
+          // 수량 더하기
+        function up(max)
+        {
+            var quantity_name = "prodQuantity";
+            var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) + 1;
+            if (document.getElementById(quantity_name).value >= parseInt(max))
+                document.getElementById(quantity_name).value = max;
+
+            totalPrice();
+
+        }
+        function down(min)
+        {
+            var quantity_name = "prodQuantity";
+            var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) - 1;
+            if (document.getElementById(quantity_name).value <= parseInt(min))
+                document.getElementById(quantity_name).value = min;
+
+            totalPrice();
+        }
+
+        function totalPrice()
+        {
+            var count = document.getElementById("prodQuantity").value;
+            var prd = removeComma(document.getElementById("prd_price").innerText);
+            var option1 =  document.getElementById("options_1").value;
+            var option2 =  document.getElementById("options_2").value;
+            var option3 =  document.getElementById("options_3").value;
+
+            prd *= 1;
+            option1 *= 1;
+            option2 *= 1;
+            option3 *= 1;
+            count *= 1;
+
+            prd = prd + option1 + option2 + option3;
+            prd =  prd * count;
+            document.getElementById("total_price").innerHTML =  numberWithCommas(prd);
+
+        }
     </script>
 
 </body>

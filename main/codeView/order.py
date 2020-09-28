@@ -12,7 +12,7 @@ def order_page(request):
     else:
         if checkSession(session, userid):
             order_info = select_order(userid)
-            delivery = 0;
+            delivery = 0
             if order_info.count() is not 0:
                 delivery = order_info[0].delivery_price
             user_info = select_register(userid)
@@ -35,16 +35,21 @@ def order(request):
     user_id = request.session.get('user_id')
     prd_code = request.POST['prd_code']
     flag = int(request.POST['flag'])
+    option1 = request.POST['option1']
+    option2 = request.POST['option2']
+    option3 = request.POST['option3']
+    count = request.POST['count']
     login_info = select_login(user_id)
+
     messages = 0
     if login_info.count() is not 0:
         order_prd_info = select_order_prdCode(user_id, prd_code)
         if order_prd_info.count() is not 0: # 장바구니에 같은 prd가 있으면 count +
-            update_order_prdCode(order_prd_info)
+            update_order_prdCode(order_prd_info, count, option1, option2, option3)
             messages = 1  # 성공
         else:
             prd_info = select_prd(prd_code)
-            order = OrderTB(user_id=user_id, prd=prd_info[0])
+            order = OrderTB(user_id=user_id, prd=prd_info[0], option1=option1, option2=option2, option3=option3, count=count)
             order.save()
             messages = 1  # 성공
 

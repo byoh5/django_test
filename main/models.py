@@ -80,6 +80,9 @@ class OrderTB(models.Model):
     user_id = models.CharField(max_length=50, default = '') #LoginTB.euser_id
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True) #개월 기준
     count = models.IntegerField(default='1')
+    option1 = models.IntegerField(default='-1', blank=True)
+    option2 = models.IntegerField(default='-1', blank=True)
+    option3 = models.IntegerField(default='-1', blank=True)
     delivery = models.CharField(max_length=50, default='기본배송')
     delivery_price = models.IntegerField(default='3000')
     delevery_addr_num = models.IntegerField(default='0')
