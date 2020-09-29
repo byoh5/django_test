@@ -2211,7 +2211,7 @@ input[id*="answer"] + label + div p {
     padding:20px;
 
 }
-input[id*="answer"]:checked + label + div {max-height:100px;}
+input[id*="answer"]:checked + label + div {max-height:500px;}
 input[id*="answer"]:checked + label em {background-position:0 -30px;}
 
 
