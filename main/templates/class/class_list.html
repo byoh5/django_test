@@ -30,32 +30,32 @@
 
              {% for classList_detail in class_list_detail %}
             <li class="list01">
+                <input type="hidden" name="idxs[]" value={{forloop.counter0}} >
                 <a href="javascript:void(0);" onclick="javscript:goClassDetail({{classList_detail.prd_code}});">
-                    <img src={{classList_detail.img}} alt="코딩키트 썸네일">
-                     <input type="hidden" name="idxs[]" value={{forloop.counter0}} >
-                    <div class="text_area">
-                            <span>
-                                <small class="type">{{classList_detail.keyword}}</small>
-                                {{classList_detail.title}}
-                            </span>
-                    <div class="ckInfo">
-                            <span class="period">
-                                <img src="{% static 'resource/img/sub/ico_calendar.png' %}" alt="기간">
-                                {{classList_detail.period}}개월 과정
-                            </span>
-                            <span class="num">
-                                <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
-                                {{classList_detail.class_count}}개 강의
-                            </span>
-                            <div id="prd_price_{{forloop.counter0}}" >
-                                <span class="price">
-                                    {{classList_detail.price}} 원
-                                </span>
-                            </div>
-                    </div>
-                        <p class="description"> </p>
-                    </div>
+                    <img src={{classList_detail.gif}} alt="코딩키트 썸네일">
                 </a>
+
+                <div class="text_area">
+                    <span>
+                        <small class="type">{{classList_detail.keyword}}</small>
+                        {{classList_detail.title}}
+                    </span>
+                    <div class="ckInfo">
+                        <span class="period">
+                            <img src="{% static 'resource/img/sub/ico_calendar.png' %}" alt="기간">
+                            {{classList_detail.period}}개월 과정
+                        </span>
+                        <span class="num">
+                            <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
+                            {{classList_detail.class_count}}개 강의
+                        </span>
+                        <div id="prd_price_{{forloop.counter0}}" >
+                            <span class="price">
+                                {{classList_detail.price}} 원
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </li>
             {% endfor%}
         </ul>

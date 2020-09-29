@@ -39,7 +39,8 @@ class PrdTB(models.Model):
     title = models.CharField(max_length=50)
     title2 = models.CharField(max_length=50, default='') #detail page title
     title3 = models.CharField(max_length=50, default='') #detail sub page title
-    img = models.CharField(max_length=50)
+    img = models.CharField(max_length=50, default='')
+    gif = models.CharField(max_length=50, default='')
     period = models.IntegerField(default='0')
     class_count = models.IntegerField(default='0')
     price = models.IntegerField(default='0')
