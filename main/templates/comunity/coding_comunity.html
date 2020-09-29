@@ -38,7 +38,7 @@
         </ul>
         <div class="accordion" style="padding-left:25px;">
              {% for comunityList in comunity_list %}
-                <input type="checkbox" id="{{comunityList.label_name}}">
+                <input type="radio" name="accordion" id="{{comunityList.label_name}}">
                 <label for="{{comunityList.label_name}}">{{forloop.counter}}. {{comunityList.title}}<em></em></label>
                 <div>
                     <p>
