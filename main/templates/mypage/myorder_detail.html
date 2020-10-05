@@ -58,6 +58,24 @@
                                             <span>결제수단</span>
                                             <p>{{payUserInfo.payWay.name}}</p>
                                         </li>
+                                        {% if payUserInfo.payWay.value == 'deposit' %}
+                                        <li>
+                                            <span>통장정보</span>
+                                            <p>국민은행&nbsp;:&nbsp;422001-04-219407 (런코딩)</p>
+                                        </li>
+                                        <li>
+                                            <span>입금자</span>
+                                            <p>{{payUserInfo.payWay_deposit_name}}</p>
+                                        </li>
+                                        <li>
+                                            <span>현금영수증 신청</span>
+                                            {% if payUserInfo.payWay_deposit_receipt == 'A' %}
+                                            <p>O</p>
+                                            {% else %}
+                                            <p>X</p>
+                                            {% endif %}
+                                        </li>
+                                        {% endif %}
                                         <li>
                                             <span>쿠폰</span>
                                             {% if mycoupon_name != "" %}
