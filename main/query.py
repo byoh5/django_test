@@ -175,23 +175,13 @@ def update_order_prdCode(order_prd_info, count, option1, option2, option3):
     new_orderPrd.save()
 
 def update_order_idx(count, order_info, addr_num, option1, option2, option3):
-
-    prd_title = ""
-
-    if order_info.count() is not 0:
-        prd_title = order_info[0].prd.title
-        new_order = order_info[0]
-        new_order.count = count
-        new_order.delevery_addr_num = addr_num
-        if option1 != '0':
-            new_order.option1 = option1
-        if option2 != '0':
-            new_order.option2 = option2
-        if option3 != '0':
-            new_order.option3 = option3
-        new_order.save()
-
-    return prd_title
+    new_order = order_info[0]
+    new_order.count = count
+    new_order.delevery_addr_num = addr_num
+    new_order.option1_selectNum = option1
+    new_order.option2_selectNum = option2
+    new_order.option3_selectNum = option3
+    new_order.save()
 
 def update_myCoupon(user_id, coupon_num):
     myCoupon_info = select_myCoupon_couponNum(user_id, coupon_num)

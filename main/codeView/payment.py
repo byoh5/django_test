@@ -87,17 +87,18 @@ def pay_deposit(request, payway_info):
             prd_count = request.POST['prodQuantity_' + str(data)]
 
             order_info = select_order_idx(idx, user_id)
-            if order_info[0].prd.option1 != "":
-                option1 = request.POST['option_idx_' + str(data) + "_1"]
-            if order_info[0].prd.option2 != "":
-                option2 = request.POST['option_idx_' + str(data) + "_2"]
-            if order_info[0].prd.option3 != "":
-                option3 = request.POST['option_idx_' + str(data) + "_3"]
+            if order_info.count() > 0:
+                if order_info[0].prd.option1 != "":
+                    option1 = request.POST['option_idx_' + str(data) + "_1"]
+                if order_info[0].prd.option2 != "":
+                    option2 = request.POST['option_idx_' + str(data) + "_2"]
+                if order_info[0].prd.option3 != "":
+                    option3 = request.POST['option_idx_' + str(data) + "_3"]
 
-            prd_total_count += int(prd_count)
-            prd_title = update_order_idx(prd_count, order_info, addr_num, option1, option2,
-                                         option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
-            order_list += idx + ","
+                prd_total_count += int(prd_count)
+                prd_title = update_order_idx(prd_count, order_info, addr_num, option1, option2,
+                                             option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                order_list += idx + ","
 
             # insert myclass_list
             period = order_info[0].prd.period * 30  # preiod * 개월(30)
@@ -182,16 +183,18 @@ def pay_credit(request, payway_info):
             prd_count = request.POST['prodQuantity_' + str(data)]
 
             order_info = select_order_idx(idx, user_id)
-            if order_info[0].prd.option1 != "":
-                option1 = request.POST['option_idx_' + str(data) + "_1"]
-            if order_info[0].prd.option2 != "":
-                option2 = request.POST['option_idx_' + str(data) + "_2"]
-            if order_info[0].prd.option3 != "":
-                option3 = request.POST['option_idx_' + str(data) + "_3"]
+            if order_info.count() > 0:
+                if order_info[0].prd.option1 != "":
+                    option1 = request.POST['option_idx_' + str(data) + "_1"]
+                if order_info[0].prd.option2 != "":
+                    option2 = request.POST['option_idx_' + str(data) + "_2"]
+                if order_info[0].prd.option3 != "":
+                    option3 = request.POST['option_idx_' + str(data) + "_3"]
 
-            prd_total_count += int(prd_count)
-            prd_title = update_order_idx(prd_count, order_info, addr_num, option1, option2, option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
-            order_list += idx + ","
+                prd_total_count += int(prd_count)
+                prd_title = order_info[0].prd.title
+                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                order_list += idx + ","
 
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
@@ -217,8 +220,10 @@ def pay_credit(request, payway_info):
         for i in range(_LENGTH):
             pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
 
+        print(order_idx)
+        pay_userStatus_info = select_userStatue(pay_status_prepay)
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
-                         prd_info=prd_title,
+                         prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
                          delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay=payway_info[0])
         pay_info.save()

@@ -65,10 +65,16 @@ def mypage_order_detail(request):
                 if order_info.count() > 0:
                     if order_info[0].option1_selectNum == 2:
                         option_name += order_info[0].prd.option1
+
                     if order_info[0].option2_selectNum == 2:
-                        option_name += "," + order_info[0].prd.option2
+                        if option_name != "":
+                            option_name += ","
+                        option_name += order_info[0].prd.option2
+
                     if order_info[0].option3_selectNum == 2:
-                        option_name += "," + order_info[0].prd.option3
+                        if option_name != "":
+                            option_name += ","
+                        option_name += order_info[0].prd.option3
 
         context = {
             "pay_detail": pay_info,
