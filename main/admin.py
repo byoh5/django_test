@@ -20,7 +20,7 @@ class LoginAdmin(admin.ModelAdmin):
 
 admin.site.register(LoginTB,LoginAdmin)
 
-class PrdAdmin(ImportExportMixin,admin.ModelAdmin):
+class PrdAdmin(admin.ModelAdmin):
     list_display = ['prd_code', 'title', 'period', 'price', 'keyword', 'dbstat'] # 커스터마이징 코드
     list_display_links = ['prd_code']
     list_filter = ['prd_code', 'dbstat']
