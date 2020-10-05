@@ -82,7 +82,7 @@ def order_delete(request):
             delete_order_idx(order_info)
 
     new_order_info = select_order(user_id)
-    delivery = 0;
+    delivery = 0
     if new_order_info.count() is not 0:
         delivery = new_order_info[0].delivery_price
 

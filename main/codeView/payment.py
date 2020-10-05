@@ -37,6 +37,7 @@ def payment(request):
             user_info = select_register(user_id)
             coupon_info = select_myCoupon_notUsed(user_id)
             payway_info_all = select_payway()
+            request.session['order_count'] = order_info.count()
             context = {
                 "order_detail": order_info,
                 "user_detail": user_info,
@@ -286,6 +287,7 @@ def pay_result(request):
         order_info = select_order(user_id)
         user_info = select_register(user_id)
         coupon_info = select_myCoupon_notUsed(user_id)
+        request.session['order_count'] = order_info.count()
         context = {
             "order_detail": order_info,
             "user_detail": user_info,
