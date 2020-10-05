@@ -508,4 +508,9 @@ span.quantity input {
 
 .dollars:before { content:'$'; }
 
+.order_payinfo{
+    padding-right:50px;
+    float:left;
+}
+
 
