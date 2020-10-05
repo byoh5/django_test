@@ -44,29 +44,37 @@
                                     <p>{{payUserInfo.prd_info}}</p>
                                 </li>
                                 <li>
+                                    <span>옵션</span>
+                                    {% if option != "" %}
+                                    <p>{{option}}</p>
+                                    {% else %}
+                                    <p>선택사항 없음.</p>
+                                    {% endif %}
+                                </li>
+                                <li>
                                     <span>결제정보</span>
                                     <ul class="meansInfo">
                                         <li>
                                             <span>결제수단</span>
-                                            <p>카드 결제</p>
+                                            <p>{{payUserInfo.payWay.name}}</p>
                                         </li>
                                         <li>
                                             <span>쿠폰</span>
-                                            {% if payUserInfo.coupon_num != "" %}
+                                            {% if mycoupon_name != "" %}
                                             <p><strong>{{mycoupon_name}}</strong> 사용.</p>
                                             {% else %}
                                              <p>X</p>
                                             {% endif %}
                                         </li>
-                                        <li class="total">
+                                        <li>
                                             <span>총 결제금액</span>
                                             <p>{{payUserInfo.prd_total_price}}</p>
                                         </li>
-                                        <li>
+                                        <li id="prd_price">
                                             <span>주문금액</span>
                                             <p>{{payUserInfo.prd_price}}</p>
                                         </li>
-                                        <li>
+                                        <li id="delivery_price">
                                             <span>배송비</span>
                                             <p>{{payUserInfo.delivery_price}}</p>
                                         </li>
@@ -102,6 +110,17 @@
 
 
         {% include "common/footer.html" %}
+
+        <script>
+
+       function numberWithCommas(x)
+       {
+           return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       }
+
+
+
+        </script>
 
     </div>
 

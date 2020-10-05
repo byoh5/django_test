@@ -1,5 +1,7 @@
 from django.contrib import admin
 from main.models import *
+from import_export.admin import ExportActionModelAdmin, ImportExportMixin, ImportMixin
+
 # Register your models here.
 
 class RegisterAdmin(admin.ModelAdmin):
@@ -19,7 +21,7 @@ class LoginAdmin(admin.ModelAdmin):
 
 admin.site.register(LoginTB,LoginAdmin)
 
-class PrdAdmin(admin.ModelAdmin):
+class PrdAdmin(ImportExportMixin,admin.ModelAdmin):
     list_display = ['prd_code', 'title', 'period', 'price', 'keyword', 'dbstat'] # 커스터마이징 코드
     list_display_links = ['prd_code']
     list_filter = ['prd_code', 'dbstat']
@@ -179,3 +181,12 @@ class myCouponAdmin(admin.ModelAdmin):
     ordering = ['-myCoupon_idx']
 
 admin.site.register(myCouponTB, myCouponAdmin)
+
+class PayWayAdmin(admin.ModelAdmin):
+    list_display = ['payWay_idx', 'name', 'value', 'dbstat'] # 커스터마이징 코드
+
+    list_filter = ['dbstat']
+    list_display_links = ['name', 'value']
+    search_fields = ['name', 'value']
+
+admin.site.register(PayWayTB, PayWayAdmin)

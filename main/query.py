@@ -11,6 +11,10 @@ def select_order_idx(idx, user_id):
     order_info = OrderTB.objects.filter(order_idx=idx, user_id=user_id, dbstat='A')
     return order_info
 
+def select_order_info(idx, user_id):
+    order_info = OrderTB.objects.filter(order_idx=idx, user_id=user_id)
+    return order_info
+
 def select_order_prdCode(user_id, prd_code):
     order_info = OrderTB.objects.filter(user_id=user_id, prd__prd_code=prd_code, dbstat='A')
     return order_info
@@ -128,6 +132,14 @@ def select_coupon_all(coupon_num):
     coupon_info = couponTB.objects.filter(coupon_num=coupon_num)
     return coupon_info
 
+def select_payway():
+    payway_info = PayWayTB.objects.filter(dbstat='A')
+    return payway_info
+
+def select_payway_value(value):
+    payway_info = PayWayTB.objects.filter(dbstat='A', value=value)
+    return payway_info
+
 def update_user_addr(user_id, add01,add02,add03):
     user_info = select_register(user_id)
 
@@ -157,13 +169,13 @@ def update_user_addr2(user_id, name, phone, add01,add02,add03):
 def update_order_prdCode(order_prd_info, count, option1, option2, option3):
     new_orderPrd = order_prd_info[0]
     new_orderPrd.count = new_orderPrd.count + int(count)
-    new_orderPrd.option1 = option1
-    new_orderPrd.option2 = option2
-    new_orderPrd.option3 = option3
+    new_orderPrd.option1_selectNum = option1
+    new_orderPrd.option2_selectNum = option2
+    new_orderPrd.option3_selectNum = option3
     new_orderPrd.save()
 
-def update_order_idx(idx, user_id, count, addr_num):
-    order_info = select_order_idx(idx, user_id)
+def update_order_idx(count, order_info, addr_num, option1, option2, option3):
+
     prd_title = ""
 
     if order_info.count() is not 0:
@@ -171,6 +183,12 @@ def update_order_idx(idx, user_id, count, addr_num):
         new_order = order_info[0]
         new_order.count = count
         new_order.delevery_addr_num = addr_num
+        if option1 != '0':
+            new_order.option1 = option1
+        if option2 != '0':
+            new_order.option2 = option2
+        if option3 != '0':
+            new_order.option3 = option3
         new_order.save()
 
     return prd_title

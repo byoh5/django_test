@@ -50,14 +50,30 @@ def mypage_order_detail(request):
     if checkSession(session, user_id):
         pay_info = select_pay(pay_idx)
         mycoupon_name = ""
+        option_name = ""
 
         if pay_info[0].coupon_num != "" :
             mycoupon_info = select_myCoupon_couponNum(user_id, pay_info[0].coupon_num)
-            mycoupon_name = mycoupon_info[0].coupon.coupon_name
+            if mycoupon_info.count() > 0:
+                mycoupon_name = mycoupon_info[0].coupon.coupon_name
+
+        split_order = pay_info[0].order_id.split(',')
+        # product -> myclass에 넣고, 장바구니 정리하기
+        for data in split_order:
+            if len(data) > 0:
+                order_info = select_order_info(data, user_id)
+                if order_info.count() > 0:
+                    if order_info[0].option1_selectNum == 2:
+                        option_name += order_info[0].prd.option1
+                    if order_info[0].option2_selectNum == 2:
+                        option_name += "," + order_info[0].prd.option2
+                    if order_info[0].option3_selectNum == 2:
+                        option_name += "," + order_info[0].prd.option3
 
         context = {
             "pay_detail": pay_info,
             "mycoupon_name": mycoupon_name,
+            "option":option_name,
         }
         return render(request, 'mypage/myorder_detail.html', context)
     else:

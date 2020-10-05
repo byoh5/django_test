@@ -3,7 +3,6 @@ from main.query import *
 from main.models import *
 
 
-
 def order_page(request):
     session = request.session.get('client_id')
     userid = request.session.get('user_id')  # 이 값으로 디비에서 정보찾고..
@@ -17,6 +16,7 @@ def order_page(request):
                 delivery = order_info[0].delivery_price
             user_info = select_register(userid)
             coupon_info = select_myCoupon_notUsed(userid)
+            payway_info = select_payway()
             request.session['order_count'] = order_info.count()
             context = {
                 "order_detail": order_info,
@@ -25,6 +25,7 @@ def order_page(request):
                 "pay_result": '',
                 "pay_msg": '',
                 "delivery_price": delivery,
+                "payway_info":payway_info,
 
             }
             return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
@@ -49,7 +50,7 @@ def order(request):
             messages = 1  # 성공
         else:
             prd_info = select_prd(prd_code)
-            order = OrderTB(user_id=user_id, prd=prd_info[0], option1=option1, option2=option2, option3=option3, count=count)
+            order = OrderTB(user_id=user_id, prd=prd_info[0], option1_selectNum=option1, option2_selectNum=option2, option3_selectNum=option3, count=count)
             order.save()
             messages = 1  # 성공
 
@@ -87,6 +88,7 @@ def order_delete(request):
 
     user_info = select_register(user_id)
     coupon_info = select_myCoupon_notUsed(user_id)
+    payway_info = select_payway()
     request.session['order_count'] = new_order_info.count()
     context = {
         "order_detail": new_order_info,
@@ -95,6 +97,6 @@ def order_delete(request):
         "pay_result": '',
         "pay_msg": '',
         "delivery_price": delivery,
-
+        "payway": payway_info,
     }
     return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax

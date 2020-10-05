@@ -76,14 +76,20 @@ class ItemTB(models.Model): #curriculum
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
+class PayWayTB(models.Model):
+    payWay_idx = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    value = models.CharField(max_length=50)
+    dbstat = models.CharField(max_length=50, default='A')
+
 class OrderTB(models.Model):
     order_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50, default = '') #LoginTB.euser_id
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True) #개월 기준
     count = models.IntegerField(default='1')
-    option1 = models.IntegerField(default='-1', blank=True)
-    option2 = models.IntegerField(default='-1', blank=True)
-    option3 = models.IntegerField(default='-1', blank=True)
+    option1_selectNum = models.IntegerField(default='0', blank=True)
+    option2_selectNum = models.IntegerField(default='0', blank=True)
+    option3_selectNum = models.IntegerField(default='0', blank=True)
     delivery = models.CharField(max_length=50, default='기본배송')
     delivery_price = models.IntegerField(default='3000')
     delevery_addr_num = models.IntegerField(default='0')
@@ -192,6 +198,9 @@ class PayTB(models.Model):
     pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
     pay_user_status = models.ForeignKey(UserStatusTB, on_delete=models.PROTECT, null=True)
     order_id = models.CharField(max_length=50, default='') #order_idx
+    payWay = models.ForeignKey(PayWayTB, on_delete=models.PROTECT, null=True)
+    payWay_deposit_name = models.CharField(max_length=50, default='',blank=True)
+    payWay_deposit_receipt = models.CharField(max_length=10, default='D')
     coupon_num = models.CharField(max_length=150, default='', null=True)
     prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
     prd_price = models.IntegerField(default='0') # product total

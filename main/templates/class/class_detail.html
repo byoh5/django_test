@@ -71,9 +71,9 @@
                                         {% csrf_token %}
                                         <input type="hidden" id="prd_code" name="prd_code" value={{prd_detail.prd_code}}> <!--arduino-AI-trashcan -->
                                         <input type="hidden" id="flag" name="flag" value="0">
-                                        <input type="hidden" id="option1" name="option1" value="-1">
-                                        <input type="hidden" id="option2" name="option2" value="-1">
-                                        <input type="hidden" id="option3" name="option3" value="-1">
+                                        <input type="hidden" id="option1" name="option1" value="0">
+                                        <input type="hidden" id="option2" name="option2" value="0">
+                                        <input type="hidden" id="option3" name="option3" value="0">
                                         <input type="hidden" id="count" name="count" value="1">
                                      </form>
                                     <p><span id="prd_price">{{prd_detail.price}}</span> 원</p>
@@ -218,15 +218,15 @@
          {
             if(num == 1)
             {
-                $("input[type=hidden][name=option1]").val(option_val)
+                $("input[type=hidden][name=option1]").val(document.getElementById("options_1").selectedIndex);
             }
             if(num == 2)
             {
-                $("input[type=hidden][name=option2]").val(option_val)
+                $("input[type=hidden][name=option2]").val(document.getElementById("options_2").selectedIndex);
             }
             if(num == 3)
             {
-                $("input[type=hidden][name=option3]").val(option_val)
+                $("input[type=hidden][name=option3]").val(document.getElementById("options_3").selectedIndex);
             }
 
             totalPrice();
