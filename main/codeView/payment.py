@@ -28,10 +28,17 @@ def payment(request):
     if payway_val is not None:
         payway_info = select_payway_value(payway_val)
 
+        number_pool = string.digits
+        _LENGTH = 12
+        pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
+                  + str(timezone.now().hour) + str(timezone.now().minute) + str(timezone.now().second) + "-"
+        for i in range(_LENGTH):
+            pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
+
         if payway_info.count() > 0 and payway_info[0].value == payway_credit:
-            return pay_credit(request, payway_info)
+            return pay_credit(request, payway_info, pay_num)
         elif payway_info.count() > 0 and payway_info[0].value == payway_deposit:
-            return pay_deposit(request, payway_info)
+            return pay_deposit(request, payway_info, pay_num)
         else:
             order_info = select_order(user_id)
             user_info = select_register(user_id)
@@ -53,7 +60,7 @@ def payment(request):
     else:
         return render(request, 'login/login.html')
 
-def pay_deposit(request, payway_info):
+def pay_deposit(request, payway_info, pay_num):
     user_id = request.session.get('user_id')
     order_idx = request.POST['idx']
     addr_num = request.POST['addr_num']
@@ -96,14 +103,14 @@ def pay_deposit(request, payway_info):
                     option3 = request.POST['option_idx_' + str(data) + "_3"]
 
                 prd_total_count += int(prd_count)
-                prd_title = update_order_idx(prd_count, order_info, addr_num, option1, option2,
-                                             option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                prd_title = order_info[0].prd.title
+                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
                 order_list += idx + ","
 
             # insert myclass_list
             period = order_info[0].prd.period * 30  # preiod * 개월(30)
             expireTime = timezone.now() + timezone.timedelta(days=period)
-            myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
+            myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd, pay_num=pay_num,
                                               expire_time=expireTime, dbstat='D-deposit')
             myclass_list_info.save()
 
@@ -126,13 +133,6 @@ def pay_deposit(request, payway_info):
             addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
                 0].regi_receiver2_add01 + ")"
 
-        number_pool = string.digits
-        _LENGTH = 12
-        pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
-                  + str(timezone.now().hour) + str(timezone.now().minute) + str(timezone.now().second) + "-"
-        for i in range(_LENGTH):
-            pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
-
         pay_userStatus_info = select_userStatue(pay_status_deposit_noCheck)
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
@@ -152,7 +152,7 @@ def pay_deposit(request, payway_info):
     else:
         return render(request, 'login/login.html')
 
-def pay_credit(request, payway_info):
+def pay_credit(request, payway_info, pay_num):
     user_id = request.session.get('user_id')
     order_idx = request.POST['idx']
     addr_num = request.POST['addr_num']
@@ -213,14 +213,6 @@ def pay_credit(request, payway_info):
             addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
                 0].regi_receiver2_add01 + ")"
 
-        number_pool = string.digits
-        _LENGTH = 12
-        pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
-                  + str(timezone.now().hour) + str(timezone.now().minute) + str(timezone.now().second) + "-"
-        for i in range(_LENGTH):
-            pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
-
-        print(order_idx)
         pay_userStatus_info = select_userStatue(pay_status_prepay)
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
@@ -270,7 +262,7 @@ def pay_result(request):
                         # insert myclass_list
                         period = order_info[0].prd.period * 30  # preiod * 개월(30)
                         expireTime = timezone.now() + timezone.timedelta(days=period)
-                        myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
+                        myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd, pay_num=pay_info[0].pay_num,
                                                           expire_time=expireTime)
                         myclass_list_info.save()
 

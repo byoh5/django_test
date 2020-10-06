@@ -107,6 +107,7 @@ class UserStatusTB(models.Model):
 class MyClassListTB(models.Model):
     myclassList_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50)
+    pay_num = models.CharField(max_length=50, default='')
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True)
     dbstat = models.CharField(max_length=50, default='A')
     start_time = models.DateTimeField(default=timezone.now)

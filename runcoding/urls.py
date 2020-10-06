@@ -27,6 +27,7 @@ from main.codeView.payment import *
 from main.codeView.regi import *
 from main.codeView.search import *
 from main.codeView.confirm_user import *
+from main.codeView.runAdmin import *
 
 urlpatterns = [
     path('regi/', register_page),
@@ -72,6 +73,12 @@ urlpatterns = [
     path('search_lounge/', search_lounge),
 
     path('confirm/', getConfirm),
+
+    path('deposit_list/', deposit_list),
+    path('deposit_search/', deposit_search),
+    path('deposit_change/', deposit_change),
+    path('pay_list/', pay_list),
+    path('pay_search/', pay_search),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),

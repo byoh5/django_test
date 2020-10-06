@@ -1,0 +1,102 @@
+{% load static %}
+{% include "common/head.html" %}
+<div class="wrap">
+    <div class="admin_sub_visual">
+         <div class="tabs section_wrap">
+            <ul>
+                <li><a href="/deposit_list/">무통장 입금 사용자 조회</a></li>
+                &nbsp;&nbsp;
+                <li class="admin_active"><a href="/pay_list/">구매 데이터 조회</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="codingLounge_list">
+        <div class="filter_area fixed">
+            <div class="search_area">
+                <div class="input_area_lounge">
+                     <input type="date" name="start_date" id="start_date" value="{{start_date}}">
+                </div>
+                <div class="input_area_lounge">
+                     <input type="date" name="end_date" id="end_date" value="{{end_date}}">
+                </div>
+                <div class="input_area_lounge">
+                     <input type="text" name="search_box" id="search_box" placeholder="아이디 검색해 보세요.">
+                </div>
+                 <div class="btn_area">
+                    <a class="btn" href="javascript:void(0);" onclick="javascript:goSearch();">&nbsp;조회하기&nbsp;</a>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-left: 300px; width: 1128px; font-size: 20px !important;">total : {{total_count}}</div>
+    <div style="overflow: hidden; position: relative; border: 0px; width: 100%;">
+        <table style="margin-left: 300px; width: 1128px;">
+            <thread>
+                <tr class="row">
+<!--                    <th class="admin_list_check">&nbsp;</th>-->
+                    <th class="admin_list">이름</th>
+                    <th class="admin_list">주문번호</th>
+                    <th class="admin_list">주문상태</th>
+                    <th class="admin_list">주문방법</th>
+                    <th class="admin_list">구매키트</th>
+                    <th class="admin_list">옵션</th>
+                    <th class="admin_list">결제금액</th>
+                </tr>
+            </thread>
+            <tbody>
+                {% for deposit in pay_info %}
+                <tr class="row">
+<!--                    <td class="admin_list_body"><input type="checkbox" name="idxs[]" value={{forloop.counter0}} onClick="javascript:check();"></td>-->
+                    <td class="admin_list_body">{{deposit.pay_user.regi_name}}</td>
+                    <td class="admin_list_body">{{deposit.pay_num}}</td>
+                    <td class="admin_list_body">{{deposit.pay_user_status}}</td>
+                    <td class="admin_list_body">{{deposit.payWay.value}}</td>
+                    <td class="admin_list_body">{{deposit.prd_info}}</td>
+                    <td class="admin_list_body">{{deposit.prd_info}}</td>
+                    <td class="admin_list_body">{{deposit.prd_total_price}}</td>
+                    {% for myclass in myclass_list %}
+                        {% if myclass.pay_num == deposit.pay_num %}
+                            {% if myclass.dbstat == 'A' %}
+                            <td class="admin_list_body">확인됨</td>
+                            {% else %}
+                            <td class="admin_list_body"><a href="javascript:void(0);" onClick="javascript:change({{myclass.myclassList_idx}});" style="cursor:pointer;color:red;"><strong>변경하기</strong></a></td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <script>
+
+     function goSearch()
+     {
+
+        var start_date = document.getElementById('start_date');
+        var end_date = document.getElementById('end_date');
+        var searchBox = $('[name=search_box]').val()
+
+        var newForm = $('<form></form>');
+
+        newForm.attr("name", "deposit_search");
+        newForm.attr("method", "post");
+        newForm.attr("action", "/pay_search/");
+
+        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date.value }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date.value }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
+
+        newForm.appendTo('body');
+        newForm.submit();
+
+     }
+
+
+    </script>
+</body></html>

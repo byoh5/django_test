@@ -33,14 +33,16 @@ def login(request):
                 session = session_auth.decode('utf-8')
                 delete_login(login_id) # 기존에 로그인 한 정보가 있다면 지움.
 
-                q = LoginTB(user_id=login_id, session_id=session) #새로운 로그인 정보 등록
-                q.save()
+                login_info = LoginTB(user_id=login_id, session_id=session) #새로운 로그인 정보 등록
+                login_info.save()
 
                 order_info = select_order(login_id)
 
                 request.session['client_id'] = session #쿠기에 정보 저장
                 request.session['order_count'] = order_info.count()
                 request.session['user_id'] = login_id
+                request.session['runcoding'] = regi_info[0].level
+
                 return HttpResponse(message_ok)
             else:
                 return HttpResponse(message_diff_pass)

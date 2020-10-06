@@ -20,6 +20,57 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	max-width:1130px;
 }
 
+.admin_sub_visual {
+	position:relative;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin-bottom:50px;
+	padding-top:30px;
+	width:100%;
+	height:200px;
+	background-color:#e1a394;
+}
+
+.admin_sub_visual .section_wrap {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	margin:0;
+	width:100%;
+	height:100%;
+}
+
+.admin_list_check {
+    padding: 10px 5px;
+    border-bottom: 1px solid #ddd;
+    background: lightgray;
+    font-size: 13px !important;
+    width:10px;
+}
+
+.admin_list {
+    padding: 10px 5px;
+    border-bottom: 1px solid #ddd;
+    background: lightgray;
+    font-size: 13px !important;
+    width:50px;
+}
+
+.admin_list_body {
+    padding: 10px 5px;
+    border-bottom: 1px solid #ddd;
+    background: white;
+    font-size: 13px !important;
+    width:50px;
+    text-align:center;
+}
+
+.tabs li.admin_active a {
+	color:#fff;
+	background-color:#101a4e;
+}
+
 /* sub visual */
 .sub_visual {
 	position:relative;

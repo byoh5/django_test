@@ -84,6 +84,13 @@
                 <span class="userImg"><img src="{% static 'resource/img/sub/img_user.png' %}" alt="유저 프로필"></span>
                 <ul class="sub_menu">
                      <div id="logout" >
+                         {% if request.session.runcoding > 10 %}
+                         <a href="/deposit_list/">
+                            <li style="border-bottom:1px solid #dcdcdc;">
+                                관리자모드
+                            </li>
+                        </a>
+                         {% endif %}
                           <a href="/myprofile/">
                               <li style="border-bottom:1px solid #dcdcdc;">
                                내 프로필

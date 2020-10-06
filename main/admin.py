@@ -78,9 +78,10 @@ class PayAdmin(admin.ModelAdmin):
 
     list_display_links = ['pay_num']
     search_fields = ['pay_num']
-    ordering = ['-pay_idx',]
+    ordering = ['-pay_idx']
 
 admin.site.register(PayTB, PayAdmin)
+
 
 class MyClassListAdmin(admin.ModelAdmin):
     list_display = ['user_id', 'get_name', 'start_time', 'expire_time', 'dbstat'] # 커스터마이징 코드

@@ -55,8 +55,28 @@ def select_pay_user(user_id):
     pay_info = PayTB.objects.filter(pay_user__regi_email=user_id).order_by('-pay_idx')
     return pay_info
 
+def select_pay_date_deposit(start_datetime_filter, end_datetime_filter, search):
+    pay_info = PayTB.objects.filter(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()), payWay__value='deposit').order_by('-pay_idx')
+    return pay_info
+
+def select_pay_date(start_datetime_filter, end_datetime_filter, search):
+    pay_info = PayTB.objects.filter(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())).order_by('-pay_idx')
+    return pay_info
+
+def select_myclass_date_deposit(start_datetime_filter, end_datetime_filter):
+    myclass_list_info = MyClassListTB.objects.filter(start_time__range=(start_datetime_filter.date(), end_datetime_filter.date()))
+    return myclass_list_info
+
+def select_myclass_list_idx(idx):
+    myclass_list_info = MyClassListTB.objects.filter(myclassList_idx=idx, dbstat='D-deposit')
+    return myclass_list_info
+
 def select_myclass_list(user_id):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, dbstat='A')
+    return myclass_list_info
+
+def select_myclass_list_payNum(user_id, pay_num):
+    myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='A')
     return myclass_list_info
 
 def select_class_list():
