@@ -87,6 +87,7 @@ class OrderTB(models.Model):
     user_id = models.CharField(max_length=50, default = '') #LoginTB.euser_id
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True) #개월 기준
     count = models.IntegerField(default='1')
+    pay_num = models.CharField(max_length=50, default='', blank=True)
     option1_selectNum = models.IntegerField(default='0', blank=True)
     option2_selectNum = models.IntegerField(default='0', blank=True)
     option3_selectNum = models.IntegerField(default='0', blank=True)
@@ -210,7 +211,7 @@ class PayTB(models.Model):
     delivery_name = models.CharField(max_length=50, default='')
     delivery_addr = models.CharField(max_length=150, default='')
     delivery_phone = models.CharField(max_length=50, default='')
-    pay_result = models.IntegerField(default='100') # 0: 성공 1: 실패
+    pay_result = models.IntegerField(default='100') # 0: 결제성공 & 배송전 1: 결제실패 2: 결제성공 & 배송중 3: 결제성공 & 배송완료
     pay_result_info = models.CharField(max_length=300, default='') #pay_msg
     pay_time = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)

@@ -11,6 +11,10 @@ def select_order_idx(idx, user_id):
     order_info = OrderTB.objects.filter(order_idx=idx, user_id=user_id, dbstat='A')
     return order_info
 
+def select_order_payNum(pay_num, user_id):
+    order_info = OrderTB.objects.filter(pay_num=pay_num, user_id=user_id)
+    return order_info
+
 def select_order_info(idx, user_id):
     order_info = OrderTB.objects.filter(order_idx=idx, user_id=user_id)
     return order_info
@@ -18,6 +22,10 @@ def select_order_info(idx, user_id):
 def select_order_prdCode(user_id, prd_code):
     order_info = OrderTB.objects.filter(user_id=user_id, prd__prd_code=prd_code, dbstat='A')
     return order_info
+#
+def select_order_date(start_datetime_filter, end_datetime_filter, search):
+    order_pay_info = OrderTB.objects.filter(pay_num__icontains='-', modified__range=(start_datetime_filter.date(), end_datetime_filter.date()))
+    return order_pay_info
 
 def select_register(regi_email):
     regi_info = RegisterTB.objects.filter(regi_email=regi_email, dbstat='A')
@@ -76,7 +84,7 @@ def select_myclass_list(user_id):
     return myclass_list_info
 
 def select_myclass_list_payNum(user_id, pay_num):
-    myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='A')
+    myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='D-deposit')
     return myclass_list_info
 
 def select_class_list():
@@ -211,10 +219,11 @@ def update_myCoupon(user_id, coupon_num):
         update_myCoupon.used = True
         update_myCoupon.save()
 
-def delete_order_idx(order_info):
+def delete_order_idx(order_info, pay_num):
     if order_info.count() is not 0:
         new_order = order_info[0]
         new_order.dbstat = 'D-'
+        new_order.pay_num = pay_num
         new_order.save()
 
 def delete_login(user_id):

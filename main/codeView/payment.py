@@ -114,7 +114,7 @@ def pay_deposit(request, payway_info, pay_num):
                                               expire_time=expireTime, dbstat='D-deposit')
             myclass_list_info.save()
 
-            delete_order_idx(order_info)  # order dbstat 변경
+            delete_order_idx(order_info, pay_num)  # order dbstat 변경
 
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
@@ -266,7 +266,7 @@ def pay_result(request):
                                                           expire_time=expireTime)
                         myclass_list_info.save()
 
-                    delete_order_idx(order_info)  # order dbstat 변경
+                    delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
         update_pay.save()
 

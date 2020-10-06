@@ -57,6 +57,23 @@ body,th,td,input,select,textarea,button {font-size:24px;}
     width:50px;
 }
 
+.admin_list_id {
+     padding: 10px 5px;
+    border-bottom: 1px solid #ddd;
+    background: lightgray;
+    font-size: 13px !important;
+    width:100px;
+}
+
+.admin_list_id_body {
+    padding: 10px 5px;
+    border-bottom: 1px solid #ddd;
+    background: white;
+    font-size: 13px !important;
+    width:100px;
+    text-align:center;
+}
+
 .admin_list_body {
     padding: 10px 5px;
     border-bottom: 1px solid #ddd;

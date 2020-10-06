@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from main.query import *
 from main.models import *
@@ -46,15 +47,17 @@ def deposit_search(request):
         return render(request, 'login/login.html')
 
 def deposit_change(request):
-    idx = request.POST['idx']
+    pay_num = request.POST['pay_num']
+    user_id = request.POST['user_id']
     start_date = request.POST['start_date']
     end_date = request.POST['end_date']
     searchBox = request.POST['searchBox']
 
-    myclass_list_info = select_myclass_list_idx(idx)
-    new_myclass_list = myclass_list_info[0]
-    new_myclass_list.dbstat = 'A'
-    new_myclass_list.save()
+    myclass_list_info = select_myclass_list_payNum(user_id, pay_num)
+    for myclass_list in myclass_list_info:
+        new_myclass_list = myclass_list
+        new_myclass_list.dbstat = 'A'
+        new_myclass_list.save()
 
     split_start = start_date.split('-')
     start_year = int(split_start[0])
@@ -101,11 +104,17 @@ def pay_search(request):
     end_datetime_filter = datetime(end_year, end_month, end_day)
 
     pay_info = select_pay_date(start_datetime_filter, end_datetime_filter, searchBox)
+    order_info = select_order_date(start_datetime_filter, end_datetime_filter, searchBox)
     context = {
         "pay_info": pay_info,
         "total_count": pay_info.count(),
         "start_date": start_date,
         "end_date": end_date,
+        "order_info": order_info,
     }
 
     return render(request, 'runAdmin/pay_list.html', context)
+
+
+
+
