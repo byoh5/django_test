@@ -67,7 +67,7 @@ admin.site.register(UserStatusTB, UserStatusAdmin)
 
 
 class PayAdmin(admin.ModelAdmin):
-    list_display = ['pay_num', 'get_name', 'pay_user_status', 'prd_info', 'prd_total_price', 'pay_result', 'pay_time'] # 커스터마이징 코드
+    list_display = ['pay_idx', 'pay_num', 'get_name', 'pay_user_status', 'prd_info', 'prd_total_price', 'pay_result', 'pay_time'] # 커스터마이징 코드
 
     list_filter = ['pay_time', 'pay_result']
     list_editable = ('pay_user_status',)

@@ -161,11 +161,17 @@ def pay_change(request):
     day = timezone.localtime().day
 
     pay_userStatus_info = select_userStatue(pay_status_delivery)
-    pay_info = select_pay(pay_idx)
-    new_pay = pay_info[0]
-    new_pay.pay_user_status = pay_userStatus_info[0]
-    new_pay.pay_result_info = '배송중-' + admin + "-" + str(year) + str(month) + str(day)
-    new_pay.save()
+
+    split_pay = pay_idx.split(',')
+
+    # product -> myclass에 넣고, 장바구니 정리하기
+    for data in split_pay:
+        if len(data) > 0:
+            pay_info = select_pay(data)
+            new_pay = pay_info[0]
+            new_pay.pay_user_status = pay_userStatus_info[0]
+            new_pay.pay_result_info = '배송중-' + admin + "-" + str(year) + str(month) + str(day)
+            new_pay.save()
 
     split_start = start_date.split('-')
     start_year = int(split_start[0])

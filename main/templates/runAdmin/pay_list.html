@@ -5,13 +5,14 @@
          <div class="tabs section_wrap">
             <ul>
                 <li><a href="/deposit_list/">무통장 입금 사용자 조회</a></li>
-                &nbsp;&nbsp;
                 <li class="admin_active"><a href="/pay_list/">구매 데이터 조회</a></li>
+                <li><a href="https://admin.iamport.kr/users/login" target="_blank">아임포트 관리자</a></li>
+                <li><a href="https://partner.danalpay.com/account/login?next=%2F#" target="_blank">다날 (휴대폰인증)</a></li>
             </ul>
         </div>
     </div>
 
-    <div class="codingLounge_list">
+    <div class="codingLounge_list" style="margin-left:280px;">
         <div class="filter_area fixed">
             <div class="search_area">
                 <div class="input_area_lounge">
@@ -28,7 +29,8 @@
                         {% endfor %}
                      </select>
                 </div>
-                <div class="input_area_lounge">
+
+                <div class="input_area_lounge" style="margin-left:-50px;">
                      <input type="text" name="search_box" id="search_box" value='{{search}}' placeholder="아이디 or 주문번호">
                 </div>
                  <div class="btn_area">
@@ -61,8 +63,13 @@
                 {% for deposit in pay_info %}
                 <tr class="row">
                     <td class="admin_list_body">
+                        <input type="hidden" name="payIdx_{{forloop.counter0}}" id="payIdx_{{forloop.counter0}}" value={{deposit.pay_idx}}>
                          {% if deposit.pay_result == 0 %}
-                        <input type="checkbox" name="idxs[]" value={{deposit.pay_idx}}"></td>
+                             {% if ok_status == deposit.pay_user_status.userStatus_idx %}
+                             <input type="checkbox" name="idxs" value={{deposit.pay_idx}}"></td>
+                             {%else%}
+                             <input type="checkbox" disabled name="idxs" value={{deposit.pay_idx}}"></td>
+                             {% endif %}
                         {%else%}
                         <input type="checkbox" disabled name="idxs[]" value={{deposit.pay_idx}}"></td>
                         {% endif %}
@@ -108,7 +115,7 @@
     </div>
 
     <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-top:50px; padding-bottom:150px;">
-        <button type="button" style="color:#fff; background-color:#e1a394;	border-color:#e1a394; float:right; border-radius:5em; font-size: 20px;" onclick="">배송중으로 변경</button>
+        <button type="button" style="color:#fff; background-color:#e1a394;	border-color:#e1a394; float:right; border-radius:5em; font-size: 20px;" onClick="javascript:change('all');">배송중으로 변경</button>
     </div>
 </div>
 
@@ -224,6 +231,27 @@
         var status = document.getElementById("status").selectedIndex;
         if(status > 0)
             status = document.getElementById("status").value;
+
+        if(pay_idx == 'all')
+        {
+            var chks = document.getElementsByName('idxs');
+            pay_idx = '';
+             for (var i=0,m=chks.length;i<m ;i++)
+             {
+                if (chks[i].checked == true)
+                {
+                     var payIndex = document.getElementById("payIdx_" + i).value;
+
+                     pay_idx += payIndex + ",";
+                }
+             }
+
+             if(pay_idx == '')
+             {
+                alert("체크된 내용이 없습니다");
+                return false;
+             }
+        }
 
         var newForm = $('<form></form>');
 
