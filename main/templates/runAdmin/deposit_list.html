@@ -21,7 +21,7 @@
                      <input type="date" name="end_date" id="end_date" value="{{end_date}}">
                 </div>
                 <div class="input_area_lounge">
-                     <input type="text" name="search_box" id="search_box" placeholder="아이디 검색해 보세요.">
+                     <input type="text" name="search_box" id="search_box" value='{{search}}'  placeholder="아이디 or 주문번호">
                 </div>
                  <div class="btn_area">
                     <a class="btn" href="javascript:void(0);" onclick="javascript:goSearch();">&nbsp;조회하기&nbsp;</a>
@@ -56,6 +56,7 @@
                     <td class="admin_list_body">{{deposit.payWay_deposit_name}}</td>
                     <td class="admin_list_body">{{deposit.payWay_deposit_receipt}}</td>
                     <td class="admin_list_body">{{deposit.delivery_phone}}</td>
+                    <td class="admin_list_body">{{deposit.prd_total_price}}</td>
                     <td class="admin_list_body">
                     {% for myclass in myclass_list %}
                         {% if myclass.pay_num == deposit.pay_num %}
@@ -81,7 +82,7 @@
 
         var start_date = document.getElementById('start_date').value;
         var end_date = document.getElementById('end_date').value;
-        var searchBox = $('[name=search_box]').val()
+        var searchBox = $('[name=search_box]').val();
 
         if(start_date == "" || end_date == "")
         {
@@ -109,7 +110,7 @@
      {
         var start_date = document.getElementById('start_date').value;
         var end_date = document.getElementById('end_date').value;
-        var searchBox = $('[name=search_box]').val()
+        var searchBox = $('[name=search_box]').val();
 
         if(start_date == "" || end_date == "")
         {

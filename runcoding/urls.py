@@ -79,6 +79,7 @@ urlpatterns = [
     path('deposit_change/', deposit_change),
     path('pay_list/', pay_list),
     path('pay_search/', pay_search),
+    path('pay_change/', pay_change),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),

@@ -24,7 +24,15 @@ def select_order_prdCode(user_id, prd_code):
     return order_info
 #
 def select_order_date(start_datetime_filter, end_datetime_filter, search):
-    order_pay_info = OrderTB.objects.filter(pay_num__icontains='-', modified__range=(start_datetime_filter.date(), end_datetime_filter.date()))
+    sort_order = '-order_idx'
+
+    query_search = Q()
+
+    if search is not "":
+        query_search.add(Q(user_id__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
+
+    order_pay_info = OrderTB.objects.filter(query_search, pay_num__icontains='-',
+                                            modified__range=(start_datetime_filter.date(), end_datetime_filter.date())).order_by(sort_order)
     return order_pay_info
 
 def select_register(regi_email):
@@ -55,6 +63,10 @@ def select_userStatue(userStatus_idx):
     userStatus_info = UserStatusTB.objects.filter(userStatus_idx=userStatus_idx)
     return userStatus_info
 
+def select_userStatus_all():
+    userStatus_info = UserStatusTB.objects.filter(dbstat='A')
+    return userStatus_info
+
 def select_pay(pay_idx):
     pay_info = PayTB.objects.filter(pay_idx=pay_idx)
     return pay_info
@@ -63,12 +75,28 @@ def select_pay_user(user_id):
     pay_info = PayTB.objects.filter(pay_user__regi_email=user_id).order_by('-pay_idx')
     return pay_info
 
-def select_pay_date_deposit(start_datetime_filter, end_datetime_filter, search):
-    pay_info = PayTB.objects.filter(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()), payWay__value='deposit').order_by('-pay_idx')
+def select_pay_user_payNume(user_id, pay_num):
+    pay_info = PayTB.objects.filter(pay_user__regi_email=user_id, pay_num=pay_num).order_by('-pay_idx')
     return pay_info
 
-def select_pay_date(start_datetime_filter, end_datetime_filter, search):
-    pay_info = PayTB.objects.filter(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())).order_by('-pay_idx')
+def select_pay_date_deposit(start_datetime_filter, end_datetime_filter, search):
+    pay_info = PayTB.objects.filter(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()),
+                                    payWay__value='deposit', pay_user__regi_email__icontains=search).order_by('-pay_idx')
+    return pay_info
+
+def select_pay_date(start_datetime_filter, end_datetime_filter, search, status):
+    sort_order = '-pay_idx'
+
+    query_search = Q()
+
+    if int(status) > 0:
+        query_search.add(Q(pay_user_status__userStatus_idx=status), query_search.AND)
+
+    if search is not "":
+        query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search, pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())).order_by(sort_order)
+
     return pay_info
 
 def select_myclass_date_deposit(start_datetime_filter, end_datetime_filter):
