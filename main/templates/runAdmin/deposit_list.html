@@ -79,9 +79,15 @@
      function goSearch()
      {
 
-        var start_date = document.getElementById('start_date');
-        var end_date = document.getElementById('end_date');
+        var start_date = document.getElementById('start_date').value;
+        var end_date = document.getElementById('end_date').value;
         var searchBox = $('[name=search_box]').val()
+
+        if(start_date == "" || end_date == "")
+        {
+            alert("날짜선택하세요");
+            return false;
+        }
 
         var newForm = $('<form></form>');
 
@@ -90,8 +96,8 @@
         newForm.attr("action", "/deposit_search/");
 
         newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-        newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date.value }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date.value }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
 
         newForm.appendTo('body');
@@ -101,9 +107,15 @@
 
      function change(user_id, pay_num)
      {
-        var start_date = document.getElementById('start_date');
-        var end_date = document.getElementById('end_date');
+        var start_date = document.getElementById('start_date').value;
+        var end_date = document.getElementById('end_date').value;
         var searchBox = $('[name=search_box]').val()
+
+        if(start_date == "" || end_date == "")
+        {
+            alert("날짜선택하세요");
+            return false;
+        }
 
         var newForm = $('<form></form>');
 
@@ -112,8 +124,8 @@
         newForm.attr("action", "/deposit_change/");
 
         newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-        newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date.value }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date.value }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
         newForm.append($('<input/>', {type: 'hidden', name: 'user_id', value : user_id }));
         newForm.append($('<input/>', {type: 'hidden', name: 'pay_num', value : pay_num }));
