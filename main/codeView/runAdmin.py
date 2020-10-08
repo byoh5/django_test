@@ -109,6 +109,7 @@ def pay_list(request):
     userStatus_info = select_userStatus_all()
     context = {
         "userStatus_info": userStatus_info,
+        "page_cnt":'2',
         "status": '0',
     }
     return render(request, 'runAdmin/pay_list.html', context)
