@@ -76,6 +76,20 @@
                                             {% endif %}
                                         </li>
                                         {% endif %}
+                                        {% if payUserInfo.payWay.value == 'escrow' %}
+                                        <li>
+                                            <span>예금주명</span>
+                                            <p>{{payUserInfo.payWay_name}}</p>
+                                        </li>
+                                        <li>
+                                            <span>현금영수증 신청</span>
+                                            {% if payUserInfo.payWay_receipt == 'A' %}
+                                            <p>O</p>
+                                            {% else %}
+                                            <p>X</p>
+                                            {% endif %}
+                                        </li>
+                                        {% endif %}
                                         <li>
                                             <span>쿠폰</span>
                                             {% if mycoupon_name != "" %}
