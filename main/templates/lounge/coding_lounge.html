@@ -24,7 +24,6 @@
                  <select id="sort">
                     <option value="0">sort by</option>
                     <option value="new" selected="selected">최신순</option>
-<!--                    <option value="popular">인기순</option>-->
                 </select>
                 <select name="category" id="category">
                     <option value="0">카테고리</option>
@@ -36,12 +35,12 @@
                      <input type="text" name="search_box" id="search_box" placeholder="검색해 보세요.">
                 </div>
                  <div class="btn_area">
-                    <a class="btn" href="javascript:void(0);" onclick="javascript:goSearch();">&nbsp;검색하기&nbsp;</a>
+                    <a class="btn" href="javascript:void(0);" onclick="javascript:goLounge(1, 0);">&nbsp;검색하기&nbsp;</a>
                  </div>
             </div>
         </div>
 
-        <ul class="thumb_list pagination">
+        <ul class="thumb_list">
              {% for loungeList in lounge_list %}
             <li>
                 <a href="javascript:void(0);" onclick="javascript:goloungeView('{{loungeList.video_id}}');" class="btn brd_detail">
@@ -54,17 +53,11 @@
             </li>
             {%endfor%}
         </ul>
-<!--            <div class="paging_area">-->
-<!--                <a><img src="{% static 'resource/img/sub/go_first.png' %}"></a>-->
-<!--                <a><img src="{% static 'resource/img/sub/go_prev.png' %}"></a>-->
-<!--                <a class="active">1</a>-->
-<!--                <a>2</a>-->
-<!--                <a>3</a>-->
-<!--                <a><img src="{% static 'resource/img/sub/go_next.png' %}"></a>-->
-<!--                <a><img src="{% static 'resource/img/sub/go_last.png' %}"></a>-->
-<!--            </div>-->
     </div>
 
+     <div class="page">
+        <ul id="paging" class="pagination modal"></ul>
+    </div>
 
     {% include "common/banner_bottom.html" %}
     {% include "common/footer.html" %}
@@ -72,7 +65,48 @@
     <script>
         $(document).ready(function() {
             $("#category").val({{current_category}}).attr("selected","selected");
+
+            var page = '{{last_page}}';
+            var cur_page = '{{paging_num}}';
+
+            page *= 1;
+
+            for(var i = 1; i <= page; i ++)
+            {
+                if(i == cur_page)
+                    document.getElementById('paging').innerHTML += "<li><a href='javascript:void(0);' onclick='javascript:goLounge(" + i + ", 1);' class='active num' >" + i + "</a></li>";
+                else
+                    document.getElementById('paging').innerHTML += "<li><a href='javascript:void(0);' onclick='javascript:goLounge(" + i + ", 1);' class='num' >" + i + "</a></li>";
+            }
         });
+
+        function goLounge(paging_num, total_cnt)
+        {
+            var select_id = document.getElementById('sort');
+            var select_category_id = $("#category option:selected").val();
+            var searchBox = $('[name=search_box]').val()
+            var newForm = $('<form></form>');
+
+            if(total_cnt == 1)
+                total_cnt = '{{total_count}}';
+
+            newForm.attr("name", "lounge_search");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/lounge_page_paging/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'status', value : status }));
+            newForm.append($('<input/>', {type: 'hidden', name: 'lounge_all_cnt', value : total_cnt }));
+            newForm.append($('<input/>', {type: 'hidden', name: 'paging_num', value : paging_num }));
+            newForm.append($('<input/>', {type: 'hidden', name: 'sort', value : select_id.value }));
+            newForm.append($('<input/>', {type: 'hidden', name: 'category', value : select_category_id }));
+            newForm.append($('<input/>', {type: 'hidden', name: 'search_input', value : searchBox }));
+
+            newForm.appendTo('body');
+            newForm.submit();
+
+        }
+
         function goloungeView(video)
         {
             var newForm = $('<form></form>');
@@ -87,30 +121,6 @@
             newForm.appendTo('body');
             newForm.submit();
         }
-
-        function goSearch()
-        {
-
-            var select_id = document.getElementById('sort');
-            var select_category_id = $("#category option:selected").val();
-            var searchBox = $('[name=search_box]').val()
-
-            var newForm = $('<form></form>');
-
-            newForm.attr("name", "lounge_search_form");
-            newForm.attr("method", "post");
-            newForm.attr("action", "/search_lounge/");
-
-            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'sort', value : select_id.value }));
-            newForm.append($('<input/>', {type: 'hidden', name: 'category', value : select_category_id }));
-            newForm.append($('<input/>', {type: 'hidden', name: 'search_input', value : searchBox }));
-
-            newForm.appendTo('body');
-            newForm.submit();
-
-        }
-
     </script>
 
 

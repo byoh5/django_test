@@ -48,6 +48,7 @@ urlpatterns = [
 
     path('lounge/', lounge_page),
     path('lounge_view/', loungeView_page),
+    path('lounge_page_paging/', lounge_page_paging),
 
     path('order/', order_page),
     path('order_del/', order_delete),
@@ -70,7 +71,6 @@ urlpatterns = [
     path('find_pass/', find_pass_viaEmail),
 
     path('search/', search_prd),
-    path('search_lounge/', search_lounge),
 
     path('confirm/', getConfirm),
 

@@ -118,6 +118,9 @@ def pay_search(request):
     end_date = request.POST['end_date']
     searchBox = request.POST['searchBox']
     status = request.POST['status']
+    pay_all_cnt = request.POST['pay_all_cnt'] #payInfo total count
+    paging_num = int(request.POST['paging_num']) #옮기고자 하는 paging 번호
+    page_cnt = int(request.POST['page_cnt']) #display count 노출되는 리스트 갯수
 
     split_start = start_date.split('-')
     start_year = int(split_start[0])
@@ -131,12 +134,32 @@ def pay_search(request):
     end_day = int(split_end[2])
     end_datetime_filter = datetime(end_year, end_month, end_day)
 
-    pay_info = select_pay_date(start_datetime_filter, end_datetime_filter, searchBox, status)
+    if pay_all_cnt == "":
+        pay_info = select_pay_date(start_datetime_filter, end_datetime_filter, searchBox, status)
+        total = pay_info.count()
+    else:
+        total = pay_all_cnt
+
+    start_cnt = 0
+    end_cnt = 0
+    last_page = int(total) / page_cnt
+    reamin = int(total) % page_cnt
+
+    if reamin > 0:
+        last_page = int(last_page) + 1
+
+    for count in range(0, paging_num):
+        if paging_num > 1:
+            start_cnt = end_cnt
+        end_cnt = start_cnt + page_cnt
+
+    pay_info_paging = select_pay_date_cnt(start_datetime_filter, end_datetime_filter, searchBox, status, start_cnt, end_cnt)
     order_info = select_order_date(start_datetime_filter, end_datetime_filter, searchBox)
     userStatus_info = select_userStatus_all()
+
     context = {
-        "pay_info": pay_info,
-        "total_count": pay_info.count(),
+        "pay_info": pay_info_paging,
+        "total_count": total,
         "start_date": start_date,
         "end_date": end_date,
         "order_info": order_info,
@@ -144,6 +167,9 @@ def pay_search(request):
         "status":status,
         "search": searchBox,
         "ok_status": pay_status_ok,
+        "last_page": int(last_page),
+        "paging_num":paging_num,
+        "page_cnt":page_cnt,
     }
 
     return render(request, 'runAdmin/pay_list.html', context)

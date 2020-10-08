@@ -99,6 +99,21 @@ def select_pay_date(start_datetime_filter, end_datetime_filter, search, status):
 
     return pay_info
 
+def select_pay_date_cnt(start_datetime_filter, end_datetime_filter, search, status, start_cnt, end_cnt ):
+    sort_order = '-pay_idx'
+
+    query_search = Q()
+
+    if int(status) > 0:
+        query_search.add(Q(pay_user_status__userStatus_idx=status), query_search.AND)
+
+    if search is not "":
+        query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search, pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())).order_by(sort_order)[start_cnt:end_cnt]
+
+    return pay_info
+
 def select_myclass_date_deposit(start_datetime_filter, end_datetime_filter):
     myclass_list_info = MyClassListTB.objects.filter(start_time__range=(start_datetime_filter.date(), end_datetime_filter.date()))
     return myclass_list_info
@@ -131,6 +146,10 @@ def select_lounge():
     lounge_info = loungeListTB.objects.filter(dbstat='A').order_by('-loungeList_idx')
     return lounge_info
 
+def select_lounge_cnt(start_cnt, end_cnt):
+    lounge_info = loungeListTB.objects.filter(dbstat='A').order_by('-loungeList_idx')[start_cnt:end_cnt]
+    return lounge_info
+
 def select_lounge_search(sort, category, keyword):
     sort_order = 'loungeList_idx'
     if sort == 'new':
@@ -145,6 +164,24 @@ def select_lounge_search(sort, category, keyword):
         query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword), query_search.AND)
 
     lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by(sort_order)
+
+    return lounge_info
+
+
+def select_lounge_search_cnt(sort, category, keyword, start_cnt, end_cnt):
+    sort_order = 'loungeList_idx'
+    if sort == 'new':
+        sort_order = '-loungeList_idx'
+
+    query_search = Q()
+
+    if int(category) > 0:
+        query_search.add(Q(loungeList_idx=category), query_search.AND)
+
+    if keyword is not "":
+        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword), query_search.AND)
+
+    lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by(sort_order)[start_cnt:end_cnt]
 
     return lounge_info
 

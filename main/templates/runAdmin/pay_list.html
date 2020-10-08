@@ -29,12 +29,19 @@
                         {% endfor %}
                      </select>
                 </div>
-
-                <div class="input_area_lounge" style="margin-left:-50px;">
+                <div class="input_area_lounge">
+                      <select id="page_cnt" name="page_cnt" style="width:60px; height:35px; border:1px solid #d4d4d4; line-height:30px; font-size:12px;">
+                        <option value="2">2(Test Ver.)</option>
+                        <option value="10">10</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                     </select>
+                </div>
+                <div class="input_area_lounge" style="margin-left:-150px;">
                      <input type="text" name="search_box" id="search_box" value='{{search}}' placeholder="아이디 or 주문번호">
                 </div>
                  <div class="btn_area">
-                    <a class="btn" href="javascript:void(0);" onclick="javascript:goSearch();">&nbsp;조회하기&nbsp;</a>
+                    <a class="btn" href="javascript:void(0);" onclick="javascript:goSearch(1);">&nbsp;조회하기&nbsp;</a>
                  </div>
             </div>
         </div>
@@ -112,6 +119,10 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <div class="page">
+            <ul id="paging" class="pagination modal"></ul>
+        </div>
     </div>
 
     <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-top:50px; padding-bottom:150px;">
@@ -123,12 +134,29 @@
 
      $(document).ready(function() {
        $('#status').val('{{status}}').prop("selected",true);
+       $('#page_cnt').val('{{page_cnt}}').prop("selected",true);
+
+
+       var page = '{{last_page}}';
+       var cur_page = '{{paging_num}}';
+
+       page *= 1;
+
+       for(var i = 1; i <= page; i ++)
+       {
+            if(i == cur_page)
+                document.getElementById('paging').innerHTML += "<li><a href='javascript:void(0);' onclick='javascript:goSearch(" + i + ");' class='active num' >" + i + "</a></li>";
+            else
+                document.getElementById('paging').innerHTML += "<li><a href='javascript:void(0);' onclick='javascript:goSearch(" + i + ");' class='num' >" + i + "</a></li>";
+       }
+
      });
 
-     function goSearch()
+     function goSearch(paging_num)
      {
         var start_date = document.getElementById('start_date').value;
         var end_date = document.getElementById('end_date').value;
+        var page_cnt = document.getElementById('page_cnt').value;
         var searchBox = $('[name=search_box]').val();
 
         if(start_date == "" || end_date == "")
@@ -152,6 +180,9 @@
         newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
         newForm.append($('<input/>', {type: 'hidden', name: 'status', value : status }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'pay_all_cnt', value : '{{total_count}}' }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'paging_num', value : paging_num }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'page_cnt', value : page_cnt }));
 
         newForm.appendTo('body');
         newForm.submit();
