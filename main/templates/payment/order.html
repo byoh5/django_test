@@ -72,6 +72,8 @@
                                                     <input type="hidden" id="payway" name="payway" value="0">
                                                     <input type="hidden" id="depositName" name="depositName" value="0">
                                                     <input type="hidden" id="depositReceipt" name="depositReceipt" value="D">
+                                                    <input type="hidden" id="escrowName" name="escrowName" value="0">
+                                                    <input type="hidden" id="escrowReceipt" name="escrowReceipt" value="D">
                                                     <td>
                                                         <input type="hidden" name="orderIdxs_{{forloop.counter0}}" id="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
                                                         <input type="hidden" id="len" name="len" value="0">
@@ -321,6 +323,24 @@
                                                <br/>
                                            </ui>
                                       </div>
+                                     <div class="panel-body padding-all-15 font-14" id="escrow" style="display:none">
+                                           <ui class="margin-bottom-20">
+                                               <li>
+                                                     <div>
+                                                        <span>예금주명
+                                                            <input type="text" name="escrow_name" id="escrow_name" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                            <input type="checkbox" name="escrow_receipt" id="escrow_receipt" value="A"> 현금영수증 신청
+                                                        </span><br/><br/>
+                                                        <span><input type="checkbox" name="escrow_check" id="escrow_check" style="margin-left:60px;">
+                                                            에스크로(구매안전) 서비스를 적용합니다. <br/>
+
+                                                        </span>
+                                                        <span style="margin-left:60px; color:red;">* 소액결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</span>
+                                                     </div>
+                                               </li>
+                                               <br/>
+                                           </ui>
+                                      </div>
                                  </div>
                             </div>
                         </div>
@@ -404,9 +424,6 @@
 {% include "common/banner_bottom.html" %}
 {% include "common/footer.html" %}
     <script>
-       var deposit = 'deposit';
-       var credit = 'credit';
-
        function removeComma(str)
        {
           n = parseInt(str.replace(/,/g,""));
@@ -616,8 +633,7 @@
              {
                 var payway_checked =  $("input[type=radio][name=payway]:checked").val();
 
-
-                if(payway_checked == deposit)
+                if(payway_checked == 'deposit')
                 {
                     var name = document.getElementById("deposit_name").value;
                     if(name == "")
@@ -629,6 +645,27 @@
 
                     $("input[type=hidden][name=depositName]").val(name);
                     $("input[type=hidden][name=depositReceipt]").val( document.getElementById("deposit_receipt").value);
+                }
+                else if(payway_checked == 'escrow')
+                {
+                    var name = document.getElementById("escrow_name").value;
+                    if(name == "")
+                    {
+                         $("#res_msg").text("예금주 명을 입력해주세요.");
+                         $('div.modal').modal();
+                         return false;
+                    }
+
+                    var escrow_checked = document.getElementById("escrow_check")
+                    if(escrow_checked.checked != true)
+                    {
+                        $("#res_msg").text("에스크로 서비스 적용에 동의해 주세요.");
+                        $('div.modal').modal();
+                        return false;
+                    }
+
+                    $("input[type=hidden][name=escrowName]").val(name);
+                    $("input[type=hidden][name=escrowReceipt]").val( document.getElementById("escrow_receipt").value);
                 }
 
                 var addr_checked = $(":input:radio[name=addr]:checked").val();
@@ -844,12 +881,16 @@
 
         function myPayway(val)
         {
-            if(val == deposit)
-            {
+            if(val == 'deposit')
                 $("#deposit").show();
-            }
             else
                 $("#deposit").hide();
+
+            if(val == 'escrow')
+                $("#escrow").show();
+            else
+                $("#escrow").hide();
+
         }
 
     </script>

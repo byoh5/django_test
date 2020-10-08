@@ -16,7 +16,7 @@ pay_status_deposit_noCheck = 5
 imp_id = 'imp08800373'
 
 payway_credit = 'credit'
-payway_transfer = 'transfer' #실시간 계좌이체
+payway_escrow = 'escrow' #실시간 계좌이체
 payway_deposit = 'deposit' #무통장
 payway_kakao = 'kakao'
 payway_naver = 'naver'
@@ -39,6 +39,8 @@ def payment(request):
             return pay_credit(request, payway_info, pay_num)
         elif payway_info.count() > 0 and payway_info[0].value == payway_deposit:
             return pay_deposit(request, payway_info, pay_num)
+        elif payway_info.count() > 0 and payway_info[0].value == payway_escrow:
+            return pay_escrow(request, payway_info, pay_num)
         else:
             order_info = select_order(user_id)
             user_info = select_register(user_id)
@@ -136,7 +138,7 @@ def pay_deposit(request, payway_info, pay_num):
         pay_userStatus_info = select_userStatue(pay_status_deposit_noCheck)
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
-                         payWay_deposit_name=de_name, payWay_deposit_receipt=de_receipt,
+                         payWay_name=de_name, payWay_receipt=de_receipt,
                          prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
                          delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay=payway_info[0])
 
@@ -223,6 +225,90 @@ def pay_credit(request, payway_info, pay_num):
         context = {
             "payment": pay_info,
             "imp": imp_id,
+            "pay_method": 'card'
+        }
+
+        return render(request, 'payment/pay_info.html', context)
+    else:
+        return render(request, 'login/login.html')
+
+
+def pay_escrow(request, payway_info, pay_num):
+    user_id = request.session.get('user_id')
+    order_idx = request.POST['idx']
+    addr_num = request.POST['addr_num']
+    prd_price = int(request.POST['total_prd_price'])
+    delivery_price = int(request.POST['total_delivery_price'])
+    prd_total_price = int(request.POST['total_option_prd_price'])
+    coupon_prd_total_price = int(request.POST['total_option_coupon_prd_price'])
+
+    es_name = request.POST['escrowName']
+    es_receipt = request.POST['escrowReceipt']
+
+    order_list = ""
+    prd_title = ""
+    prd_total_count = 0
+    option1 = "0"
+    option2 = "0"
+    option3 = "0"
+
+    coupon_num = request.POST['coupon_num']
+    if coupon_prd_total_price == 0:
+        pay_price = prd_total_price
+    else:
+        pay_price = coupon_prd_total_price
+
+    split_order = order_idx.split(',')
+
+    # product -> myclass에 넣고, 장바구니 정리하기
+    for data in split_order:
+        if len(data) > 0:
+            idx = request.POST['orderIdxs_' + str(data)]
+            prd_count = request.POST['prodQuantity_' + str(data)]
+
+            order_info = select_order_idx(idx, user_id)
+            if order_info.count() > 0:
+                if order_info[0].prd.option1 != "":
+                    option1 = request.POST['option_idx_' + str(data) + "_1"]
+                if order_info[0].prd.option2 != "":
+                    option2 = request.POST['option_idx_' + str(data) + "_2"]
+                if order_info[0].prd.option3 != "":
+                    option3 = request.POST['option_idx_' + str(data) + "_3"]
+
+                prd_total_count += int(prd_count)
+                prd_title = order_info[0].prd.title
+                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                order_list += idx + ","
+
+    if prd_total_count > 1:
+        prd_title += "_외 " + str(prd_total_count) + "개"
+
+    regi_info = select_register(user_id)
+
+    if regi_info.count() is not 0:
+        if int(addr_num) == 1:
+            phone = regi_info[0].regi_phone
+            name = regi_info[0].regi_name
+            addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
+                0].regi_receiver1_add01 + ")"
+        else:
+            name = regi_info[0].regi_receiver2_name
+            phone = regi_info[0].regi_receiver2_phone
+            addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
+                0].regi_receiver2_add01 + ")"
+
+        pay_userStatus_info = select_userStatue(pay_status_prepay)
+        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
+                         prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
+                         payWay_name=es_name, payWay_receipt=es_receipt,
+                         prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
+                         delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay=payway_info[0])
+        pay_info.save()
+
+        context = {
+            "payment": pay_info,
+            "imp": imp_id,
+            "pay_method": 'trans'
         }
 
         return render(request, 'payment/pay_info.html', context)

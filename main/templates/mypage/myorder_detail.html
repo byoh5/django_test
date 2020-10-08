@@ -65,11 +65,11 @@
                                         </li>
                                         <li>
                                             <span>입금자</span>
-                                            <p>{{payUserInfo.payWay_deposit_name}}</p>
+                                            <p>{{payUserInfo.payWay_name}}</p>
                                         </li>
                                         <li>
                                             <span>현금영수증 신청</span>
-                                            {% if payUserInfo.payWay_deposit_receipt == 'A' %}
+                                            {% if payUserInfo.payWay_receipt == 'A' %}
                                             <p>O</p>
                                             {% else %}
                                             <p>X</p>

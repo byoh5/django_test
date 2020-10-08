@@ -34,6 +34,7 @@
     var buyer_addr3 = '{{payment.pay_user.regi_add03}}';
     var buyer_addr = buyer_addr2.concat(" ", buyer_addr3);
     var buyer_postcode = '{{payment.pay_user.regi_add01}}';
+    var method = '{{pay_method}}';
 
     if(price > 0)
     {
@@ -42,7 +43,7 @@
         IMP.init(imp_id);
         IMP.request_pay({
         pg : 'kcp',
-        pay_method : 'card',
+        pay_method : method,
         merchant_uid : 'merchant_' + new Date().getTime(),
         name : title,
         amount : price,

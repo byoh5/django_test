@@ -201,8 +201,8 @@ class PayTB(models.Model):
     pay_user_status = models.ForeignKey(UserStatusTB, on_delete=models.PROTECT, null=True)
     order_id = models.CharField(max_length=50, default='') #order_idx
     payWay = models.ForeignKey(PayWayTB, on_delete=models.PROTECT, null=True)
-    payWay_deposit_name = models.CharField(max_length=50, default='',blank=True)
-    payWay_deposit_receipt = models.CharField(max_length=10, default='D')
+    payWay_name = models.CharField(max_length=50, default='',blank=True)
+    payWay_receipt = models.CharField(max_length=10, default='D')
     coupon_num = models.CharField(max_length=150, default='', null=True)
     prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
     prd_price = models.IntegerField(default='0') # product total
