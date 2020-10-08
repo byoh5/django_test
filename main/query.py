@@ -72,7 +72,7 @@ def select_pay(pay_idx):
     return pay_info
 
 def select_pay_user(user_id):
-    pay_info = PayTB.objects.filter(pay_user__regi_email=user_id).order_by('-pay_idx')
+    pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id) | Q(pay_result=100, pay_user__regi_email=user_id)).order_by('-pay_idx')
     return pay_info
 
 def select_pay_user_payNume(user_id, pay_num):
@@ -267,13 +267,14 @@ def update_order_prdCode(order_prd_info, count, option1, option2, option3):
     new_orderPrd.option3_selectNum = option3
     new_orderPrd.save()
 
-def update_order_idx(count, order_info, addr_num, option1, option2, option3):
+def update_order_idx(count, order_info, addr_num, option1, option2, option3, pay_num):
     new_order = order_info[0]
     new_order.count = count
     new_order.delevery_addr_num = addr_num
     new_order.option1_selectNum = option1
     new_order.option2_selectNum = option2
     new_order.option3_selectNum = option3
+    new_order.pay_num = pay_num
     new_order.save()
 
 def update_myCoupon(user_id, coupon_num):

@@ -34,7 +34,7 @@ def deposit_search(request):
             split_end = end_date.split('-')
             end_year = int(split_end[0])
             end_month = int(split_end[1])
-            end_day = int(split_end[2])
+            end_day = int(split_end[2]) + 1
             end_datetime_filter = datetime(end_year, end_month, end_day)
 
             pay_info = select_pay_date_deposit(start_datetime_filter, end_datetime_filter, searchBox)
@@ -89,7 +89,7 @@ def deposit_change(request):
     split_end = end_date.split('-')
     end_year = int(split_end[0])
     end_month = int(split_end[1])
-    end_day = int(split_end[2])
+    end_day = int(split_end[2]) + 1
     end_datetime_filter = datetime(end_year, end_month, end_day)
 
     pay_info = select_pay_date_deposit(start_datetime_filter, end_datetime_filter, searchBox)
@@ -132,7 +132,7 @@ def pay_search(request):
     split_end = end_date.split('-')
     end_year = int(split_end[0])
     end_month = int(split_end[1])
-    end_day = int(split_end[2])
+    end_day = int(split_end[2]) + 1
     end_datetime_filter = datetime(end_year, end_month, end_day)
 
     if pay_all_cnt == "":
@@ -209,7 +209,7 @@ def pay_change(request):
     split_end = end_date.split('-')
     end_year = int(split_end[0])
     end_month = int(split_end[1])
-    end_day = int(split_end[2])
+    end_day = int(split_end[2]) + 1
     end_datetime_filter = datetime(end_year, end_month, end_day)
 
     pay_info = select_pay_date(start_datetime_filter, end_datetime_filter, searchBox, status)

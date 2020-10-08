@@ -106,7 +106,7 @@ def pay_deposit(request, payway_info, pay_num):
 
                 prd_total_count += int(prd_count)
                 prd_title = order_info[0].prd.title
-                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3, pay_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
                 order_list += idx + ","
 
             # insert myclass_list
@@ -195,7 +195,7 @@ def pay_credit(request, payway_info, pay_num):
 
                 prd_total_count += int(prd_count)
                 prd_title = order_info[0].prd.title
-                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3, pay_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
                 order_list += idx + ","
 
     if prd_total_count > 1:
@@ -277,7 +277,7 @@ def pay_escrow(request, payway_info, pay_num):
 
                 prd_total_count += int(prd_count)
                 prd_title = order_info[0].prd.title
-                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3, pay_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
                 order_list += idx + ","
 
     if prd_total_count > 1:
@@ -337,7 +337,6 @@ def pay_result(request):
                 update_myCoupon(user_id, pay_info[0].coupon_num)
             update_pay.pay_user_status = pay_userStatus_info[0]
             split_order = update_pay.order_id.split(',')
-
 
             # product -> myclass에 넣고, 장바구니 정리하기
             for data in split_order:
