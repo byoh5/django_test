@@ -130,6 +130,10 @@ def select_myclass_list_payNum(user_id, pay_num):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='D-deposit')
     return myclass_list_info
 
+def select_myclass_list_play(myclass_idx):
+    myclass_list_info = MyClassListTB.objects.filter(myclassList_idx=myclass_idx)
+    return myclass_list_info
+
 def select_class_list():
     prd_info = PrdTB.objects.filter(dbstat='A').order_by('-prd_idx')
     return prd_info

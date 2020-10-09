@@ -42,6 +42,7 @@ urlpatterns = [
 
     path('myclass/', myclass_page),
     path('myclass_list/', myclass_list_page),
+    path('video_play/',video_play_page),
 
     path('comunity/', comunity_page),
     path('get_category/', comunity_page_category),

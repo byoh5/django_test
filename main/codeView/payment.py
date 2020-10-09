@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils import timezone
 from main.query import *
 from main.models import *
 import string
@@ -110,10 +111,8 @@ def pay_deposit(request, payway_info, pay_num):
                 order_list += idx + ","
 
             # insert myclass_list
-            period = order_info[0].prd.period * 30  # preiod * 개월(30)
-            expireTime = timezone.now() + timezone.timedelta(days=period)
             myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd, pay_num=pay_num,
-                                              expire_time=expireTime, dbstat='D-deposit')
+                                              expire_time=timezone.now(), dbstat='D-deposit')
             myclass_list_info.save()
 
             delete_order_idx(order_info, pay_num)  # order dbstat 변경
@@ -345,10 +344,8 @@ def pay_result(request):
 
                     if order_info.count() is not 0:
                         # insert myclass_list
-                        period = order_info[0].prd.period * 30  # preiod * 개월(30)
-                        expireTime = timezone.now() + timezone.timedelta(days=period)
                         myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd, pay_num=pay_info[0].pay_num,
-                                                          expire_time=expireTime)
+                                                          expire_time=timezone.now())
                         myclass_list_info.save()
 
                     delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경

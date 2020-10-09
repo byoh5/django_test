@@ -67,10 +67,9 @@ admin.site.register(UserStatusTB, UserStatusAdmin)
 
 
 class PayAdmin(admin.ModelAdmin):
-    list_display = ['pay_idx', 'pay_num', 'get_name', 'pay_user_status', 'prd_info', 'prd_total_price', 'pay_result', 'pay_time'] # 커스터마이징 코드
+    list_display = ['pay_idx', 'pay_num', 'get_name', 'prd_info', 'prd_total_price', 'pay_result', 'pay_time'] # 커스터마이징 코드
 
     list_filter = ['pay_time', 'pay_result']
-    list_editable = ('pay_user_status',)
 
     def get_name(self, obj):
         return obj.pay_user.regi_email
@@ -84,7 +83,7 @@ admin.site.register(PayTB, PayAdmin)
 
 
 class MyClassListAdmin(admin.ModelAdmin):
-    list_display = ['user_id', 'get_name', 'start_time', 'expire_time', 'dbstat'] # 커스터마이징 코드
+    list_display = ['myclassList_idx', 'user_id', 'get_name', 'start_time', 'expire_time', 'dbstat'] # 커스터마이징 코드
 
     list_filter = ['start_time', 'expire_time','dbstat']
     def get_name(self, obj):

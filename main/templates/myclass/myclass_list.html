@@ -21,6 +21,8 @@
         <form id="myclass_form" method="post" action="/myclass/">
             {% csrf_token %}
             <input type="hidden" id="prdCode" name="prdCode" value="">
+            <input type="hidden" id="myclass_idx" name="myclass_idx" value="">
+            <input type="hidden" id="myclass_play" name="myclass_play" value="">
         </form>
 
         <!-- codingLounge list -->
@@ -31,9 +33,13 @@
                     <img src={{list_detail.prd.img}} alt="코딩 라운지 리스트 썸네일">
                     <div class="text_area">
                         <span class="title">{{list_detail.prd.title}}</span>
-                        <p class="writer">{{list_detail.start_time | date:'y-m-d' }} ~ </p>
-                        <p class="date"> {{list_detail.expire_time | date:'y-m-d' }}</p>
-                        <a href="javascript:void(0);" onclick="javascript:goMyClass({{list_detail.prd.prd_code}});" class="btn brd_detail">강의 보기</a>
+                            {% if list_detail.play == 'D'%}
+                             <p class="date"> 강의시작 전입니다.</p>
+                            {% else %}
+                            <p class="writer">{{list_detail.play_time}} ~ </p>
+                            <p class="date"> {{list_detail.expire_time | date:'Y-m-d' }}</p>
+                            {% endif %}
+                        <a href="javascript:void(0);" onclick="javascript:goMyClass({{list_detail.prd.prd_code}}, {{list_detail.myclassList_idx}}, '{{list_detail.play}}');" class="btn brd_detail">강의 보기</a>
                     </div>
                 </li>
                 {%endfor%}
@@ -66,9 +72,11 @@
             }
          });
 
-         function goMyClass(prdCode)
+         function goMyClass(prdCode, idx, play)
          {
             $("input[type=hidden][name=prdCode]").val(prdCode);
+            $("input[type=hidden][name=myclass_idx]").val(idx);
+            $("input[type=hidden][name=myclass_play]").val(play);
             document.getElementById("myclass_form").submit();
          }
 

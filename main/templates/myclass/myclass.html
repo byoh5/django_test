@@ -26,6 +26,7 @@
                         <video id="video_ctrl" width ="100%" height="100%" controls autoplay controlsList="nodownload"  poster="" src="" />
                     </div>
 
+                    <input type="hidden" name="play_enable" value="{{play}}">
                     <div class="class_list_precaution">
                         <span class="summaryTitle">강의 자료실</span>
                         <ul>
@@ -124,6 +125,25 @@
             var src = '/static/resource/data/lecture/' + prdCode + '/' + data;
             var video  = document.getElementById('video_ctrl');
             video.src = src;
+
+            var play = $("input[type=hidden][name=play_enable]").val();
+            if(play == 'D')
+            {
+                var myclass_idx = '{{myclass_idx}}';
+
+                 $.ajax({
+                    data: {prdCode:prdCode, data:data, myclass_idx:myclass_idx, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    type: 'post',
+                    url: '/video_play/',
+                    dataType: 'json',
+                    success:function(result){
+                        if(result == 200)
+                        {
+                            $("input[type=hidden][name=play_enable]").val('A');
+                        }
+                    }
+                 });
+            }
         }
     </script>
 

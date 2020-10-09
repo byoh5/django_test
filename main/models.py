@@ -111,6 +111,9 @@ class MyClassListTB(models.Model):
     pay_num = models.CharField(max_length=50, default='')
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True)
     dbstat = models.CharField(max_length=50, default='A')
+    play = models.CharField(max_length=50, default='D')  # 첫번째 play되는 데이터 남기기
+    play_time = models.CharField(max_length=50, default='', blank=True)
+    play_video = models.CharField(max_length=500, default='', null=True, blank=True)
     start_time = models.DateTimeField(default=timezone.now)
     expire_time = models.DateTimeField(default='')
     modified = models.DateTimeField(auto_now=True, blank=True)
