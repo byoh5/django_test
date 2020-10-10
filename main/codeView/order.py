@@ -2,6 +2,7 @@ from django.shortcuts import render
 from main.query import *
 from main.models import *
 
+message_no_login = 210
 
 def order_page(request):
     session = request.session.get('client_id')
@@ -30,7 +31,11 @@ def order_page(request):
             }
             return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
         else:
-            return disableSession(userid, request)
+            disableSession(userid, request)
+            context = {
+                "msg": message_no_login,
+            }
+            return render(request, 'login/login.html', context)
 
 def order(request):
     user_id = request.session.get('user_id')

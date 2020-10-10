@@ -189,3 +189,12 @@ class PayWayAdmin(admin.ModelAdmin):
     search_fields = ['name', 'value']
 
 admin.site.register(PayWayTB, PayWayAdmin)
+
+class cancleAdmin(admin.ModelAdmin):
+    list_display = ['user_email', 'buyer_name', 'pay_num', 'prd_name'] # 커스터마이징 코드
+
+    list_filter = ['prd_name']
+    list_display_links = ['user_email', 'buyer_name']
+    search_fields = ['user_email', 'prd_name']
+
+admin.site.register(cancleTB, cancleAdmin)

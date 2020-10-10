@@ -4,6 +4,8 @@ from main.query import *
 from main.models import *
 import string
 import random
+import requests
+import json
 
 pay_ok = 0
 pay_fail = 1
@@ -13,6 +15,7 @@ pay_status_delivery = 2
 pay_status_delivery_done = 3
 pay_status_prepay = 4
 pay_status_deposit_noCheck = 5
+pay_status_deposit_refund = 6
 
 imp_id = 'imp08800373'
 
@@ -322,6 +325,10 @@ def pay_result(request):
     pay_result = int(request.POST['pay_result'])
     pay_msg = request.POST['pay_msg']
 
+    merchant_uid = request.POST['merchant_uid']
+    imp_uid = request.POST['imp_uid']
+    card_apply = request.POST['card_apply']
+
     pay_info = select_pay(pay_idx)
     payway_info = select_payway()
 
@@ -329,6 +336,10 @@ def pay_result(request):
         update_pay = pay_info[0]
         update_pay.pay_result_info = pay_msg
         update_pay.pay_result = pay_result
+        update_pay.merchant_uid = merchant_uid
+        update_pay.card_apply = card_apply
+        update_pay.imp_uid = imp_uid
+
 
         if pay_result == pay_ok:
             pay_userStatus_info = select_userStatue(pay_status_ok) # 구매성공
@@ -378,3 +389,76 @@ def pay_result(request):
         }
 
         return render(request, 'payment/order.html', context)
+
+def refund(pay_num, user_id):
+    runcoding = select_runcoding()
+
+    key = runcoding[0].imp_key
+    secret = runcoding[0].imp_secret
+
+    pay_info = select_pay_user_payNum(user_id,pay_num)
+
+    run_uid = pay_info[0].imp_uid
+    price = pay_info[0].prd_total_price
+    run_reason = '사용자요청'
+    pay_num = pay_info[0].pay_num
+
+    # getToken
+    post_data = {
+        'imp_key': key,
+        'imp_secret': secret
+    }
+    token_msg = requests.post(url='https://api.iamport.kr/users/getToken', data=json.dumps(post_data),
+                              headers={'Content-Type': 'application/json'})
+
+    json_msg = token_msg.json()
+    json_res = json_msg["response"]
+    access_token = json_res["access_token"]
+
+    # get auth user
+    post_data_cancle = {
+        'amount': price,
+        'reason':run_reason,
+        'imp_uid':run_uid
+    }
+    cancle_user_msg = requests.post(url='https://api.iamport.kr/payments/cancel/', data=json.dumps(post_data_cancle),
+                                    headers={'Content-Type': 'application/json', 'Authorization': access_token})
+    json_user_msg = cancle_user_msg.json()
+    json_user_msg_res = json_user_msg["response"]
+    json_user_msg_code = json_user_msg["code"]
+
+    if json_user_msg_code == 1: #이미취소된
+        print(json_user_msg_code)
+    elif json_user_msg_code == 0:
+        print(json_user_msg_code)
+        user_email = json_user_msg_res["buyer_email"]
+        user_name = json_user_msg_res["buyer_name"]
+        user_number = json_user_msg_res["buyer_tel"]
+        imp_uid = json_user_msg_res["imp_uid"]
+        merchant_uid = json_user_msg_res["merchant_uid"]
+        prd_name = json_user_msg_res["name"]
+        cancel_amount = json_user_msg_res["cancel_amount"]
+        card_code = json_user_msg_res["card_code"]
+        card_name = json_user_msg_res["card_name"]
+        card_number = json_user_msg_res["card_number"]
+        card_type = json_user_msg_res["card_type"]
+        channel = json_user_msg_res["channel"]
+        cancle_info = cancleTB(user_email=user_id, buyer_email=user_email, buyer_name=user_name, buyer_number=user_number, pay_num=pay_num, imp_uid=imp_uid,
+                               merchant_uid=merchant_uid, prd_name=prd_name, cancel_amount=cancel_amount, reason=run_reason,
+                               card_code=card_code, card_name=card_name, card_number=card_number, card_type=card_type, channel=channel)
+        cancle_info.save()
+
+        pay_userStatus_info = select_userStatue(pay_status_deposit_refund)
+
+        pay_info = select_pay_user_payNum(user_id, pay_num)
+        new_payInfo = pay_info[0]
+        new_payInfo.pay_result = 2
+        new_payInfo.pay_user_status = pay_userStatus_info[0]
+        new_payInfo.save()
+
+        myclass_list = select_myclass_list_payNum_active(user_id, pay_num)
+        for class_list in myclass_list:
+            new_myclass = class_list
+            new_myclass.dbstat = 'D-refund'
+            new_myclass.save()
+

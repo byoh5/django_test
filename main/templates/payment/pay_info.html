@@ -22,6 +22,9 @@
     <input type="hidden" id="pay" name="pay" value={{payment.pay_idx}}>
     <input type="hidden" id="pay_result" name="pay_result" value="">
     <input type="hidden" id="pay_msg" name="pay_msg" value="">
+    <input type="hidden" id="merchant_uid" name="merchant_uid" value="">
+    <input type="hidden" id="imp_uid" name="imp_uid" value="">
+    <input type="hidden" id="card_apply" name="card_apply" value="">
 </form>
 <script>
 
@@ -60,6 +63,9 @@
                 msg += '결제 금액 : ' + rsp.paid_amount;
                 msg += '카드 승인번호 : ' + rsp.apply_num;
                 $("input[type=hidden][name=pay_result]").val('0');
+                $("input[type=hidden][name=merchant_uid]").val(rsp.merchant_uid);
+                $("input[type=hidden][name=imp_uid]").val(rsp.imp_uid);
+                $("input[type=hidden][name=card_apply]").val(rsp.apply_num);
 
             } else {
                 var msg = '결제에 실패하였습니다.';

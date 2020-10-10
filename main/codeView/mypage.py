@@ -14,6 +14,8 @@ message_coupon_expired = 304
 message_coupon_already_used = 306
 imp_id = 'imp08800373'
 
+message_no_login = 210
+
 def mypage_profile(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
@@ -26,7 +28,11 @@ def mypage_profile(request):
         }
         return render(request, 'mypage/myprofile.html', context)
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)
 
 
 def mypage_order(request):
@@ -40,7 +46,11 @@ def mypage_order(request):
         }
         return render(request, 'mypage/myorder.html', context)
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)
 
 def mypage_order_detail(request):
     pay_idx = request.POST['pay_idx']
@@ -83,7 +93,11 @@ def mypage_order_detail(request):
         }
         return render(request, 'mypage/myorder_detail.html', context)
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)
 
 
 def mypage_profile_modify_addr(request):
@@ -105,7 +119,11 @@ def mypage_profile_modify_addr(request):
         }
         return render(request, 'mypage/myprofile.html', context)
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)
 
 def mypage_profile_modify_addr2(request):
     user_id = request.session.get('user_id')
@@ -127,7 +145,11 @@ def mypage_profile_modify_addr2(request):
         }
         return render(request, 'mypage/myprofile.html', context)
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)
 
 def mypage_profile_modify_pw(request):
     user_id = request.session.get('user_id')
@@ -158,7 +180,11 @@ def mypage_profile_modify_pw(request):
 
                 return render(request, 'mypage/myprofile.html', context)
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)
 
 def mypage_coupon_list(request):
     user_id = request.session.get('user_id')
@@ -171,7 +197,11 @@ def mypage_coupon_list(request):
         }
         return render(request, 'mypage/mycoupon.html', context)
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)
 
 def mypage_add_coupon(request):
     user_id = request.session.get('user_id')
@@ -209,4 +239,8 @@ def mypage_add_coupon(request):
         return render(request, 'mypage/mycoupon.html', context)
 
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)

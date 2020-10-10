@@ -4,6 +4,8 @@ from django.utils import timezone
 from main.query import *
 from main.models import *
 
+message_no_login = 210
+
 def myclass_list_page(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
@@ -16,7 +18,11 @@ def myclass_list_page(request):
             }
             return render(request, 'myclass/myclass_list.html', context)
         else:
-            return disableSession(user_id, request)
+            disableSession(user_id, request)
+            context = {
+                "msg": message_no_login,  # message_no_login
+            }
+            return render(request, 'login/login.html', context)
 
         return render(request, 'myclass/myclass_list.html')
     else:
@@ -44,8 +50,19 @@ def myclass_page(request):
                 "play":play,
             }
             return render(request, 'myclass/myclass.html', context)
+
+        else:
+            disableSession(user_id, request)
+            context = {
+                "msg": message_no_login,
+            }
+            return render(request, 'login/login.html', context)
     else:
-        return disableSession(user_id, request)
+        disableSession(user_id, request)
+        context = {
+            "msg": message_no_login,
+        }
+        return render(request, 'login/login.html', context)
 
 def video_play_page(request):
     myclass_idx = request.POST['myclass_idx']

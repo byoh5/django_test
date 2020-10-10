@@ -214,7 +214,29 @@ class PayTB(models.Model):
     delivery_name = models.CharField(max_length=50, default='')
     delivery_addr = models.CharField(max_length=150, default='')
     delivery_phone = models.CharField(max_length=50, default='')
-    pay_result = models.IntegerField(default='100') # 0: 결제성공 1: 결제실패
+    pay_result = models.IntegerField(default='100') # 0: 결제성공 1: 결제실패 2:환불
     pay_result_info = models.CharField(max_length=500, default='') #pay_msg
+    merchant_uid = models.CharField(max_length=500, default='')
+    imp_uid = models.CharField(max_length=500, default='')
+    card_apply = models.CharField(max_length=500, default='')
     pay_time = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
+
+class cancleTB(models.Model):
+    cancle_idx = models.AutoField(primary_key=True)
+    user_email = models.CharField(max_length=50, default='')
+    buyer_email = models.CharField(max_length=50, default='')
+    buyer_name = models.CharField(max_length=50, default='')
+    buyer_number = models.CharField(max_length=50, default='')
+    pay_num = models.CharField(max_length=50, default='')
+    imp_uid = models.CharField(max_length=500, default='')
+    merchant_uid = models.CharField(max_length=500, default='')
+    prd_name = models.CharField(max_length=500, default='')
+    cancel_amount = models.CharField(max_length=50, default='')
+    reason = models.CharField(max_length=500, default='')
+    card_code = models.CharField(max_length=50, default='')
+    card_name = models.CharField(max_length=50, default='')
+    card_number = models.CharField(max_length=50, default='')
+    card_type = models.CharField(max_length=10, default='')
+    channel = models.CharField(max_length=10, default='')
+    cancle_time = models.DateTimeField(default=timezone.now)

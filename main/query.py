@@ -1,7 +1,6 @@
 from main.models import *
 from django.utils import timezone
 from django.db.models import Q
-from django.shortcuts import render
 
 def select_order(user_id):
     order_info = OrderTB.objects.filter(user_id=user_id, dbstat='A')
@@ -72,16 +71,36 @@ def select_pay(pay_idx):
     return pay_info
 
 def select_pay_user(user_id):
-    pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id) | Q(pay_result=100, pay_user__regi_email=user_id)).order_by('-pay_idx')
+    pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id) | Q(pay_result=100, pay_user__regi_email=user_id) | Q(pay_result=2, pay_user__regi_email=user_id)).order_by('-pay_idx')
     return pay_info
 
-def select_pay_user_payNume(user_id, pay_num):
+def select_pay_user_payNum(user_id, pay_num):
     pay_info = PayTB.objects.filter(pay_user__regi_email=user_id, pay_num=pay_num).order_by('-pay_idx')
     return pay_info
 
 def select_pay_date_deposit(start_datetime_filter, end_datetime_filter, search):
-    pay_info = PayTB.objects.filter(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()),
-                                    payWay__value='deposit', pay_user__regi_email__icontains=search).order_by('-pay_idx')
+    sort_order = '-pay_idx'
+
+    query_search = Q()
+
+    if search is not "":
+        query_search.add(Q(pay_user__regi_email__icontains=search), query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search, pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()),
+                                    payWay__value='deposit').order_by(sort_order)
+    return pay_info
+
+def select_pay_date_deposit_paging(start_datetime_filter, end_datetime_filter, search, start_cnt, end_cnt):
+    sort_order = '-pay_idx'
+
+    query_search = Q()
+
+    if search is not "":
+        query_search.add(Q(pay_user__regi_email__icontains=search), query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search,
+                                    pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()),
+                                    payWay__value='deposit').order_by(sort_order)[start_cnt:end_cnt]
     return pay_info
 
 def select_pay_date(start_datetime_filter, end_datetime_filter, search, status):
@@ -126,8 +145,44 @@ def select_myclass_list(user_id):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, dbstat='A')
     return myclass_list_info
 
+def select_myclass_list_date(keyword, start_datetime_filter, end_datetime_filter):
+    sort_order = '-myclassList_idx'
+
+    query_search = Q()
+
+    if keyword is not "":
+        query_search.add(Q(user_id=keyword), query_search.AND)
+
+    if start_datetime_filter is not "":
+        query_search.add((start_datetime_filter.date(), end_datetime_filter.date()), query_search.AND)
+
+    myclass_list_info = MyClassListTB.objects.filter(query_search).order_by(sort_order)
+
+    return myclass_list_info
+
+
+def select_myclass_list_date_paging(keyword, start_datetime_filter, end_datetime_filter, start_cnt, end_cnt):
+    sort_order = '-myclassList_idx'
+
+    query_search = Q()
+
+    if keyword is not "":
+        query_search.add(Q(user_id=keyword), query_search.AND)
+
+    if start_datetime_filter is not "":
+        query_search.add((start_datetime_filter.date(), end_datetime_filter.date()), query_search.AND)
+
+    myclass_list_info = MyClassListTB.objects.filter(query_search).order_by(sort_order)[start_cnt:end_cnt]
+
+    return myclass_list_info
+
+
 def select_myclass_list_payNum(user_id, pay_num):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='D-deposit')
+    return myclass_list_info
+
+def select_myclass_list_payNum_active(user_id, pay_num):
+    myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='A')
     return myclass_list_info
 
 def select_myclass_list_play(myclass_idx):
@@ -339,12 +394,8 @@ def checkSession(session, user_id):
     else:
         return 0
 
-message_no_login = 210
+
 def disableSession(userid, request):
     delete_login(userid)
     request.session['client_id'] = ''
     request.session['user_id'] = ''
-    context = {
-        "msg": message_no_login,
-    }
-    return render(request, 'login/login.html', context)
