@@ -1,9 +1,7 @@
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.template.loader import render_to_string
 from main.query import select_register
-
 
 
 import string
@@ -65,8 +63,11 @@ def find_pass_viaEmail(request):
             new_user.regi_pass = password_encrypt.decode('utf-8')
             new_user.save()
 
-            html_content = '안녕하세요. 런코딩 입니다. <br/><br/>임시로 발급된 비밀번호는 <strong>[' + newPW + ']</strong> 입니다. <br/> 로그인 후, 비밀번호를 다시 설정해 주세요. <br /><br /> 런코딩 드림.<br />'
+            html_content = '안녕하세요. 런코딩 입니다. <br/><br/>' \
+                           '임시로 발급된 비밀번호는 <strong>[' + newPW + ']</strong> 입니다. <br/> ' \
+                           '로그인 후, 비밀번호를 다시 설정해 주세요. <br /><br /> 런코딩 드림.<br />'
 
             result = sendEmailWithHtml(find_loginId, '런코딩에서 임시 비밀번호를 발송해 드렸습니다.', html_content)
             if result == 200:
                 return HttpResponse(message_ok)
+
