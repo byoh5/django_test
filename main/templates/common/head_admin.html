@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <META http-equiv="imagetoolbar" content="no">
+
+    <title>머릿속 생각을 쉽게,뚝딱 런코딩</title>
+    <meta name="description" content="">
+    <meta name="Keywords" content="runcoding">
+    <meta http-equiv="Copyright" content="">
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <meta name="robots" content="index,follow">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="runcoding">
+    <meta property="og:description" content="runcoding">
+    <meta property="og:image" content="{% static 'resource/img/common/share_img.jpg' %}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'resource/img/common/favicon.ico' %}" type="image/x-icon">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/font-awesome.min.css' %}">
+
+    <!-- slick css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/slick-theme.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/common_admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/layout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'resource/css/main.css' %}">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/animate.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/jquery.modal.css" />
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/jquery.modal.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+
+    <script src="{% static 'resource/js/vendor/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'resource/js/vendor/modernizr-3.7.1.min.js' %}"></script>
+    <script src="{% static 'resource/js/jquery-migrate-3.0.0.js' %}"></script>
+    <script src="{% static 'resource/js/common.js' %}"></script>
+    <script src="{% static 'resource/js/wrest.js' %}"></script>
+
+</head>
+
+<body>
+
+
+    <div class="modal fade" style="max-width: 100%; width: auto; display: table;">
+      <div class="modal-dialog" >
+        <div id="res_msg" class="modal-content">
+            <!-- remote ajax call이 되는영역 -->
+        </div>
+      </div>
+    </div>
+

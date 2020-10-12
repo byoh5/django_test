@@ -24,7 +24,6 @@ def deposit_list(request):
 def deposit_search(request):
     userid = request.session.get('user_id')
     user_info = select_register(userid)
-    deposit_all_cnt = request.POST['deposit_all_cnt']  # total count
     paging_num = int(request.POST['paging_num'])  # 옮기고자 하는 paging 번호
     page_cnt = display_count  # display count 노출되는 리스트 갯수
 
@@ -33,6 +32,8 @@ def deposit_search(request):
             start_date = request.POST['start_date']
             end_date = request.POST['end_date']
             searchBox = request.POST['searchBox']
+
+            print(searchBox)
 
             split_start = start_date.split('-')
             start_year = int(split_start[0])
@@ -46,11 +47,8 @@ def deposit_search(request):
             end_day = int(split_end[2]) + 1
             end_datetime_filter = datetime(end_year, end_month, end_day)
 
-            if deposit_all_cnt == "":
-                pay_info = select_pay_date_deposit(start_datetime_filter, end_datetime_filter, searchBox)
-                total = pay_info.count()
-            else:
-                total = deposit_all_cnt
+            pay_info = select_pay_date_deposit(start_datetime_filter, end_datetime_filter, searchBox)
+            total = pay_info.count()
 
             start_cnt = 0
             end_cnt = 0
@@ -153,7 +151,6 @@ def pay_search(request):
     end_date = request.POST['end_date']
     searchBox = request.POST['searchBox']
     status = request.POST['status']
-    pay_all_cnt = request.POST['pay_all_cnt'] #payInfo total count
     paging_num = int(request.POST['paging_num']) #옮기고자 하는 paging 번호
     page_cnt = int(request.POST['page_cnt']) #display count 노출되는 리스트 갯수
 
@@ -169,11 +166,8 @@ def pay_search(request):
     end_day = int(split_end[2]) + 1
     end_datetime_filter = datetime(end_year, end_month, end_day)
 
-    if pay_all_cnt == "":
-        pay_info = select_pay_date(start_datetime_filter, end_datetime_filter, searchBox, status)
-        total = pay_info.count()
-    else:
-        total = pay_all_cnt
+    pay_info = select_pay_date(start_datetime_filter, end_datetime_filter, searchBox, status)
+    total = pay_info.count()
 
     start_cnt = 0
     end_cnt = 0
@@ -274,7 +268,6 @@ def user_search(request):
     start_date = request.POST['start_date']
     end_date = request.POST['end_date']
     user_id = request.POST['searchBox']
-    user_all_cnt = request.POST['user_all_cnt'] #payInfo total count
     paging_num = int(request.POST['paging_num']) #옮기고자 하는 paging 번호
     page_cnt = display_count #display count 노출되는 리스트 갯수
 
@@ -295,11 +288,8 @@ def user_search(request):
         end_day = int(split_end[2]) + 1
         end_datetime_filter = datetime(end_year, end_month, end_day)
 
-    if user_all_cnt == "":
-        myclass_info = select_myclass_list_date(user_id, start_datetime_filter, end_datetime_filter)
-        total = myclass_info.count()
-    else:
-        total = user_all_cnt
+    myclass_info = select_myclass_list_date(user_id, start_datetime_filter, end_datetime_filter)
+    total = myclass_info.count()
 
     user_info = select_register(user_id)
     start_cnt = 0
@@ -334,7 +324,6 @@ def user_refund(request):
     start_date = request.POST['start_date']
     end_date = request.POST['end_date']
     user_id = request.POST['searchBox']
-    total = request.POST['user_all_cnt']  # payInfo total count
     paging_num = 1 # 옮기고자 하는 paging 번호
     page_cnt = display_count  # display count 노출되는 리스트 갯수
 

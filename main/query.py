@@ -84,7 +84,7 @@ def select_pay_date_deposit(start_datetime_filter, end_datetime_filter, search):
     query_search = Q()
 
     if search is not "":
-        query_search.add(Q(pay_user__regi_email__icontains=search), query_search.AND)
+        query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
 
     pay_info = PayTB.objects.filter(query_search, pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()),
                                     payWay__value='deposit').order_by(sort_order)
@@ -96,7 +96,7 @@ def select_pay_date_deposit_paging(start_datetime_filter, end_datetime_filter, s
     query_search = Q()
 
     if search is not "":
-        query_search.add(Q(pay_user__regi_email__icontains=search), query_search.AND)
+        query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
 
     pay_info = PayTB.objects.filter(query_search,
                                     pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()),

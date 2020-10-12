@@ -1,5 +1,6 @@
 {% load static %}
-{% include "common/head.html" %}
+{% include "common/head_admin.html" %}
+
 <div class="wrap">
     <div class="admin_sub_visual">
          <div class="tabs section_wrap">
@@ -134,7 +135,6 @@
         newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'user_all_cnt', value : '{{total_count}}' }));
         newForm.append($('<input/>', {type: 'hidden', name: 'paging_num', value : paging_num }));
 
         newForm.appendTo('body');
@@ -164,7 +164,6 @@
         newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'user_all_cnt', value : '{{total_count}}' }));
         newForm.append($('<input/>', {type: 'hidden', name: 'pay_num', value : pay_num }));
 
         newForm.appendTo('body');

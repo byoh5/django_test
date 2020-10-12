@@ -1,84 +1,85 @@
 {% load static %}
-{% include "common/head.html" %}
-<div class="wrap">
-    <div class="admin_sub_visual">
-         <div class="tabs section_wrap">
-            <ul>
-                <li class="admin_active"><a href="/deposit_list/">무통장 입금 조회</a></li>
-                <li><a href="/pay_list/">구매 데이터 조회</a></li>
-                <li><a href="/user_list/">사용자 조회</a></li>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <li><a href="https://admin.iamport.kr/users/login" target="_blank">아임포트 관리자</a></li>
-                <li><a href="https://partner.danalpay.com/account/login?next=%2F#" target="_blank">다날 (휴대폰인증)</a></li>
-                <li><a href="http://admin8.kcp.co.kr" target="_blank">KCP</a></li>
-            </ul>
-        </div>
-    </div>
+{% include "common/head_admin.html" %}
 
-    <div class="codingLounge_list" style="margin-left:280px;">
-        <div class="filter_area fixed">
-            <div class="search_area">
-                <div class="input_area_lounge">
-                     <input type="date" name="start_date" id="start_date" value="{{start_date}}">
+    <div class="wrap">
+        <div class="admin_sub_visual">
+             <div class="tabs section_wrap">
+                <ul>
+                    <li class="admin_active"><a href="/deposit_list/">무통장 입금 조회</a></li>
+                    <li><a href="/pay_list/">구매 데이터 조회</a></li>
+                    <li><a href="/user_list/">사용자 조회</a></li>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <li><a href="https://admin.iamport.kr/users/login" target="_blank">아임포트 관리자</a></li>
+                    <li><a href="https://partner.danalpay.com/account/login?next=%2F#" target="_blank">다날 (휴대폰인증)</a></li>
+                    <li><a href="http://admin8.kcp.co.kr" target="_blank">KCP</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="codingLounge_list" style="margin-left:280px;">
+            <div class="filter_area fixed">
+                <div class="search_area">
+                    <div class="input_area_lounge">
+                         <input type="date" name="start_date" id="start_date" value="{{start_date}}">
+                    </div>
+                    <div class="input_area_lounge">
+                         <input type="date" name="end_date" id="end_date" value="{{end_date}}">
+                    </div>
+                    <div class="input_area_lounge">
+                         <input type="text" name="search_box" id="search_box" value='{{search}}'  placeholder="아이디 or 주문번호">
+                    </div>
+                     <div class="btn_area">
+                        <a class="btn" href="javascript:void(0);" onclick="javascript:goSearch(1);">&nbsp;조회하기&nbsp;</a>
+                     </div>
                 </div>
-                <div class="input_area_lounge">
-                     <input type="date" name="end_date" id="end_date" value="{{end_date}}">
-                </div>
-                <div class="input_area_lounge">
-                     <input type="text" name="search_box" id="search_box" value='{{search}}'  placeholder="아이디 or 주문번호">
-                </div>
-                 <div class="btn_area">
-                    <a class="btn" href="javascript:void(0);" onclick="javascript:goSearch(1);">&nbsp;조회하기&nbsp;</a>
-                 </div>
+            </div>
+        </div>
+
+        <div style="margin-left: 300px; width: 1128px; font-size: 20px !important;">total : {{total_count}}</div>
+        <div style="overflow: hidden; position: relative; border: 0px; width: 100%; " >
+            <table style="margin-left: 300px; width: 1128px;">
+                <thread>
+                    <tr class="row">
+                        <th class="admin_list">이름</th>
+                        <th class="admin_list_id">아이디</th>
+                        <th class="admin_list">주문번호</th>
+                        <th class="admin_list">입금자명</th>
+                        <th class="admin_list">현금영수증</th>
+                        <th class="admin_list">휴대폰 번호</th>
+                        <th class="admin_list">결제금액</th>
+                        <th class="admin_list">입금확인</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    {% for deposit in pay_info %}
+                    <tr class="row">
+                        <td class="admin_list_body">{{deposit.pay_user.regi_name}}</td>
+                        <td class="admin_list_id_body">{{deposit.pay_user.regi_email}}</td>
+                        <td class="admin_list_body">{{deposit.pay_num}}</td>
+                        <td class="admin_list_body">{{deposit.payWay_name}}</td>
+                        <td class="admin_list_body">{{deposit.payWay_receipt}}</td>
+                        <td class="admin_list_body">{{deposit.delivery_phone}}</td>
+                        <td class="admin_list_body">{{deposit.prd_total_price}}</td>
+                        <td class="admin_list_body">
+                        {% for myclass in myclass_list %}
+                            {% if myclass.pay_num == deposit.pay_num %}
+                                {% if myclass.dbstat == 'A' %}
+                                확인됨
+                                {% else %}
+                               <a href="javascript:void(0);" onClick="javascript:change('{{deposit.pay_user.regi_email}}', '{{deposit.pay_num}}');" style="cursor:pointer;color:red;"><strong>강의상태 변경하기</strong></a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+             <div class="page">
+                <ul id="paging" class="pagination modal"></ul>
             </div>
         </div>
     </div>
-
-    <div style="margin-left: 300px; width: 1128px; font-size: 20px !important;">total : {{total_count}}</div>
-    <div style="overflow: hidden; position: relative; border: 0px; width: 100%;">
-        <table style="margin-left: 300px; width: 1128px;">
-            <thread>
-                <tr class="row">
-                    <th class="admin_list">이름</th>
-                    <th class="admin_list_id">아이디</th>
-                    <th class="admin_list">주문번호</th>
-                    <th class="admin_list">입금자명</th>
-                    <th class="admin_list">현금영수증</th>
-                    <th class="admin_list">휴대폰 번호</th>
-                    <th class="admin_list">결제금액</th>
-                    <th class="admin_list">입금확인</th>
-                </tr>
-            </thread>
-            <tbody>
-                {% for deposit in pay_info %}
-                <tr class="row">
-                    <td class="admin_list_body">{{deposit.pay_user.regi_name}}</td>
-                    <td class="admin_list_id_body">{{deposit.pay_user.regi_email}}</td>
-                    <td class="admin_list_body">{{deposit.pay_num}}</td>
-                    <td class="admin_list_body">{{deposit.payWay_name}}</td>
-                    <td class="admin_list_body">{{deposit.payWay_receipt}}</td>
-                    <td class="admin_list_body">{{deposit.delivery_phone}}</td>
-                    <td class="admin_list_body">{{deposit.prd_total_price}}</td>
-                    <td class="admin_list_body">
-                    {% for myclass in myclass_list %}
-                        {% if myclass.pay_num == deposit.pay_num %}
-                            {% if myclass.dbstat == 'A' %}
-                            확인됨
-                            {% else %}
-                           <a href="javascript:void(0);" onClick="javascript:change('{{deposit.pay_user.regi_email}}', '{{deposit.pay_num}}');" style="cursor:pointer;color:red;"><strong>강의상태 변경하기</strong></a>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-         <div class="page">
-            <ul id="paging" class="pagination modal"></ul>
-        </div>
-    </div>
-</div>
 
     <script>
 
@@ -123,7 +124,6 @@
         newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'deposit_all_cnt', value : '{{total_count}}' }));
         newForm.append($('<input/>', {type: 'hidden', name: 'paging_num', value : paging_num }));
 
         newForm.appendTo('body');
