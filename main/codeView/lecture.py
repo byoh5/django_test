@@ -13,10 +13,17 @@ def class_page(request):
 def class_detail_page(request):
     prd_code = request.POST['detail_prd_code']
     items_info = select_class_detail(prd_code)
+    html_file = ""
+
+    if prd_code == '2020080013001':
+        html_file = "product/arduino_trashcan.html"
+    elif prd_code == '2020080023001':
+        html_file = "product/mblock_trashcan.html"
 
     context = {
         "class_items_detail": items_info,
         "prd_detail": items_info[0].prd,
+        "html_file": html_file,
     }
 
     return render(request, 'class/class_detail.html', context)

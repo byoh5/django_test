@@ -486,6 +486,59 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	border-radius:5px;
 	/*box-shadow:10px 10px 20px rgba(0,0,0,.1);*/
 }
+
+.codingKit_list .lecture_list.detail .info_detail {
+	margin:0 0.83em 2.083em;
+	padding:2.083em 0;
+	border-bottom:1px solid #dcdcdc;
+}
+
+.info_detail .title {
+	position:relative;
+	padding-left:0.5em;
+	font-size:0.83em;
+	font-weight:600;
+	color:white;
+	background-color:gray;
+}
+
+.info_detail .img_info {
+	position:relative;
+	font-size:0.43em;
+	font-weight:400;
+	color:gray;
+}
+
+.info_detail .img_info li:before {
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.info_detail .first_content {
+	position:relative;
+	font-size:0.73em;
+	font-weight:600;
+	color:#b14739;
+}
+
+.info_detail .content {
+	position:relative;
+	font-size:0.73em;
+	font-weight:400;
+	color:black;
+}
+
+.info_detail ul {
+	margin-top:50px;
+}
+
+.info_detail ul li:before {
+	position:absolute;
+	top:0;
+	left:0;
+}
+
 .codingKit_list .lecture_list.detail .precaution {
 	margin:0 0.83em 2.083em;
 	padding:2.083em 0;
