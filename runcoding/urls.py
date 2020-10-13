@@ -70,6 +70,7 @@ urlpatterns = [
 
     path('contact_email/', contact_email),
     path('find_pass/', find_pass_viaEmail),
+    path('info_email/', info_email),
 
     path('search/', search_prd),
 

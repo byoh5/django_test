@@ -11,7 +11,6 @@
                     </span>
             <p>
                 자주하는 질문들을 모아 보았습니다.<br/>
-                이외의 궁금증은 master@runcoding.co.kr로 문의주세요!
             </p>
         </div>
         <img class="subVisual review" src="{% static 'resource/img/sub/sv_community.png' %}" alt="커뮤니티">
@@ -57,7 +56,25 @@
         </div>
 </div>
 
-    {% include "common/banner_bottom.html" %}
+     <section class="section04">
+        <img class="bg left" src="{% static 'resource/img/main/bg_contactLeft.png' %}" alt="bg">
+        <img class="bg right" src="{% static 'resource/img/main/bg_contactRight.png' %}" alt="bg">
+        <div class="contactUs">
+            <div class="text_area">
+                <span class="sm_title">CONTACT US</span>
+                <span class="big_title">궁금하신 부분이 있나요?</span>
+                <p>
+                    위 자주 하는 질문 외 다른 질문사항이 있으시다면 남겨주세요.<br/>
+                    영업일 기준 3일 내에 적어주신 메일 주소로 답변 드립니다.
+                </p>
+            </div>
+            <div class="input_area">
+                <input type="text" name="contact" id="email" placeholder="이메일 주소">
+                <textarea rows="5" name="contact" id="text" placeholder="문의 내용"></textarea>
+                <button type="button" name="contact" class="submit" onclick="javascript:sendEmail();">문의하기</button>
+            </div>
+        </div>
+    </section>
     {% include "common/footer.html" %}
 
     <script>
@@ -76,6 +93,44 @@
             newForm.submit();
 
         }
+
+        function sendEmail()
+        {
+            var email = document.getElementById('email');
+            var text = document.getElementById('text');
+
+            var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
+            if(!email_patten.test(email.value))
+            {
+                alert("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
+                email.value = '';
+                email.focus();
+                return false;
+            }
+
+            if(text.value == "")
+            {
+                alert("문의 내용을 작성해 주세요.");
+                text.value = '';
+                text.focus();
+                return false;
+            }
+
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "email_form");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/info_email/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'email', value : email.value}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'text', value : text.value}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+
+        }
+
 
     </script>
 

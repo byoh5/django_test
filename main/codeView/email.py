@@ -2,7 +2,7 @@ from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.shortcuts import render
 from django.http import HttpResponse
 from main.query import select_register
-
+from main.codeView.comunity import *
 
 import string
 import random
@@ -38,8 +38,19 @@ def contact_email(request):
     email = request.POST['email']
     text = request.POST['text']
 
-    sendEmail("runcoding@naver.com", email, text)
+    subject = "[b2b] " + email
+
+    sendEmail("runcoding@naver.com", subject, text)
     return render(request, 'main/index_runcoding.html')
+
+def info_email(request):
+    email = request.POST['email']
+    text = request.POST['text']
+
+    subject = "[info] " + email
+
+    sendEmail("runcoding@naver.com", subject, text)
+    return comunity_page(request)
 
 def find_pass_viaEmail(request):
     if request.method == "POST":
