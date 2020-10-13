@@ -499,7 +499,16 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	font-size:0.83em;
 	font-weight:600;
 	color:white;
-	background-color:gray;
+	background-color:#878787;
+}
+
+.info_detail .sub_title {
+	position:relative;
+	padding-left:0.5em;
+	font-size:0.83em;
+	font-weight:600;
+	color:white;
+	background-color:#a9a9a9;
 }
 
 .info_detail .img_info {
@@ -515,7 +524,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	left:0;
 }
 
-.info_detail .first_content {
+.info_detail .point_content {
 	position:relative;
 	font-size:0.73em;
 	font-weight:600;
@@ -524,7 +533,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 
 .info_detail .content {
 	position:relative;
-	font-size:0.73em;
+	font-size:0.6em;
 	font-weight:400;
 	color:black;
 }
