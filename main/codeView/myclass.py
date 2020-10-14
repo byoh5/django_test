@@ -36,19 +36,16 @@ def myclass_page(request):
         item_info = select_class_kit_detail(prdCode)
         item_common_info = select_class_common_detail(prdCode)
 
-        if item_info.count() > 0:
-            context = {
-                "myclass_detail": item_info,
-                "myclass_common_detail": item_common_info,
-                "title": item_info[0].prd.title2,
-                "sub_title": item_info[0].prd.title3,
-                "myclass_idx":myclass_idx,
-                "play":play,
-            }
-            return render(request, 'myclass/myclass.html', context)
+        context = {
+            "myclass_detail": item_info,
+            "myclass_common_detail": item_common_info,
+            "title": item_info[0].prd.title2,
+            "sub_title": item_info[0].prd.title3,
+            "myclass_idx":myclass_idx,
+            "play":play,
+        }
+        return render(request, 'myclass/myclass.html', context)
 
-        else:
-            return render(request, 'myclass/myclass_list.html')
     else:
         disableSession(user_id, request)
         context = {
