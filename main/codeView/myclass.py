@@ -33,7 +33,7 @@ def myclass_page(request):
 
     if user_id is not None:
         if checkSession(session, user_id):
-            item_info = select_class_kit_detail(prdCode)
+            item_info = select_class_detail(prdCode)#select_class_kit_detail(prdCode)
             item_common_info = select_class_common_detail(prdCode)
 
             if item_info.count() > 0:
