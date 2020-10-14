@@ -36,7 +36,7 @@ def myclass_page(request):
         item_info = select_class_kit_detail(prdCode)
         item_common_info = select_class_common_detail(prdCode)
 
-        if item_info.count() is not 0:
+        if item_info.count() > 0:
             context = {
                 "myclass_detail": item_info,
                 "myclass_common_detail": item_common_info,
