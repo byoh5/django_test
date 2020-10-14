@@ -29,13 +29,21 @@ class PrdAdmin(admin.ModelAdmin):
 
 admin.site.register(PrdTB, PrdAdmin)
 
+class ItemCommonTBAdmin(admin.ModelAdmin):
+    list_display = ['item_code', 'title'] # 커스터마이징 코드
+
+    list_display_links = ['item_code', 'title']
+    search_fields = ['item_code', 'title']
+
+admin.site.register(ItemCommonTB, ItemCommonTBAdmin)
+
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'title', 'order'] # 커스터마이징 코드
 
     def get_name(self, obj):
         return obj.prd.prd_code
 
-    get_name.short_description = 'prd code'  # Renames column head
+    get_name.short_description = 'prd code'  # Renames column
 
     list_display_links = ['title']
     search_fields = ['title']
@@ -97,15 +105,16 @@ class MyClassListAdmin(admin.ModelAdmin):
 admin.site.register(MyClassListTB, MyClassListAdmin)
 
 
-class ItemDowndataAdmin(admin.ModelAdmin):
-    list_display = ['downdata_idx', 'downdata_name', 'prd_code', 'dbstat']  # 커스터마이징 코드
+# class ItemDowndataAdmin(admin.ModelAdmin):
+#     list_display = ['downdata_idx', 'downdata_name', 'prd_code', 'dbstat']  # 커스터마이징 코드
+#
+#     list_filter = ['dbstat']
+#
+#     list_display_links = ['downdata_idx', 'downdata_name']
+#     search_fields = ['downdata_name', 'prd_code']
+#
+# admin.site.register(ItemDowndataTB, ItemDowndataAdmin)
 
-    list_filter = ['dbstat']
-
-    list_display_links = ['downdata_idx', 'downdata_name']
-    search_fields = ['downdata_name', 'prd_code']
-
-admin.site.register(ItemDowndataTB, ItemDowndataAdmin)
 
 class loungeListAdmin(admin.ModelAdmin):
     list_display = ['title', 'user', 'data_name', 'video_id', 'dbstat']  # 커스터마이징 코드

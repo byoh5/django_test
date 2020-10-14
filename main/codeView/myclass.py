@@ -37,15 +37,15 @@ def myclass_page(request):
     session = request.session.get('client_id')
 
     if checkSession(session, user_id):
-        item_info = select_class_detail(prdCode)
-        downdata_info = select_downdata(prdCode)
+        item_info = select_class_kit_detail(prdCode)
+        item_common_info = select_class_common_detail(prdCode)
 
         if item_info.count() is not 0:
             context = {
                 "myclass_detail": item_info,
+                "myclass_common_detail": item_common_info,
                 "title": item_info[0].prd.title2,
                 "sub_title": item_info[0].prd.title3,
-                "downData": downdata_info,
                 "myclass_idx":myclass_idx,
                 "play":play,
             }

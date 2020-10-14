@@ -56,23 +56,25 @@ class PrdTB(models.Model):
     modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
-class ItemDowndataTB(models.Model):
-    downdata_idx = models.AutoField(primary_key=True)
-    downdata = models.CharField(max_length=50, default='')
-    downdata_name = models.CharField(max_length=50, default='')
-    prd_code = models.CharField(max_length=50, default='')
+class ItemCommonTB(models.Model):
+    itemcommon_idx = models.AutoField(primary_key=True)
+    item_code = models.CharField(max_length=50, default='')
+    title = models.CharField(max_length=50)
+    time = models.CharField(max_length=50)
+    data = models.CharField(max_length=150, default='')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
-    dbstat = models.CharField(max_length=50, default='A')
-
 
 class ItemTB(models.Model): #curriculum
     item_idx = models.AutoField(primary_key=True)
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT)
+    common = models.ForeignKey(ItemCommonTB, on_delete=models.PROTECT, null=True, blank=True)
     title = models.CharField(max_length=50)
     time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
-    order = models.IntegerField(default='0')
+    order = models.IntegerField(default='0', null=True, blank=True)
+    downdata = models.CharField(max_length=50, null=True, blank=True)
+    downdata_name = models.CharField(max_length=50, null=True, blank=True)
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 

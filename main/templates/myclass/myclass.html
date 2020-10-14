@@ -28,14 +28,8 @@
 
                     <input type="hidden" name="play_enable" value="{{play}}">
                     <div class="class_list_precaution">
-                        <span class="summaryTitle">강의 자료실</span>
-                        <ul>
-                             {% for downData_info in downData %}
-                                <a href="/static/resource/data/download/{{downData_info.prd_code}}/{{downData_info.downdata}}" download>
-                                    <li>{{downData_info.downdata_name}}</li>
-                                </a>
-                            {% endfor %}
-                        </ul>
+
+                        <div id="lecture_data"></div>
                     </div>
                 </div>
                 <a href="/myclass_list/" class="btn list_more">목록으로</a>
@@ -46,18 +40,31 @@
                         <span>강의목록</span>
                         <div class="lecture_info">
                             <ul class="lectureList" id="accordion">
+
                                 <li class="active">
+                                     <span>기본강의</span>
                                     <ul class="submenu">
-                                         {% for item_detail in myclass_detail %}
+                                         {% for common_detail in myclass_common_detail %}
                                        <li>
-                                             <a href="javascript:getVideo('{{item_detail.prd.prd_code}}', '{{item_detail.data}}');" class="classList">
-                                                 {{forloop.counter}}. {{item_detail.title}}</a>
+                                             <a href="javascript:getVideo('common', '{{common_detail.data}}', '{{common_detail.downdata}}', '{{common_detail.downdata_name}}');" class="classList">
+                                                 {{forloop.counter}}. {{common_detail.title}}</a>
                                        </li>
                                         {% endfor %}
                                     </ul>
                                 </li>
+                                 <br/>
+                                 <li class="active">
+                                    <span>키트강의</span>
+                                    <ul class="submenu">
+                                         {% for item_detail in myclass_detail %}
+                                       <li>
+                                             <a href="javascript:getVideo('{{item_detail.prd.prd_code}}', '{{item_detail.data}}', '{{item_detail.downdata}}', '{{item_detail.downdata_name}}');" class="classList">
+                                                 {{forloop.counter}}. {{item_detail.title}}</a>
+                                       </li>
+                                         {% endfor %}
+                                    </ul>
+                                </li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
@@ -120,11 +127,21 @@
             }
         });
 
-        function getVideo(prdCode, data)
+        function getVideo(prdCode, data, downdata, downdata_name)
         {
             var src = '/static/resource/data/lecture/' + prdCode + '/' + data;
             var video  = document.getElementById('video_ctrl');
             video.src = src;
+
+            if(downdata != "")
+            {
+                var down_src = '/static/resource/data/download/' + prdCode + '/' + downdata
+                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><a href=' + down_src + ' download><li>' + downdata_name + '</li></a></ul>';
+            }
+            else
+            {
+                document.getElementById('lecture_data').innerHTML = '';
+            }
 
             var play = $("input[type=hidden][name=play_enable]").val();
             if(play == 'D')
