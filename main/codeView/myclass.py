@@ -18,11 +18,7 @@ def myclass_list_page(request):
             }
             return render(request, 'myclass/myclass_list.html', context)
         else:
-            disableSession(user_id, request)
-            context = {
-                "msg": message_no_login,  # message_no_login
-            }
-            return render(request, 'login/login.html', context)
+            return render(request, 'myclass/myclass_list.html')
 
         return render(request, 'myclass/myclass_list.html')
     else:
@@ -52,11 +48,7 @@ def myclass_page(request):
             return render(request, 'myclass/myclass.html', context)
 
         else:
-            disableSession(user_id, request)
-            context = {
-                "msg": message_no_login,
-            }
-            return render(request, 'login/login.html', context)
+            return render(request, 'myclass/myclass_list.html')
     else:
         disableSession(user_id, request)
         context = {
