@@ -18,9 +18,8 @@ def myclass_list_page(request):
             }
             return render(request, 'myclass/myclass_list.html', context)
         else:
-            return render(request, 'myclass/myclass_list.html')
-
-        return render(request, 'myclass/myclass_list.html')
+            disableSession(user_id, request)
+            return render(request, 'login/login.html')
     else:
         return render(request, 'login/login.html')
 
@@ -32,29 +31,29 @@ def myclass_page(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
 
-    if checkSession(session, user_id):
-        item_info = select_class_kit_detail(prdCode)
-        item_common_info = select_class_common_detail(prdCode)
+    if user_id is not None:
+        if checkSession(session, user_id):
+            item_info = select_class_kit_detail(prdCode)
+            item_common_info = select_class_common_detail(prdCode)
 
-        if item_info.count() > 0:
-            context = {
-                "myclass_detail": item_info,
-                "myclass_common_detail": item_common_info,
-                "title": item_info[0].prd.title2,
-                "sub_title": item_info[0].prd.title3,
-                "myclass_idx":myclass_idx,
-                "play":play,
-            }
-            return render(request, 'myclass/myclass.html', context)
+            if item_info.count() > 0:
+                context = {
+                    "myclass_detail": item_info,
+                    "myclass_common_detail": item_common_info,
+                    "title": item_info[0].prd.title2,
+                    "sub_title": item_info[0].prd.title3,
+                    "myclass_idx":myclass_idx,
+                    "play":play,
+                }
+                return render(request, 'myclass/myclass.html', context)
 
+            else:
+                return render(request, 'myclass/myclass_list.html')
         else:
-            return render(request, 'myclass/myclass_list.html')
+            disableSession(user_id, request)
+            return render(request, 'login/login.html')
     else:
-        disableSession(user_id, request)
-        context = {
-            "msg": message_no_login,
-        }
-        return render(request, 'login/login.html', context)
+        return render(request, 'login/login.html')
 
 def video_play_page(request):
     myclass_idx = request.POST['myclass_idx']

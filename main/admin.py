@@ -104,18 +104,6 @@ class MyClassListAdmin(admin.ModelAdmin):
 
 admin.site.register(MyClassListTB, MyClassListAdmin)
 
-
-# class ItemDowndataAdmin(admin.ModelAdmin):
-#     list_display = ['downdata_idx', 'downdata_name', 'prd_code', 'dbstat']  # 커스터마이징 코드
-#
-#     list_filter = ['dbstat']
-#
-#     list_display_links = ['downdata_idx', 'downdata_name']
-#     search_fields = ['downdata_name', 'prd_code']
-#
-# admin.site.register(ItemDowndataTB, ItemDowndataAdmin)
-
-
 class loungeListAdmin(admin.ModelAdmin):
     list_display = ['title', 'user', 'data_name', 'video_id', 'dbstat']  # 커스터마이징 코드
 

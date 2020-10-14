@@ -39,7 +39,7 @@
                             <p class="writer">{{list_detail.play_time}} ~ </p>
                             <p class="date"> {{list_detail.expire_time | date:'Y-m-d' }}</p>
                             {% endif %}
-                        <a href="javascript:void(0);" onclick="javascript:goMyClass({{list_detail.prd.prd_code}}, {{list_detail.myclassList_idx}}, '{{list_detail.play}}');" class="btn brd_detail">강의 보기</a>
+                        <a href="javascript:void(0);" onclick="javascript:goMyClass('{{list_detail.prd.prd_code}}', '{{list_detail.myclassList_idx}}', '{{list_detail.play}}');" class="btn brd_detail">강의 보기</a>
                     </div>
                 </li>
                 {%endfor%}
