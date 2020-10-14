@@ -205,10 +205,6 @@ def select_class_kit_detail(prd_code):
     item_info = ItemTB.objects.filter(prd__prd_code=prd_code, common__isnull=True).order_by('order')
     return item_info
 
-def select_downdata(prdCode):
-    downdata_info = ItemDowndataTB.objects.filter(prd_code=prdCode)
-    return downdata_info
-
 def select_lounge():
     lounge_info = loungeListTB.objects.filter(dbstat='A').order_by('-loungeList_idx')
     return lounge_info

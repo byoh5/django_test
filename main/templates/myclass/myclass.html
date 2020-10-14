@@ -133,14 +133,14 @@
             var video  = document.getElementById('video_ctrl');
             video.src = src;
 
-            if(downdata != "")
+            if(downdata == 'None')
             {
-                var down_src = '/static/resource/data/download/' + prdCode + '/' + downdata
-                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><a href=' + down_src + ' download><li>' + downdata_name + '</li></a></ul>';
+                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><li>자료가 없습니다.</li></ul>';
             }
             else
             {
-                document.getElementById('lecture_data').innerHTML = '';
+                var down_src = '/static/resource/data/download/' + prdCode + '/' + downdata
+                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><a href=' + down_src + ' download><li>' + downdata_name + '</li></a></ul>';
             }
 
             var play = $("input[type=hidden][name=play_enable]").val();
