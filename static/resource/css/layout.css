@@ -855,7 +855,6 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 /* coding lounge list */
 .codingLounge_list {
 	margin: 0 auto;
-	padding: 0 0.83em;
 	width: 100%;
 	max-width: 1130px;
 }
@@ -868,7 +867,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 .codingLounge_list ul li {
 	margin:0 65px 65px 0;
 	width:calc((100% - 130px) / 3);
-	background-color:#fff;
+	background-color:#f7f7f7;
 	border-radius:5px;
 }
 .codingLounge_list ul li:nth-child(3n),
