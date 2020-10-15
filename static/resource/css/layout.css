@@ -280,7 +280,6 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 .codingKit_list .lecture_list > ul > li {
 	position:relative;
 	margin-bottom:1.66em;
-	padding:0.83em;
 	background-color:#f7f7f7;
 	border-radius:5px;
 	/*box-shadow:0 5px 20px rgba(0,0,0,.15);*/
@@ -290,7 +289,8 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 
 .codingKit_list .lecture_list > ul > li .text_area {
-	padding:0.83em 0;
+	padding:0.83em;
+
 }
 .codingKit_list .lecture_list > ul > li .text_area p,
 .codingKit_list .lecture_list > ul > li .text_area span {
