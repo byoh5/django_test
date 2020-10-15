@@ -2,7 +2,7 @@
 body,th,td,input,select,textarea,button {font-size:24px;}
 .wrap {
 	min-width:1024px;
-	background-color:#f7f7f7;
+	background-color:white;
 }
 .wrap.mypage {
 	background-color:rgba(242,171,156,.4);
