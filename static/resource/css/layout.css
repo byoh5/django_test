@@ -281,7 +281,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	position:relative;
 	margin-bottom:1.66em;
 	padding:0.83em;
-	background-color:#fff;
+	background-color:#f7f7f7;
 	border-radius:5px;
 	/*box-shadow:0 5px 20px rgba(0,0,0,.15);*/
 }
