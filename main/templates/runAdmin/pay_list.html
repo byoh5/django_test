@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="codingLounge_list" style="margin-left:280px;">
+    <div class="codingLounge_list" style="margin-left:300px;">
         <div class="filter_area fixed">
             <div class="search_area">
                 <div class="input_area_lounge">
@@ -52,7 +52,7 @@
     </div>
 
     <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-bottom:10px;">total : {{total_count}}
-        <button type="button" style="color:#fff; background-color:#101a4e;	border-color:#101a4e; float:right; border-radius:5em; font-size: 20px" onclick="fnExcelReport('payList');">Excel</button>
+        <button id="excel" class="excel" type="button" onclick="fnExcelReport('payList');">Excel</button>
     </div>
     <div style="overflow: hidden; position: relative; border: 0px; width: 100%;">
         <table id="payList" style="margin-left: 300px; width: 1130px;">
@@ -126,13 +126,14 @@
             </tbody>
         </table>
 
+        <div id="total_data" class="page"><span>조회 데이터가 없습니다.</span></div>
         <div class="page">
             <ul id="paging" class="pagination modal"></ul>
         </div>
     </div>
 
     <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-top:50px; padding-bottom:150px;">
-        <button type="button" style="color:#fff; background-color:#e1a394;	border-color:#e1a394; float:right; border-radius:5em; font-size: 20px;" onClick="javascript:change('all');">배송중으로 변경</button>
+        <button id="delivery" type="button" class="delivery_chg" onClick="javascript:change('all');">배송중으로 변경</button>
     </div>
 </div>
 
@@ -141,6 +142,20 @@
      $(document).ready(function() {
        $('#status').val('{{status}}').prop("selected",true);
        $('#page_cnt').val('{{page_cnt}}').prop("selected",true);
+
+       var total = '{{total_count}}';
+       if (total == 0)
+       {
+            $("#total_data").show();
+            $("#excel").attr('disabled', true);
+            $("#delivery").attr('disabled', true);
+       }
+       else
+       {
+            $("#total_data").hide();
+            $("#excel").attr('disabled', false);
+            $("#delivery").attr('disabled', false);
+       }
 
        var page = '{{last_page}}';
        var cur_page = '{{paging_num}}';

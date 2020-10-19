@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="codingLounge_list" style="margin-left:280px;">
+    <div class="codingLounge_list" style="margin-left:300px;">
         <div class="filter_area fixed">
             <div class="search_area">
                 <div class="input_area_lounge">
@@ -35,8 +35,7 @@
         </div>
     </div>
 
-    <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-bottom:10px;">total : {{total_count}}
-    </div>
+    <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-bottom:10px;">total : {{total_count}}</div>
     <div style="overflow: hidden; position: relative; border: 0px; width: 100%;">
         <table id="payList" style="margin-left: 300px; width: 1130px;">
             <thread>
@@ -85,6 +84,7 @@
             </tbody>
         </table>
 
+        <div id="total_data" class="page"><span>조회 데이터가 없습니다.</span></div>
         <div class="page">
             <ul id="paging" class="pagination modal"></ul>
         </div>
@@ -93,10 +93,20 @@
 
 
     <script>
-
      $(document).ready(function() {
        $('#status').val('{{status}}').prop("selected",true);
        $('#page_cnt').val('{{page_cnt}}').prop("selected",true);
+
+       var total = '{{total_count}}';
+       if (total == 0)
+       {
+            $("#total_data").show();
+       }
+       else
+       {
+            $("#total_data").hide();
+       }
+
 
        var page = '{{last_page}}';
        var cur_page = '{{paging_num}}';

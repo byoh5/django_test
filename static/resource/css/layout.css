@@ -83,6 +83,38 @@ body,th,td,input,select,textarea,button {font-size:24px;}
     text-align:center;
 }
 
+.excel {
+    color:#fff;
+    background-color:#101a4e;
+    border-color:#101a4e;
+    float:right;
+    border-radius:5em;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.excel:disabled {
+    background: #ccc;
+    border-color: #ccc;
+    cursor:default;
+}
+
+.delivery_chg {
+    color:#fff;
+    background-color:#e1a394;
+    border-color:#e1a394;
+    float:right;
+    border-radius:5em;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.delivery_chg:disabled {
+    background: #ccc;
+    border-color: #ccc;
+    cursor:default;
+}
+
 .tabs li.admin_active a {
 	color:#fff;
 	background-color:#101a4e;
