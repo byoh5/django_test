@@ -154,7 +154,7 @@ def select_myclass_list_date(keyword, start_datetime_filter, end_datetime_filter
         query_search.add(Q(user_id=keyword), query_search.AND)
 
     if start_datetime_filter is not "":
-        query_search.add((start_datetime_filter.date(), end_datetime_filter.date()), query_search.AND)
+        query_search.add(Q(start_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
 
     myclass_list_info = MyClassListTB.objects.filter(query_search).order_by(sort_order)
 
