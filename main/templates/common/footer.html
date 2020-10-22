@@ -1,4 +1,18 @@
 {% load static %}
+
+<script>
+    function onPopKBAuthMark()
+    {
+        window.open('', 'KB_AUTHMARK', 'height=604, width=648, status=yes, toolbar-no, menubar=no, location=no');
+        document.KB_AUTHMARK_FORM.action='http://escrow1.kbstar.com/quics';
+        document.KB_AUTHMARK_FORM.target='KB_AUTHMARK';
+        document.KB_AUTHMARK_FORM.submit();
+
+        return false;
+    }
+
+</script>
+
 <footer>
         <div class="footer">
             <img class="ci" src="{% static 'resource/img/common/logo_footer.png' %}" alt="런코딩">
@@ -30,6 +44,17 @@
                             <span>Address</span>
                             <p>경기도 수원시 영통구 영통로 200번길 20</p>
                         </li>
+                        <li>
+                            <span>escrow</span>
+                             <form name="KB_AUTHMARK_FORM" method="get">
+                                <input type="hidden" name="page" value="B009111"/>
+                                <input type="hidden" name="cc" value="b010807:b008491"/>
+                                <input type="hidden" name="mHValue" value='9ae08a5f100b7e459fcb9ca35b6ae815202003121740935'/>
+                            </form>
+                            <a href="javascript:void(0);" onclick="javascript:onPopKBAuthMark();">
+                                <img src="{% static 'resource/img/common/escrow.png' %}" width="50px;" height="50px" border="0"/>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="contact">
@@ -60,6 +85,7 @@
                 </div>
             </div>
         </div>
+
         <div class="link_area">
             <div class="linkWrap">
                 <a href="#modal01">Privacy Policy</a>
