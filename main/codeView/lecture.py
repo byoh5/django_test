@@ -27,3 +27,11 @@ def class_detail_page(request):
     }
 
     return render(request, 'class/class_detail.html', context)
+
+def class_detail_page_prd(request):
+    prd_code = request.GET.get('prd_code')
+    context = {
+        "prd_code": prd_code,
+    }
+
+    return render(request, 'class/class_store_detail.html', context)

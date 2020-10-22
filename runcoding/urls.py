@@ -39,6 +39,7 @@ urlpatterns = [
 
     path('class/', class_page),
     path('class_detail/', class_detail_page),
+    path('detail_prd/', class_detail_page_prd),
 
     path('myclass/', myclass_page),
     path('myclass_list/', myclass_list_page),

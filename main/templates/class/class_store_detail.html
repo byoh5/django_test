@@ -1,0 +1,9 @@
+{% load static %}
+ <form id="class_store_form" method="POST" action="/class_detail/">
+    {% csrf_token %}
+    <input type="hidden" id="detail_prd_code" name="detail_prd_code" value={{prd_code}}>
+</form>
+
+<script>
+    document.getElementById('class_store_form').submit();
+</script>
