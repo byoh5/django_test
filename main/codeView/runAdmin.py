@@ -18,6 +18,12 @@ message_no_login = 210
 
 display_count = 10
 
+payway_credit = 'credit'
+payway_escrow = 'escrow' #실시간 계좌이체
+payway_deposit = 'deposit' #무통장
+payway_kakao = 'kakao'
+payway_naver = 'naver'
+
 def deposit_list(request):
     return render(request, 'runAdmin/deposit_list.html')
 
@@ -141,7 +147,7 @@ def pay_list(request):
     userStatus_info = select_userStatus_all()
     context = {
         "userStatus_info": userStatus_info,
-        "page_cnt":'2',
+        "page_cnt":'10',
         "status": '0',
     }
     return render(request, 'runAdmin/pay_list.html', context)
@@ -210,10 +216,9 @@ def pay_change(request):
     status = request.POST['status']
     pay_idx = request.POST['pay_idx']
     admin = request.session.get('user_id')
+    page_cnt = int(request.POST['page_cnt'])
+    paging_num = int(request.POST['paging_num'])
 
-    year = timezone.localtime().year
-    month = timezone.localtime().month
-    day = timezone.localtime().day
 
     pay_userStatus_info = select_userStatue(pay_status_delivery)
 
@@ -225,7 +230,8 @@ def pay_change(request):
             pay_info = select_pay(data)
             new_pay = pay_info[0]
             new_pay.pay_user_status = pay_userStatus_info[0]
-            new_pay.pay_result_info = '배송중-' + admin + "-" + str(year) + str(month) + str(day)
+            new_pay.pay_result_info = '배송중-' + admin + "-" + str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day)
+            new_pay.delivery_time = timezone.now()
             new_pay.save()
 
     split_start = start_date.split('-')
@@ -241,18 +247,39 @@ def pay_change(request):
     end_datetime_filter = datetime(end_year, end_month, end_day)
 
     pay_info = select_pay_date(start_datetime_filter, end_datetime_filter, searchBox, status)
+    total = pay_info.count()
+
+    start_cnt = 0
+    end_cnt = 0
+    last_page = int(total) / page_cnt
+    reamin = int(total) % page_cnt
+
+    if reamin > 0:
+        last_page = int(last_page) + 1
+
+    for count in range(0, paging_num):
+        if paging_num > 1:
+            start_cnt = end_cnt
+        end_cnt = start_cnt + page_cnt
+
+    pay_info_paging = select_pay_date_cnt(start_datetime_filter, end_datetime_filter, searchBox, status, start_cnt,
+                                          end_cnt)
     order_info = select_order_date(start_datetime_filter, end_datetime_filter, searchBox)
     userStatus_info = select_userStatus_all()
+
     context = {
-        "pay_info": pay_info,
-        "total_count": pay_info.count(),
+        "pay_info": pay_info_paging,
+        "total_count": total,
         "start_date": start_date,
         "end_date": end_date,
         "order_info": order_info,
         "userStatus_info": userStatus_info,
         "status": status,
         "search": searchBox,
-        "ok_status":pay_status_ok,
+        "ok_status": pay_status_ok,
+        "last_page": int(last_page),
+        "paging_num": paging_num,
+        "page_cnt": page_cnt,
     }
 
     return render(request, 'runAdmin/pay_list.html', context)
@@ -292,88 +319,64 @@ def user_search(request):
     total = myclass_info.count()
 
     user_info = select_register(user_id)
-    start_cnt = 0
-    end_cnt = 0
-    last_page = int(total) / page_cnt
-    reamin = int(total) % page_cnt
+    if user_info.count() > 0:
+        start_cnt = 0
+        end_cnt = 0
+        last_page = int(total) / page_cnt
+        reamin = int(total) % page_cnt
 
-    if reamin > 0:
-        last_page = int(last_page) + 1
+        if reamin > 0:
+            last_page = int(last_page) + 1
 
-    for count in range(0, paging_num):
-        if paging_num > 1:
-            start_cnt = end_cnt
-        end_cnt = start_cnt + page_cnt
+        for count in range(0, paging_num):
+            if paging_num > 1:
+                start_cnt = end_cnt
+            end_cnt = start_cnt + page_cnt
 
-    myclass_info_paging = select_myclass_list_date_paging(user_id, start_datetime_filter, end_datetime_filter, start_cnt, end_cnt)
+        myclass_info_paging = select_myclass_list_date_paging(user_id, start_datetime_filter, end_datetime_filter, start_cnt, end_cnt)
+        pay_info = select_pay_user(user_id)
 
-    context = {
-        "myclass_info": myclass_info_paging,
-        "user_info": user_info[0],
-        "total_count": total,
-        "start_date": start_date,
-        "end_date": end_date,
-        "search": user_id,
-        "last_page": int(last_page),
-        "paging_num":paging_num,
-    }
+        context = {
+            "myclass_info": myclass_info_paging,
+            "pay_info": pay_info,
+            "user_info": user_info[0],
+            "total_count": total,
+            "start_date": start_date,
+            "end_date": end_date,
+            "search": user_id,
+            "last_page": int(last_page),
+            "paging_num":paging_num,
+        }
 
-    return render(request, 'runAdmin/user_list.html', context)
+        return render(request, 'runAdmin/user_list.html', context)
+    else:
+        context = {
+            "page_cnt": '2',
+            "status": '0',
+        }
+        return render(request, 'runAdmin/user_list.html', context)
 
 def user_refund(request):
-    start_date = request.POST['start_date']
-    end_date = request.POST['end_date']
     user_id = request.POST['searchBox']
-    paging_num = 1 # 옮기고자 하는 paging 번호
-    page_cnt = display_count  # display count 노출되는 리스트 갯수
-
     pay_num = request.POST['pay_num']
+    
+    pay_info = select_pay_user_payNum(user_id, pay_num)
 
-    refund(pay_num, user_id)
+    if pay_info[0].payWay.value != payway_deposit: #PG사 연동만 전달
+        refund(pay_num, user_id)
 
-    start_datetime_filter = ""
-    end_datetime_filter = ""
+    pay_userStatus_info = select_userStatue(pay_status_deposit_refund)
 
-    if start_date is not "":
-        split_start = start_date.split('-')
-        start_year = int(split_start[0])
-        start_month = int(split_start[1])
-        start_day = int(split_start[2])
-        start_datetime_filter = datetime(start_year, start_month, start_day)
+    pay_info = select_pay_user_payNum(user_id, pay_num)
+    new_payInfo = pay_info[0]
+    new_payInfo.pay_result = 2
+    new_payInfo.pay_user_status = pay_userStatus_info[0]
+    new_payInfo.save()
 
-    if end_date is not "":
-        split_end = end_date.split('-')
-        end_year = int(split_end[0])
-        end_month = int(split_end[1])
-        end_day = int(split_end[2]) + 1
-        end_datetime_filter = datetime(end_year, end_month, end_day)
+    myclass_list = select_myclass_list_payNum_refund(user_id, pay_num)
+    for class_list in myclass_list:
+        new_myclass = class_list
+        new_myclass.dbstat = 'D-refund'
+        new_myclass.save()
 
-
-    user_info = select_register(user_id)
-    start_cnt = 0
-    end_cnt = 0
-    last_page = int(total) / page_cnt
-    reamin = int(total) % page_cnt
-
-    if reamin > 0:
-        last_page = int(last_page) + 1
-
-    for count in range(0, paging_num):
-        if paging_num > 1:
-            start_cnt = end_cnt
-        end_cnt = start_cnt + page_cnt
-
-    myclass_info_paging = select_myclass_list_date_paging(user_id, start_datetime_filter, end_datetime_filter, start_cnt, end_cnt)
-
-    context = {
-        "myclass_info": myclass_info_paging,
-        "user_info": user_info[0],
-        "total_count": total,
-        "start_date": start_date,
-        "end_date": end_date,
-        "search": user_id,
-        "last_page": int(last_page),
-        "paging_num":paging_num,
-    }
-
-    return render(request, 'runAdmin/user_list.html', context)
+    return user_search(request)

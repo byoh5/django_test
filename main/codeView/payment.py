@@ -16,6 +16,7 @@ pay_status_delivery_done = 3
 pay_status_prepay = 4
 pay_status_deposit_noCheck = 5
 pay_status_deposit_refund = 6
+pay_status_deposit_refund_req = 7
 
 imp_id = 'imp08800373'
 
@@ -31,7 +32,6 @@ def payment(request):
     user_id = request.session.get('user_id')
     if payway_val is not None:
         payway_info = select_payway_value(payway_val)
-
         number_pool = string.digits
         _LENGTH = 12
         pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
@@ -448,17 +448,5 @@ def refund(pay_num, user_id):
                                card_code=card_code, card_name=card_name, card_number=card_number, card_type=card_type, channel=channel)
         cancle_info.save()
 
-        pay_userStatus_info = select_userStatue(pay_status_deposit_refund)
 
-        pay_info = select_pay_user_payNum(user_id, pay_num)
-        new_payInfo = pay_info[0]
-        new_payInfo.pay_result = 2
-        new_payInfo.pay_user_status = pay_userStatus_info[0]
-        new_payInfo.save()
-
-        myclass_list = select_myclass_list_payNum_active(user_id, pay_num)
-        for class_list in myclass_list:
-            new_myclass = class_list
-            new_myclass.dbstat = 'D-refund'
-            new_myclass.save()
 

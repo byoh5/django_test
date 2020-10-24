@@ -61,6 +61,7 @@ urlpatterns = [
     path('myprofile/', mypage_profile),
     path('myorder/', mypage_order),
     path('myorder_detail/', mypage_order_detail),
+    path('myorder_refund/', mypage_order_refund),
 
     path('my_modify_addr/', mypage_profile_modify_addr),
     path('my_modify_addr2/', mypage_profile_modify_addr2),

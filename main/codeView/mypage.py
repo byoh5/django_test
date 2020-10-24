@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils import timezone
 from main.query import *
 from main.models import *
 import bcrypt
@@ -13,6 +14,9 @@ message_coupon_diff = 302
 message_coupon_expired = 304
 message_coupon_already_used = 306
 imp_id = 'imp08800373'
+
+ay_status_deposit_refund = 6
+pay_status_deposit_refund_req = 7
 
 message_no_login = 210
 
@@ -53,51 +57,104 @@ def mypage_order(request):
         return render(request, 'login/login.html', context)
 
 def mypage_order_detail(request):
-    pay_idx = request.POST['pay_idx']
+    pay_idx = request.POST.get('pay_idx', 0)
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
+    refund = 0
+    myclass_info = ""
 
     if checkSession(session, user_id):
         pay_info = select_pay(pay_idx)
         mycoupon_name = ""
         option_name = ""
+        delivery_time =""
+        play_time = ""
 
-        if pay_info[0].coupon_num != "" :
-            mycoupon_info = select_myCoupon_couponNum(user_id, pay_info[0].coupon_num)
-            if mycoupon_info.count() > 0:
-                mycoupon_name = mycoupon_info[0].coupon.coupon_name
+        if pay_info.count() > 0 :
+            if pay_info[0].coupon_num != "" :
+                mycoupon_info = select_myCoupon_couponNum(user_id, pay_info[0].coupon_num)
+                if mycoupon_info.count() > 0:
+                    mycoupon_name = mycoupon_info[0].coupon.coupon_name
 
-        split_order = pay_info[0].order_id.split(',')
-        # product -> myclass에 넣고, 장바구니 정리하기
-        for data in split_order:
-            if len(data) > 0:
-                order_info = select_order_info(data, user_id)
-                if order_info.count() > 0:
-                    if order_info[0].option1_selectNum == 2:
-                        option_name += order_info[0].prd.option1
+            if pay_info[0].pay_user_status.userStatus_idx < 4: # 구매 성공 일때만
+                myclass_info = select_myclass_list_payNum_active(user_id, pay_info[0].pay_num)
+                if myclass_info.count() > 0:
+                    if myclass_info[0].play == 'D': # 영상 시작되지 않았음
+                        if pay_info[0].delivery_time is not None : # 배송 됨
+                            today = timezone.now()
+                            refundTime = pay_info[0].delivery_time + timezone.timedelta(hours=9, days=9)
+                            if today <= refundTime: # 오늘이 배송된지 9일이 지났는지 확인
+                                refund = 1 # 영상을 보지 않았고, 배송 후 9일이 지나지 않은 시점 = refund 가능
+                        else:
+                            refund = 1 #영상을 보지 않았고, 배송 전 = refund 가능
+                    else:
+                        play_time = myclass_info[0].play_time
 
-                    if order_info[0].option2_selectNum == 2:
-                        if option_name != "":
-                            option_name += ","
-                        option_name += order_info[0].prd.option2
+            split_order = pay_info[0].order_id.split(',')
+            # product -> myclass에 넣고, 장바구니 정리하기
+            for data in split_order:
+                if len(data) > 0:
+                    order_info = select_order_info(data, user_id)
+                    if order_info.count() > 0:
+                        if order_info[0].option1_selectNum == 2:
+                            option_name += order_info[0].prd.option1
 
-                    if order_info[0].option3_selectNum == 2:
-                        if option_name != "":
-                            option_name += ","
-                        option_name += order_info[0].prd.option3
+                        if order_info[0].option2_selectNum == 2:
+                            if option_name != "":
+                                option_name += ","
+                            option_name += order_info[0].prd.option2
 
-        context = {
-            "pay_detail": pay_info,
-            "mycoupon_name": mycoupon_name,
-            "option":option_name,
-        }
-        return render(request, 'mypage/myorder_detail.html', context)
+                        if order_info[0].option3_selectNum == 2:
+                            if option_name != "":
+                                option_name += ","
+                            option_name += order_info[0].prd.option3
+
+            context = {
+                "pay_detail": pay_info,
+                "myclass": myclass_info,
+                "refund": refund,
+                "delivery_time": delivery_time,
+                "play_time": play_time,
+                "mycoupon_name": mycoupon_name,
+                "option":option_name,
+            }
+            return render(request, 'mypage/myorder_detail.html', context)
+        else:
+            return mypage_order(request)
     else:
         disableSession(user_id, request)
         context = {
             "msg": message_no_login,
         }
         return render(request, 'login/login.html', context)
+
+def mypage_order_refund(request):
+    user_id = request.session.get('user_id')
+    pay_num = request.POST['pay_num']
+    pay_way = request.POST['pay_way']
+
+    if pay_way == 'deposit':
+        bank = request.POST['bank']
+        account = request.POST['account']
+
+    pay_userStatus_info = select_userStatue(pay_status_deposit_refund_req)
+
+    pay_info = select_pay_user_payNum(user_id, pay_num)
+    new_payInfo = pay_info[0]
+    new_payInfo.pay_result = 3 #환불요청
+    new_payInfo.pay_user_status = pay_userStatus_info[0]
+    if pay_way == 'deposit':
+        new_payInfo.payWay_account = bank + account
+    new_payInfo.save()
+
+    myclass_list = select_myclass_list_payNum_active(user_id, pay_num)
+    for class_list in myclass_list:
+        new_myclass = class_list
+        new_myclass.dbstat = 'D-refund-req'
+        new_myclass.save()
+
+    return mypage_order_detail(request)
+
 
 
 def mypage_profile_modify_addr(request):
@@ -244,3 +301,4 @@ def mypage_add_coupon(request):
             "msg": message_no_login,
         }
         return render(request, 'login/login.html', context)
+

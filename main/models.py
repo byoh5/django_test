@@ -208,6 +208,7 @@ class PayTB(models.Model):
     payWay = models.ForeignKey(PayWayTB, on_delete=models.PROTECT, null=True)
     payWay_name = models.CharField(max_length=50, default='',blank=True)
     payWay_receipt = models.CharField(max_length=10, default='D')
+    payWay_account = models.CharField(max_length=50, default='',blank=True)
     coupon_num = models.CharField(max_length=150, default='', null=True)
     prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
     prd_price = models.IntegerField(default='0') # product total
@@ -216,7 +217,8 @@ class PayTB(models.Model):
     delivery_name = models.CharField(max_length=50, default='')
     delivery_addr = models.CharField(max_length=150, default='')
     delivery_phone = models.CharField(max_length=50, default='')
-    pay_result = models.IntegerField(default='100') # 0: 결제성공 1: 결제실패 2:환불
+    delivery_time = models.DateTimeField(null=True, blank=True) #배송중 변경 시 저장
+    pay_result = models.IntegerField(default='100') # 0: 결제성공 1: 결제실패 2:환불 3:환불요청
     pay_result_info = models.CharField(max_length=500, default='') #pay_msg
     merchant_uid = models.CharField(max_length=500, default='')
     imp_uid = models.CharField(max_length=500, default='')

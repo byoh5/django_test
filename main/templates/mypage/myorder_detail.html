@@ -23,6 +23,9 @@
                         <div class="order_detail">
                             <ul>
                                 {% for payUserInfo in pay_detail %}
+                                <input type="hidden" id="pay_num" name="pay_num" value={{payUserInfo.pay_num}}>
+                                <input type="hidden" id="pay_idx" name="pay_idx" value={{payUserInfo.pay_idx}}>
+                                <input type="hidden" id="pay_way" name="pay_way" value={{payUserInfo.payWay.value}}>
                                 <li>
                                     <span>주문번호</span>
                                     <p>{{payUserInfo.pay_num}}</p>
@@ -38,6 +41,11 @@
                                 <li>
                                     <span>주문처리상태</span>
                                     <p>{{payUserInfo.pay_user_status.userStatus}}</p>
+
+                                     <div class="mypageBtn" style="margin-top:5px;">
+                                        <a href="#refund" class="btn means">환불요청</a>
+                                    </div>
+
                                 </li>
                                 <li>
                                     <span>주문상품</span>
@@ -140,6 +148,68 @@
             </div>
         </div>
 
+        <div data-ml-modal="" id="refund">
+            <a href="" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg mypage_refund">
+                <a href="#" class="modal-close">×</a>
+                <h3>취소. 교환. 환불 안내 </h3>
+                <div class="modal-content">
+                     <div class="text">
+                         <span>1. 다음의 경우 환불 되지 않습니다. <br/>
+                             - <strong style="color:red;">강의시청 </strong>을 했을 경우. <br/>
+                             - <strong style="color:red;">코딩키트 오픈</strong>을 했을 경우. <br/>
+                             - 배송 후 <strong style="color:red;">9일 이상</strong> 시간이 지난 경우. <br/>
+                             본 상품 구매의 특성상 <strong>취소.교환.환불</strong>이 어려울 수 있습니다.<br/>
+                            (본 상품 상세페이지 하단 내용에서 자세히 보실 수 있습니다)
+                         </span>
+
+                         <span>2. 다음 절차로 진행됩니다.<br/>
+                             - <strong style="color:red;">코딩키트 오픈하지 않은 상태</strong>로 보내주세요. 키트상태를 확인 후 처리 됩니다. <br/>
+                             - 왕복 배송비 <strong>6,000원</strong>을 동봉 혹은 <strong>무통장 입금(국민은행&nbsp;:&nbsp;422001-04-219407 (런코딩))</strong>해 주세요.<br/>
+                             - 키트 수거 후 영업일 기준 1~2일 이내에 절차대로 진행됩니다.<br/>
+                             - 문의사항은 카카오채널을 이용해주세요.<br/>
+                         </span>
+
+                         <span>
+                             {% if refund == 0 %}
+                                {% if delivery_time != "" %}
+                                 - 배송된 날짜 입니다. ({{delivery_time | date:'Y-m-d' }})
+                                {% endif %}
+                                {% if play_time != "" %}
+                                 - 강의가 이미 시작되었습니다. ({{play_time | date:'Y-m-d' }})
+                                {% endif %}
+                             {% endif %}
+                         </span>
+
+                         <span>3. 배송료 무통장 입금 시, <br/>
+                             {% for payUser in pay_detail %}
+                             {% if payUser.payWay.value == 'deposit' %}
+                                입금자 <strong>({{payUser.payWay_name}})</strong> 으로 입금해주셔야 처리가 됩니다.<br/>
+                                <br/>
+                                4. 무통장 입금으로 구매를 하셨습니다. 환불 계좌를 입력해주세요.<br/>
+                                예금주<strong>({{payUser.payWay_name}})</strong>와 계좌가 맞지 않을 경우 입금처리가 되지 않습니다. <br/>
+                                <div class="input_area" style="margin-top:10px">
+                                    <input type="text" name="bank" id="bank" style="margin-right:10px; float:left; width:30%;" placeholder="은행">
+                                    <input type="text" name="account" id="account" style="margin-right:10px;" placeholder="환불계좌 번호">
+                                </div>
+                             {% else %}
+                                입금자 <strong>({{payUser.pay_user.regi_name}})</strong> 으로 입금해주셔야 처리가 됩니다.
+                             {% endif %}
+                             {% endfor %}
+                         </span>
+                     </div>
+
+                    <div class="btn_area">
+                        {% if refund == 1 %}
+                        <a href="#" class="btn cancle">환불 취소</a>
+                        <a href="javascript:void(0);" onclick="javascript:goRefund();" class="btn apply">환불 하기</a>
+                        {% else %}
+                        <a href="#" class="btn cancle">환불 대상이 아닙니다.</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {% include "common/footer.html" %}
 
@@ -150,7 +220,47 @@
            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
        }
 
+        function goRefund()
+        {
+             pay_num = document.getElementById('pay_num').value;
+             pay_idx = document.getElementById('pay_idx').value;
+             pay_way = document.getElementById('pay_way').value;
 
+             if(pay_way == 'deposit')
+             {
+               bank = document.getElementById('bank').value;
+               if(bank == "")
+               {
+                    alert("은행을 정확히 표기해주세요.");
+                    return false;
+               }
+               account = document.getElementById('account').value;
+               if(account == "")
+               {
+                    alert("계좌번호를 정확히 표기해주세요.");
+                    return false;
+               }
+             }
+
+             var newForm = $('<form></form>');
+
+            newForm.attr("name", "myorder_refund");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/myorder_refund/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'pay_num', value : pay_num }));
+            newForm.append($('<input/>', {type: 'hidden', name: 'pay_idx', value : pay_idx }));
+            newForm.append($('<input/>', {type: 'hidden', name: 'pay_way', value : pay_way }));
+            if(pay_way == 'deposit')
+            {
+                 newForm.append($('<input/>', {type: 'hidden', name: 'bank', value : bank }));
+                 newForm.append($('<input/>', {type: 'hidden', name: 'account', value : account }));
+            }
+
+            newForm.appendTo('body');
+            newForm.submit();
+        }
 
         </script>
 

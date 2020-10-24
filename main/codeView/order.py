@@ -64,10 +64,16 @@ def order(request):
 
         if flag == 1:
             items_info = select_class_detail(prd_code)
+            if items_info.count() > 0:
+                if prd_code == '2020080013001':
+                    html_file = "product/arduino_trashcan.html"
+                elif prd_code == '2020080023001':
+                    html_file = "product/mblock_trashcan.html"
             context = {
                 "message": messages,
                 "class_items_detail": items_info,
                 "prd_detail": items_info[0].prd,
+                "html_file":html_file,
             }
             return render(request, 'class/class_detail.html', context)
 

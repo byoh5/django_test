@@ -71,7 +71,10 @@ def select_pay(pay_idx):
     return pay_info
 
 def select_pay_user(user_id):
-    pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id) | Q(pay_result=100, pay_user__regi_email=user_id) | Q(pay_result=2, pay_user__regi_email=user_id)).order_by('-pay_idx')
+    pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id) |
+                                    Q(pay_result=100, pay_user__regi_email=user_id) |
+                                    Q(pay_result=2, pay_user__regi_email=user_id) |
+                                    Q(pay_result=3, pay_user__regi_email=user_id)).order_by('-pay_idx')
     return pay_info
 
 def select_pay_user_payNum(user_id, pay_num):
@@ -179,6 +182,10 @@ def select_myclass_list_date_paging(keyword, start_datetime_filter, end_datetime
 
 def select_myclass_list_payNum(user_id, pay_num):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='D-deposit')
+    return myclass_list_info
+
+def select_myclass_list_payNum_refund(user_id, pay_num):
+    myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num)
     return myclass_list_info
 
 def select_myclass_list_payNum_active(user_id, pay_num):

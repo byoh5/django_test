@@ -45,10 +45,11 @@
                     <th class="admin_list_id">주문번호</th>
                     <th class="admin_list_id">키트번호</th>
                     <th class="admin_list_id">주문키트</th>
-                    <th class="admin_list">결제 day</th>
                     <th class="admin_list">강의상태</th>
-                    <th class="admin_list">강의시작 day</th>
-                    <th class="admin_list_id">환불여부</th>
+                    <th class="admin_list_id">결제방법</th>
+                    <th class="admin_list">결제 day</th>
+                    <th class="admin_list">환불여부</th>
+                    <th class="admin_list">&nbsp;</th>
                 </tr>
             </thread>
             <tbody>
@@ -59,25 +60,42 @@
                     <td class="admin_list_id_body">{{myclass.pay_num}}</td>
                     <td class="admin_list_id_body">{{myclass.prd.prd_code}}</td>
                     <td class="admin_list_body">{{myclass.prd.title}}</td>
-                    <td class="admin_list_body date"> {{myclass.start_time | date:'Y-m-d' }}</td>
                     <td class="admin_list_body">
                         {% if myclass.play == 'D' %}
-                        강의시작 전입니다.
+                        강의시작 X
                         {% else %}
-                        강의 시작되었습니다.
+                        <a href="javascript:alert('영상 : {{myclass.play_video}}, 시간: {{myclass.play_time}}');">강의시작 O</a>
                         {% endif %}
                     </td>
-                    <td class="admin_list_body date"> {{myclass.play_time}}</td>
                     <td class="admin_list_body date">
-                        {% if myclass.play == 'D' %}
-                            {% if myclass.dbstat == 'D-refund' %}
-                            환불됨
-                            {% else %}
-                            <a href="javascript:void(0);" onClick="javascript:refund('{{myclass.pay_num}}');" style="cursor:pointer;color:red;"><strong>환불하기</strong></a>
-                            {% endif %}
-                        {% else %}
-                        환불불가
+                        {% for pay_list in pay_info %}
+                        {% if myclass.pay_num == pay_list.pay_num %}
+                            {{pay_list.payWay.name}}
+
+                            {% if pay_list.payWay.value == 'deposit' %}
+                              <br/>{{pay_list.payWay_name}}
+                              <br/>{{pay_list.payWay_account}}
+                            {% endif%}
+
                         {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td class="admin_list_body date"> {{myclass.start_time | date:'Y-m-d' }}</td>
+                    <td class="admin_list_body date">
+                        {% if myclass.dbstat == 'D-refund' %}
+                        환불됨
+                        {% elif myclass.dbstat == 'D-refund-req' %}
+                        환불요청됨
+                        {% endif %}
+                    </td>
+                    <td class="admin_list_body date">
+                     {% if myclass.play == 'D' %}
+                        {% if myclass.dbstat != 'D-refund' %}
+                        <a href="javascript:void(0);" onClick="javascript:refund('{{myclass.pay_num}}');" style="cursor:pointer;color:red;"><strong>환불하기</strong></a>
+                        {% endif %}
+                    {% else %}
+                    환불불가
+                    {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -175,6 +193,7 @@
         newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
         newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
         newForm.append($('<input/>', {type: 'hidden', name: 'pay_num', value : pay_num }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'paging_num', value : 1 }));
 
         newForm.appendTo('body');
         newForm.submit();

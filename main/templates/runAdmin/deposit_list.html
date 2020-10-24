@@ -65,8 +65,12 @@
                             {% if myclass.pay_num == deposit.pay_num %}
                                 {% if myclass.dbstat == 'A' %}
                                 확인됨
+                                {% elif myclass.dbstat == 'D-refund' %}
+                                환불됨
+                                {% elif myclass.dbstat == 'D-refund-req' %}
+                                환불요청
                                 {% else %}
-                               <a href="javascript:void(0);" onClick="javascript:change('{{deposit.pay_user.regi_email}}', '{{deposit.pay_num}}');" style="cursor:pointer;color:red;"><strong>강의상태 변경하기</strong></a>
+                               <a href="javascript:void(0);" onClick="javascript:change('{{deposit.pay_user.regi_email}}', '{{deposit.pay_num}}');" style="cursor:pointer;color:red;"><strong>확인</strong></a>
                                 {% endif %}
                             {% endif %}
                         {% endfor %}

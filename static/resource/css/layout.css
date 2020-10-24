@@ -1663,6 +1663,34 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	margin:0 auto 1em;
 	text-align:center;
 }
+
+[data-ml-modal] .mypage_refund {
+	width:35vw;
+}
+
+[data-ml-modal] .mypage_refund .modal-content {
+	padding:2em 1.5em;
+	height:auto;
+}
+
+[data-ml-modal] .mypage_refund .modal-content .text > span {
+	display:block;
+	margin:0 auto 1em;
+	text-align:left;
+	font-size:13px;
+}
+
+
+
+[data-ml-modal] .mypage_refund .modal-content .input_area input[type="text"]{
+	padding:0.25em;
+	width:50%;
+	height:auto;
+	font-size:0.95em;
+	border:1px solid #dcdcdc;
+	border-radius:2px;
+}
+
 [data-ml-modal] .mypage .modal-content > p {
 	display:block;
 	margin:0 auto 1em;
@@ -1741,6 +1769,10 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	font-size:1em;
 }
 [data-ml-modal] .mypage .modal-content .btn_area a.apply {
+	background-color:#b14739;
+}
+
+[data-ml-modal] .mypage_refund .modal-content .btn_area a.apply {
 	background-color:#b14739;
 }
 

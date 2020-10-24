@@ -91,7 +91,7 @@ admin.site.register(PayTB, PayAdmin)
 
 
 class MyClassListAdmin(admin.ModelAdmin):
-    list_display = ['myclassList_idx', 'user_id', 'get_name', 'start_time', 'expire_time', 'dbstat'] # 커스터마이징 코드
+    list_display = ['myclassList_idx', 'pay_num', 'user_id', 'get_name', 'start_time', 'expire_time', 'dbstat'] # 커스터마이징 코드
 
     list_filter = ['start_time', 'expire_time','dbstat']
     def get_name(self, obj):
@@ -100,7 +100,7 @@ class MyClassListAdmin(admin.ModelAdmin):
     get_name.short_description = 'prd code'  # Renames column head
 
     list_display_links = ['user_id']
-    search_fields = ['user_id']
+    search_fields = ['user_id', 'pay_num']
 
 admin.site.register(MyClassListTB, MyClassListAdmin)
 

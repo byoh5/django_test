@@ -35,7 +35,6 @@
                 </div>
                 <div class="input_area_lounge">
                       <select id="page_cnt" name="page_cnt" style="width:60px; height:35px; border:1px solid #d4d4d4; line-height:30px; font-size:12px;">
-                        <option value="2">2(Test Ver.)</option>
                         <option value="10">10</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
@@ -110,7 +109,7 @@
                     <td class="admin_list_id_body">{{deposit.delivery_name}}<br/>{{deposit.delivery_addr}}<br/>{{deposit.delivery_phone}}</td>
                     {% if deposit.pay_result == 0 %}
                         {% if ok_status == deposit.pay_user_status.userStatus_idx %}
-                        <td class="admin_list_body"><a href="javascript:void(0);" onClick="javascript:change({{deposit.pay_idx}});" style="cursor:pointer;color:red;"><strong>배송중 변경하기</strong></a></td>
+                        <td class="admin_list_body"><a href="javascript:void(0);" onClick="javascript:change({{deposit.pay_idx}}, {{paging_num}});" style="cursor:pointer;color:red;"><strong>배송중 변경하기</strong></a></td>
                         {% else %}
                         <td class="admin_list_body">배송중</td>
                         {% endif %}
@@ -120,6 +119,8 @@
                      <td class="admin_list_body">결제실패</td>
                     {% elif deposit.pay_result == 2 %}
                      <td class="admin_list_body">환불</td>
+                     {% elif deposit.pay_result == 3 %}
+                     <td class="admin_list_body">환불요청</td>
                     {% endif %}
                 </tr>
                 {% endfor %}
@@ -266,10 +267,11 @@
      }
 
 
-    function change(pay_idx)
+    function change(pay_idx, paging_num)
     {
         var start_date = document.getElementById('start_date').value;
         var end_date = document.getElementById('end_date').value;
+        var page_cnt = document.getElementById('page_cnt').value;
         var searchBox = $('[name=search_box]').val();
 
         if(start_date == "" || end_date == "")
@@ -315,6 +317,8 @@
         newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
         newForm.append($('<input/>', {type: 'hidden', name: 'status', value : status }));
         newForm.append($('<input/>', {type: 'hidden', name: 'pay_idx', value : pay_idx }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'paging_num', value : paging_num }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'page_cnt', value : page_cnt }));
 
         newForm.appendTo('body');
         newForm.submit();
