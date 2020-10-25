@@ -308,12 +308,15 @@ def user_search(request):
         start_day = int(split_start[2])
         start_datetime_filter = datetime(start_year, start_month, start_day)
 
-    if end_date is not "":
-        split_end = end_date.split('-')
-        end_year = int(split_end[0])
-        end_month = int(split_end[1])
-        end_day = int(split_end[2]) + 1
-        end_datetime_filter = datetime(end_year, end_month, end_day)
+        if end_date is not "":
+            split_end = end_date.split('-')
+            end_year = int(split_end[0])
+            end_month = int(split_end[1])
+            end_day = int(split_end[2]) + 1
+            end_datetime_filter = datetime(end_year, end_month, end_day)
+        else:
+            start_datetime_filter = ""
+            end_datetime_filter = ""
 
     myclass_info = select_myclass_list_date(user_id, start_datetime_filter, end_datetime_filter)
     total = myclass_info.count()
