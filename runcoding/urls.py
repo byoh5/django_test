@@ -28,6 +28,7 @@ from main.codeView.regi import *
 from main.codeView.search import *
 from main.codeView.confirm_user import *
 from main.codeView.runAdmin import *
+from main.codeView.watch import *
 
 urlpatterns = [
     path('regi/', register_page),
@@ -87,6 +88,8 @@ urlpatterns = [
     path('user_list/',user_list),
     path('user_search/', user_search),
     path('user_refund/', user_refund),
+
+    path('watchCam/', watch_esp_cam),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
