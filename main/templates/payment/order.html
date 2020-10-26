@@ -39,9 +39,9 @@
                                                  <col width="3%" />
                                                 <col width="10%" />
                                                 <col width="20%" />
+                                                <col width="10%" />
                                                 <col width="20%" />
                                                 <col width="10%" />
-                                                <col width="15%" />
                                                 <col width="10%" />
                                                 <col width="10%" />
                                             </colgroup>
@@ -49,11 +49,11 @@
                                             <tr>
                                                 <th class="text-center">&nbsp;</th>
                                                 <th class="text-center">&nbsp;</th>
-                                                <th class="text-left">상품</th>
-                                                <th class="text-center">옵션 선택</th>
-                                                <th class="text-center">판매가</th>
-                                                <th class="text-center">수량선택</th>
-                                                <th class="text-left">배송구분</th>
+                                                <th class="text-center">상품정보</th>
+                                                <th class="text-left">판매가</th>
+                                                <th class="text-center">옵션선택</th>
+                                                <th class="text-left">수량선택</th>
+                                                <th class="text-left">구매가</th>
                                                 <th class="text-right">배송비</th>
                                             </tr>
                                             </thead>
@@ -92,35 +92,42 @@
                                                              <span>{{orderDetail.prd.title}}</span>
                                                          </div>
                                                     </td>
+
                                                     <td>
-                                                        <div id="prdModify">
+                                                        <div id="prd_price_{{forloop.counter0}}" class="pull-left" >
+                                                            <strong>{{orderDetail.prd.price}}</strong>
+                                                        </div>
+                                                        <div class="pull-left">
+                                                            <strong>원</strong>
+                                                         </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div id="prdModify" class="prdModify">
                                                             <li>
                                                                 {% if orderDetail.prd.option1 != "" %}
                                                                     <input type="hidden" id="alreadyOption_{{forloop.counter0}}_1" name="alreadyOption_{{forloop.counter0}}_1" value="{{orderDetail.option1_selectNum}}">
-                                                                    <input type="hidden" id="minus_{{forloop.counter0}}_1" name="minus_{{forloop.counter0}}_1" value="0">
                                                                     <input type="hidden" id="option_idx_{{forloop.counter0}}_1" name="option_idx_{{forloop.counter0}}_1" value="0">
-                                                                    <select id="options_{{forloop.counter0}}_1" name="options_{{forloop.counter0}}_1" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, {{forloop.counter0}}, 1)">
-                                                                        <option value="0">----------------옵션------</option>
+                                                                    <select id="options_{{forloop.counter0}}_1" name="options_{{forloop.counter0}}_1" onchange="myOption({{forloop.counter0}})">
+                                                                        <option value="0">---------------옵션------</option>
                                                                         <option value="0">선택없음</option>
                                                                         <option value={{orderDetail.prd.option1_price}} >{{orderDetail.prd.option1}} (+{{orderDetail.prd.option1_price}})</option>
                                                                      </select>
                                                                 {% endif %}
                                                                 {% if orderDetail.prd.option2 != "" %}
                                                                     <input type="hidden" id="alreadyOption_{{forloop.counter0}}_2" name="alreadyOption_{{forloop.counter0}}_2" value="{{orderDetail.option2_selectNum}}">
-                                                                    <input type="hidden" id="minus_{{forloop.counter0}}_2" name="minus_{{forloop.counter0}}_2" value="0">
                                                                     <input type="hidden" id="option_idx_{{forloop.counter0}}_2" name="option_idx_{{forloop.counter0}}_2" value="0">
-                                                                    <select id="options_{{forloop.counter0}}_2" name="options_{{forloop.counter0}}_2" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, {{forloop.counter0}}, 2)">
-                                                                        <option value="0">----------------옵션------</option>
+                                                                    <select id="options_{{forloop.counter0}}_2" name="options_{{forloop.counter0}}_2" onchange="myOption({{forloop.counter0}})">
+                                                                        <option value="0">---------------옵션------</option>
                                                                         <option value="0">선택없음</option>
                                                                         <option value={{orderDetail.prd.option2_price}}>{{orderDetail.prd.option2}} (+{{orderDetail.prd.option2_price}})</option>
                                                                      </select>
                                                                  {% endif %}
                                                                  {% if orderDetail.prd.option3 != "" %}
                                                                     <input type="hidden" id="alreadyOption_{{forloop.counter0}}_3" name="alreadyOption_{{forloop.counter0}}_3" value="{{orderDetail.option3_selectNum}}">
-                                                                    <input type="hidden" id="minus_{{forloop.counter0}}_3" name="minus_{{forloop.counter0}}_3" value="0">
                                                                     <input type="hidden" id="option_idx_{{forloop.counter0}}_3" name="option_idx_{{forloop.counter0}}_3" value="0">
-                                                                     <select id="options_{{forloop.counter0}}_3" name="options_{{forloop.counter0}}_3" style="float:right; width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, {{forloop.counter0}}, 3)">
-                                                                        <option value="0">----------------옵션------</option>
+                                                                     <select id="options_{{forloop.counter0}}_3" name="options_{{forloop.counter0}}_3" onchange="myOption({{forloop.counter0}})">
+                                                                        <option value="0">---------------옵션------</option>
                                                                         <option value="0">선택없음</option>
                                                                         <option value={{orderDetail.prd.option3_price}}>{{orderDetail.prd.option3}} (+{{orderDetail.prd.option3_price}})</option>
                                                                      </select>
@@ -128,27 +135,24 @@
                                                             </li>
                                                         </div>
                                                     </td>
-                                                    <td >
-                                                        <div id="prd_price_{{forloop.counter0}}" style="float:left; margin-left:20px;">
-                                                            <strong>{{orderDetail.prd.price}}</strong>
-                                                         </div>
-                                                        <div style="float:left;">
-                                                            <strong>원</strong>
-                                                         </div>
-                                                    </td>
-                                                    <td class="quantity_td" >
-                                                        <span class="quantity">
+                                                    <td class="quantity_td">
+                                                        <span class="quantity" >
                                                             <input type="text" name="prodQuantity_{{forloop.counter0}}" id="prodQuantity_{{forloop.counter0}}" class="input quantity" value={{orderDetail.count}} >
                                                             <a href="javascript:up('10','{{forloop.counter0}}')" style="color: #000;">
-                                                                <img src="{% static 'resource/img/sub/btn_quantity_up.gif' %}" alt="증가" class="QuantityUp">
+                                                                <img src="{% static 'resource/img/sub/btn_quantity_up.png' %}" alt="증가" class="QuantityUp">
                                                             </a>
                                                             <a href="javascript:down('1', '{{forloop.counter0}}')" style="color: #000;">
-                                                                <img src="{% static 'resource/img/sub/btn_quantity_down.gif' %}" alt="감소" class="QuantityDown">
+                                                                <img src="{% static 'resource/img/sub/btn_quantity_down.png' %}" alt="감소" class="QuantityDown">
                                                             </a>
                                                         </span>
                                                     </td>
                                                     <td>
-                                                       <strong>{{orderDetail.delivery}}</strong>
+                                                       <div id="prd_real_price_{{forloop.counter0}}" class="pull-left">
+                                                            <strong>{{orderDetail.prd.price}}</strong>
+                                                         </div>
+                                                        <div class="pull-left">
+                                                            <strong>원</strong>
+                                                         </div>
                                                     </td>
                                                     <td>
                                                        <div id="prd_delivery_price_{{forloop.counter0}}" style="float:left;">
@@ -558,24 +562,57 @@
             }
          }
 
-         function myOption(option_val, idx, num)
+         function myOption(idx)
          {
             var chks = document.getElementsByName('idxs[]');
-            option_name = "minus_" + String(idx) +"_" + String(num);
-            var minus_option_price = document.getElementById(option_name).value;
-            minus_option_price *= 1
-
-            if(minus_option_price > 0)
-                option_val = -minus_option_price;
-
-            option_val *= 1;
+            var total_summary_price = 0;
             if(chks[idx].checked == true)
             {
-                total_prd_price = document.getElementById("div_total_prd_price").innerText;
-                addOption_price = removeComma(total_prd_price) + option_val;
+                var prd_price = document.getElementById("prd_price_" + idx).innerText;
+                var count = document.getElementById("prodQuantity_" + idx).value;
+                prd_price = removeComma(prd_price);
+                prd_price *= 1;
 
-                document.getElementById(option_name).value = option_val;
-                all_total_price(addOption_price);
+                var option = 0;
+
+                var prd_option1_name = "options_" + idx +"_1";
+                var prd_option2_name = "options_" + idx +"_2";
+                var prd_option3_name = "options_" + idx +"_3";
+
+                var option1 = document.getElementById(prd_option1_name);
+                var option2 = document.getElementById(prd_option2_name);
+                var option3 = document.getElementById(prd_option3_name);
+
+                if(option1 != null && option1.selectedIndex > 0)
+                {
+                    var option1_val = option1.value;
+                    option1_val *= 1;
+                    option += option1_val;
+                }
+                if(option2 != null && option2.selectedIndex > 0)
+                {
+                    var option2_val = option2.value;
+                    option2_val *= 1;
+                    option += option2_val;
+                }
+                if(option3 != null && option3.selectedIndex > 0)
+                {
+                    var option3_val = option3.value;
+                    option3_val *= 1;
+                    option += option3_val;
+                }
+
+                prd_total_price = parseInt(prd_price);
+                if(option > 0)
+                    prd_total_price += option;
+
+                if(count > 1)
+                    prd_total_price = (prd_total_price * count);
+
+                total_summary_price += prd_total_price;
+                document.getElementById("prd_real_price_" + idx).innerHTML = "<strong>" + numberWithCommas(prd_total_price) + "</<strong>";
+
+                all_total_price(total_summary_price);
             }
          }
 
@@ -693,7 +730,7 @@
             if (document.getElementById(quantity_name).value >= parseInt(max))
                 document.getElementById(quantity_name).value = max;
 
-            total_count();
+            myOption(id);
 
         }
         function down(min, id) {
@@ -702,7 +739,7 @@
             if (document.getElementById(quantity_name).value <= parseInt(min))
                 document.getElementById(quantity_name).value = min;
 
-            total_count();
+            myOption(id);
         }
 
         // total 금액 계산하기
@@ -730,7 +767,7 @@
                 prd_option_name = "options_" + i;
 
                 prd_price = document.getElementById(prd_price_name).innerText;
-                document.getElementById(prd_price_name).innerText = numberWithCommas(prd_price);
+                document.getElementById(prd_price_name).innerHTML = "<strong>" + numberWithCommas(prd_price) + "</<strong>";
 
 				if (chks[i].checked == true)
 				{
@@ -769,24 +806,18 @@
                         var option1_val = option1.value;
                         option1_val *= 1;
                         option += option1_val;
-                        var minus_option1_name = "minus_" + i +"_1";
-                        document.getElementById(minus_option1_name).value = option1_val;
                     }
                     if(option2 != null && option2.selectedIndex > 0)
                     {
                         var option2_val = option2.value;
                         option2_val *= 1;
                         option += option2_val;
-                        var minus_option2_name = "minus_" + i +"_2";
-                        document.getElementById(minus_option2_name).value = option2_val;
                     }
                     if(option3 != null && option3.selectedIndex > 0)
                     {
                         var option3_val = option3.value;
                         option3_val *= 1;
                         option += option3_val;
-                        var minus_option3_name = "minus_" + i +"_3";
-                        document.getElementById(minus_option3_name).value = option3_val;
                     }
 
                     prd_total_price = parseInt(prd_price);
@@ -809,6 +840,7 @@
                      }
 
                     total_summary_price += prd_total_price;
+                    document.getElementById("prd_real_price_" + i).innerHTML = "<strong>" + numberWithCommas(prd_total_price) + "</<strong>";
 				}
 				else
 				{

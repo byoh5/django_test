@@ -926,7 +926,12 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	color:#646464;
 }
 .codingLounge_list ul li .text_area a.brd_detail {
-	position:absolute;
+
+}
+
+
+
+/* review list */position:absolute;
 	display:table;
 	right:1.25em;
 	bottom:1.25em;
@@ -935,11 +940,6 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	color:#b14739;
 	border:1px solid #b14739;
 	border-radius:3px;
-}
-
-
-
-/* review list */
 .review_top {
 	position:relative;
 	display:flex;

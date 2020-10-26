@@ -391,8 +391,8 @@ tfoot tr td {
 
 .order-option .prdModify li { padding:6px 0 0; *zoom:1; }
 .order-option .prdModify li:after { content:""; display:block; clear:both; }
-.order-option .prdModify li span { float:left; width:110px; margin:3px 0 0; }
-.order-option .prdModify li select { float:right; width:294px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px; }
+.order-option .prdModify li span { float:center width:110px; margin:3px 0 0; }
+.prdModify li select { width:180px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px; }
 .prdModify li input { float:right; width:286px; height:22px; padding:0 0 0 6px; border:1px solid #d4d4d4; color:#3c3c3c; line-height:22px; }
 
 .xans-order-totalsummary {
@@ -476,32 +476,34 @@ tr {
 span.quantity {
     position: relative;
     display: inline-block;
-    width: 27px;
+    width: 25px;
     margin: 0 1px 4px 0;
-    padding: 0 21px 0 0;
     border: 1px solid #d4d8d9;
     border-radius: 2px;
 }
 
 span.quantity .QuantityUp {
     position: absolute;
-    left: 27px;
+    left: 24px;
     top: 0;
-    border:none;
+    height:50%;
+    border:1px solid #d4d8d9;
     vertical-align: top;
+
 }
 
 span.quantity .QuantityDown {
     position: absolute;
-    left: 27px;
+    left: 24px;
     bottom: 0;
-    border: none;
+    height:50%;
+    border: 1px solid #d4d8d9;
     vertical-align: top;
 }
 
 span.quantity input {
     width: 22px;
-    height: 23px;
+    height: 22px;
     padding: 0 0 0 5px;
     border: 0;
     line-height: 23px;
@@ -512,9 +514,7 @@ span.quantity input {
 }
 
 .quantity_td {
-    padding: 8px 0 5px;
-    text-align: center;
-    vertical-align: middle;
+    text-align: left;
     word-wrap: break-word;
 }
 
