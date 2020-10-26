@@ -90,7 +90,7 @@ def order_delete(request):
     for idx in split_order:
         if len(idx) > 0:
             order_info = select_order_idx(idx, user_id)
-            delete_order_idx(order_info)
+            delete_order_idx(order_info, '')
 
     new_order_info = select_order(user_id)
     delivery = 0

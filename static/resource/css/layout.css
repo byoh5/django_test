@@ -2475,6 +2475,8 @@ input[id*="answer"] + label + div {
     background:#f9f9f9;
     font-size:17px;
     color:#000;
+    max-width: 1110px;
+    width:100%;
 
 }
 input[id*="answer"] + label + div p {

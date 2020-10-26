@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+
 from main.views import *
 from main.codeView.lecture import *
 from main.codeView.comunity import *

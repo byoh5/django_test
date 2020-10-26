@@ -368,6 +368,19 @@ div, header, section, nav, input, ul, li {
     justify-content: center;
 }
 
+.btn-del {
+
+	display:table;
+	right:1.25em;
+	bottom:1.25em;
+	margin-left:1.55em;
+	padding:0.25em 1em;
+	font-size:0.66em;
+	color:#b14739;
+	border:1px solid #b14739;
+	border-radius:3px;
+}
+
 tfoot tr td {
     border-bottom: 1px solid #efefef;
     background: #f7f7f7;
@@ -385,12 +398,11 @@ tfoot tr td {
 .xans-order-totalsummary {
     color: #353535;
     line-height: 1.5;
-
     margin-right: auto;
     margin-left: auto;
     padding-left: 10px;
     padding-right: 10px;
-    max-width: 1110px;
+    max-width: 1085px;
     width:100%;
 }
 

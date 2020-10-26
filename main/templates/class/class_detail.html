@@ -259,17 +259,37 @@
         {
             var count = document.getElementById("prodQuantity").value;
             var prd = removeComma(document.getElementById("prd_price").innerText);
-            var option1 =  document.getElementById("options_1").value;
-            var option2 =  document.getElementById("options_2").value;
-            var option3 =  document.getElementById("options_3").value;
+
+            var option1_name = document.getElementById("options_1");
+            var option2_name = document.getElementById("options_2");
+            var option3_name = document.getElementById("options_3");
 
             prd *= 1;
-            option1 *= 1;
-            option2 *= 1;
-            option3 *= 1;
-            count *= 1;
+            var option_price = 0;
+            option_price *= 1;
+            if(option1_name != null)
+            {
+                var option1 =  option1_name.value;
+                option1 *= 1;
+                option_price += option1;
+            }
 
-            prd = prd + option1 + option2 + option3;
+            if(option2_name != null)
+            {
+                var option2 =  option2_name.value;
+                option2 *= 1;
+                option_price += option2;
+            }
+
+            if(option3_name != null)
+            {
+                var option3 =  option3_name.value;
+                option3 *= 1;
+                option_price += option3;
+            }
+
+            count *= 1;
+            prd = prd + option_price;
             prd =  prd * count;
             document.getElementById("total_price").innerHTML =  numberWithCommas(prd);
 
