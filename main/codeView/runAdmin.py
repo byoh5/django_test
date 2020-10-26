@@ -338,10 +338,12 @@ def user_search(request):
 
         myclass_info_paging = select_myclass_list_date_paging(user_id, start_datetime_filter, end_datetime_filter, start_cnt, end_cnt)
         pay_info = select_pay_user(user_id)
+        order_info = select_order_d(user_id)
 
         context = {
             "myclass_info": myclass_info_paging,
             "pay_info": pay_info,
+            "order_info":order_info,
             "user_info": user_info[0],
             "total_count": total,
             "start_date": start_date,

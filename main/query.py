@@ -6,6 +6,10 @@ def select_order(user_id):
     order_info = OrderTB.objects.filter(user_id=user_id, dbstat='A')
     return order_info
 
+def select_order_d(user_id):
+    order_info = OrderTB.objects.filter(user_id=user_id, dbstat='D-')
+    return order_info
+
 def select_order_idx(idx, user_id):
     order_info = OrderTB.objects.filter(order_idx=idx, user_id=user_id, dbstat='A')
     return order_info

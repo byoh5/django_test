@@ -40,26 +40,46 @@
         <table id="payList" style="margin-left: 300px; width: 1130px;">
             <thread>
                 <tr class="row">
+                    <th class="admin_list_check">&nbsp;</th>
                     <th class="admin_list">이름</th>
-                    <th class="admin_list_id">아이디</th>
                     <th class="admin_list_id">주문번호</th>
-                    <th class="admin_list_id">키트번호</th>
                     <th class="admin_list_id">주문키트</th>
+                    <th class="admin_list">키트가격</th>
+                    <th class="admin_list">옵션</th>
                     <th class="admin_list">강의상태</th>
-                    <th class="admin_list_id">결제방법</th>
-                    <th class="admin_list">결제 day</th>
-                    <th class="admin_list">환불여부</th>
+                    <th class="admin_list">결제방법</th>
+                    <th class="admin_list">결제일</th>
+                    <th class="admin_list">환불상태</th>
                     <th class="admin_list">&nbsp;</th>
                 </tr>
             </thread>
             <tbody>
                 {% for myclass in myclass_info %}
                 <tr class="row">
-                    <td class="admin_list_body">{{user_info.regi_name}}</td>
-                    <td class="admin_list_id_body">{{myclass.user_id}}</td>
+                    <td class="admin_list_body"><input type="checkbox" name="idxs" value=""></td>
+                    <td class="admin_list_body">
+                        <a href="javascript:alert('아이디 : {{myclass.user_id}}');">{{user_info.regi_name}}</a>
+                    </td>
                     <td class="admin_list_id_body">{{myclass.pay_num}}</td>
-                    <td class="admin_list_id_body">{{myclass.prd.prd_code}}</td>
-                    <td class="admin_list_body">{{myclass.prd.title}}</td>
+                    <td class="admin_list_body">
+                        <a href="javascript:alert('키드번호 : {{myclass.prd.prd_code}}');">{{myclass.prd.title}}</a>
+                    </td>
+                    <td class="admin_list_body">{{myclass.prd.price}}</td>
+                    <td class="admin_list_body">
+                        {% for order_list in order_info %}
+                        {% if myclass.pay_num == order_list.pay_num %}
+                            {% if order_list.option1_selectNum == 2 %}
+                                {{myclass.prd.option1}}({{myclass.prd.option1_price}})
+                            {% endif%}
+                            {% if order_list.option2_selectNum == 2 %}
+                                {{myclass.prd.option2}}({{myclass.prd.option2_price}})
+                            {% endif%}
+                            {% if order_list.option3_selectNum == 2 %}
+                                {{myclass.prd.option3}}({{myclass.prd.option3_price}})
+                            {% endif%}
+                        {% endif %}
+                        {% endfor %}
+                    </td>
                     <td class="admin_list_body">
                         {% if myclass.play == 'D' %}
                         강의시작 X
@@ -70,7 +90,11 @@
                     <td class="admin_list_body date">
                         {% for pay_list in pay_info %}
                         {% if myclass.pay_num == pay_list.pay_num %}
-                            {{pay_list.payWay.name}}
+                        <input type="hidden" id="prd_price_{{forloop.counter0}}" name="prd_price_{{forloop.counter0}}" value="{{pay_list.prd_price}}">
+                        <input type="hidden" id="delivery_price_{{forloop.counter0}}" name="delivery_price_{{forloop.counter0}}" value="{{pay_list.delivery_price}}">
+                        <input type="hidden" id="prd_total_price_{{forloop.counter0}}" name="prd_total_price_{{forloop.counter0}}" value="{{pay_list.prd_total_price}}">
+
+                        <a href="javascript:alert('총결제금액 : {{pay_list.prd_price}} + {{pay_list.delivery_price}} = {{pay_list.prd_total_price}}');">{{pay_list.payWay.name}}</a>
 
                             {% if pay_list.payWay.value == 'deposit' %}
                               <br/>{{pay_list.payWay_name}}

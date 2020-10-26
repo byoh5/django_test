@@ -76,13 +76,14 @@
                         <input type="hidden" name="payIdx_{{forloop.counter0}}" id="payIdx_{{forloop.counter0}}" value={{deposit.pay_idx}}>
                          {% if deposit.pay_result == 0 %}
                              {% if ok_status == deposit.pay_user_status.userStatus_idx %}
-                             <input type="checkbox" name="idxs" value={{deposit.pay_idx}}"></td>
+                             <input type="checkbox" name="idxs" value={{deposit.pay_idx}}">
                              {%else%}
-                             <input type="checkbox" disabled name="idxs" value={{deposit.pay_idx}}"></td>
+                             <input type="checkbox" disabled name="idxs" value={{deposit.pay_idx}}">
                              {% endif %}
                         {%else%}
-                        <input type="checkbox" disabled name="idxs[]" value={{deposit.pay_idx}}"></td>
+                        <input type="checkbox" disabled name="idxs[]" value={{deposit.pay_idx}}">
                         {% endif %}
+                    </td>
                     <td class="admin_list_body">{{deposit.pay_user.regi_name}}</td>
                     <td class="admin_list_id_body">{{deposit.pay_user.regi_email}}</td>
                     <td class="admin_list_id_body">{{deposit.pay_num}}</td>
