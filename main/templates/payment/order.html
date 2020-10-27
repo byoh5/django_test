@@ -566,54 +566,56 @@
          {
             var chks = document.getElementsByName('idxs[]');
             var total_summary_price = 0;
-            if(chks[idx].checked == true)
+            for (var idx=0,m=chks.length;idx<m ;idx++)
             {
-                var prd_price = document.getElementById("prd_price_" + idx).innerText;
-                var count = document.getElementById("prodQuantity_" + idx).value;
-                prd_price = removeComma(prd_price);
-                prd_price *= 1;
-
-                var option = 0;
-
-                var prd_option1_name = "options_" + idx +"_1";
-                var prd_option2_name = "options_" + idx +"_2";
-                var prd_option3_name = "options_" + idx +"_3";
-
-                var option1 = document.getElementById(prd_option1_name);
-                var option2 = document.getElementById(prd_option2_name);
-                var option3 = document.getElementById(prd_option3_name);
-
-                if(option1 != null && option1.selectedIndex > 0)
+                if(chks[idx].checked == true)
                 {
-                    var option1_val = option1.value;
-                    option1_val *= 1;
-                    option += option1_val;
+                    var prd_price = document.getElementById("prd_price_" + idx).innerText;
+                    var count = document.getElementById("prodQuantity_" + idx).value;
+                    prd_price = removeComma(prd_price);
+                    prd_price *= 1;
+
+                    var option = 0;
+
+                    var prd_option1_name = "options_" + idx +"_1";
+                    var prd_option2_name = "options_" + idx +"_2";
+                    var prd_option3_name = "options_" + idx +"_3";
+
+                    var option1 = document.getElementById(prd_option1_name);
+                    var option2 = document.getElementById(prd_option2_name);
+                    var option3 = document.getElementById(prd_option3_name);
+
+                    if(option1 != null && option1.selectedIndex > 0)
+                    {
+                        var option1_val = option1.value;
+                        option1_val *= 1;
+                        option += option1_val;
+                    }
+                    if(option2 != null && option2.selectedIndex > 0)
+                    {
+                        var option2_val = option2.value;
+                        option2_val *= 1;
+                        option += option2_val;
+                    }
+                    if(option3 != null && option3.selectedIndex > 0)
+                    {
+                        var option3_val = option3.value;
+                        option3_val *= 1;
+                        option += option3_val;
+                    }
+
+                    prd_total_price = parseInt(prd_price);
+                    if(option > 0)
+                        prd_total_price += option;
+
+                    if(count > 1)
+                        prd_total_price = (prd_total_price * count);
+
+                    total_summary_price += prd_total_price;
+                    document.getElementById("prd_real_price_" + idx).innerHTML = "<strong>" + numberWithCommas(prd_total_price) + "</<strong>";
                 }
-                if(option2 != null && option2.selectedIndex > 0)
-                {
-                    var option2_val = option2.value;
-                    option2_val *= 1;
-                    option += option2_val;
-                }
-                if(option3 != null && option3.selectedIndex > 0)
-                {
-                    var option3_val = option3.value;
-                    option3_val *= 1;
-                    option += option3_val;
-                }
-
-                prd_total_price = parseInt(prd_price);
-                if(option > 0)
-                    prd_total_price += option;
-
-                if(count > 1)
-                    prd_total_price = (prd_total_price * count);
-
-                total_summary_price += prd_total_price;
-                document.getElementById("prd_real_price_" + idx).innerHTML = "<strong>" + numberWithCommas(prd_total_price) + "</<strong>";
-
-                all_total_price(total_summary_price);
             }
+             all_total_price(total_summary_price);
          }
 
          function goPay()
