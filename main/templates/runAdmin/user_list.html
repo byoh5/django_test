@@ -8,6 +8,7 @@
                 <li><a href="/deposit_list/">무통장 입금 조회</a></li>
                 <li><a href="/pay_list/">구매 데이터 조회</a></li>
                 <li class="admin_active"><a href="/user_list/">사용자 조회</a></li>
+                <li><a href="/refund_list/">환불</a></li>
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <li><a href="https://admin.iamport.kr/users/login" target="_blank">아임포트 관리자</a></li>
                 <li><a href="https://partner.danalpay.com/account/login?next=%2F#" target="_blank">다날 (휴대폰인증)</a></li>
@@ -40,44 +41,43 @@
         <table id="payList" style="margin-left: 300px; width: 1130px;">
             <thread>
                 <tr class="row">
-                    <th class="admin_list_check">&nbsp;</th>
                     <th class="admin_list">이름</th>
+                     <th class="admin_list">결제일</th>
                     <th class="admin_list_id">주문번호</th>
                     <th class="admin_list_id">주문키트</th>
                     <th class="admin_list">키트가격</th>
                     <th class="admin_list">옵션</th>
                     <th class="admin_list">강의상태</th>
                     <th class="admin_list">결제방법</th>
-                    <th class="admin_list">결제일</th>
-                    <th class="admin_list">환불상태</th>
-                    <th class="admin_list">&nbsp;</th>
                 </tr>
             </thread>
             <tbody>
                 {% for myclass in myclass_info %}
                 <tr class="row">
-                    <td class="admin_list_body"><input type="checkbox" name="idxs" value=""></td>
                     <td class="admin_list_body">
                         <a href="javascript:alert('아이디 : {{myclass.user_id}}');">{{user_info.regi_name}}</a>
                     </td>
+                    <td class="admin_list_body date"> {{myclass.start_time | date:'Y-m-d' }}</td>
                     <td class="admin_list_id_body">{{myclass.pay_num}}</td>
                     <td class="admin_list_body">
                         <a href="javascript:alert('키드번호 : {{myclass.prd.prd_code}}');">{{myclass.prd.title}}</a>
                     </td>
-                    <td class="admin_list_body">{{myclass.prd.price}}</td>
+                    <td class="admin_list_body">{{myclass.prd.price}}원</td>
                     <td class="admin_list_body">
                         {% for order_list in order_info %}
-                        {% if myclass.pay_num == order_list.pay_num %}
-                            {% if order_list.option1_selectNum == 2 %}
-                                {{myclass.prd.option1}}({{myclass.prd.option1_price}})
-                            {% endif%}
-                            {% if order_list.option2_selectNum == 2 %}
-                                {{myclass.prd.option2}}({{myclass.prd.option2_price}})
-                            {% endif%}
-                            {% if order_list.option3_selectNum == 2 %}
-                                {{myclass.prd.option3}}({{myclass.prd.option3_price}})
-                            {% endif%}
-                        {% endif %}
+                            {% if myclass.pay_num == order_list.pay_num %}
+                                {% if myclass.prd.prd_code == order_list.prd.prd_code %}
+                                    {% if order_list.option1_selectNum == 2 %}
+                                        {{myclass.prd.option1}}({{myclass.prd.option1_price}}원)<br/>
+                                    {% endif%}
+                                    {% if order_list.option2_selectNum == 2 %}
+                                        {{myclass.prd.option2}}({{myclass.prd.option2_price}}원)<br/>
+                                    {% endif%}
+                                    {% if order_list.option3_selectNum == 2 %}
+                                        {{myclass.prd.option3}}({{myclass.prd.option3_price}}원)<br/>
+                                    {% endif%}
+                                {% endif %}
+                            {% endif %}
                         {% endfor %}
                     </td>
                     <td class="admin_list_body">
@@ -89,37 +89,19 @@
                     </td>
                     <td class="admin_list_body date">
                         {% for pay_list in pay_info %}
-                        {% if myclass.pay_num == pay_list.pay_num %}
-                        <input type="hidden" id="prd_price_{{forloop.counter0}}" name="prd_price_{{forloop.counter0}}" value="{{pay_list.prd_price}}">
-                        <input type="hidden" id="delivery_price_{{forloop.counter0}}" name="delivery_price_{{forloop.counter0}}" value="{{pay_list.delivery_price}}">
-                        <input type="hidden" id="prd_total_price_{{forloop.counter0}}" name="prd_total_price_{{forloop.counter0}}" value="{{pay_list.prd_total_price}}">
+                            {% if myclass.pay_num == pay_list.pay_num %}
+                                <input type="hidden" id="prd_price_{{forloop.counter0}}" name="prd_price_{{forloop.counter0}}" value="{{pay_list.prd_price}}">
+                                <input type="hidden" id="delivery_price_{{forloop.counter0}}" name="delivery_price_{{forloop.counter0}}" value="{{pay_list.delivery_price}}">
+                                <input type="hidden" id="prd_total_price_{{forloop.counter0}}" name="prd_total_price_{{forloop.counter0}}" value="{{pay_list.prd_total_price}}">
 
-                        <a href="javascript:alert('총결제금액 : {{pay_list.prd_price}} + {{pay_list.delivery_price}} = {{pay_list.prd_total_price}}');">{{pay_list.payWay.name}}</a>
+                                <a href="javascript:alert('총결제금액 : {{pay_list.prd_price}} + {{pay_list.delivery_price}} = {{pay_list.prd_total_price}} \n배송일:{{pay_list.delivery_time | date:'Y-m-d' }}');">{{pay_list.payWay.name}}</a>
 
-                            {% if pay_list.payWay.value == 'deposit' %}
-                              <br/>{{pay_list.payWay_name}}
-                              <br/>{{pay_list.payWay_account}}
-                            {% endif%}
+                                {% if pay_list.payWay.value == 'deposit' %}
+                                  <br/>{{pay_list.payWay_name}}
+                                {% endif%}
 
-                        {% endif %}
+                            {% endif %}
                         {% endfor %}
-                    </td>
-                    <td class="admin_list_body date"> {{myclass.start_time | date:'Y-m-d' }}</td>
-                    <td class="admin_list_body date">
-                        {% if myclass.dbstat == 'D-refund' %}
-                        환불됨
-                        {% elif myclass.dbstat == 'D-refund-req' %}
-                        환불요청됨
-                        {% endif %}
-                    </td>
-                    <td class="admin_list_body date">
-                     {% if myclass.play == 'D' %}
-                        {% if myclass.dbstat != 'D-refund' %}
-                        <a href="javascript:void(0);" onClick="javascript:refund('{{myclass.pay_num}}');" style="cursor:pointer;color:red;"><strong>환불하기</strong></a>
-                        {% endif %}
-                    {% else %}
-                    환불불가
-                    {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -171,6 +153,12 @@
         var end_date = document.getElementById('end_date').value;
         var searchBox = $('[name=search_box]').val();
 
+        if(start_date > end_date)
+        {
+            alert("날짜 설정을 다시 해주세요");
+            return false;
+        }
+
         if(searchBox == "")
         {
             alert("검색 내용을 입력하세요.");
@@ -193,34 +181,5 @@
         newForm.submit();
 
      }
-
-    function refund(pay_num)
-    {
-        var start_date = document.getElementById('start_date').value;
-        var end_date = document.getElementById('end_date').value;
-        var searchBox = $('[name=search_box]').val();
-
-        if(searchBox == "")
-        {
-            alert("검색 내용을 입력하세요.");
-            return false;
-        }
-
-        var newForm = $('<form></form>');
-
-        newForm.attr("name", "user_refund");
-        newForm.attr("method", "post");
-        newForm.attr("action", "/user_refund/");
-
-        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-        newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'pay_num', value : pay_num }));
-        newForm.append($('<input/>', {type: 'hidden', name: 'paging_num', value : 1 }));
-
-        newForm.appendTo('body');
-        newForm.submit();
-    }
     </script>
 </body></html>

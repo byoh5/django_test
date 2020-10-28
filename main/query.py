@@ -34,8 +34,11 @@ def select_order_date(start_datetime_filter, end_datetime_filter, search):
     if search is not "":
         query_search.add(Q(user_id__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
 
-    order_pay_info = OrderTB.objects.filter(query_search, pay_num__icontains='-',
-                                            modified__range=(start_datetime_filter.date(), end_datetime_filter.date())).order_by(sort_order)
+    if start_datetime_filter is not "":
+        query_search.add(Q(modified__range=(start_datetime_filter.date(), end_datetime_filter.date())),
+                         query_search.AND)
+
+    order_pay_info = OrderTB.objects.filter(query_search, pay_num__icontains='-').order_by(sort_order)
     return order_pay_info
 
 def select_register(regi_email):
@@ -93,8 +96,10 @@ def select_pay_date_deposit(start_datetime_filter, end_datetime_filter, search):
     if search is not "":
         query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
 
-    pay_info = PayTB.objects.filter(query_search, pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()),
-                                    payWay__value='deposit').order_by(sort_order)
+    if start_datetime_filter is not "":
+        query_search.add(Q(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search, payWay__value='deposit').order_by(sort_order)
     return pay_info
 
 def select_pay_date_deposit_paging(start_datetime_filter, end_datetime_filter, search, start_cnt, end_cnt):
@@ -105,9 +110,43 @@ def select_pay_date_deposit_paging(start_datetime_filter, end_datetime_filter, s
     if search is not "":
         query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
 
-    pay_info = PayTB.objects.filter(query_search,
-                                    pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date()),
-                                    payWay__value='deposit').order_by(sort_order)[start_cnt:end_cnt]
+    if start_datetime_filter is not "":
+        query_search.add(Q(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())),
+                         query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search, payWay__value='deposit').order_by(sort_order)[start_cnt:end_cnt]
+    return pay_info
+
+def select_pay_date_done(start_datetime_filter, end_datetime_filter, search):
+    sort_order = '-pay_idx'
+
+    query_search = Q()
+    query_search.add(~Q(pay_result=1), query_search.AND)
+
+    if search is not "":
+        query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
+
+    if start_datetime_filter is not "":
+        query_search.add(Q(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search).order_by(sort_order)
+
+    return pay_info
+
+def select_pay_date_done_cnt(start_datetime_filter, end_datetime_filter, search, start_cnt, end_cnt):
+    sort_order = '-pay_idx'
+
+    query_search = Q()
+    query_search.add(~Q(pay_result=1), query_search.AND)
+
+    if search is not "":
+        query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
+
+    if start_datetime_filter is not "":
+        query_search.add(Q(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search).order_by(sort_order)[start_cnt:end_cnt]
+
     return pay_info
 
 def select_pay_date(start_datetime_filter, end_datetime_filter, search, status):
@@ -121,7 +160,10 @@ def select_pay_date(start_datetime_filter, end_datetime_filter, search, status):
     if search is not "":
         query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
 
-    pay_info = PayTB.objects.filter(query_search, pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())).order_by(sort_order)
+    if start_datetime_filter is not "":
+        query_search.add(Q(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search).order_by(sort_order)
 
     return pay_info
 
@@ -136,7 +178,11 @@ def select_pay_date_cnt(start_datetime_filter, end_datetime_filter, search, stat
     if search is not "":
         query_search.add(Q(pay_user__regi_email__icontains=search) | Q(pay_num__icontains=search), query_search.AND)
 
-    pay_info = PayTB.objects.filter(query_search, pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())).order_by(sort_order)[start_cnt:end_cnt]
+    if start_datetime_filter is not "":
+        query_search.add(Q(pay_time__range=(start_datetime_filter.date(), end_datetime_filter.date())),
+                         query_search.AND)
+
+    pay_info = PayTB.objects.filter(query_search).order_by(sort_order)[start_cnt:end_cnt]
 
     return pay_info
 
@@ -158,7 +204,7 @@ def select_myclass_list_date(keyword, start_datetime_filter, end_datetime_filter
     query_search = Q()
 
     if keyword is not "":
-        query_search.add(Q(user_id=keyword), query_search.AND)
+        query_search.add((Q(user_id__icontains=keyword) | Q(pay_num__icontains=keyword)), query_search.AND)
 
     if start_datetime_filter is not "":
         query_search.add(Q(start_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
@@ -174,7 +220,7 @@ def select_myclass_list_date_paging(keyword, start_datetime_filter, end_datetime
     query_search = Q()
 
     if keyword is not "":
-        query_search.add(Q(user_id=keyword), query_search.AND)
+        query_search.add((Q(user_id__icontains=keyword) | Q(pay_num__icontains=keyword)), query_search.AND)
 
     if start_datetime_filter is not "":
         query_search.add(Q(start_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
@@ -194,6 +240,10 @@ def select_myclass_list_payNum_refund(user_id, pay_num):
 
 def select_myclass_list_payNum_active(user_id, pay_num):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='A')
+    return myclass_list_info
+
+def select_myclass_list_paynum_noplay(user_id, pay_num):
+    myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, play='D')
     return myclass_list_info
 
 def select_myclass_list_play(myclass_idx):
@@ -306,6 +356,46 @@ def select_payway():
 def select_payway_value(value):
     payway_info = PayWayTB.objects.filter(dbstat='A', value=value)
     return payway_info
+
+def select_refund_idx(idx):
+    refund_info = refundTB.objects.filter(refund_idx=idx)
+
+    return refund_info
+
+def select_refund_paynum(user_id, paynum):
+    refund_info = refundTB.objects.filter(user_email=user_id, pay_num=paynum)
+
+    return refund_info
+
+def select_refund_search(search, start_datetime_filter, end_datetime_filter):
+    sort_order = '-refund_idx'
+
+    query_search = Q()
+
+    if search is not "":
+        query_search.add((Q(user_email__icontains=search) | Q(pay_num__icontains=search)), query_search.AND)
+
+    if start_datetime_filter is not "":
+        query_search.add(Q(refund_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
+
+    refund_info = refundTB.objects.filter(query_search).order_by(sort_order)
+
+    return refund_info
+
+def select_refund_search_cnt(search, start_datetime_filter, end_datetime_filter, start_cnt, end_cnt):
+    sort_order = '-refund_idx'
+
+    query_search = Q()
+
+    if search is not "":
+        query_search.add((Q(user_email__icontains=search) | Q(pay_num__icontains=search)), query_search.AND)
+
+    if start_datetime_filter is not "":
+        query_search.add(Q(refund_time__range=(start_datetime_filter.date(), end_datetime_filter.date())), query_search.AND)
+
+    refund_info = refundTB.objects.filter(query_search).order_by(sort_order)[start_cnt:end_cnt]
+
+    return refund_info
 
 def update_user_addr(user_id, add01,add02,add03):
     user_info = select_register(user_id)

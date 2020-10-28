@@ -8,6 +8,7 @@
                     <li class="admin_active"><a href="/deposit_list/">무통장 입금 조회</a></li>
                     <li><a href="/pay_list/">구매 데이터 조회</a></li>
                     <li><a href="/user_list/">사용자 조회</a></li>
+                    <li><a href="/refund_list/">환불</a></li>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <li><a href="https://admin.iamport.kr/users/login" target="_blank">아임포트 관리자</a></li>
                     <li><a href="https://partner.danalpay.com/account/login?next=%2F#" target="_blank">다날 (휴대폰인증)</a></li>
@@ -61,19 +62,15 @@
                         <td class="admin_list_body">{{deposit.delivery_phone}}</td>
                         <td class="admin_list_body">{{deposit.prd_total_price}}</td>
                         <td class="admin_list_body">
-                        {% for myclass in myclass_list %}
-                            {% if myclass.pay_num == deposit.pay_num %}
-                                {% if myclass.dbstat == 'A' %}
+                            {% if deposit.pay_result == 100 %}
+                                <a href="javascript:void(0);" onClick="javascript:change('{{deposit.pay_user.regi_email}}', '{{deposit.pay_num}}');" style="cursor:pointer;color:red;"><strong>확인</strong></a>
+                            {% elif deposit.pay_result == 0 %}
                                 확인됨
-                                {% elif myclass.dbstat == 'D-refund' %}
+                            {% elif deposit.pay_result == 2 %}
                                 환불됨
-                                {% elif myclass.dbstat == 'D-refund-req' %}
+                            {% elif deposit.pay_result == 3 %}
                                 환불요청
-                                {% else %}
-                               <a href="javascript:void(0);" onClick="javascript:change('{{deposit.pay_user.regi_email}}', '{{deposit.pay_num}}');" style="cursor:pointer;color:red;"><strong>확인</strong></a>
-                                {% endif %}
                             {% endif %}
-                        {% endfor %}
                         </td>
                     </tr>
                     {% endfor %}
@@ -130,6 +127,13 @@
             return false;
         }
 
+        if(start_date > end_date)
+        {
+            alert("날짜 설정을 다시 해주세요");
+            return false;
+        }
+
+
         var newForm = $('<form></form>');
 
         newForm.attr("name", "deposit_search");
@@ -158,6 +162,13 @@
             alert("날짜선택하세요");
             return false;
         }
+
+        if(start_date > end_date)
+        {
+            alert("날짜 설정을 다시 해주세요");
+            return false;
+        }
+
 
         var newForm = $('<form></form>');
 

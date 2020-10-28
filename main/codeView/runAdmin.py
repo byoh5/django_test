@@ -1,11 +1,4 @@
 from datetime import datetime
-
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.utils import timezone
-from main.query import *
-from main.models import *
-
 from main.codeView.payment import *
 
 pay_status_ok = 1
@@ -30,16 +23,17 @@ def deposit_list(request):
 def deposit_search(request):
     userid = request.session.get('user_id')
     user_info = select_register(userid)
-    paging_num = int(request.POST['paging_num'])  # 옮기고자 하는 paging 번호
     page_cnt = display_count  # display count 노출되는 리스트 갯수
 
     if user_info is not None:
         if user_info[0].level == 100:
-            start_date = request.POST['start_date']
+            start_date = request.POST.get('start_date', '0')
+            if start_date == '0':
+                return deposit_list(request)
             end_date = request.POST['end_date']
             searchBox = request.POST['searchBox']
+            paging_num = int(request.POST['paging_num'])  # 옮기고자 하는 paging 번호
 
-            print(searchBox)
 
             split_start = start_date.split('-')
             start_year = int(split_start[0])
@@ -70,12 +64,10 @@ def deposit_search(request):
                 end_cnt = start_cnt + page_cnt
 
             new_pay_info = select_pay_date_deposit_paging(start_datetime_filter, end_datetime_filter, searchBox, start_cnt, end_cnt)
-            myclass_list_info = select_myclass_date_deposit(start_datetime_filter, end_datetime_filter)
 
             context = {
                 "pay_info": new_pay_info,
                 "total_count":total,
-                "myclass_list":myclass_list_info,
                 "start_date": start_date,
                 "end_date": end_date,
                 "search": searchBox,
@@ -93,9 +85,12 @@ def deposit_search(request):
         return render(request, 'login/login.html')
 
 def deposit_change(request):
+    start_date = request.POST.get('start_date', '0')
+    if start_date == '0':
+        return deposit_list(request)
+
     pay_num = request.POST['pay_num']
     user_id = request.POST['user_id']
-    start_date = request.POST['start_date']
     end_date = request.POST['end_date']
     searchBox = request.POST['searchBox']
     admin = request.session.get('user_id')
@@ -131,12 +126,10 @@ def deposit_change(request):
     end_datetime_filter = datetime(end_year, end_month, end_day)
 
     pay_info = select_pay_date_deposit(start_datetime_filter, end_datetime_filter, searchBox)
-    myclass_list_info = select_myclass_date_deposit(start_datetime_filter, end_datetime_filter)
 
     context = {
         "pay_info": pay_info,
         "total_count": pay_info.count(),
-        "myclass_list": myclass_list_info,
         "start_date": start_date,
         "end_date": end_date,
         "search": searchBox,
@@ -153,7 +146,10 @@ def pay_list(request):
     return render(request, 'runAdmin/pay_list.html', context)
 
 def pay_search(request):
-    start_date = request.POST['start_date']
+    start_date = request.POST.get('start_date', '0')
+    if start_date == '0':
+        return pay_list(request)
+
     end_date = request.POST['end_date']
     searchBox = request.POST['searchBox']
     status = request.POST['status']
@@ -210,7 +206,10 @@ def pay_search(request):
     return render(request, 'runAdmin/pay_list.html', context)
 
 def pay_change(request):
-    start_date = request.POST['start_date']
+    start_date = request.POST.get('start_date', '0')
+    if start_date == '0':
+        return pay_list(request)
+
     end_date = request.POST['end_date']
     searchBox = request.POST['searchBox']
     status = request.POST['status']
@@ -218,7 +217,6 @@ def pay_change(request):
     admin = request.session.get('user_id')
     page_cnt = int(request.POST['page_cnt'])
     paging_num = int(request.POST['paging_num'])
-
 
     pay_userStatus_info = select_userStatue(pay_status_delivery)
 
@@ -292,9 +290,12 @@ def user_list(request):
     return render(request, 'runAdmin/user_list.html', context)
 
 def user_search(request):
+    user_id = request.POST.get('searchBox', '0')
+    if user_id == '0':
+        return user_list(request)
+
     start_date = request.POST['start_date']
     end_date = request.POST['end_date']
-    user_id = request.POST['searchBox']
     paging_num = int(request.POST['paging_num']) #옮기고자 하는 paging 번호
     page_cnt = display_count #display count 노출되는 리스트 갯수
 
@@ -337,21 +338,21 @@ def user_search(request):
             end_cnt = start_cnt + page_cnt
 
         myclass_info_paging = select_myclass_list_date_paging(user_id, start_datetime_filter, end_datetime_filter, start_cnt, end_cnt)
-        pay_info = select_pay_user(user_id)
-        order_info = select_order_d(user_id)
+        pay_info = select_pay_date(start_datetime_filter, end_datetime_filter, user_id, 0)
+        order_info = select_order_date(start_datetime_filter, end_datetime_filter, user_id)
 
         context = {
-            "myclass_info": myclass_info_paging,
-            "pay_info": pay_info,
-            "order_info":order_info,
-            "user_info": user_info[0],
-            "total_count": total,
-            "start_date": start_date,
-            "end_date": end_date,
-            "search": user_id,
-            "last_page": int(last_page),
-            "paging_num":paging_num,
-        }
+                "myclass_info": myclass_info_paging,
+                "pay_info": pay_info,
+                "order_info":order_info,
+                "user_info": user_info[0],
+                "total_count": total,
+                "start_date": start_date,
+                "end_date": end_date,
+                "search": user_id,
+                "last_page": int(last_page),
+                "paging_num":paging_num,
+            }
 
         return render(request, 'runAdmin/user_list.html', context)
     else:
@@ -361,27 +362,141 @@ def user_search(request):
         }
         return render(request, 'runAdmin/user_list.html', context)
 
-def user_refund(request):
-    user_id = request.POST['searchBox']
-    pay_num = request.POST['pay_num']
-    
-    pay_info = select_pay_user_payNum(user_id, pay_num)
 
-    if pay_info[0].payWay.value != payway_deposit: #PG사 연동만 전달
-        refund(pay_num, user_id)
+def refund_list(request):
+    context = {
+        "page_cnt": '10',
+    }
+    return render(request, 'runAdmin/refund_list.html', context)
+
+def refund_search(request):
+    start_date = request.POST.get('start_date', '0')
+    if start_date == '0':
+        return pay_list(request)
+
+    end_date = request.POST['end_date']
+    searchBox = request.POST['searchBox']
+    paging_num = int(request.POST['paging_num'])  # 옮기고자 하는 paging 번호
+    page_cnt = int(request.POST['page_cnt'])  # display count 노출되는 리스트 갯수
+
+    split_start = start_date.split('-')
+    start_year = int(split_start[0])
+    start_month = int(split_start[1])
+    start_day = int(split_start[2])
+    start_datetime_filter = datetime(start_year, start_month, start_day)
+
+    split_end = end_date.split('-')
+    end_year = int(split_end[0])
+    end_month = int(split_end[1])
+    end_day = int(split_end[2]) + 1
+    end_datetime_filter = datetime(end_year, end_month, end_day)
+
+    refund_info = select_refund_search(searchBox, start_datetime_filter, end_datetime_filter)
+    total = refund_info.count()
+
+    start_cnt = 0
+    end_cnt = 0
+    last_page = int(total) / page_cnt
+    reamin = int(total) % page_cnt
+
+    if reamin > 0:
+        last_page = int(last_page) + 1
+
+    for count in range(0, paging_num):
+        if paging_num > 1:
+            start_cnt = end_cnt
+        end_cnt = start_cnt + page_cnt
+
+    refund_paging = select_refund_search_cnt(searchBox, start_datetime_filter, end_datetime_filter, start_cnt, end_cnt)
+
+    context = {
+        "refund_info": refund_paging,
+        "total_count": total,
+        "start_date": start_date,
+        "end_date": end_date,
+        "search": searchBox,
+        "last_page": int(last_page),
+        "paging_num": paging_num,
+        "page_cnt": page_cnt,
+    }
+
+    return render(request, 'runAdmin/refund_list.html', context)
+
+def user_refund(request):
+    refund_idx = request.POST.get('refund_idx', 0)
+    if refund_idx == 0:
+        context = {
+            "page_cnt": '10',
+        }
+        return render(request, 'runAdmin/refund_list.html', context)
+
+    refund_price = request.POST['refund_price']
+    refund_msg = request.POST['refund_msg']
+
+    refund_info = select_refund_idx(refund_idx)
+    pay_num = refund_info[0].pay_num
+    user_id = refund_info[0].user_email
+
+    if refund_info[0].pay_way != payway_deposit: #PG사 연동만 전달
+        response = refund(refund_info, refund_price)
 
     pay_userStatus_info = select_userStatue(pay_status_deposit_refund)
 
     pay_info = select_pay_user_payNum(user_id, pay_num)
+    print(pay_info.count())
     new_payInfo = pay_info[0]
     new_payInfo.pay_result = 2
     new_payInfo.pay_user_status = pay_userStatus_info[0]
     new_payInfo.save()
 
+    new_refund = refund_info[0]
+    new_refund.reason = refund_msg
+    new_refund.refund_price = refund_price
+    new_refund.dbstat = 'D'
+    if refund_info[0].pay_way != payway_deposit:
+        if response is not 1:
+            new_refund.card_code = response["card_code"]
+            new_refund.card_name = response["card_name"]
+            new_refund.card_number = response["card_number"]
+            new_refund.card_type = response["card_type"]
+            new_refund.channel = response["channel"]
+
+    new_refund.save()
+
+    return refund_search(request)
+
+def user_refund_rollback(request):
+    refund_idx = request.POST.get('refund_idx', 0)
+    if refund_idx == 0:
+        context = {
+            "page_cnt": '10',
+        }
+        return render(request, 'runAdmin/refund_list.html', context)
+
+    refund_msg = request.POST['refund_msg']
+
+    refund_info = select_refund_idx(refund_idx)
+    pay_userStatus_info = select_userStatue(pay_status_ok)
+
+    pay_num = refund_info[0].pay_num
+    user_id = refund_info[0].user_email
+
+    pay_info = select_pay_user_payNum(user_id, pay_num)
+    new_payInfo = pay_info[0]
+    new_payInfo.pay_result = 0
+    new_payInfo.pay_user_status = pay_userStatus_info[0]
+    new_payInfo.save()
+
     myclass_list = select_myclass_list_payNum_refund(user_id, pay_num)
     for class_list in myclass_list:
-        new_myclass = class_list
-        new_myclass.dbstat = 'D-refund'
-        new_myclass.save()
+        if class_list.dbstat == 'D-refund':
+            new_myclass = class_list
+            new_myclass.dbstat = 'A'
+            new_myclass.save()
 
-    return user_search(request)
+    new_refund = refund_info[0]
+    new_refund.reason = refund_msg
+    new_refund.dbstat = 'D'
+    new_refund.save()
+
+    return refund_search(request)

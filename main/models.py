@@ -208,7 +208,6 @@ class PayTB(models.Model):
     payWay = models.ForeignKey(PayWayTB, on_delete=models.PROTECT, null=True)
     payWay_name = models.CharField(max_length=50, default='',blank=True)
     payWay_receipt = models.CharField(max_length=10, default='D')
-    payWay_account = models.CharField(max_length=50, default='',blank=True)
     coupon_num = models.CharField(max_length=150, default='', null=True)
     prd_info = models.CharField(max_length=150, default='') #prd 제목 외 몇개
     prd_price = models.IntegerField(default='0') # product total
@@ -226,21 +225,38 @@ class PayTB(models.Model):
     pay_time = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
-class cancleTB(models.Model):
-    cancle_idx = models.AutoField(primary_key=True)
+class refundTB(models.Model):
+    refund_idx = models.AutoField(primary_key=True)
+    user_name = models.CharField(max_length=50, default='')
     user_email = models.CharField(max_length=50, default='')
-    buyer_email = models.CharField(max_length=50, default='')
-    buyer_name = models.CharField(max_length=50, default='')
-    buyer_number = models.CharField(max_length=50, default='')
+    user_number = models.CharField(max_length=50, default='')
     pay_num = models.CharField(max_length=50, default='')
-    imp_uid = models.CharField(max_length=500, default='')
-    merchant_uid = models.CharField(max_length=500, default='')
-    prd_name = models.CharField(max_length=500, default='')
-    cancel_amount = models.CharField(max_length=50, default='')
-    reason = models.CharField(max_length=500, default='')
-    card_code = models.CharField(max_length=50, default='')
-    card_name = models.CharField(max_length=50, default='')
-    card_number = models.CharField(max_length=50, default='')
-    card_type = models.CharField(max_length=10, default='')
-    channel = models.CharField(max_length=10, default='')
-    cancle_time = models.DateTimeField(default=timezone.now)
+    prd_title = models.CharField(max_length=50) # 반송할 키트
+    prd_price = models.IntegerField(default='0')
+    option1 = models.CharField(max_length=50, blank=True)
+    option1_price = models.IntegerField(null=True, blank=True)
+    option2 = models.CharField(max_length=50, blank=True)
+    option2_price = models.IntegerField(null=True, blank=True)
+    option3 = models.CharField(max_length=50, blank=True)
+    option3_price = models.IntegerField(null=True, blank=True)
+    refund_price = models.IntegerField(null=True, blank=True)
+    prd_total_price = models.IntegerField(default='0')
+    delivery_price = models.IntegerField(default='0')
+    delivery_name = models.CharField(max_length=50, default='')
+    delivery_addr = models.CharField(max_length=150, default='')
+    delivery_phone = models.CharField(max_length=50, default='')
+    delivery_time = models.DateTimeField(null=True, blank=True)  # 배송보낸 날
+    pay_time = models.DateTimeField(auto_now=True, blank=True) # 결제된 날
+    pay_way = models.CharField(max_length=50, default='')
+    payWay_name = models.CharField(max_length=50, default='', blank=True)
+    payWay_account = models.CharField(max_length=50, default='', blank=True) # 무통장 결제시 환불 계좌
+    merchant_uid = models.CharField(max_length=500, default='', blank=True) #신용카드 결제시 필요정보
+    imp_uid = models.CharField(max_length=500, default='', blank=True) #신용카드 결제시 필요정보
+    card_apply = models.CharField(max_length=500, default='', blank=True) #신용카드 결제시 필요정보
+    reason = models.CharField(max_length=500, default='', blank=True)
+    card_code = models.CharField(max_length=50, default='', blank=True)
+    card_name = models.CharField(max_length=50, default='', blank=True)
+    card_number = models.CharField(max_length=50, default='', blank=True)
+    card_type = models.CharField(max_length=10, default='', blank=True)
+    refund_time = models.DateTimeField(default=timezone.now) #환불요청 날
+    dbstat = models.CharField(max_length=50, default='A') #D : 환불완료

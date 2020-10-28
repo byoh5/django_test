@@ -155,7 +155,8 @@
                 <h3>취소. 교환. 환불 안내 </h3>
                 <div class="modal-content">
                      <div class="text">
-                         <span>1. 다음의 경우 환불 되지 않습니다. <br/>
+                         <span>
+                             1. 다음의 경우 환불 되지 않습니다. <br/>
                              - <strong style="color:red;">강의시청 </strong>을 했을 경우. <br/>
                              - <strong style="color:red;">코딩키트 오픈</strong>을 했을 경우. <br/>
                              - 배송 후 <strong style="color:red;">9일 이상</strong> 시간이 지난 경우. <br/>
@@ -163,40 +164,60 @@
                             (본 상품 상세페이지 하단 내용에서 자세히 보실 수 있습니다)
                          </span>
 
-                         <span>2. 다음 절차로 진행됩니다.<br/>
-                             - <strong style="color:red;">코딩키트 오픈하지 않은 상태</strong>로 보내주세요. 키트상태를 확인 후 처리 됩니다. <br/>
-                             - 왕복 배송비 <strong>6,000원</strong>을 동봉 혹은 <strong>무통장 입금(국민은행&nbsp;:&nbsp;422001-04-219407 (런코딩))</strong>해 주세요.<br/>
-                             - 키트 수거 후 영업일 기준 1~2일 이내에 절차대로 진행됩니다.<br/>
-                             - 문의사항은 카카오채널을 이용해주세요.<br/>
-                         </span>
-
-                         <span>
-                             {% if refund == 0 %}
-                                {% if delivery_time != "" %}
-                                 - 배송된 날짜 입니다. ({{delivery_time | date:'Y-m-d' }})
-                                {% endif %}
-                                {% if play_time != "" %}
-                                 - 강의가 이미 시작되었습니다. ({{play_time | date:'Y-m-d' }})
-                                {% endif %}
-                             {% endif %}
-                         </span>
-
-                         <span>3. 배송료 무통장 입금 시, <br/>
-                             {% for payUser in pay_detail %}
+                         {% for payUser in pay_detail %}
                              {% if payUser.payWay.value == 'deposit' %}
-                                입금자 <strong>({{payUser.payWay_name}})</strong> 으로 입금해주셔야 처리가 됩니다.<br/>
-                                <br/>
-                                4. 무통장 입금으로 구매를 하셨습니다. 환불 계좌를 입력해주세요.<br/>
-                                예금주<strong>({{payUser.payWay_name}})</strong>와 계좌가 맞지 않을 경우 입금처리가 되지 않습니다. <br/>
-                                <div class="input_area" style="margin-top:10px">
-                                    <input type="text" name="bank" id="bank" style="margin-right:10px; float:left; width:30%;" placeholder="은행">
-                                    <input type="text" name="account" id="account" style="margin-right:10px;" placeholder="환불계좌 번호">
-                                </div>
+                                 <span>
+                                     2. 다음 절차로 진행됩니다.<br/>
+                                     -  환불 신청 후 아래 주소로 코딩 키트를 보내주세요. <br/>
+                                     -  <strong>보내주신 상품에 이상이 없을 경우</strong> 입력해 주신 계좌로 구매 배송비 3천원을 제한 금액을 환급해 드립니다.<br/>
+                                     -  <strong style="color:red;">반송지 주소: 서울시 양천구 국회대로 12 강성빌딩 4층</strong> / 런코딩 / 070-7867-886<br/>
+                                 </span>
+                                 {% if refund == 1 %}
+                                 <span>
+                                     3. 환불 계좌를 입력해주세요.<br/>
+                                        예금주<strong>({{payUser.payWay_name}})</strong>와 계좌가 맞지 않을 경우 입금처리가 되지 않습니다. <br/>
+                                        <div class="input_area" style="margin-top:10px">
+                                            <input type="text" name="bank" id="bank" style="margin-right:10px; float:left; width:30%;" placeholder="은행">
+                                            <input type="text" name="account" id="account" style="margin-right:10px;" placeholder="환불계좌 번호">
+                                        </div>
+                                 </span>
+                                {% endif %}
                              {% else %}
-                                입금자 <strong>({{payUser.pay_user.regi_name}})</strong> 으로 입금해주셔야 처리가 됩니다.
-                             {% endif %}
-                             {% endfor %}
-                         </span>
+                                  <span>
+                                      2. 다음 절차로 진행됩니다.<br/>
+                                        - 환불 신청 후 아래 주소로 코딩 키트를 보내주세요. <br/>
+                                        - <strong>보내주신 상품에 이상이 없을 경우</strong> 구매 배송비 3천원을 제한 금액을 카드 부분 취소 처리해드립니다.<br/>
+                                        - 카드 취소 금액 확인은 취소 처리 시작 후 영업일 기준 7-10일 정도 소요 될 수 있으며 자세한 확인은 사용하시는 카드사에 문의 부탁 드립니다. <br/>
+                                        - <strong style="color:red;">반송지 주소: 서울시 양천구 국회대로 12 강성빌딩 4층</strong> / 런코딩 / 070-7867-8866<br/>
+                                  </span>
+                            {% endif %}
+
+                            {% if refund == 1 %}
+                              <span>
+                                     * 환불을 원하는 상품을 선택해주세요.<br/>
+                                     {% for order in order_info %}
+                                         {% if order.pay_num == payUser.pay_num %}
+                                                <input type="checkbox" name="prd_order" value={{order.order_idx}}>&nbsp;&nbsp;
+                                                {{ order.prd.title}} &nbsp;-&nbsp; {{order.count}} 개 &nbsp;| 옵션 :&nbsp;
+                                                {% if order.option1_selectNum == 2 %}
+                                                    {{ order.prd.option1}}
+                                                {% endif %}
+                                                {% if order.option2_selectNum == 2 %}
+                                                    {{ order.prd.option2}}
+                                                {% endif %}
+                                                {% if order.option3_selectNum == 2 %}
+                                                    {{ order.prd.option3}}<br/>
+                                                {% endif %}<br/>
+                                         {% endif %}
+                                     {% endfor %}
+                                 </span>
+
+                                 <span>
+                                     <input type="checkbox" name="check_kit" value="A">
+                                     <strong>키트에 이상 없음을 확인하였습니다.</strong>
+                                 </span>
+                            {% endif %}
+                         {% endfor %}
                      </div>
 
                     <div class="btn_area">
@@ -222,9 +243,25 @@
 
         function goRefund()
         {
-             pay_num = document.getElementById('pay_num').value;
-             pay_idx = document.getElementById('pay_idx').value;
-             pay_way = document.getElementById('pay_way').value;
+             var order_idx = "";
+             var chks = document.getElementsByName('prd_order');
+             for (var i=0,m=chks.length;i<m ;i++)
+             {
+                if (chks[i].checked == true)
+                {
+                   order_idx += chks[i].value + ',';
+                }
+              }
+
+              if(order_idx == "" )
+              {
+                alert("환불 원하는 키트를 선택해주세요");
+                return false;
+              }
+
+             var pay_num = document.getElementById('pay_num').value;
+             var pay_idx = document.getElementById('pay_idx').value;
+             var pay_way = document.getElementById('pay_way').value;
 
              if(pay_way == 'deposit')
              {
@@ -242,7 +279,14 @@
                }
              }
 
-             var newForm = $('<form></form>');
+             var check_kit = document.getElementsByName('check_kit');
+             if(check_kit[0].checked == false)
+             {
+                 alert("키트 상태를 다시 확인해주시고, 동의해주세요.");
+                 return false;
+             }
+
+            var newForm = $('<form></form>');
 
             newForm.attr("name", "myorder_refund");
             newForm.attr("method", "post");
@@ -252,6 +296,7 @@
             newForm.append($('<input/>', {type: 'hidden', name: 'pay_num', value : pay_num }));
             newForm.append($('<input/>', {type: 'hidden', name: 'pay_idx', value : pay_idx }));
             newForm.append($('<input/>', {type: 'hidden', name: 'pay_way', value : pay_way }));
+            newForm.append($('<input/>', {type: 'hidden', name: 'order_idx', value : order_idx }));
             if(pay_way == 'deposit')
             {
                  newForm.append($('<input/>', {type: 'hidden', name: 'bank', value : bank }));

@@ -8,6 +8,7 @@
                 <li><a href="/deposit_list/">무통장 입금 조회</a></li>
                 <li class="admin_active"><a href="/pay_list/">구매 데이터 조회</a></li>
                 <li><a href="/user_list/">사용자 조회</a></li>
+                <li><a href="/refund_list/">환불</a></li>
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <li><a href="https://admin.iamport.kr/users/login" target="_blank">아임포트 관리자</a></li>
                 <li><a href="https://partner.danalpay.com/account/login?next=%2F#" target="_blank">다날 (휴대폰인증)</a></li>
@@ -119,7 +120,7 @@
                     {% elif deposit.pay_result == 1 %}
                      <td class="admin_list_body">결제실패</td>
                     {% elif deposit.pay_result == 2 %}
-                     <td class="admin_list_body">환불</td>
+                     <td class="admin_list_body">환불처리됨</td>
                      {% elif deposit.pay_result == 3 %}
                      <td class="admin_list_body">환불요청</td>
                     {% endif %}
@@ -187,6 +188,13 @@
             return false;
         }
 
+        if(start_date > end_date)
+        {
+            alert("날짜 설정을 다시 해주세요");
+            return false;
+        }
+
+
         var status = document.getElementById("status").selectedIndex;
         if(status > 0)
             status = document.getElementById("status").value;
@@ -220,6 +228,13 @@
             alert("날짜선택하세요");
             return false;
         }
+
+        if(start_date > end_date)
+        {
+            alert("날짜 설정을 다시 해주세요");
+            return false;
+        }
+
 
         var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
         tab_text = tab_text + '<head><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
@@ -280,6 +295,13 @@
             alert("날짜선택하세요");
             return false;
         }
+
+        if(start_date > end_date)
+        {
+            alert("날짜 설정을 다시 해주세요");
+            return false;
+        }
+
 
         var status = document.getElementById("status").selectedIndex;
         if(status > 0)

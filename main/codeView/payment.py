@@ -28,8 +28,26 @@ payway_naver = 'naver'
 
 
 def payment(request):
-    payway_val = request.POST['payway']
     user_id = request.session.get('user_id')
+    payway_val = request.POST.get('payway', 0)
+    if payway_val == 0:
+        order_info = select_order(user_id)
+        user_info = select_register(user_id)
+        coupon_info = select_myCoupon_notUsed(user_id)
+        payway_info_all = select_payway()
+        request.session['order_count'] = order_info.count()
+        context = {
+            "order_detail": order_info,
+            "user_detail": user_info,
+            "coupon_detail": coupon_info,
+            "pay_result": pay_result,
+            "pay_msg": pay_fail,
+            "delivery_price": order_info[0].delivery_price,
+            "payway_info": payway_info_all,
+        }
+
+        return render(request, 'payment/order.html', context)
+
     if payway_val is not None:
         payway_info = select_payway_value(payway_val)
         number_pool = string.digits
@@ -194,6 +212,8 @@ def pay_credit(request, payway_info, pay_num):
                     option2 = request.POST['option_idx_' + str(data) + "_2"]
                 if order_info[0].prd.option3 != "":
                     option3 = request.POST['option_idx_' + str(data) + "_3"]
+
+                print(option1, option2, option3)
 
                 prd_total_count += int(prd_count)
                 prd_title = order_info[0].prd.title
@@ -390,18 +410,15 @@ def pay_result(request):
 
         return render(request, 'payment/order.html', context)
 
-def refund(pay_num, user_id):
+def refund(refund_info, refund_price):
     runcoding = select_runcoding()
 
     key = runcoding[0].imp_key
     secret = runcoding[0].imp_secret
 
-    pay_info = select_pay_user_payNum(user_id,pay_num)
-
-    run_uid = pay_info[0].imp_uid
-    price = pay_info[0].prd_total_price
+    run_uid = refund_info[0].imp_uid
+    price = refund_price
     run_reason = '사용자요청'
-    pay_num = pay_info[0].pay_num
 
     # getToken
     post_data = {
@@ -428,25 +445,9 @@ def refund(pay_num, user_id):
     json_user_msg_code = json_user_msg["code"]
 
     if json_user_msg_code == 1: #이미취소된
-        print(json_user_msg_code)
+        return json_user_msg_code
     elif json_user_msg_code == 0:
-        print(json_user_msg_code)
-        user_email = json_user_msg_res["buyer_email"]
-        user_name = json_user_msg_res["buyer_name"]
-        user_number = json_user_msg_res["buyer_tel"]
-        imp_uid = json_user_msg_res["imp_uid"]
-        merchant_uid = json_user_msg_res["merchant_uid"]
-        prd_name = json_user_msg_res["name"]
-        cancel_amount = json_user_msg_res["cancel_amount"]
-        card_code = json_user_msg_res["card_code"]
-        card_name = json_user_msg_res["card_name"]
-        card_number = json_user_msg_res["card_number"]
-        card_type = json_user_msg_res["card_type"]
-        channel = json_user_msg_res["channel"]
-        cancle_info = cancleTB(user_email=user_id, buyer_email=user_email, buyer_name=user_name, buyer_number=user_number, pay_num=pay_num, imp_uid=imp_uid,
-                               merchant_uid=merchant_uid, prd_name=prd_name, cancel_amount=cancel_amount, reason=run_reason,
-                               card_code=card_code, card_name=card_name, card_number=card_number, card_type=card_type, channel=channel)
-        cancle_info.save()
+        return json_user_msg_res
 
 
 

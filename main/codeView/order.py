@@ -47,6 +47,8 @@ def order(request):
     count = request.POST['count']
     login_info = select_login(user_id)
 
+    print(option1,option2,option3)
+
     messages = 0
     if login_info.count() is not 0:
         order_prd_info = select_order_prdCode(user_id, prd_code)
