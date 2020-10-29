@@ -194,7 +194,7 @@
 
                             {% if refund == 1 %}
                               <span>
-                                     * 환불을 원하는 상품을 선택해주세요.<br/>
+                                     ■ 환불을 원하는 상품을 선택해주세요.<br/>
                                      {% for order in order_info %}
                                          {% if order.pay_num == payUser.pay_num %}
                                                 <input type="checkbox" name="prd_order" value={{order.order_idx}}>&nbsp;&nbsp;
