@@ -415,7 +415,7 @@
                                           <div class="panel-heading bg-color-gray font-14"><strong>알려드립니다.</strong></div>
                                           <div class="panel-body color-light-yellow">
                                                <div class="row">
-                                                   <div class="col-xs-7 padding-right-30 border-dashed-right"></div>
+                                                   <div class="font-16 col-xs-7 padding-right-30 border-dashed-right" style="padding-left:10px;">도서 산간지역은 별도의 배송비가 추가됩니다.</div>
                                                </div>
                                           </div>
                                      </div>
@@ -427,6 +427,7 @@
                 <div class="btn-center" style="margin-bottom:40px">
                     <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay();">주문하기</a>
                 </div>
+
              </tr>
          </div>
     </tr>
@@ -435,6 +436,7 @@
 {% include "common/banner_bottom.html" %}
 {% include "common/footer.html" %}
     <script>
+
        function removeComma(str)
        {
           n = parseInt(str.replace(/,/g,""));
