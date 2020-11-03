@@ -18,7 +18,7 @@
         <!-- sub visual -->
 
         <!-- codingKit list -->
-        <div class="codingKit_list detail">
+        <div id="top" class="codingKit_list detail">
             <div class="lecture_list detail">
                 <div class="detail_area">
                     <img src="{{prd_detail.img}}" alt="상품상세 이미지">
@@ -65,7 +65,7 @@
                 <div class="fixedArea">
                     <div class="info_area">
                         <span>INFO</span>
-<!--                         <a class="btn buy" href="#">위로</a>-->
+
                         <div class="lecture_info">
                             <ul>
                                 <li>
@@ -144,6 +144,7 @@
                         <a href="javascript:void(0);" class="btn cart" onClick="javascript:goOrder(1);">장바구니 담기</a>
                         <a class="btn buy" href="javascript:void(0);" onClick="javascript:goOrder(2);">바로구매</a>
                     </div>
+                    <a class="btn" href="javascript:void(0);" onclick="javascript:top_val();"><img src="{% static 'resource/img/sub/top.png' %}" style="float:right;"></a><br/>
                     <input type="hidden" name="message" value="{{message}}" readonly>
                 </div>
             </div>
@@ -173,22 +174,19 @@
             }
         });
 
+        function top_val()
+        {
+            var offset = $("#top").offset();
+            $('html, body').animate({scrollTop : offset.top}, 400);
+        }
+
         function goOrder(flag)
         {
+            var quantity = document.getElementById("prodQuantity").value;
 
-            if($("input[type=hidden][name=clientId]").val() == "")
-            {
-                $("#res_msg").text("로그인이 필요합니다.");
-                $('div.modal').modal();
-            }
-            else
-            {
-                var quantity = document.getElementById("prodQuantity").value;
-
-                $("input[type=hidden][name=flag]").val(flag);
-                $("input[type=hidden][name=count]").val(quantity);
-                document.getElementById("prd_form").submit();
-             }
+            $("input[type=hidden][name=flag]").val(flag);
+            $("input[type=hidden][name=count]").val(quantity);
+            document.getElementById("prd_form").submit();
          }
 
          function numberWithCommas(x)

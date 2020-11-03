@@ -23,13 +23,14 @@ imp_id = 'imp08800373'
 payway_credit = 'credit'
 payway_escrow = 'escrow' #실시간 계좌이체
 payway_deposit = 'deposit' #무통장
-payway_kakao = 'kakao'
-payway_naver = 'naver'
+payway_naver = 'naverco'
 
+nouser = 'kcp_nouser' #비회원
 
 def payment(request):
     user_id = request.session.get('user_id')
     payway_val = request.POST.get('payway', 0)
+
     if payway_val == 0:
         order_info = select_order(user_id)
         user_info = select_register(user_id)
@@ -49,7 +50,9 @@ def payment(request):
         return render(request, 'payment/order.html', context)
 
     if payway_val is not None:
-        payway_info = select_payway_value(payway_val)
+        pg_type = request.POST['pg_type']
+        print(pg_type) # 비회원/회원/네이버
+
         number_pool = string.digits
         _LENGTH = 12
         pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
@@ -57,8 +60,13 @@ def payment(request):
         for i in range(_LENGTH):
             pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
 
+        if pg_type == 'payway_naver':
+            return pay_naver(request, pay_num)
+
+        payway_info = select_payway_value(payway_val)
+        print(payway_val);
         if payway_info.count() > 0 and payway_info[0].value == payway_credit:
-            return pay_credit(request, payway_info, pay_num)
+            return pay_credit(request, payway_info, pay_num, pg_type)
         elif payway_info.count() > 0 and payway_info[0].value == payway_deposit:
             return pay_deposit(request, payway_info, pay_num)
         elif payway_info.count() > 0 and payway_info[0].value == payway_escrow:
@@ -83,6 +91,7 @@ def payment(request):
 
     else:
         return render(request, 'login/login.html')
+
 
 def pay_deposit(request, payway_info, pay_num):
     user_id = request.session.get('user_id')
@@ -174,8 +183,10 @@ def pay_deposit(request, payway_info, pay_num):
     else:
         return render(request, 'login/login.html')
 
-def pay_credit(request, payway_info, pay_num):
+def pay_credit(request, payway_info, pay_num, pg_type):
     user_id = request.session.get('user_id')
+    session = request.session.get('client_id')
+
     order_idx = request.POST['idx']
     addr_num = request.POST['addr_num']
     prd_price = int(request.POST['total_prd_price'])
@@ -204,7 +215,11 @@ def pay_credit(request, payway_info, pay_num):
             idx = request.POST['orderIdxs_' + str(data)]
             prd_count = request.POST['prodQuantity_' + str(data)]
 
-            order_info = select_order_idx(idx, user_id)
+            if pg_type == nouser: #비회원
+                order_info = select_order_idx(idx, session)
+                addr_num = 1
+            else:
+                order_info = select_order_idx(idx, user_id)
             if order_info.count() > 0:
                 if order_info[0].prd.option1 != "":
                     option1 = request.POST['option_idx_' + str(data) + "_1"]
@@ -212,8 +227,6 @@ def pay_credit(request, payway_info, pay_num):
                     option2 = request.POST['option_idx_' + str(data) + "_2"]
                 if order_info[0].prd.option3 != "":
                     option3 = request.POST['option_idx_' + str(data) + "_3"]
-
-                print(option1, option2, option3)
 
                 prd_total_count += int(prd_count)
                 prd_title = order_info[0].prd.title
@@ -223,37 +236,50 @@ def pay_credit(request, payway_info, pay_num):
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
 
-    regi_info = select_register(user_id)
+    pay_userStatus_info = select_userStatue(pay_status_prepay)
+    if pg_type == nouser:
+        phone = request.POST['noUser_info_number']
+        name = request.POST['noUser_info_name']
+        email = request.POST['noUser_info_email']
+        addr01 = request.POST['noUser_info_addr01']
+        addr02 = request.POST['noUser_info_addr02']
+        addr03 = request.POST['noUser_info_addr03']
 
-    if regi_info.count() is not 0:
-        if int(addr_num) == 1:
-            phone = regi_info[0].regi_phone
-            name = regi_info[0].regi_name
-            addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
-                0].regi_receiver1_add01 + ")"
-        else:
-            name = regi_info[0].regi_receiver2_name
-            phone = regi_info[0].regi_receiver2_phone
-            addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
-                0].regi_receiver2_add01 + ")"
-
-        pay_userStatus_info = select_userStatue(pay_status_prepay)
-        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
+        addr = addr02 + addr03 + "(" + addr01 + ")"
+        pay_info = PayTB(pay_num=pay_num, pay_email=email, order_id=order_list, coupon_num=coupon_num,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
                          delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay=payway_info[0])
-        pay_info.save()
-
-        context = {
-            "payment": pay_info,
-            "imp": imp_id,
-            "pay_method": 'card'
-        }
-
-        return render(request, 'payment/pay_info.html', context)
     else:
-        return render(request, 'login/login.html')
+        regi_info = select_register(user_id)
 
+        if regi_info.count() is not 0:
+            if int(addr_num) == 1:
+                phone = regi_info[0].regi_phone
+                name = regi_info[0].regi_name
+                addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
+                    0].regi_receiver1_add01 + ")"
+            else:
+                name = regi_info[0].regi_receiver2_name
+                phone = regi_info[0].regi_receiver2_phone
+                addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
+                    0].regi_receiver2_add01 + ")"
+
+            pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
+                 prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
+                 prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
+                 delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay=payway_info[0])
+
+    pay_info.save()
+
+    context = {
+        "payment": pay_info,
+        "order_info": "",
+        "imp": imp_id,
+        "pay_method": 'card'
+    }
+
+    return render(request, 'payment/pay_info.html', context)
 
 def pay_escrow(request, payway_info, pay_num):
     user_id = request.session.get('user_id')
@@ -329,8 +355,95 @@ def pay_escrow(request, payway_info, pay_num):
 
         context = {
             "payment": pay_info,
+            "order_info": "",
             "imp": imp_id,
             "pay_method": 'trans'
+        }
+
+        return render(request, 'payment/pay_info.html', context)
+    else:
+        return render(request, 'login/login.html')
+
+
+def pay_naver(request, pay_num):
+    session = request.session.get('client_id')
+    order_idx = request.POST['idx']
+    addr_num = request.POST['addr_num']
+    prd_price = int(request.POST['total_prd_price'])
+    delivery_price = int(request.POST['total_delivery_price'])
+    pay_price = int(request.POST['total_option_prd_price'])
+    coupon_prd_total_price = int(request.POST['total_option_coupon_prd_price'])
+
+    order_list = ""
+    prd_title = ""
+    prd_total_count = 0
+    option1 = "0"
+    option2 = "0"
+    option3 = "0"
+    coupon_num = ""
+
+    # 비회원이니 쿠폰은 없겠지
+    #coupon_num = request.POST['coupon_num']
+    #if coupon_prd_total_price == 0:
+    #pay_price = prd_total_price
+    #else:
+     #   pay_price = coupon_prd_total_price
+
+    split_order = order_idx.split(',')
+
+    # product -> myclass에 넣고, 장바구니 정리하기
+    for data in split_order:
+        if len(data) > 0:
+            idx = request.POST['orderIdxs_' + str(data)]
+            prd_count = request.POST['prodQuantity_' + str(data)]
+
+            order_info = select_order_idx(idx, session)
+            if order_info.count() > 0:
+                if order_info[0].prd.option1 != "":
+                    option1 = request.POST['option_idx_' + str(data) + "_1"]
+                if order_info[0].prd.option2 != "":
+                    option2 = request.POST['option_idx_' + str(data) + "_2"]
+                if order_info[0].prd.option3 != "":
+                    option3 = request.POST['option_idx_' + str(data) + "_3"]
+
+                prd_total_count += int(prd_count)
+                prd_title = order_info[0].prd.title
+                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3,
+                                 pay_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                order_list += idx + ","
+
+    if prd_total_count > 1:
+        prd_title += "_외 " + str(prd_total_count) + "개"
+
+    # 가입자 정보는 어찌 알 수 있을까...
+    # regi_info = select_register(user_id)
+    #
+    # if regi_info.count() is not 0:
+    #     if int(addr_num) == 1:
+    #         phone = regi_info[0].regi_phone
+    #         name = regi_info[0].regi_name
+    #         addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
+    #             0].regi_receiver1_add01 + ")"
+    #     else:
+    #         name = regi_info[0].regi_receiver2_name
+    #         phone = regi_info[0].regi_receiver2_phone
+    #         addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
+    #             0].regi_receiver2_add01 + ")"
+
+        pay_userStatus_info = select_userStatue(pay_status_prepay)
+        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
+                         prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
+                         prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
+                         delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay="payway_naver")
+        pay_info.save()
+
+        order_info = select_order_payNum(pay_num, session)
+
+        context = {
+            "payment": pay_info,
+            "order_info": order_info,
+            "imp": imp_id,
+            "pay_method": 'card'
         }
 
         return render(request, 'payment/pay_info.html', context)
@@ -341,6 +454,7 @@ def pay_escrow(request, payway_info, pay_num):
 def pay_result(request):
     pay_idx = int(request.POST['pay'])
     user_id = request.session.get('user_id')
+    session = request.session.get('client_id')
 
     pay_result = int(request.POST['pay_result'])
     pay_msg = request.POST['pay_msg']
@@ -360,55 +474,67 @@ def pay_result(request):
         update_pay.card_apply = card_apply
         update_pay.imp_uid = imp_uid
 
-
         if pay_result == pay_ok:
             pay_userStatus_info = select_userStatue(pay_status_ok) # 구매성공
             if pay_info[0].coupon_num != '0':
                 update_myCoupon(user_id, pay_info[0].coupon_num)
             update_pay.pay_user_status = pay_userStatus_info[0]
-            split_order = update_pay.order_id.split(',')
+            split_order = pay_info[0].order_id.split(',')
 
             # product -> myclass에 넣고, 장바구니 정리하기
+
             for data in split_order:
                 if len(data) > 0:
-                    order_info = select_order_idx(data, user_id)
+                    if len(user_id) > 0:
+                        order_info = select_order_idx(data, user_id)
+                        if order_info.count() > 0:
+                            myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
+                                                              pay_num=pay_info[0].pay_num,
+                                                              expire_time=timezone.now())
+                            myclass_list_info.save()
+                            delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
-                    if order_info.count() is not 0:
-                        # insert myclass_list
-                        myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd, pay_num=pay_info[0].pay_num,
-                                                          expire_time=timezone.now())
-                        myclass_list_info.save()
+                    else:
+                        order_info = select_order_idx(data, session)
+                        if order_info.count() > 0:
+                            myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
+                                                              pay_num=pay_info[0].pay_num,
+                                                              expire_time=timezone.now())
+                            myclass_list_info.save()
+                            delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
-                    delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
+            update_pay.save()
 
-        update_pay.save()
+            if len(user_id) > 0:
+                myclass_list_info = select_myclass_list(user_id)
+                new_order_info = select_order(user_id)
+                request.session['order_count'] = new_order_info.count()
 
-    if pay_result == pay_ok:
-        myclass_list_info = select_myclass_list(user_id)
-        new_order_info = select_order(user_id)
-        request.session['order_count'] = new_order_info.count()
+                context = {
+                    "myclass_list_detail": myclass_list_info,
+                }
 
-        context = {
-            "myclass_list_detail": myclass_list_info,
-        }
+                return render(request, 'myclass/myclass_list.html', context)
+            else:
+                new_order_info = select_order(session)
+                request.session['order_count'] = new_order_info.count()
+                return render(request, 'main/index_runcoding.html')
+        else:
+            order_info = select_order(user_id)
+            user_info = select_register(user_id)
+            coupon_info = select_myCoupon_notUsed(user_id)
+            request.session['order_count'] = order_info.count()
+            context = {
+                "order_detail": order_info,
+                "user_detail": user_info,
+                "coupon_detail": coupon_info,
+                "pay_result": pay_result,
+                "pay_msg": pay_msg,
+                "delivery_price": order_info[0].delivery_price,
+                "payway_info": payway_info,
+            }
 
-        return render(request, 'myclass/myclass_list.html', context)
-    else:
-        order_info = select_order(user_id)
-        user_info = select_register(user_id)
-        coupon_info = select_myCoupon_notUsed(user_id)
-        request.session['order_count'] = order_info.count()
-        context = {
-            "order_detail": order_info,
-            "user_detail": user_info,
-            "coupon_detail": coupon_info,
-            "pay_result": pay_result,
-            "pay_msg": pay_msg,
-            "delivery_price": order_info[0].delivery_price,
-            "payway_info": payway_info,
-        }
-
-        return render(request, 'payment/order.html', context)
+            return render(request, 'payment/order.html', context)
 
 def refund(refund_info, refund_price):
     runcoding = select_runcoding()

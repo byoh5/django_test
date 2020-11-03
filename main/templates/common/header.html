@@ -59,7 +59,7 @@
     </script>
 
     <div class="header_wrap">
-        <input type="hidden" id="clientId" name="clientId" value={{ request.session.client_id }}>
+        <input type="hidden" id="clientId" name="clientId" value={{ request.session.user_id }}>
         <a href="/" class="logo">
             <img src="{% static 'resource/img/common/logo.png' %}" alt="runcoding">
         </a>
@@ -130,6 +130,19 @@
                              <li>
                                 로그인
                              </li>
+                         </a>
+                         <a href="/order/">
+                            <li style="border-bottom:1px solid #dcdcdc; ">
+                                {% if request.session.order_count > 0 %}
+                                <div style="float:left; padding-right:5px;">장바구니 </div>
+                                <div class="img_order">
+                                    <img src="{% static 'resource/img/sub/ico_order.png' %}">
+                                    <div class="content">{{request.session.order_count}}</div>
+                                </div>
+                                {% else %}
+                                장바구니
+                                {% endif %}
+                            </li>
                          </a>
                      </div>
                 </ul>

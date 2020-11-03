@@ -63,17 +63,27 @@
                                               {% for orderDetail in order_detail %}
                                                 <tr>
                                                     <input type="hidden" id="idx" name="idx" value="0">
-                                                    <input type="hidden" id="addr_num" name="addr_num" value="0">
+                                                    <input type="hidden" id="addr_num" name="addr_num" value="1">
                                                     <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
                                                     <input type="hidden" id="total_delivery_price" name="total_delivery_price" value="0">
                                                     <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
                                                     <input type="hidden" id="total_option_coupon_prd_price" name="total_option_coupon_prd_price" value="0">
                                                     <input type="hidden" id="coupon_num" name="coupon_num" value="0">
                                                     <input type="hidden" id="payway" name="payway" value="0">
+                                                    <input type="hidden" id="pg_type" name="pg_type" value="kcp_user">
                                                     <input type="hidden" id="depositName" name="depositName" value="0">
                                                     <input type="hidden" id="depositReceipt" name="depositReceipt" value="D">
                                                     <input type="hidden" id="escrowName" name="escrowName" value="0">
                                                     <input type="hidden" id="escrowReceipt" name="escrowReceipt" value="D">
+
+                                                    <!-- noUser -->
+                                                    <input type="hidden" id="noUser_info_name" name="noUser_info_name" value="">
+                                                    <input type="hidden" id="noUser_info_number" name="noUser_info_number" value="">
+                                                    <input type="hidden" id="noUser_info_email" name="noUser_info_email" value="">
+                                                    <input type="hidden" id="noUser_info_addr01" name="noUser_info_addr01" value="">
+                                                    <input type="hidden" id="noUser_info_addr02" name="noUser_info_addr02" value="">
+                                                    <input type="hidden" id="noUser_info_addr03" name="noUser_info_addr03" value="">
+
                                                     <td>
                                                         <input type="hidden" name="orderIdxs_{{forloop.counter0}}" id="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
                                                         <input type="hidden" id="len" name="len" value="0">
@@ -326,9 +336,11 @@
                                                <li>
                                                      <div>
                                                         <span><strong>국민은행&nbsp;:&nbsp;422001-04-219407 (런코딩)</strong>&nbsp;</span><br/><br/>
-                                                        <span>입금자명
-                                                            <input type="text" name="deposit_name" id="deposit_name" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                            <input type="checkbox" name="deposit_receipt" id="deposit_receipt" value="A"> 현금영수증 신청
+                                                        <span>
+                                                            <input type="text" name="deposit_name" id="deposit_name" placeholder="입금자명"  style="float:center; width:10%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                            <input type="checkbox" name="deposit_receipt" id="deposit_receipt" onchange="receipt_check('deposit')" value="A"> 현금영수증 신청
+                                                            <input type="text" name="receipt_number" id="receipt_number" placeholder="현금영수증 신청번호" style="display:none; float:center; width:15%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+
                                                         </span>
                                                      </div>
                                                </li>
@@ -341,7 +353,8 @@
                                                      <div>
                                                         <span>예금주명
                                                             <input type="text" name="escrow_name" id="escrow_name" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                            <input type="checkbox" name="escrow_receipt" id="escrow_receipt" value="A"> 현금영수증 신청
+                                                            <input type="checkbox" name="escrow_receipt" id="escrow_receipt" onchange="receipt_check('escrow')" value="A"> 현금영수증 신청
+                                                            <input type="text" name="escrow_number" id="escrow_number" placeholder="현금영수증 신청번호" style="display:none; float:center; width:15%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
                                                         </span><br/><br/>
                                                         <span><input type="checkbox" name="escrow_check" id="escrow_check" style="margin-left:60px;">
                                                             에스크로(구매안전) 서비스를 적용합니다. <br/>
@@ -367,38 +380,53 @@
                                      <div class="panel panel-default border-radius-none margin-top-30">
                                           <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
                                               <div class="panel-body">
-                                                  {% for userDetail in user_detail %}
-                                                   <div class="row padding-all-15 col-xs-3 border-dashed-right" style="display:inline-block;">
-                                                       <div class="font-16">
-                                                           <input name="addr" type="radio" value="1"checked>
-                                                           <strong>{{userDetail.regi_name}}</strong>(기본 배송지)
+                                                  {% if pay_msg == 'noUser'%}
+                                                  <div class="font-14"><span><strong>비회원입니다. 배송받을 주소를 직접 입력해주세요.</strong></span></div>
+                                                    <div class="input_area multiLine">
+                                                        <input type="text" name="noUser_add01" id="noUser_add01"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" readonly required/><br/>
+                                                        <input type="text" name="noUser_add02" id="noUser_add02"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" readonly required/>
+                                                        <input type="text" name="noUser_add03" id="noUser_add03"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="상세주소를 입력해주세요." required/>
+                                                        <button type="button" class="btn" onClick="javascript:getAddress();" style="width:10%; height:24px; font-size:12px; border:1px solid #d4d4d4;">주소찾기</button><br/><br/>
+
+                                                         <div class="font-14"><span><strong>배송시 필요한 정보입니다. 정확히 기입해주세요.</strong></span></div>
+                                                         <input type="text" name="noUser_name" id="noUser_name" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 이름">
+                                                         <input type="text" name="noUser_number" id="noUser_number" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 휴대폰 번호">
+                                                         <input type="text" name="noUser_email" id="noUser_email" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 이메일주소 : 강의시청 시 필요">
+                                                    </div>
+                                                  {% else%}
+                                                      {% for userDetail in user_detail %}
+                                                       <div class="row padding-all-15 col-xs-3 border-dashed-right" style="display:inline-block;">
+                                                           <div class="font-16">
+                                                               <input name="addr" type="radio" value="1"checked>
+                                                               <strong>{{userDetail.regi_name}}</strong>(기본 배송지)
+                                                           </div>
+                                                           <div class="font-16">
+                                                               {{userDetail.regi_receiver1_add02}}
+                                                               {{userDetail.regi_receiver1_add03}}
+                                                               ({{userDetail.regi_receiver1_add01}})
+                                                           </div>
+                                                            <div class="font-16">
+                                                               {{userDetail.regi_phone}}
+                                                           </div>
                                                        </div>
-                                                       <div class="font-16">
-                                                           {{userDetail.regi_receiver1_add02}}
-                                                           {{userDetail.regi_receiver1_add03}}
-                                                           ({{userDetail.regi_receiver1_add01}})
-                                                       </div>
-                                                        <div class="font-16">
-                                                           {{userDetail.regi_phone}}
-                                                       </div>
-                                                   </div>
-                                                  <div class="row col-xs-3" style="padding-left:50px; display:inline-block; ">
-                                                      {% if userDetail.regi_receiver2_name != "" %}
-                                                      <div class="font-16">
-                                                          <input name="addr" value="2" type="radio">
-                                                          <strong>{{userDetail.regi_receiver2_name}}</strong>
-                                                       </div>
-                                                       <div class="font-16">
-                                                           {{userDetail.regi_receiver2_add02}}
-                                                           {{userDetail.regi_receiver2_add03}}
-                                                           ({{userDetail.regi_receiver2_add01}})
-                                                       </div>
-                                                      <div class="font-16">
-                                                           {{userDetail.regi_receiver2_phone}}
-                                                       </div>
-                                                      {% endif %}
-                                                  </div>
-                                                  {%endfor%}
+                                                      <div class="row col-xs-3" style="padding-left:50px; display:inline-block; ">
+                                                          {% if userDetail.regi_receiver2_name != "" %}
+                                                          <div class="font-16">
+                                                              <input name="addr" value="2" type="radio">
+                                                              <strong>{{userDetail.regi_receiver2_name}}</strong>
+                                                           </div>
+                                                           <div class="font-16">
+                                                               {{userDetail.regi_receiver2_add02}}
+                                                               {{userDetail.regi_receiver2_add03}}
+                                                               ({{userDetail.regi_receiver2_add01}})
+                                                           </div>
+                                                          <div class="font-16">
+                                                               {{userDetail.regi_receiver2_phone}}
+                                                           </div>
+                                                          {% endif %}
+                                                      </div>
+                                                      {%endfor%}
+                                                  {% endif%}
                                               </div>
                                      </div>
                                 </div>
@@ -425,17 +453,44 @@
                     </tr>
                 </div>
                 <div class="btn-center" style="margin-bottom:40px">
-                    <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay();">주문하기</a>
+                    <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:gopg();">주문하기</a>
+                    <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay('noUser');">비회원 주문하기</a>
                 </div>
+<!--                <div id="iamport-naverpay-product-button" class="btn-center" style="margin-bottom:40px;"></div>-->
 
              </tr>
          </div>
     </tr>
 </div>
 
+<!-- <script type="text/javascript" src="//pay.naver.com/customer/js/naverPayButton.js"></script>-->
+<!-- <script type="text/javascript" src="//pay.naver.com/customer/js/mobile/naverPayButton.js"></script>-->
+
+
 {% include "common/banner_bottom.html" %}
 {% include "common/footer.html" %}
     <script>
+<!--        naver.NaverPayButton.apply({-->
+<!--            BUTTON_KEY: "네이버에서 전달받은 버튼생성키",-->
+<!--            TYPE: "C", //버튼 스타일-->
+<!--            COLOR: 1, //버튼 색상타입-->
+<!--            COUNT: 2, // 네이버페이버튼 + 찜하기버튼 모두 출력 여부-->
+<!--            ENABLE: "Y", //네이버페이 활성여부(재고부족 등에는 N으로 비활성처리)-->
+<!--            EMBED_ID: "iamport-naverpay-product-button", //네이버페이 버튼 UI가 부착될 HTML element의 ID-->
+<!--            BUY_BUTTON_HANDLER : function() {-->
+<!--                //중략-->
+<!--                //핸들러 내에서 아임포트 네이버페이 결제 함수 호출-->
+<!--                 $("input[type=hidden][name=pg]").val("naverco");-->
+<!--                 goPay();-->
+<!--&lt;!&ndash;                IMP.request_pay(param);&ndash;&gt;-->
+<!--            },-->
+<!--            WISHLIST_BUTTON_HANDLER : function() {-->
+<!--                //중략-->
+
+<!--                //핸들러 내에서 아임포트 네이버페이 찜하기 함수 호출(iamport.payment-1.1.6.js부터 지원됨)-->
+<!--                IMP.naver_zzim(param);-->
+<!--            }-->
+<!--        });-->
 
        function removeComma(str)
        {
@@ -454,21 +509,14 @@
         });
 
          $(document).ready(function() {
-            if($("input[type=hidden][name=clientId]").val() == "")
+
+            total_count();
+
+            if('{{ pay_result }}' == 1)
             {
-                $("#res_msg").text("로그인이 필요합니다.");
+                $("#res_msg").text('{{ pay_msg }}');
                 $('div.modal').modal();
             }
-            else
-            {
-                total_count();
-
-                if('{{ pay_result }}' == 1)
-                {
-                    $("#res_msg").text('{{ pay_msg }}');
-                    $('div.modal').modal();
-                }
-             }
          });
 
          function myCoupon(value)
@@ -620,7 +668,20 @@
              all_total_price(total_summary_price);
          }
 
-         function goPay()
+         function gopg()
+         {
+            var session ='{{request.session.user_id}}';
+            if(session == "")
+            {
+                $("#res_msg").text("로그인이 필요합니다.");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                goPay('user');
+         }
+
+         function goPay(user_type)
          {
             var chks = document.getElementsByName('idxs[]');
             var order_idx = '';
@@ -684,6 +745,7 @@
                 if(payway_checked == 'deposit')
                 {
                     var name = document.getElementById("deposit_name").value;
+                    var receipt = document.getElementsByName("deposit_receipt");
                     if(name == "")
                     {
                          $("#res_msg").text("입금자 명을 입력해주세요.");
@@ -691,8 +753,21 @@
                          return false;
                     }
 
+                    if(receipt[0].checked == true)
+                    {
+                         var number = document.getElementById("receipt_number").value;
+                         if(number == "")
+                         {
+                             $("#res_msg").text("현금영수증 신청을 위한 번호를 입력해주세요.");
+                             $('div.modal').modal();
+                             return false;
+                        }
+                        else
+                            name += number;
+                    }
+
                     $("input[type=hidden][name=depositName]").val(name);
-                    $("input[type=hidden][name=depositReceipt]").val( document.getElementById("deposit_receipt").value);
+                    $("input[type=hidden][name=depositReceipt]").val(receipt[0].checked);
                 }
                 else if(payway_checked == 'escrow')
                 {
@@ -721,9 +796,80 @@
                 $("input[type=hidden][name=idx]").val(order_idx);
                 $("input[type=hidden][name=addr_num]").val(addr_checked);
                 $("input[type=hidden][name=payway]").val(payway_checked);
-                document.getElementById("order_form").submit();
 
+                if(user_type == 'user')
+                    document.getElementById("order_form").submit();
+                else if(user_type == 'noUser')
+                    noUserPay();
              }
+         }
+
+         function noUserPay()
+         {
+            var add01 = document.getElementById("noUser_add01").value;
+            var add02 = document.getElementById("noUser_add02").value;
+            if(add01 == "" || add02 == "")
+            {
+                $("#res_msg").text("배송받을 주소를 입력해주세요.");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+            {
+                $("input[type=hidden][name=noUser_info_addr01]").val(add01);
+                $("input[type=hidden][name=noUser_info_addr02]").val(add02);
+            }
+
+            var add03 = document.getElementById("noUser_add03").value;
+            if(add03 == "")
+            {
+                $("#res_msg").text("배송받을 주소의 상세주소를 입력해주세요.");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                $("input[type=hidden][name=noUser_info_addr03]").val(add03);
+
+            var name = document.getElementById("noUser_name").value;
+            if(name == "")
+            {
+                $("#res_msg").text("사용자 이름을 입력해주세요.(배송에 필요)");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                $("input[type=hidden][name=noUser_info_name]").val(name);
+
+            var number = document.getElementById("noUser_number").value;
+            if(number == "")
+            {
+                $("#res_msg").text("사용자 전화번호를 입력해주세요.(배송에 필요)");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                $("input[type=hidden][name=noUser_info_number]").val(number);
+
+            var email = document.getElementById("noUser_email").value;
+            if(email == "")
+            {
+                $("#res_msg").text("사용자 이메일 주소를 입력해주세요.(배송에 필요)");
+                $('div.modal').modal();
+                return false;
+            }
+
+            var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
+            if(!email_patten.test(email))
+            {
+                $("#res_msg").text("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                $("input[type=hidden][name=noUser_info_email]").val(email);
+
+            $("input[type=hidden][name=pg_type]").val('kcp_nouser');
+            document.getElementById("order_form").submit();
          }
 
         // 수량 더하기
@@ -934,6 +1080,46 @@
             else
                 $("#escrow").hide();
 
+        }
+
+        function receipt_check(value)
+        {
+            if(value == 'deposit')
+            {
+                var receipt = document.getElementsByName("deposit_receipt");
+                if(receipt[0].checked == true)
+                    $("#receipt_number").show();
+                else
+                    $("#receipt_number").hide();
+            }
+            else if(value == 'escrow')
+            {
+                var receipt = document.getElementsByName("escrow_receipt");
+                if(receipt[0].checked == true)
+                    $("#escrow_number").show();
+                else
+                    $("#escrow_number").hide();
+
+            }
+        }
+
+</script>
+
+<script>
+
+        function getAddress()
+        {
+            chkAddr = 1;
+            new daum.Postcode({
+                oncomplete: function(data)
+                {
+                    $('[name=noUser_add01]').val(data.zonecode); // 우편번호 (5자리)
+                    $('[name=noUser_add02]').val(data.address);
+                    $('[name=noUser_add03]').val(data.buildingName);
+                }
+            }).open();
+
+            return true;
         }
 
     </script>

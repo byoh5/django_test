@@ -80,7 +80,8 @@ class PayAdmin(admin.ModelAdmin):
     list_filter = ['pay_time', 'pay_result']
 
     def get_name(self, obj):
-        return obj.pay_user.regi_email
+        if obj.pay_user is not None:
+            return obj.pay_user.regi_email
     get_name.short_description = 'pay_user'  # Renames column head
 
     list_display_links = ['pay_num']

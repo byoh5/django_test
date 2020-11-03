@@ -202,7 +202,8 @@ class myCouponTB(models.Model):
 class PayTB(models.Model):
     pay_idx = models.AutoField(primary_key=True)
     pay_num = models.CharField(max_length=50, default='')
-    pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True)
+    pay_user = models.ForeignKey(RegisterTB, on_delete=models.PROTECT, null=True,blank=True)
+    pay_email = models.CharField(max_length=50, null=True,blank=True) #비회원용
     pay_user_status = models.ForeignKey(UserStatusTB, on_delete=models.PROTECT, null=True)
     order_id = models.CharField(max_length=50, default='') #order_idx
     payWay = models.ForeignKey(PayWayTB, on_delete=models.PROTECT, null=True)
