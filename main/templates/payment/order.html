@@ -324,7 +324,13 @@
                                                <li>
                                                   {% for payway in payway_info %}
                                                    <div class="order_payinfo">
-                                                        <span><input type="radio" name="payway" value="{{payway.value}}" onchange="myPayway(this.value)" checked>&nbsp;{{payway.name}}</span>
+                                                        {% if pay_msg == 'noUser'%}
+                                                            {% if payway.value == 'credit' %}
+                                                            <span><input type="radio" name="payway" value="{{payway.value}}" onchange="myPayway(this.value)" checked>&nbsp;{{payway.name}}</span>
+                                                            {% endif%}
+                                                        {% else %}
+                                                       <span><input type="radio" name="payway" value="{{payway.value}}" onchange="myPayway(this.value)" checked>&nbsp;{{payway.name}}</span>
+                                                       {% endif %}
                                                    </div>
                                                    {% endfor %}
                                                </li>
@@ -443,7 +449,13 @@
                                           <div class="panel-heading bg-color-gray font-14"><strong>알려드립니다.</strong></div>
                                           <div class="panel-body color-light-yellow">
                                                <div class="row">
-                                                   <div class="font-16 col-xs-7 padding-right-30 border-dashed-right" style="padding-left:10px;">도서 산간지역은 별도의 배송비가 추가됩니다.</div>
+                                                   <div class="font-14 col-xs-7 padding-right-30" style="padding-left:10px;">
+                                                       * 도서 산간지역은 별도의 배송비가 추가됩니다. <br/>
+
+                                                       * 강의는 회원에게만 제공됩니다. <br/>
+                                                       * 비회원 구매 시 입력한 email로 가입하면 강의를 들을 수 있습니다.<br/>
+                                                       * 비회원 구매 시 환불을 원하시면 고객센터로 연락주시기 바립니다. (runcoding@naver.com)<br/>
+                                                   </div>
                                                </div>
                                           </div>
                                      </div>
