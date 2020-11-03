@@ -9,8 +9,6 @@ message_no_login = 210
 def order_page(request):
     session = request.session.get('client_id')
     userid = request.session.get('user_id')  # 이 값으로 디비에서 정보찾고..
-    print(userid)
-    print(session)
     if userid is "":
         order_info = select_order(session)
         user_info = ''

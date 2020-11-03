@@ -199,6 +199,20 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 
 /* sub visual */
+.sub_visual_class_detail {
+	position:relative;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin-bottom:100px;
+	padding-top:60px;
+	width:100%;
+	height:40px;
+	background-color:#e1a394;
+
+}
+
+
 .sub_visual {
 	position:relative;
 	display:flex;
@@ -519,6 +533,23 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	/*box-shadow:10px 10px 20px rgba(0,0,0,.1);*/
 }
 
+.codingKit_list .lecture_list.detail .prd_title{
+    font-size:40px;
+    padding-left:15px;
+}
+
+.codingKit_list .lecture_list.detail .prd_title_sub{
+   font-size:12px;
+   float:left;
+}
+
+.codingKit_list .lecture_list.detail .prd_title_sub .content_sub {
+   float:left;
+   color:gray;
+   padding-right:3px;
+   font-size:12px;
+}
+
 .codingKit_list .lecture_list.detail .info_detail {
 	margin:0 0.83em 2.083em;
 	padding:2.083em 0;
@@ -563,12 +594,30 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	color:#b14739;
 }
 
+.info_detail .content_gray {
+	position:relative;
+	font-size:0.6em;
+	font-weight:400;
+	color:gray;
+}
+
 .info_detail .content {
 	position:relative;
 	font-size:0.6em;
 	font-weight:400;
 	color:black;
+	padding-top:20px;
 }
+
+.info_detail .content_curriculum {
+	position:relative;
+	font-size:0.6em;
+	font-weight:400;
+	color:gray;
+	padding:0.83em;
+	border:1px solid #dcdcdc;
+}
+
 
 .info_detail ul {
 	margin-top:50px;
@@ -2424,6 +2473,11 @@ select.inp_mypage {
 input[id*="answer"] {
     display:none;
 }
+
+input[id*="detail_faq"] {
+    display:none;
+}
+
 .accordion > label {
     position: relative;
     display: block;
@@ -2486,6 +2540,51 @@ input[id*="answer"] + label + div p {
 }
 input[id*="answer"]:checked + label + div {max-height:500px;}
 input[id*="answer"]:checked + label em {background-position:0 -30px;}
+
+
+input[id*="detail_faq"] + label {
+    display:block;
+    padding:20px;
+    #border:1px solid #000;
+    border-bottom:0;
+    border-top: 1px solid #e3e3e2;
+    height: 50px;
+    padding: 0 10px;
+    margin-bottom: 0px;
+    line-height: 50px;
+    font-weight:900;
+    background: #fff;
+    cursor:pointer;
+    position:relative;
+}
+input[id*="detail_faq"] + label em {
+    position:absolute;
+    top:50%;
+    right:10px;
+    width:24px;
+    height:23px;
+    margin-top:-15px;
+    display:inline-block;
+    background:url("../img/sub/arrow_faq.png"); 0 0 no-repeat;
+}
+
+input[id*="detail_faq"] + label + div {
+    max-height:0;
+    transition:all .35s;
+    overflow:hidden;
+    font-size:25px;
+    color:#000;
+    max-width: 1110px;
+    width:100%;
+
+}
+input[id*="detail_faq"] + label + div p {
+    display:inline-block;
+    padding:20px;
+
+}
+input[id*="detail_faq"]:checked + label + div {max-height:500px;}
+input[id*="detail_faq"]:checked + label em {background-position:0 -30px;}
 
 
 /* test popup */
