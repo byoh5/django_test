@@ -15,6 +15,7 @@ def myclass_list_page(request):
 
             context = {
                 "myclass_list_detail": myclass_list_info,
+                "count": myclass_list_info.count(),
             }
             return render(request, 'myclass/myclass_list.html', context)
         else:
@@ -48,7 +49,12 @@ def myclass_page(request):
                 return render(request, 'myclass/myclass.html', context)
 
             else:
-                return render(request, 'myclass/myclass_list.html')
+                myclass_list_info = select_myclass_list(user_id)
+                context = {
+                    "myclass_list_detail": myclass_list_info,
+                    "count": myclass_list_info.count(),
+                }
+                return render(request, 'myclass/myclass_list.html', context)
         else:
             disableSession(user_id, request)
             return render(request, 'login/login.html')
