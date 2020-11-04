@@ -47,6 +47,7 @@ class ItemAdmin(admin.ModelAdmin):
 
     list_display_links = ['title']
     search_fields = ['title']
+    ordering = ['-order']
 
 admin.site.register(ItemTB, ItemAdmin)
 
