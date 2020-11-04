@@ -592,21 +592,41 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	font-size:0.73em;
 	font-weight:600;
 	color:#b14739;
+	padding-bottom:20px;
+	padding-top:80px;
 }
+
+.info_detail .point_content_faq{
+	position:relative;
+	font-size:0.73em;
+	font-weight:600;
+	color:#b14739;
+	padding-bottom:20px;
+}
+
 
 .info_detail .content_gray {
 	position:relative;
 	font-size:0.6em;
 	font-weight:400;
 	color:gray;
+	padding-bottom:20px;
 }
 
 .info_detail .content {
 	position:relative;
 	font-size:0.6em;
 	font-weight:400;
-	color:black;
-	padding-top:20px;
+	color:gray;
+	padding-bottom:20px;
+}
+
+.info_detail .content_faq {
+	position:relative;
+	font-size:0.6em;
+	font-weight:400;
+	color:gray;
+	padding-left:8px;
 }
 
 .info_detail .content_curriculum {
@@ -2496,6 +2516,24 @@ input[id*="detail_faq"] {
     width:100%;
 }
 
+.accordion_faq > label {
+    position: relative;
+    display: block;
+    height: 50px;
+    color: gray;
+    line-height: 50px;
+    padding: 0 20px;
+    margin-bottom: 0px;
+    font-size: 15px;
+    font-weight: 700;
+    border-top: 1px solid #e3e3e2;
+    background: #fff;
+    cursor: pointer;
+    transform: rotate(0deg);
+    max-width: 1110px;
+    width:100%;
+}
+
 input[id*="answer"] + label {
     display:block;
     padding:20px;
@@ -2561,9 +2599,9 @@ input[id*="detail_faq"] + label em {
     position:absolute;
     top:50%;
     right:10px;
-    width:24px;
-    height:23px;
-    margin-top:-15px;
+    width:14px;
+    height:11px;
+    margin-top:-8px;
     display:inline-block;
     background:url("../img/sub/arrow_faq.png"); 0 0 no-repeat;
 }
