@@ -142,25 +142,27 @@ br {
 }
 
 header {
-	position:absolute;
+	position:fixed;
 	top:0;
 	left:0;
 	width:100vw;
 	height:2.5em;
 	z-index:10;
+	background-color:#e1a394;
 }
 
 header .header_wrap {
-    position:fixed;
+
 	display:flex;
 	justify-content:space-between;
 	align-items:center;
 	margin:0 auto;
 	padding:0 0.83em;
-
+	max-width:1130px;
 	height:2.5em;
+
 	width:100%;
-	background-color:#e1a394;
+
 }
 header .logo {
 	width:8.75em;
