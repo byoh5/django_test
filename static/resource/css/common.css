@@ -151,13 +151,16 @@ header {
 }
 
 header .header_wrap {
+    position:fixed;
 	display:flex;
 	justify-content:space-between;
 	align-items:center;
 	margin:0 auto;
 	padding:0 0.83em;
-	max-width:1130px;
+
 	height:2.5em;
+	width:100%;
+	background-color:#e1a394;
 }
 header .logo {
 	width:8.75em;
