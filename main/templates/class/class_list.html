@@ -49,11 +49,10 @@
                                 <img src="{% static 'resource/img/sub/ico_play.png' %}" alt="강의 수">
                                 {{classList_detail.class_count}}개 강의
                             </span>
-                            <div id="prd_price_{{forloop.counter0}}" >
-                                <span class="price">
-                                    {{classList_detail.price}} 원
-                                </span>
-                            </div>
+                             <span class="num">
+                                <img src="{% static 'resource/img/sub/ico_what.png' %}" style="width:24px; height:22px;" alt="강의 수">
+                                {{classList_detail.goal}}
+                            </span>
                         </div>
                     </div>
                 </li>
@@ -87,10 +86,6 @@
 </div>
 
 <script>
-     function numberWithCommas(x)
-     {
-          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-     }
 
      $(window).scroll(function() {
         var scroll_top = $(window).scrollTop();
@@ -109,19 +104,6 @@
             $(".scr").removeClass("end");
         }
     });
-
-     $(document).ready(function() {
-            var chks = document.getElementsByName('idxs[]');
-            var check_len = 0;
-            var prd_price_name = ""
-             for (var i=0,m=chks.length;i<m ;i++)
-             {
-                prd_price_name = "prd_price_" + i;
-                price_format = numberWithCommas(document.getElementById(prd_price_name).innerText);
-                document.getElementById(prd_price_name).innerText = price_format;
-             }
-
-      });
 
     function goClassDetail(prdCode)
     {
