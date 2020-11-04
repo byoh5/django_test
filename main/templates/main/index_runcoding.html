@@ -5,7 +5,6 @@
 
 
 <div class="wrap">
-
     <!-- main visual -->
     <section class="main_visual">
         <div class="section_wrap">
@@ -26,7 +25,6 @@
         </div>
     </section>
 
-
  <section class="section02">
         <img class="bg left" src="{% static 'resource/img/main/bg_sec02left.png' %}" alt="left bg">
         <img class="bg right" src="{% static 'resource/img/main/bg_sec02right.png' %}" alt="right bg">
@@ -39,7 +37,7 @@
 
         </div>
 
-        <div class="benefit">
+      <div class="benefit">
             <img src="{% static 'resource/img/main/img_sec02_01.png' %}" alt="코딩키트를 사면 온라인 강의는 무료!">
             <div class="text_area">
                     <span class="sec_title">
@@ -281,10 +279,17 @@
 
         }
 
+         function top_val()
+        {
+            var offset = $("#section02").offset();
+            $('html, body').animate({scrollTop : offset.top}, 400);
+        }
+
 
     </script>
 
     {% include "common/footer.html" %}
+ <a class="btn" href="javascript:void(0);" onclick="javascript:top_val();" style="display:scroll;position:fixed;bottom:15px;right:15px;"><img src="{% static 'resource/img/sub/top.png' %}" style="float:right;"></a><br/>
 
 
 </body></html>
