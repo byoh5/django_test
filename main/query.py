@@ -77,6 +77,10 @@ def select_pay(pay_idx):
     pay_info = PayTB.objects.filter(pay_idx=pay_idx)
     return pay_info
 
+def select_pay_paynum(pay_num):
+    pay_info = PayTB.objects.filter(pay_num=pay_num)
+    return pay_info
+
 def select_pay_user(user_id):
     pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id) |
                                     Q(pay_result=100, pay_user__regi_email=user_id) |

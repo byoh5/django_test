@@ -324,7 +324,7 @@
                                                <li>
                                                   {% for payway in payway_info %}
                                                    <div class="order_payinfo">
-                                                        {% if pay_msg == 'noUser'%}
+                                                        {% if user == 'n'%}
                                                             {% if payway.value == 'credit' %}
                                                             <span><input type="radio" name="payway" value="{{payway.value}}" onchange="myPayway(this.value)" checked>&nbsp;{{payway.name}}</span>
                                                             {% endif%}
@@ -386,7 +386,7 @@
                                      <div class="panel panel-default border-radius-none margin-top-30">
                                           <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
                                               <div class="panel-body">
-                                                  {% if pay_msg == 'noUser'%}
+                                                  {% if user == 'n'%}
                                                   <div class="font-14"><span><strong>비회원입니다. 배송받을 주소를 직접 입력해주세요.</strong></span></div>
                                                     <div class="input_area multiLine">
                                                         <input type="text" name="noUser_add01" id="noUser_add01"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" readonly required/><br/>
@@ -866,14 +866,6 @@
             if(email == "")
             {
                 $("#res_msg").text("사용자 이메일 주소를 입력해주세요.(배송에 필요)");
-                $('div.modal').modal();
-                return false;
-            }
-
-            var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
-            if(!email_patten.test(email))
-            {
-                $("#res_msg").text("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
                 $('div.modal').modal();
                 return false;
             }

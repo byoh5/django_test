@@ -43,6 +43,7 @@ def payment(request):
             "coupon_detail": coupon_info,
             "pay_result": pay_result,
             "pay_msg": pay_fail,
+            "user": 'y',
             "delivery_price": order_info[0].delivery_price,
             "payway_info": payway_info_all,
         }
@@ -83,6 +84,7 @@ def payment(request):
                 "coupon_detail": coupon_info,
                 "pay_result": pay_result,
                 "pay_msg": pay_fail,
+                "user": 'y',
                 "delivery_price": order_info[0].delivery_price,
                 "payway_info": payway_info_all,
             }
@@ -518,26 +520,50 @@ def pay_result(request):
             else:
                 new_order_info = select_order(session)
                 request.session['order_count'] = new_order_info.count()
-                return render(request, 'main/index_runcoding.html')
+
+                pay_user_info = select_pay_paynum(pay_info[0].pay_num)
+                context = {
+                    "user_detail": pay_user_info,
+                }
+                return render(request, 'mypage/myorder_noUser.html', context)
         else:
-            order_info = select_order(user_id)
-            user_info = select_register(user_id)
-            coupon_info = select_myCoupon_notUsed(user_id)
-            request.session['order_count'] = order_info.count()
+            delivery_price = 0
+            if len(user_id) > 0:
+                order_info = select_order(user_id)
+                user_info = select_register(user_id)
+                coupon_info = select_myCoupon_notUsed(user_id)
+                request.session['order_count'] = order_info.count()
 
-            delivery_price = 3000
-            if order_info.count() > 0:
-                delivery_price = order_info[0].delivery_price
+                if order_info.count() > 0:
+                    delivery_price = order_info[0].delivery_price
 
-            context = {
-                "order_detail": order_info,
-                "user_detail": user_info,
-                "coupon_detail": coupon_info,
-                "pay_result": pay_result,
-                "pay_msg": pay_msg,
-                "delivery_price": delivery_price,
-                "payway_info": payway_info,
-            }
+                context = {
+                    "order_detail": order_info,
+                    "user_detail": user_info,
+                    "coupon_detail": coupon_info,
+                    "pay_result": pay_result,
+                    "pay_msg": pay_msg,
+                    "user": 'y',
+                    "delivery_price": delivery_price,
+                    "payway_info": payway_info,
+                }
+            else:
+                order_info = select_order(session)
+                request.session['order_count'] = order_info.count()
+
+                if order_info.count() > 0:
+                    delivery_price = order_info[0].delivery_price
+
+                context = {
+                    "order_detail": order_info,
+                    "user_detail": '',
+                    "coupon_detail": '',
+                    "pay_result": pay_result,
+                    "pay_msg": pay_msg,
+                    "user" : 'n',
+                    "delivery_price": delivery_price,
+                    "payway_info": payway_info,
+                }
 
             return render(request, 'payment/order.html', context)
 
