@@ -10,11 +10,8 @@ message_no_login = 210
 
 def order_page(request):
     session = request.session.get('client_id')
-    userid = request.session.get('user_id')  # 이 값으로 디비에서 정보찾고..
-    if len(userid) > 0:
-        print(1)
-        print(len(userid))
-        print(session)
+    userid = request.session.get('user_id', 'no')  # 이 값으로 디비에서 정보찾고..
+    if userid is not 'no':
         if checkSession(session, userid):
             order_info = select_order(userid)
             user = "y"
@@ -22,12 +19,9 @@ def order_page(request):
             coupon_info = select_myCoupon_notUsed(userid)
 
         else:
-            print(3)
             disableSession(userid, request)
             return render(request, 'login/login.html')
     else:
-        print(2)
-        print(session)
         order_info = select_order(session)
         user_info = ''
         coupon_info = ''
@@ -53,8 +47,8 @@ def order_page(request):
     return render(request, 'payment/order.html', context)  # templete에 없으면 호출이 안됨. ajax
 
 def order(request):
-    session = request.session.get('client_id')
-    if session is None:
+    session = request.session.get('client_id', 'no')
+    if session == 'no':
         logger.debug('none session')
         number_pool = string.digits
         _LENGTH = 8
@@ -74,8 +68,8 @@ def order(request):
     count = int(request.POST['count'])
 
     messages = 0
-    user_id = request.session.get('user_id')
-    if user_id is not None:
+    user_id = request.session.get('user_id', 'no')
+    if user_id is not 'no':
         # login_info = select_login(user_id)
         order_prd_info = select_order_prdCode(user_id, prd_code)
         if order_prd_info.count() > 0:  # 장바구니에 같은 prd가 있으면 count +
@@ -124,14 +118,14 @@ def order(request):
 
 def order_delete(request):
     order_idx = request.POST['order_idx']
-    user_id = request.session.get('user_id')
+    user_id = request.session.get('user_id', 'no')
     session = request.session.get('client_id')
 
     split_order = order_idx.split(',')
 
     for idx in split_order:
         if len(idx) > 0:
-            if user_id is not None:
+            if user_id is not 'no':
                 order_info = select_order_idx(idx, user_id)
             else:
                 order_info = select_order_idx(idx, session)
@@ -140,7 +134,7 @@ def order_delete(request):
                 delete_order_idx(order_info, '')
 
     delivery = 0
-    if user_id is not None:
+    if user_id is not 'no':
         new_order_info = select_order(user_id)
         user_info = select_register(user_id)
         coupon_info = select_myCoupon_notUsed(user_id)

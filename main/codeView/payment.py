@@ -29,7 +29,7 @@ nouser = 'kcp_nouser' #비회원
 
 def payment(request):
     user_id = request.session.get('user_id')
-    payway_val = request.POST.get('payway', 0)
+    payway_val = request.POST.get('payway', 'no')
 
     if payway_val == 0:
         order_info = select_order(user_id)
@@ -50,7 +50,7 @@ def payment(request):
 
         return render(request, 'payment/order.html', context)
 
-    if payway_val is not None:
+    if payway_val is not 'no':
         pg_type = request.POST['pg_type']
         print(pg_type) # 비회원/회원/네이버
 
@@ -455,7 +455,7 @@ def pay_naver(request, pay_num):
 
 def pay_result(request):
     pay_idx = int(request.POST['pay'])
-    user_id = request.session.get('user_id')
+    user_id = request.session.get('user_id', 'no')
     session = request.session.get('client_id')
 
     pay_result = int(request.POST['pay_result'])
@@ -487,7 +487,7 @@ def pay_result(request):
 
             for data in split_order:
                 if len(data) > 0:
-                    if len(user_id) > 0:
+                    if user_id is not 'no':
                         order_info = select_order_idx(data, user_id)
                         if order_info.count() > 0:
                             myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
@@ -507,7 +507,7 @@ def pay_result(request):
 
             update_pay.save()
 
-            if len(user_id) > 0:
+            if user_id is not 'no':
                 myclass_list_info = select_myclass_list(user_id)
                 new_order_info = select_order(user_id)
                 request.session['order_count'] = new_order_info.count()
@@ -528,7 +528,7 @@ def pay_result(request):
                 return render(request, 'mypage/myorder_noUser.html', context)
         else:
             delivery_price = 0
-            if len(user_id) > 0:
+            if user_id is not 'no':
                 order_info = select_order(user_id)
                 user_info = select_register(user_id)
                 coupon_info = select_myCoupon_notUsed(user_id)
