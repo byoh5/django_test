@@ -524,13 +524,18 @@ def pay_result(request):
             user_info = select_register(user_id)
             coupon_info = select_myCoupon_notUsed(user_id)
             request.session['order_count'] = order_info.count()
+
+            delivery_price = 3000
+            if order_info.count() > 0:
+                delivery_price = order_info[0].delivery_price
+
             context = {
                 "order_detail": order_info,
                 "user_detail": user_info,
                 "coupon_detail": coupon_info,
                 "pay_result": pay_result,
                 "pay_msg": pay_msg,
-                "delivery_price": order_info[0].delivery_price,
+                "delivery_price": delivery_price,
                 "payway_info": payway_info,
             }
 
