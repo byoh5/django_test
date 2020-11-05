@@ -52,7 +52,7 @@ def order_page(request):
 
 def order(request):
     session = request.session.get('client_id')
-    if session is None:
+    if len(session) == 0:
         number_pool = string.digits
         _LENGTH = 8
         session = str(timezone.now().month) + str(timezone.now().day) + str(timezone.now().hour) + str(timezone.now().minute) + "-"
