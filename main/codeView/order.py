@@ -3,6 +3,8 @@ from main.query import *
 from main.models import *
 import string
 import random
+import logging
+logger = logging.getLogger(__name__)
 
 message_no_login = 210
 
@@ -53,6 +55,7 @@ def order_page(request):
 def order(request):
     session = request.session.get('client_id')
     if session is None:
+        logger.debug('none session')
         number_pool = string.digits
         _LENGTH = 8
         session = str(timezone.now().month) + str(timezone.now().day) + str(timezone.now().hour) + str(timezone.now().minute) + "-"
@@ -60,7 +63,8 @@ def order(request):
             session += random.choice(number_pool)
         request.session['client_id'] = session
 
-    print(session)
+    logger.debug(session)
+    logger.debug(len(session))
 
     prd_code = request.POST['prd_code']
     flag = int(request.POST['flag'])
