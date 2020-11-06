@@ -1,61 +1,14 @@
 {% load static %}
 {% include "common/header.html" %}
     <div class="wrap">
-        <!-- sub visual -->
         <section class="sub_visual_class_detail">
-<!--            <div class="section_wrap">style="position:fixed; top:0px;
-<!--                <div class="slogan">-->
-<!--                    <span class="bigSlg ck_title">-->
-<!--                        {{prd_detail.title2}}-->
-<!--                    </span>-->
-<!--                    <div class="pageNav">-->
-<!--                        <span>{{prd_detail.title3}}</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <img class="subVisual codingKit" src="{% static 'resource/img/sub/sv_codingKit.png' %}" alt="코딩키트">-->
-<!--            </div>-->
         </section>
-        <!-- sub visual -->
 
         <!-- codingKit list -->
         <div id="top" class="codingKit_list detail">
             <div class="lecture_list detail">
                 <div class="detail_area">
-
                     {% include html_file %}
-
-<!--                    <div class="precaution">-->
-<!--                        <span class="cautionTitle">구매 전 유의사항</span>-->
-<!--                        <ul>-->
-<!--                            <li>런코딩 이용권은 동시에 여러 기기에서 접속할 수 없습니다.</li>-->
-<!--                            <li>런코딩 이용권은 해외에서 이용할 수 없습니다.</li>-->
-<!--                            <li>런코딩 이용권의 이용기간은 일시정지할 수 없습니다.</li>-->
-<!--                            <li>런코딩 이용권은 구매 후 7일 이내에 3개 미만의 유닛을 열람한 경우 전액 환불이 가능합니다.</li>-->
-<!--                            <li>3개 이상의 유닛을 열람하신 경우 부분환불로 처리되며, 부분환불의 경우 제반 수수료와 이미 학습한 기간<br/>-->
-<!--                            (결제 완료 후 환불 의사 표시까지의 기간)만큼의 금액을 차감하고 남은 금액을 불합니다.<br/>-->
-<!--                            이 때, 총 이용기간이 아닌 정상제공 기간을 기준으로 환불을 진행합니다.</li>-->
-<!--                            <li>고객의 환불 의사 표시에 대해 회사가 회산한 날로부터 영업일 기준 3일 이내에 환불 처리되며, 환불이<br/>-->
-<!--                            불가한 경우 이를 사전에 고지합니다.</li>-->
-<!--                            <li>교재를 비롯한 실물 상품은 오후 12시 이전 구매 시 당일 출고, 12시 이후 구매시 익일 출고됩니다.<br/>-->
-<!--                            출고취소 요청은 구매 당일 오후 1시까지만 가능합니다.</li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-
-<!--                    <div class="curriculum">-->
-<!--                        <h3>커리큘럼</h3>-->
-<!--                        <div class="list_depth1">-->
-<!--                            <ul>-->
-<!--                                {% for items_detail in class_items_detail %}-->
-<!--                                <li>-->
-<!--                                    <p class="title">-->
-<!--                                        <b>{{forloop.counter0}}) </b>{{items_detail.title}}-->
-<!--                                    </p>-->
-<!--                                    <p class="time">{{items_detail.time}}</p>-->
-<!--                                </li>-->
-<!--                                {% endfor %}-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                    </div>-->
                 </div>
                 <a href="/class/" class="btn list_more">목록으로</a>
             </div>
@@ -77,6 +30,7 @@
                                         <input type="hidden" id="option2" name="option2" value="0">
                                         <input type="hidden" id="option3" name="option3" value="0">
                                         <input type="hidden" id="count" name="count" value="1">
+                                        <input type="hidden" id="id" name="id" value="1">
                                      </form>
                                     <p><span id="prd_price">{{prd_detail.price}}</span> 원</p>
                                 </li>
@@ -181,6 +135,12 @@
         function goOrder(flag)
         {
             var quantity = document.getElementById("prodQuantity").value;
+
+            var id = '{{client_id}}';
+            if(id == "")
+            {
+                 $("input[type=hidden][name=id]").val('100');
+            }
 
             $("input[type=hidden][name=flag]").val(flag);
             $("input[type=hidden][name=count]").val(quantity);

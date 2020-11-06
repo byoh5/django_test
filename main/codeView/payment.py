@@ -29,7 +29,7 @@ nouser = 'kcp_nouser' #비회원
 
 def payment(request):
     user_id = request.session.get('user_id')
-    payway_val = request.POST.get('payway', 'no')
+    payway_val = request.POST.get('payway', '0')
 
     if payway_val == 0:
         order_info = select_order(user_id)
@@ -50,7 +50,7 @@ def payment(request):
 
         return render(request, 'payment/order.html', context)
 
-    if payway_val is not 'no':
+    if payway_val is not '0':
         pg_type = request.POST['pg_type']
         print(pg_type) # 비회원/회원/네이버
 
@@ -65,7 +65,7 @@ def payment(request):
             return pay_naver(request, pay_num)
 
         payway_info = select_payway_value(payway_val)
-        print(payway_val);
+        delivery = 0
         if payway_info.count() > 0 and payway_info[0].value == payway_credit:
             return pay_credit(request, payway_info, pay_num, pg_type)
         elif payway_info.count() > 0 and payway_info[0].value == payway_deposit:
@@ -78,6 +78,8 @@ def payment(request):
             coupon_info = select_myCoupon_notUsed(user_id)
             payway_info_all = select_payway()
             request.session['order_count'] = order_info.count()
+            if order_info.count() is not 0:
+                delivery = order_info[0].delivery_price
             context = {
                 "order_detail": order_info,
                 "user_detail": user_info,
@@ -85,7 +87,7 @@ def payment(request):
                 "pay_result": pay_result,
                 "pay_msg": pay_fail,
                 "user": 'y',
-                "delivery_price": order_info[0].delivery_price,
+                "delivery_price": delivery,
                 "payway_info": payway_info_all,
             }
 
@@ -455,7 +457,7 @@ def pay_naver(request, pay_num):
 
 def pay_result(request):
     pay_idx = int(request.POST['pay'])
-    user_id = request.session.get('user_id', 'no')
+    user_id = request.session.get('user_id', '')
     session = request.session.get('client_id')
 
     pay_result = int(request.POST['pay_result'])
@@ -487,7 +489,15 @@ def pay_result(request):
 
             for data in split_order:
                 if len(data) > 0:
-                    if user_id is not 'no':
+                    if user_id == '':
+                        order_info = select_order_idx(data, session)
+                        if order_info.count() > 0:
+                            myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
+                                                              pay_num=pay_info[0].pay_num,
+                                                              expire_time=timezone.now())
+                            myclass_list_info.save()
+                            delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
+                    else:
                         order_info = select_order_idx(data, user_id)
                         if order_info.count() > 0:
                             myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
@@ -496,18 +506,18 @@ def pay_result(request):
                             myclass_list_info.save()
                             delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
-                    else:
-                        order_info = select_order_idx(data, session)
-                        if order_info.count() > 0:
-                            myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
-                                                              pay_num=pay_info[0].pay_num,
-                                                              expire_time=timezone.now())
-                            myclass_list_info.save()
-                            delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
-
             update_pay.save()
 
-            if user_id is not 'no':
+            if user_id == '':
+                new_order_info = select_order(session)
+                request.session['order_count'] = new_order_info.count()
+
+                pay_user_info = select_pay_paynum(pay_info[0].pay_num)
+                context = {
+                    "user_detail": pay_user_info,
+                }
+                return render(request, 'mypage/myorder_noUser.html', context)
+            else:
                 myclass_list_info = select_myclass_list(user_id)
                 new_order_info = select_order(user_id)
                 request.session['order_count'] = new_order_info.count()
@@ -517,18 +527,26 @@ def pay_result(request):
                 }
 
                 return render(request, 'myclass/myclass_list.html', context)
-            else:
-                new_order_info = select_order(session)
-                request.session['order_count'] = new_order_info.count()
-
-                pay_user_info = select_pay_paynum(pay_info[0].pay_num)
-                context = {
-                    "user_detail": pay_user_info,
-                }
-                return render(request, 'mypage/myorder_noUser.html', context)
         else:
             delivery_price = 0
-            if user_id is not 'no':
+            if user_id == '':
+                order_info = select_order(session)
+                request.session['order_count'] = order_info.count()
+
+                if order_info.count() > 0:
+                    delivery_price = order_info[0].delivery_price
+
+                context = {
+                    "order_detail": order_info,
+                    "user_detail": '',
+                    "coupon_detail": '',
+                    "pay_result": pay_result,
+                    "pay_msg": pay_msg,
+                    "user": 'n',
+                    "delivery_price": delivery_price,
+                    "payway_info": payway_info,
+                }
+            else:
                 order_info = select_order(user_id)
                 user_info = select_register(user_id)
                 coupon_info = select_myCoupon_notUsed(user_id)
@@ -544,23 +562,6 @@ def pay_result(request):
                     "pay_result": pay_result,
                     "pay_msg": pay_msg,
                     "user": 'y',
-                    "delivery_price": delivery_price,
-                    "payway_info": payway_info,
-                }
-            else:
-                order_info = select_order(session)
-                request.session['order_count'] = order_info.count()
-
-                if order_info.count() > 0:
-                    delivery_price = order_info[0].delivery_price
-
-                context = {
-                    "order_detail": order_info,
-                    "user_detail": '',
-                    "coupon_detail": '',
-                    "pay_result": pay_result,
-                    "pay_msg": pay_msg,
-                    "user" : 'n',
                     "delivery_price": delivery_price,
                     "payway_info": payway_info,
                 }

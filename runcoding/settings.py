@@ -150,6 +150,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+# logging
 LOGGING = {
     'version': 1,
     # 기존의 로깅 설정을 비활성화 할 것인가?

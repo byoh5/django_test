@@ -60,7 +60,7 @@ class OrderAdmin(admin.ModelAdmin):
     get_name.short_description = 'prd code'  # Renames column head
 
     list_filter = ['order_time', 'dbstat']
-    list_display_links = ['user_id']
+    list_display_links = ['order_idx','user_id']
     search_fields = ['user_id']
 
 admin.site.register(OrderTB, OrderAdmin)
