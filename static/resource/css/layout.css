@@ -490,8 +490,16 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	top:8em;
 	width:210px;
 }
+
+.codingKit_list .filter_area.scr .tagList {
+	position:fixed;
+	top:15em;
+	width:210px;
+}
+
 .codingKit_list .filter_area.end .search_area,
-.codingKit_list .filter_area.end .category {
+.codingKit_list .filter_area.end .category,
+.codingKit_list .filter_area.end .tagList{
 	position:relative;
 	top:auto;
 }
@@ -515,6 +523,22 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	border-radius:5em;
 	background:none;
 }
+
+.codingKit_list .filter_area .Tag {
+	display:block;
+	margin-bottom:0.5em;
+	padding:0.5em;
+	margin-right:2px;
+	width:48%;
+	color:#646464;
+	font-size:0.63em;
+	text-align:center;
+	border:1px solid #dcdcdc;
+	border-radius:5em;
+	background:#dcdcdc;
+
+}
+
 .codingKit_list .filter_area .category button.active {
 	color:#fff;
 	background-color:#646464;
