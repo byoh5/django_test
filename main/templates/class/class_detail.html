@@ -96,11 +96,17 @@
                     <div class="btn_area">
                         <a href="javascript:void(0);" class="btn cart" onClick="javascript:goOrder(1);">장바구니 담기</a>
                         <a class="btn buy" href="javascript:void(0);" onClick="javascript:goOrder(2);">바로구매</a>
+                         <div id="naverpay_btn" class="btn-center" style="margin-left:20px; margin-bottom:40px;"></div>
                     </div>
+
+                    <div id="margin" style="margin-top:40px;"></div>
                     <input type="hidden" name="message" value="{{message}}" readonly>
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript" src="//pay.naver.com/customer/js/naverPayButton.js"></script>
+        <script type="text/javascript" src="//pay.naver.com/customer/js/mobile/naverPayButton.js"></script>
 
         {% include "common/banner_bottom.html" %}
         {% include "common/footer.html" %}
@@ -108,6 +114,27 @@
     </div>
 
     <script>
+         naver.NaverPayButton.apply({
+            BUTTON_KEY: "CE196A42-5C47-46D0-A871-00BB22E69FB6",
+            TYPE: "A", //버튼 스타일
+            COLOR: 1, //버튼 색상타입
+            COUNT: 1, // 네이버페이버튼 + 찜하기버튼 모두 출력 여부
+            ENABLE: "Y", //네이버페이 활성여부(재고부족 등에는 N으로 비활성처리)
+            EMBED_ID: "naverpay_btn", //네이버페이 버튼 UI가 부착될 HTML element의 ID
+            BUY_BUTTON_HANDLER : function() {
+                //중략
+                //핸들러 내에서 아임포트 네이버페이 결제 함수 호출
+<!--                IMP.request_pay(param);-->
+            },
+            WISHLIST_BUTTON_HANDLER : function() {
+                //중략
+
+                //핸들러 내에서 아임포트 네이버페이 찜하기 함수 호출(iamport.payment-1.1.6.js부터 지원됨)
+                IMP.naver_zzim(param);
+            }
+        });
+
+
         $(window).scroll(function() {
             var scroll_top = $(window).scrollTop();
             if (scroll_top >= $(".sub_visual_class_detail").outerHeight()) {

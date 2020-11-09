@@ -553,7 +553,6 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 .codingKit_list .lecture_list.detail .info_detail {
 	margin:0 0.83em 2.083em;
 	padding:2.083em 0;
-	border-bottom:1px solid #dcdcdc;
 }
 
 .info_detail .title {
@@ -2508,7 +2507,6 @@ input[id*="detail_faq"] {
     margin-bottom: 0px;
     font-size: 15px;
     font-weight: 700;
-    border-top: 1px solid #e3e3e2;
     background: #fff;
     cursor: pointer;
     transform: rotate(0deg);
@@ -2526,7 +2524,7 @@ input[id*="detail_faq"] {
     margin-bottom: 0px;
     font-size: 15px;
     font-weight: 700;
-    border-top: 1px solid #e3e3e2;
+    border-bottom: 1px solid #e3e3e2;
     background: #fff;
     cursor: pointer;
     transform: rotate(0deg);
@@ -2585,7 +2583,7 @@ input[id*="detail_faq"] + label {
     padding:20px;
     #border:1px solid #000;
     border-bottom:0;
-    border-top: 1px solid #e3e3e2;
+    border-bottom: 1px solid #e3e3e2;
     height: 50px;
     padding: 0 10px;
     margin-bottom: 0px;
