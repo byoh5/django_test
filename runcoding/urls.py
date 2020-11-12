@@ -19,18 +19,17 @@ from django.urls import path, include
 
 from main.views import *
 from main.codeView.lecture import *
-from main.codeView.comunity import *
 from main.codeView.login import *
 from main.codeView.lounge import *
 from main.codeView.myclass import *
 from main.codeView.mypage import *
 from main.codeView.order import *
-from main.codeView.payment import *
 from main.codeView.regi import *
 from main.codeView.search import *
 from main.codeView.confirm_user import *
 from main.codeView.runAdmin import *
 from main.codeView.watch import *
+from main.codeView.prodcut_xml import *
 
 urlpatterns = [
     path('regi/', register_page),
@@ -43,6 +42,7 @@ urlpatterns = [
     path('class/', class_page),
     path('class_detail/', class_detail_page),
     path('detail_prd/', class_detail_page_prd),
+    path('product_xml/', product_xml_page),
 
     path('myclass/', myclass_page),
     path('myclass_list/', myclass_list_page),
@@ -94,6 +94,8 @@ urlpatterns = [
     path('refund_search/', refund_search),
     path('user_refund_rollback/', user_refund_rollback),
     path('watchCam/', watch_esp_cam),
+
+
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
