@@ -93,20 +93,21 @@ def mypage_order_detail(request):
                 if len(data) > 0:
                     order_info = select_order_info(data, user_id)
                     if order_info.count() > 0:
-                        option_name += " | "
                         if order_info[0].option1_selectNum == 2:
                             option_name += order_info[0].prd.option1
+                            option_name += " | "
 
                         if order_info[0].option2_selectNum == 2:
                             if option_name != "":
                                 option_name += ","
                             option_name += order_info[0].prd.option2
+                            option_name += " | "
 
                         if order_info[0].option3_selectNum == 2:
                             if option_name != "":
                                 option_name += ","
                             option_name += order_info[0].prd.option3
-                        option_name += " | "
+                            option_name += " | "
             order_info = select_order_payNum(pay_info[0].pay_num, user_id)
             context = {
                 "pay_detail": pay_info,
