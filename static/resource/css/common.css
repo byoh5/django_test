@@ -794,6 +794,22 @@ footer .footer .snsArea .snsBtn a {
 	margin-right:0.416em;
 }
 
+.up_scroll {
+    display:scroll;
+    position:fixed;
+    bottom:60px;
+    right:15px;
+    z-index:50;
+}
+
+.down_scroll {
+    display:scroll;
+    position:fixed;
+    bottom:15px;
+    right:15px;
+    z-index:50;
+}
+
 	/* modal-popup */
 [data-ml-modal] {
 	position:fixed;

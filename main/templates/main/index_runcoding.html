@@ -25,7 +25,7 @@
         </div>
     </section>
 
- <section class="section02">
+    <section class="section02">
         <img class="bg left" src="{% static 'resource/img/main/bg_sec02left.png' %}" alt="left bg">
         <img class="bg right" src="{% static 'resource/img/main/bg_sec02right.png' %}" alt="right bg">
 
@@ -279,20 +279,29 @@
 
         }
 
-         function top_val()
+        function top_val()
         {
-            var offset = $("#section02").offset();
-            $('html, body').animate({scrollTop : offset.top}, 400);
+            $('html, body').animate({scrollTop : 0}, 400);
+        }
+
+        function down_val()
+        {
+           $('html, body').animate({scrollTop : ($(document).height()-1200)}, 400);
         }
 
 
     </script>
 
     {% include "common/footer.html" %}
-    <a class="btn" href="javascript:void(0);" onclick="javascript:top_val();" style="display:scroll;position:fixed;bottom:15px;right:15px;">
-        <img src="{% static 'resource/img/sub/top.png' %}" style="float:right;">
-    </a>
-    <br/>
+
 
 
 </body></html>
+
+     <a class="up_scroll" href="javascript:void(0);" onclick="javascript:top_val();">
+        <img src="{% static 'resource/img/sub/up.png' %}" style="float:right;">
+    </a>
+    <a class="down_scroll" href="javascript:void(0);" onclick="javascript:down_val();">
+        <img src="{% static 'resource/img/sub/down.png' %}" style="float:right;">
+    </a>
+    <br/>
