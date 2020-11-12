@@ -1,6 +1,9 @@
+from django.db.models.query import QuerySet
+
 from main.models import *
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Q, Count
+
 
 def select_order(user_id):
     order_info = OrderTB.objects.filter(user_id=user_id, dbstat='A')
@@ -56,14 +59,6 @@ def select_register_idx(idx):
 def select_login(user_id):
     login_info = LoginTB.objects.filter(user_id=user_id, dbstat='A')
     return login_info
-
-def select_prd(prd_code):
-    prd_info = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
-    return prd_info
-
-def select_prd_keyword(keyword):
-    prd_info = PrdTB.objects.filter(Q(keyword=keyword, dbstat='A') | Q(title__icontains=keyword, dbstat='A') | Q(title2__icontains=keyword, dbstat='A') | Q(title3__icontains=keyword, dbstat='A'))
-    return prd_info
 
 def select_userStatue(userStatus_idx):
     userStatus_info = UserStatusTB.objects.filter(userStatus_idx=userStatus_idx)
@@ -255,19 +250,27 @@ def select_myclass_list_play(myclass_idx):
     return myclass_list_info
 
 def select_class_list():
-    prd_info = PrdTB.objects.filter(dbstat='A').order_by('-prd_idx')
+    prd_info = PrdTB.objects.filter(dbstat='A', list__isnull=False)
+    return prd_info
+
+def select_prd_tag(tag):
+    prd_info = PrdTB.objects.filter(dbstat='A', tag=tag)
+    return prd_info
+
+def select_prd(prd_code):
+    prd_info = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
+    return prd_info
+
+def select_prd_keyword(keyword):
+    prd_info = PrdTB.objects.filter(Q(keyword=keyword, dbstat='A') | Q(title__icontains=keyword, dbstat='A') | Q(title2__icontains=keyword, dbstat='A'))
     return prd_info
 
 def select_class_detail(prd_code):
-    item_info = ItemTB.objects.filter(prd__prd_code=prd_code).order_by('order')
+    item_info = ItemTB.objects.filter(prd__prd_code=prd_code, dbstat='A').order_by('order')
     return item_info
 
 def select_class_common_detail(prd_code):
-    item_info = ItemTB.objects.filter(prd__prd_code=prd_code, common__isnull=False).order_by('order')
-    return item_info
-
-def select_class_kit_detail(prd_code):
-    item_info = ItemTB.objects.filter(prd__prd_code=prd_code, common__isnull=True).order_by('order')
+    item_info = ItemCommonTB.objects.filter(prd__prd_code=prd_code, dbstat='A').order_by('order')
     return item_info
 
 def select_lounge():

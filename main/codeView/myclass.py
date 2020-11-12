@@ -34,15 +34,14 @@ def myclass_page(request):
 
     if user_id is not None:
         if checkSession(session, user_id):
-            item_info = select_class_kit_detail(prdCode)
+            item_info = select_class_detail(prdCode)
             item_common_info = select_class_common_detail(prdCode)
 
             if item_info.count() > 0:
                 context = {
                     "myclass_detail": item_info,
                     "myclass_common_detail": item_common_info,
-                    "title": item_info[0].prd.title2,
-                    "sub_title": item_info[0].prd.title3,
+                    "title": item_info[0].prd.title,
                     "myclass_idx":myclass_idx,
                     "play":play,
                 }

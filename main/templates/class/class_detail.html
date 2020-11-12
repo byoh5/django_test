@@ -29,6 +29,7 @@
                                         <input type="hidden" id="option1" name="option1" value="0">
                                         <input type="hidden" id="option2" name="option2" value="0">
                                         <input type="hidden" id="option3" name="option3" value="0">
+                                        <input type="hidden" id="option_level" name="option_level" value="0">
                                         <input type="hidden" id="count" name="count" value="1">
                                         <input type="hidden" id="id" name="id" value="1">
                                      </form>
@@ -60,6 +61,13 @@
                                 <li>
                                     <span class="li_title">옵션 </span>
 
+                                     <select id="options_level" name="options_level" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;"">
+                                        <option value="0">--------------필수옵션----------</option>
+                                        {% for tag_info in prd_tag %}
+                                        <option value={{tag_info.prd_code}}>{{tag_info.keyword}}</option>
+                                        {% endfor %}
+                                     </select>
+
                                     {% if prd_detail.option1 != "" %}
                                      <select id="options_1" name="options_1" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, 1);">
                                         <option value="0">--------------필수옵션----------</option>
@@ -83,6 +91,7 @@
                                         <option value={{prd_detail.option3_price}}>{{prd_detail.option3}} (+{{prd_detail.option3_price}})</option>
                                      </select>
                                     {% endif %}
+
 
                                 </li>
                                 <li>
@@ -163,12 +172,22 @@
         {
             var quantity = document.getElementById("prodQuantity").value;
 
+            option_level = document.getElementById("options_level")
+
+            if (option_level.selectedIndex == 0)
+            {
+                $("#res_msg").text("아두이노/엠블럭 선택해주세요.");
+                $('div.modal').modal();
+                return false;
+            }
+
             var id = '{{client_id}}';
             if(id == "")
             {
                  $("input[type=hidden][name=id]").val('100');
             }
 
+             $("input[type=hidden][name=option_level]").val(option_level);
             $("input[type=hidden][name=flag]").val(flag);
             $("input[type=hidden][name=count]").val(quantity);
             document.getElementById("prd_form").submit();

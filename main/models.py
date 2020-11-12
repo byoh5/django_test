@@ -35,10 +35,11 @@ class LoginTB(models.Model):
 
 class PrdTB(models.Model):
     prd_idx = models.AutoField(primary_key=True)
-    prd_code = models.CharField(max_length=50, default='') #year(2020) + month(08) + arduino(001), mblock(002), AI(300), kit count(1)
+    prd_code = models.CharField(max_length=50, default='') #year(2020) + month(08) + trashcan(001), AI(300), kit count(1)
     title = models.CharField(max_length=50)
-    title2 = models.CharField(max_length=50, default='') #detail page title
-    title3 = models.CharField(max_length=50, default='') #detail sub page title
+    title2 = models.CharField(max_length=50,  null=True, blank=True) #img sub title
+    list = models.CharField(max_length=50,  null=True,  blank=True) #group by 있으면 list에 표시
+    tag = models.CharField(max_length=50, default='')
     img = models.CharField(max_length=50, default='')
     gif = models.CharField(max_length=50, default='')
     period = models.IntegerField(default='0')
@@ -58,23 +59,28 @@ class PrdTB(models.Model):
 
 class ItemCommonTB(models.Model):
     itemcommon_idx = models.AutoField(primary_key=True)
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
     item_code = models.CharField(max_length=50, default='')
-    title = models.CharField(max_length=50)
-    time = models.CharField(max_length=50)
-    data = models.CharField(max_length=150, default='')
-    stime = models.DateTimeField(default=timezone.now)
-    modified = models.DateTimeField(auto_now=True, blank=True)
-
-class ItemTB(models.Model): #curriculum
-    item_idx = models.AutoField(primary_key=True)
-    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT)
-    common = models.ForeignKey(ItemCommonTB, on_delete=models.PROTECT, null=True, blank=True)
     title = models.CharField(max_length=50)
     time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0', null=True, blank=True)
     downdata = models.CharField(max_length=50, null=True, blank=True)
     downdata_name = models.CharField(max_length=50, null=True, blank=True)
+    dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
+
+class ItemTB(models.Model): #curriculum
+    item_idx = models.AutoField(primary_key=True)
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT)
+    title = models.CharField(max_length=50)
+    time = models.CharField(max_length=50)
+    data = models.CharField(max_length=150, default='')
+    order = models.IntegerField(default='0', null=True, blank=True)
+    downdata = models.CharField(max_length=50, null=True, blank=True)
+    downdata_name = models.CharField(max_length=50, null=True, blank=True)
+    dbstat = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 

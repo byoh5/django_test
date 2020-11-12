@@ -2,18 +2,15 @@ from django.shortcuts import render
 
 def product_xml_page(request):
     prd_code1 = request.GET.get('product[0][id]')
-    prd_code2 = request.GET.get('product[1][id]')
+    #prd_code2 = request.GET.get('product[1][id]')
     xml_file = ""
-
-    if prd_code1 is not None and prd_code2 is not None and prd_code1 is not prd_code2:
-        xml_file = "all"
-    elif prd_code1 is not None:
+    #
+    # if prd_code1 is not None and prd_code2 is not None and prd_code1 is not prd_code2:
+    #     xml_file = "all"
+    if prd_code1 is not None:
         xml_file = prd_code1
-    elif prd_code1 is not None:
-        xml_file = prd_code2
-
-
-    print(xml_file)
+    # elif prd_code1 is not None:
+    #     xml_file = prd_code2
 
     context = {
         "xml_file": xml_file,

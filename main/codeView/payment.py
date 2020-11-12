@@ -61,10 +61,14 @@ def payment(request):
         for i in range(_LENGTH):
             pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
 
-        if pg_type == 'payway_naver':
-            return pay_naver(request, pay_num)
+
+
+        if pg_type == 'naverco':
+            payway_info = select_payway_value(pg_type)
+            return pay_naver(request, payway_info, pay_num)
 
         payway_info = select_payway_value(payway_val)
+
         delivery = 0
         if payway_info.count() > 0 and payway_info[0].value == payway_credit:
             return pay_credit(request, payway_info, pay_num, pg_type)
@@ -369,10 +373,9 @@ def pay_escrow(request, payway_info, pay_num):
         return render(request, 'login/login.html')
 
 
-def pay_naver(request, pay_num):
+def pay_naver(request, payway_info, pay_num):
     session = request.session.get('client_id')
     order_idx = request.POST['idx']
-    addr_num = request.POST['addr_num']
     prd_price = int(request.POST['total_prd_price'])
     delivery_price = int(request.POST['total_delivery_price'])
     pay_price = int(request.POST['total_option_prd_price'])
@@ -385,13 +388,6 @@ def pay_naver(request, pay_num):
     option2 = "0"
     option3 = "0"
     coupon_num = ""
-
-    # 비회원이니 쿠폰은 없겠지
-    #coupon_num = request.POST['coupon_num']
-    #if coupon_prd_total_price == 0:
-    #pay_price = prd_total_price
-    #else:
-     #   pay_price = coupon_prd_total_price
 
     split_order = order_idx.split(',')
 
@@ -412,48 +408,31 @@ def pay_naver(request, pay_num):
 
                 prd_total_count += int(prd_count)
                 prd_title = order_info[0].prd.title
-                update_order_idx(prd_count, order_info, addr_num, option1, option2, option3,
+                update_order_idx(prd_count, order_info, 1, option1, option2, option3,
                                  pay_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
                 order_list += idx + ","
 
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
 
-    # 가입자 정보는 어찌 알 수 있을까...
-    # regi_info = select_register(user_id)
-    #
-    # if regi_info.count() is not 0:
-    #     if int(addr_num) == 1:
-    #         phone = regi_info[0].regi_phone
-    #         name = regi_info[0].regi_name
-    #         addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
-    #             0].regi_receiver1_add01 + ")"
-    #     else:
-    #         name = regi_info[0].regi_receiver2_name
-    #         phone = regi_info[0].regi_receiver2_phone
-    #         addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
-    #             0].regi_receiver2_add01 + ")"
+    pay_userStatus_info = select_userStatue(pay_status_prepay)
+    pay_info = PayTB(pay_num=pay_num, order_id=order_list, coupon_num=coupon_num,
+                     prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
+                     prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
+                     delivery_name="runcoding", delivery_addr="경기도 수원시", delivery_phone="01012341234", payWay=payway_info[0])
+    pay_info.save()
 
-        pay_userStatus_info = select_userStatue(pay_status_prepay)
-        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
-                         prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
-                         prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
-                         delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay="payway_naver")
-        pay_info.save()
+    order_info = select_order_payNum(pay_num, session)
 
-        order_info = select_order_payNum(pay_num, session)
+    context = {
+        "payment": pay_info,
+        "pay_num": pay_num,
+        "order_info": order_info,
+        "count": order_info.count(),
+        "imp": imp_id,
+    }
 
-        context = {
-            "payment": pay_info,
-            "order_info": order_info,
-            "imp": imp_id,
-            "pay_method": 'card'
-        }
-
-        return render(request, 'payment/pay_info.html', context)
-    else:
-        return render(request, 'login/login.html')
-
+    return render(request, 'payment/pay_naver.html', context)
 
 def pay_result(request):
     pay_idx = int(request.POST['pay'])

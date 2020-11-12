@@ -8,9 +8,7 @@
                    <span class="bigSlg ck_title">
                         {{title}}
                     </span>
-                    <div class="pageNav">
-                        <span>{{sub_title}}</span>
-                    </div>
+
                 </div>
                 <img class="subVisual myClass" src="{% static 'resource/img/sub/sv_myClass.png' %}" alt="나의 강의실">
             </div>
@@ -40,19 +38,6 @@
                         <span>강의목록</span>
                         <div class="lecture_info">
                             <ul class="lectureList" id="accordion">
-
-                                <li class="active">
-                                     <span>기본강의</span>
-                                    <ul class="submenu">
-                                         {% for common_detail in myclass_common_detail %}
-                                       <li>
-                                             <a href="javascript:getVideo('common', '{{common_detail.data}}', '{{common_detail.downdata}}', '{{common_detail.downdata_name}}');" class="classList">
-                                                 {{forloop.counter}}. {{common_detail.title}}</a>
-                                       </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                                 <br/>
                                  <li class="active">
                                     <span>키트강의</span>
                                     <ul class="submenu">
@@ -62,6 +47,18 @@
                                                  {{forloop.counter}}. {{item_detail.title}}</a>
                                        </li>
                                          {% endfor %}
+                                    </ul>
+                                </li>
+                                <br/>
+                                <li class="active">
+                                     <span>세부강의</span>
+                                    <ul class="submenu">
+                                         {% for common_detail in myclass_common_detail %}
+                                       <li>
+                                             <a href="javascript:getVideo('common', '{{common_detail.data}}', '{{common_detail.downdata}}', '{{common_detail.downdata_name}}');" class="classList">
+                                                 {{forloop.counter}}. {{common_detail.title}}</a>
+                                       </li>
+                                        {% endfor %}
                                     </ul>
                                 </li>
                             </ul>
