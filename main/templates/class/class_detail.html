@@ -164,8 +164,12 @@
 
         function top_val()
         {
-            var offset = $("#sub_visual_class_detail").offset();
-            $('html, body').animate({scrollTop : offset.top}, 400);
+            $('html, body').animate({scrollTop : 0}, 600);
+        }
+
+        function down_val()
+        {
+           $('html, body').animate({scrollTop : ($(document).height() - 2000)}, 600);
         }
 
         function goOrder(flag)
@@ -299,9 +303,13 @@
         }
     </script>
 
-    <a class="btn" href="javascript:void(0);" onclick="javascript:top_val();" style="display:scroll;position:fixed;bottom:15px;right:15px;">
-         <img src="{% static 'resource/img/sub/top.png' %}" style="float:right;">
-    </a><br/>
+      <a class="up_scroll" href="javascript:void(0);" onclick="javascript:top_val();">
+        <img src="{% static 'resource/img/sub/up.png' %}" style="float:right;">
+    </a>
+    <a class="down_scroll" href="javascript:void(0);" onclick="javascript:down_val();">
+        <img src="{% static 'resource/img/sub/down.png' %}" style="float:right;">
+    </a>
+    <br/>
 
 </body>
 </html>
