@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from main.query import *
-from main.models import *
 
 def class_page(request):
     class_list_info = select_class_list()
@@ -44,3 +43,4 @@ def class_detail_page_prd(request):
     }
 
     return render(request, 'class/class_store_detail.html', context)
+
