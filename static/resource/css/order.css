@@ -23,7 +23,7 @@
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
-    max-width: 1170px;
+    max-width: 1130px;
     width:100%;
 }
 
@@ -32,7 +32,7 @@
     margin-left: auto;
 
     padding-right: 15px;
-    max-width: 1080px;
+    max-width: 1130px;
     width:100%;
 }
 
@@ -41,7 +41,7 @@
     margin-left: auto;
 
     padding-right: 15px;
-    max-width: 1500px;
+    max-width: 1130px;
     width:100%;
 }
 
@@ -140,7 +140,7 @@
 }
 
 .panel-body {
-    padding: 20px;
+    padding: 0;
 }
 
 .margin-right-20 {
@@ -174,7 +174,6 @@ img {
 }
 
 .order-table {
-    margin-top: 25px;
     width: 100%;
     border-collapse: collapse;
 }
@@ -400,9 +399,8 @@ tfoot tr td {
     line-height: 1.5;
     margin-right: auto;
     margin-left: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    max-width: 1085px;
+
+    max-width: 1130px;
     width:100%;
 }
 
