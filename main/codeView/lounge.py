@@ -2,7 +2,7 @@ from django.shortcuts import render
 from main.query import *
 from main.models import *
 
-page_cnt = 1 # display count 노출되는 리스트 갯수
+page_cnt = 6 # display count 노출되는 리스트 갯수
 
 def lounge_page(request):
     category_info = select_lounge_categoy()

@@ -393,7 +393,9 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 
 .codingLounge_list .filter_area {
-	width:410px;
+	width:90%;
+	align-items:center;
+
 }
 .codingLounge_list .filter_area.scr {
 	position:absolute !important;
@@ -407,16 +409,12 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	right:0.83em;
 }
 
-.codingLounge_list .filter_area .search_area {
-	width:1110px;
-}
-
 .codingLounge_list .filter_area .search_area select {
 	margin-right:20px;
 	padding:0.5em;
 	font-size:0.75em;
 	box-sizing:border-box;
-	width:50%;
+	width:30%;
 	font-family: inherit;
 	background:white;
 	border-color:#eee;
@@ -429,7 +427,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	display:flex;
 	justify-content:flex-start;
 	align-items:center;
-	width:50%;
+	width:30%;
 	margin-left:-10px;
 }
 
@@ -438,7 +436,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
     width:100%;
     height: 100%; /* 높이값 초기화 */
     line-height : normal; /* line-height 초기화 */
-     padding: .4em .5em;
+    padding: .4em .5em;
     font-family: inherit; /* 폰트 상속 */
     border: 1px solid #eee; /*#999; */
     border-radius: 0; /* iSO 둥근모서리 제거 */
@@ -978,7 +976,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 
 /* coding lounge list */
 .codingLounge_list {
-	margin: 0 auto;
+	margin-left: 30px;
 	width: 100%;
 	max-width: 1130px;
 }
@@ -1313,7 +1311,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	margin:0 auto 2em;
 	padding-bottom:2em;
 	width:100%;
-	max-width:1160px;
+	max-width:1130px;
 	border-bottom:1px solid #969696;
 }
 .brd_section:last-child {
@@ -1327,7 +1325,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	margin:0 auto 0.25em;
 	padding-left:0.5em;
 	width:100%;
-	max-width:1160px;
+	max-width:1130px;
 	font-size:0.9em;
 }
 .brdSection_tit:before {
@@ -1359,7 +1357,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	display:block;
 	margin:0 auto 0.25em;
 	width:100%;
-	max-width:1160px;
+	max-width:1130px;
 	font-size:0.7em;
 }
 .point_desc b {
@@ -1369,7 +1367,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	display:block;
 	margin:0 auto 0.25em;
 	width:100%;
-	max-width:1160px;
+	max-width:1130px;
 	font-size:0.7em;
 }
 .table.board ul li {
@@ -1477,7 +1475,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	justify-content:center;
 	align-items:center;
 	margin:30px auto 0;
-	max-width:1160px;
+	max-width:1130px;
 }
 .sub_container .btn_area.left,
 .modal-content .btn_area.left {
@@ -1537,7 +1535,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	position:relative;
 	margin:0 auto;
 	width:100%;
-	max-width:1160px;
+	max-width:1130px;
 }
 
 .board_community ul {
@@ -2153,7 +2151,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 .tab_content {
 	margin:0 auto;
 	width:100%;
-	max-width:1160px;
+	max-width:1130px;
 }
 
 .introduce_content {
@@ -2476,7 +2474,7 @@ select.inp_mypage {
 	align-items:center;
 	margin:0 auto 30px;
 	width:100%;
-	max-width:1160px;
+	max-width:1130px;
 }
 .search_area select,
 .search_area .input_area {
@@ -2535,7 +2533,7 @@ input[id*="detail_faq"] {
     cursor: pointer;
     transform: rotate(0deg);
     max-width: 1110px;
-    width:100%;
+    width:98%;
 }
 
 .accordion_faq > label {
@@ -2553,7 +2551,7 @@ input[id*="detail_faq"] {
     cursor: pointer;
     transform: rotate(0deg);
     max-width: 1110px;
-    width:100%;
+    width:98%;
 }
 
 input[id*="answer"] + label {
@@ -2586,11 +2584,11 @@ input[id*="answer"] + label + div {
     max-height:0;
     transition:all .35s;
     overflow:hidden;
-    background:#f9f9f9;
+    background:white;
     font-size:17px;
     color:#000;
     max-width: 1110px;
-    width:100%;
+    width:95%;
 
 }
 input[id*="answer"] + label + div p {
