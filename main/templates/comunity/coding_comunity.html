@@ -58,7 +58,7 @@
 
     <div style="padding-top:30px;"></div>
 
-     <section class="section04">
+     <section class="section04" style="z-index:1;">
         <img class="bg left" src="{% static 'resource/img/main/bg_contactLeft.png' %}" alt="bg">
         <img class="bg right" src="{% static 'resource/img/main/bg_contactRight.png' %}" alt="bg">
         <div class="contactUs">
@@ -70,7 +70,7 @@
                     영업일 기준 3일 내에 적어주신 메일 주소로 답변 드립니다.
                 </p>
             </div>
-            <div class="input_area">
+            <div class="input_area" >
                 <input type="text" name="contact" id="email" placeholder="이메일 주소">
                 <textarea rows="5" name="contact" id="text" placeholder="문의 내용"></textarea>
                 <button type="button" name="contact" class="submit" onclick="javascript:sendEmail();">문의하기</button>
