@@ -394,7 +394,6 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 .codingLounge_list .filter_area {
 	width:95%;
 	align-items:center;
-	margin-left:10px;
 
 }
 .codingLounge_list .filter_area.scr {
@@ -988,7 +987,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	align-items:center;
 }
 .codingLounge_list ul li {
-	margin:0 65px 65px 10px;
+	margin:0 65px 65px 0px;
 	width:calc((100% - 130px) / 3);
 	background-color:#f7f7f7;
 	border-radius:5px;
