@@ -19,12 +19,10 @@
 
 /* order 1 */
 .container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 15px;
-    padding-right: 15px;
-    max-width: 1130px;
-    width:100%;
+    position:relative;
+	margin:0 auto;
+	width:100%;
+	max-width:1130px;
 }
 
 .container-2 {
@@ -519,8 +517,8 @@ span.quantity input {
 .dollars:before { content:'$'; }
 
 .order_payinfo{
-    padding-right:50px;
-    float:left;
+    text-align:center;
+    width:100%;
 }
 
 
