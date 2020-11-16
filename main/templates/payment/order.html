@@ -63,26 +63,27 @@
                                               {% for orderDetail in order_detail %}
                                                 <tr>
                                                     <input type="hidden" id="idx" name="idx" value="0">
-                                                    <input type="hidden" id="addr_num" name="addr_num" value="1">
+<!--                                                    <input type="hidden" id="addr_num" name="addr_num" value="1">-->
                                                     <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
                                                     <input type="hidden" id="total_delivery_price" name="total_delivery_price" value="0">
                                                     <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
-                                                    <input type="hidden" id="total_option_coupon_prd_price" name="total_option_coupon_prd_price" value="0">
-                                                    <input type="hidden" id="coupon_num" name="coupon_num" value="0">
-                                                    <input type="hidden" id="payway" name="payway" value="0">
                                                     <input type="hidden" id="pg_type" name="pg_type" value="kcp_user">
-                                                    <input type="hidden" id="depositName" name="depositName" value="0">
-                                                    <input type="hidden" id="depositReceipt" name="depositReceipt" value="D">
-                                                    <input type="hidden" id="escrowName" name="escrowName" value="0">
-                                                    <input type="hidden" id="escrowReceipt" name="escrowReceipt" value="D">
+<!--                                                    <input type="hidden" id="total_option_coupon_prd_price" name="total_option_coupon_prd_price" value="0">-->
+<!--                                                    <input type="hidden" id="coupon_num" name="coupon_num" value="0">-->
+<!--                                                    <input type="hidden" id="payway" name="payway" value="0">-->
+<!--                                                    <input type="hidden" id="pg_type" name="pg_type" value="kcp_user">-->
+<!--                                                    <input type="hidden" id="depositName" name="depositName" value="0">-->
+<!--                                                    <input type="hidden" id="depositReceipt" name="depositReceipt" value="D">-->
+<!--                                                    <input type="hidden" id="escrowName" name="escrowName" value="0">-->
+<!--                                                    <input type="hidden" id="escrowReceipt" name="escrowReceipt" value="D">-->
 
                                                     <!-- noUser -->
-                                                    <input type="hidden" id="noUser_info_name" name="noUser_info_name" value="">
-                                                    <input type="hidden" id="noUser_info_number" name="noUser_info_number" value="">
-                                                    <input type="hidden" id="noUser_info_email" name="noUser_info_email" value="">
-                                                    <input type="hidden" id="noUser_info_addr01" name="noUser_info_addr01" value="">
-                                                    <input type="hidden" id="noUser_info_addr02" name="noUser_info_addr02" value="">
-                                                    <input type="hidden" id="noUser_info_addr03" name="noUser_info_addr03" value="">
+<!--                                                    <input type="hidden" id="noUser_info_name" name="noUser_info_name" value="">-->
+<!--                                                    <input type="hidden" id="noUser_info_number" name="noUser_info_number" value="">-->
+<!--                                                    <input type="hidden" id="noUser_info_email" name="noUser_info_email" value="">-->
+<!--                                                    <input type="hidden" id="noUser_info_addr01" name="noUser_info_addr01" value="">-->
+<!--                                                    <input type="hidden" id="noUser_info_addr02" name="noUser_info_addr02" value="">-->
+<!--                                                    <input type="hidden" id="noUser_info_addr03" name="noUser_info_addr03" value="">-->
 
                                                     <td>
                                                         <input type="hidden" name="orderIdxs_{{forloop.counter0}}" id="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
@@ -253,184 +254,7 @@
                   </div>
              </div>
 
-             <!-- 쿠폰 -->
-             <div class="row">
-                  <div class="col-xs-offset-1 col-xs-10">
-                      <div class="col-xs-12">
-                         <div class="border-radius-none margin-top-30">
-                              <div class="margin-top-40 xans-order-totalsummary">
-                                  <table summary>
-                                     <colgroup>
-                                         <col style="width:47%;">
-                                         <col style="width:auto;">
-                                     </colgroup>
-                                     <thead>
-                                        <tr>
-                                            <th scope="col" class="text-center">
-                                                <span>쿠폰 선택</span>
-                                            </th>
-                                             <th scope="col" class="text-center">
-                                                <span>최종 결제 금액</span>
-                                            </th>
-                                        </tr>
-                                     </thead>
-                                     <tbody>
-                                         <tr>
-                                             <td>
-                                                 <select id="coupon" name="coupon" style="float:center; width:80%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myCoupon(this.value)">
-                                                      {% if coupon_detail.count == 0 %}
-                                                        <option value="0">&nbsp;&nbsp;----------------&nbsp;적용할 수 있는 쿠폰이 없습니다.&nbsp; ------------</option>
-                                                      {% else %}
-                                                        <option value="0">&nbsp;&nbsp;----------------&nbsp;사용 가능한 쿠폰을 선택하세요.&nbsp; ------------</option>
-                                                      {% endif %}
-                                                      {% for couponList in coupon_detail %}
-                                                         <option value={{couponList.coupon.coupon_num}},{{couponList.coupon.discount}},{{couponList.coupon.delivery_price}},{{couponList.coupon.prd.prd_code}},{{couponList.coupon.prd.title}}>{{couponList.coupon.coupon_name}} [유효기한 : {{couponList.expire | date:'y-m-d' }} 까지]</option>
-                                                      {% endfor %}
-                                                 </select>
-                                             </td>
-                                             <td style="background-color: #fffdec !important; ">
-                                                  <div id="coupon_total_price" class="box" style="padding-left:40%; float:left; margin-right:10px;">
-                                                    <span class="tail displaynone"></span>
-                                                  </div>
-                                                  <div style="float:left;">
-                                                    <strong>원</strong>
-                                                  </div>
-                                             </td>
-                                        </tr>
-                                     </tbody>
-                                  </table>
-                              </div>
-                         </div>
-                      </div>
-                  </div>
-               </div>
-
-             <!-- 결제방법 -->
-
-             <div class="row">
-                <div class="col-xs-offset-1 col-xs-10">
-                    <div class="col-xs-12">
-                         <div class="panel panel-default border-radius-none margin-top-40">
-                              <div class="panel-heading bg-color-gray font-14"><strong>결제방법</strong></div>
-                              <div class="panel-body padding-all-15 font-14">
-                                   <ui class="margin-bottom-20">
-                                       <li>
-                                          {% for payway in payway_info %}
-                                           <div class="order_payinfo">
-                                                {% if user == 'n'%}
-                                                    {% if payway.value == 'credit' %}
-                                                    <span><input type="radio" name="payway" value="{{payway.value}}" onchange="myPayway(this.value)" checked>&nbsp;{{payway.name}}</span>
-                                                    {% endif%}
-                                                {% else %}
-                                               <span><input type="radio" name="payway" value="{{payway.value}}" onchange="myPayway(this.value)" checked>&nbsp;{{payway.name}}</span>
-                                               {% endif %}
-                                           </div>
-                                           {% endfor %}
-                                       </li>
-                                       <br/>
-                                   </ui>
-                              </div>
-                             <div class="panel-body padding-all-15 font-14" id="deposit" style="display:none">
-                                   <ui class="margin-bottom-20">
-                                       <li>
-                                             <div>
-                                                <span><strong>국민은행&nbsp;:&nbsp;422001-04-219407 (런코딩)</strong>&nbsp;</span><br/><br/>
-                                                <span>
-                                                    <input type="text" name="deposit_name" id="deposit_name" placeholder="입금자명"  style="float:center; width:10%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                    <input type="checkbox" name="deposit_receipt" id="deposit_receipt" onchange="receipt_check('deposit')" value="A"> 현금영수증 신청
-                                                    <input type="text" name="receipt_number" id="receipt_number" placeholder="현금영수증 신청번호" style="display:none; float:center; width:15%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-
-                                                </span>
-                                             </div>
-                                       </li>
-                                       <br/>
-                                   </ui>
-                             </div>
-                             <div class="panel-body padding-all-15 font-14" id="escrow" style="display:none">
-                                   <ui class="margin-bottom-20">
-                                       <li>
-                                             <div>
-                                                <span>예금주명
-                                                    <input type="text" name="escrow_name" id="escrow_name" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                    <input type="checkbox" name="escrow_receipt" id="escrow_receipt" onchange="receipt_check('escrow')" value="A"> 현금영수증 신청
-                                                    <input type="text" name="escrow_number" id="escrow_number" placeholder="현금영수증 신청번호" style="display:none; float:center; width:15%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
-                                                </span><br/><br/>
-                                                <span><input type="checkbox" name="escrow_check" id="escrow_check" style="margin-left:60px;">
-                                                    에스크로(구매안전) 서비스를 적용합니다. <br/>
-
-                                                </span>
-                                                <span style="margin-left:60px; color:red;">* 소액결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</span>
-                                             </div>
-                                       </li>
-                                       <br/>
-                                   </ui>
-                             </div>
-                         </div>
-                    </div>
-                </div>
-             </div>
-
-             <!-- 배송지 -->
-             <div class="row">
-                <div class="col-xs-offset-1 col-xs-10">
-                    <div class="col-xs-12">
-                         <div class="panel panel-default border-radius-none margin-top-30">
-                              <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
-                              <div class="panel-body padding-all-15 font-14">
-                                  {% if user == 'n'%}
-                                    <div class="font-14"><span><strong>비회원입니다. 배송받을 주소를 직접 입력해주세요.</strong></span></div>
-                                    <div class="input_area multiLine">
-                                        <input type="text" name="noUser_add01" id="noUser_add01"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" readonly required/><br/>
-                                        <input type="text" name="noUser_add02" id="noUser_add02"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" readonly required/>
-                                        <input type="text" name="noUser_add03" id="noUser_add03"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="상세주소를 입력해주세요." required/>
-                                        <button type="button" class="btn" onClick="javascript:getAddress();" style="width:10%; height:24px; font-size:12px; border:1px solid #d4d4d4;">주소찾기</button><br/><br/>
-
-                                         <div class="font-14"><span><strong>배송시 필요한 정보입니다. 정확히 기입해주세요.</strong></span></div>
-                                         <input type="text" name="noUser_name" id="noUser_name" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 이름">
-                                         <input type="text" name="noUser_number" id="noUser_number" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 휴대폰 번호">
-                                         <input type="text" name="noUser_email" id="noUser_email" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 이메일주소 : 강의시청 시 필요">
-                                    </div>
-                                  {% else%}
-                                      {% for userDetail in user_detail %}
-                                       <div class="row padding-all-15 col-xs-3 border-dashed-right" style="display:inline-block;">
-                                           <div class="font-16">
-                                               <input name="addr" type="radio" value="1"checked>
-                                               <strong>{{userDetail.regi_name}}</strong>(기본 배송지)
-                                           </div>
-                                           <div class="font-16">
-                                               {{userDetail.regi_receiver1_add02}}
-                                               {{userDetail.regi_receiver1_add03}}
-                                               ({{userDetail.regi_receiver1_add01}})
-                                           </div>
-                                            <div class="font-16">
-                                               {{userDetail.regi_phone}}
-                                           </div>
-                                       </div>
-                                      <div class="row col-xs-3" style="padding-left:50px; display:inline-block; ">
-                                          {% if userDetail.regi_receiver2_name != "" %}
-                                          <div class="font-16">
-                                              <input name="addr" value="2" type="radio">
-                                              <strong>{{userDetail.regi_receiver2_name}}</strong>
-                                           </div>
-                                           <div class="font-16">
-                                               {{userDetail.regi_receiver2_add02}}
-                                               {{userDetail.regi_receiver2_add03}}
-                                               ({{userDetail.regi_receiver2_add01}})
-                                           </div>
-                                          <div class="font-16">
-                                               {{userDetail.regi_receiver2_phone}}
-                                           </div>
-                                          {% endif %}
-                                      </div>
-                                      {%endfor%}
-                                  {% endif%}
-                              </div>
-                         </div>
-                    </div>
-                </div>
-             </div>
-
-                <!-- 유의사항 -->
+            <!-- 유의사항 -->
             <div class="row">
                 <div class="col-xs-offset-1 col-xs-10">
                     <div class="col-xs-12">
@@ -452,9 +276,10 @@
             </div>
             <div class="btn-center" style="margin-bottom:40px">
                 <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:gopg();">주문하기</a>
-                <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay('noUser');">비회원 주문하기</a>
+                 <div id="naverpay_btn" class="btn-center" style="margin-bottom:40px;"></div>
+<!--                <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay('noUser');">비회원 주문하기</a>-->
             </div>
-            <div id="naverpay_btn" class="btn-center" style="margin-bottom:40px;"></div>
+
          </div>
 
     {% include "common/banner_bottom.html" %}
@@ -481,13 +306,16 @@
                 //핸들러 내에서 아임포트 네이버페이 결제 함수 호출
 <!--                 $("input[type=hidden][name=pg_type]").val("naverco");-->
 <!--                 goPay('user');-->
-<!--                IMP.request_pay(param);-->
+               // IMP.request_pay(param);
+               $("#res_msg").text('곧 오픈 됩니다.');
+                $('div.modal').modal();
+                return false;
             },
             WISHLIST_BUTTON_HANDLER : function() {
                 //중략
 
                 //핸들러 내에서 아임포트 네이버페이 찜하기 함수 호출(iamport.payment-1.1.6.js부터 지원됨)
-                IMP.naver_zzim(param);
+               // IMP.naver_zzim(param);
             }
         });
 
@@ -503,9 +331,9 @@
         }
 
 
-        $('.menu-btn').click(function() {
-            $('.line').toggleClass('animate');
-        });
+<!--        $('.menu-btn').click(function() {-->
+<!--            $('.line').toggleClass('animate');-->
+<!--        });-->
 
          $(document).ready(function() {
 
@@ -517,99 +345,6 @@
                 $('div.modal').modal();
             }
          });
-
-         function myCoupon(value)
-         {
-            if(value != "0")
-            {
-                var total_price = $("input[type=hidden][name=total_prd_price]").val();
-
-                delivery = {{delivery_price}};
-                if($("input[type=hidden][name=total_delivery_price]").val() == 0)
-                {
-                    $("input[type=hidden][name=total_delivery_price]").val(delivery);
-                    document.getElementById("div_total_delivery_price").innerHTML = "<strong>"+ numberWithCommas(delivery) + "</<strong>";
-                }
-
-                var pay_price = 0;
-
-                var data = value.split(",");
-                var coupon_num = data[0];
-                var discount = data[1];
-                var delivery_price = data[2];
-                var prdCode = data[3];
-                var title = data[4];
-
-                discount *= 1;
-                total_price *= 1;
-                delivery *= 1;
-
-                if(prdCode != "")
-                {
-                    var chks = document.getElementsByName('idxs[]');
-                    var prd_selected = 0;
-                    var prd_price = 0;
-                     for (var i=0,m=chks.length;i<m ;i++)
-                     {
-                        if (chks[i].checked == true)
-                        {
-                            var prd_code = document.getElementById("prd_code_" + i).value;
-
-                            if(prd_code == prdCode)
-                            {
-                                prd_price = removeComma(document.getElementById("prd_price_" + i).innerText);
-                                prd_price *= 1;
-                                prd_selected = 1;
-                            }
-                        }
-                     }
-
-                     if(prd_selected == 1)
-                     {
-                        if(discount == 100)
-                        {
-                            pay_price = total_price - prd_price;
-                            if(delivery_price == 'False')
-                            {
-                                delivery = 0;
-                                $("input[type=hidden][name=total_delivery_price]").val(delivery);
-                                document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + delivery + "</<strong>";
-                            }
-
-                        }
-                        else
-                            pay_price = total_price - (Math.ceil(prd_price * ((100 - discount) / 100)));
-                    }
-                    else
-                    {
-                        document.getElementById("coupon").selectedIndex = 0;
-                        $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);
-                        $("input[type=hidden][name=coupon_num]").val(0);
-
-                        var price = document.getElementById("div_total_option_prd_price").innerText;
-                        document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(price) + "</<strong>";
-
-                        $("#res_msg").text("적용 가능한 키트상품이 없습니다. 다시 확인 후 사용해주세요.");
-                        $('div.modal').modal();
-                        return false;
-                    }
-                }
-                else if(discount > 0)
-                {
-                   pay_price = Math.ceil(total_price * ((100 - discount) / 100));
-                }
-
-                pay_price += delivery;
-                $("input[type=hidden][name=total_option_coupon_prd_price]").val(pay_price);
-                $("input[type=hidden][name=coupon_num]").val(coupon_num);
-                document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(pay_price) + "</<strong>";
-            }
-            else
-            {
-                var price = document.getElementById("div_total_option_prd_price").innerText;
-                document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(price) + "</<strong>";
-            }
-         }
 
          function myOption(idx)
          {
@@ -677,10 +412,10 @@
                 return false;
             }
             else
-                goPay('user');
+                goPay();
          }
 
-         function goPay(user_type)
+         function goPay()
          {
             var chks = document.getElementsByName('idxs[]');
             var order_idx = '';
@@ -737,130 +472,67 @@
                 }
              }
 
-             if(order_idx != "")
-             {
-                var payway_checked =  $("input[type=radio][name=payway]:checked").val();
+<!--             if(order_idx != "")-->
+<!--             {-->
+<!--                var payway_checked =  $("input[type=radio][name=payway]:checked").val();-->
 
-                if(payway_checked == 'deposit')
-                {
-                    var name = document.getElementById("deposit_name").value;
-                    var receipt = document.getElementsByName("deposit_receipt");
-                    if(name == "")
-                    {
-                         $("#res_msg").text("입금자 명을 입력해주세요.");
-                         $('div.modal').modal();
-                         return false;
-                    }
+<!--                if(payway_checked == 'deposit')-->
+<!--                {-->
+<!--                    var name = document.getElementById("deposit_name").value;-->
+<!--                    var receipt = document.getElementsByName("deposit_receipt");-->
+<!--                    if(name == "")-->
+<!--                    {-->
+<!--                         $("#res_msg").text("입금자 명을 입력해주세요.");-->
+<!--                         $('div.modal').modal();-->
+<!--                         return false;-->
+<!--                    }-->
 
-                    if(receipt[0].checked == true)
-                    {
-                         var number = document.getElementById("receipt_number").value;
-                         if(number == "")
-                         {
-                             $("#res_msg").text("현금영수증 신청을 위한 번호를 입력해주세요.");
-                             $('div.modal').modal();
-                             return false;
-                        }
-                        else
-                            name += number;
-                    }
+<!--                    if(receipt[0].checked == true)-->
+<!--                    {-->
+<!--                         var number = document.getElementById("receipt_number").value;-->
+<!--                         if(number == "")-->
+<!--                         {-->
+<!--                             $("#res_msg").text("현금영수증 신청을 위한 번호를 입력해주세요.");-->
+<!--                             $('div.modal').modal();-->
+<!--                             return false;-->
+<!--                        }-->
+<!--                        else-->
+<!--                            name += number;-->
+<!--                    }-->
 
-                    $("input[type=hidden][name=depositName]").val(name);
-                    $("input[type=hidden][name=depositReceipt]").val(receipt[0].checked);
-                }
-                else if(payway_checked == 'escrow')
-                {
-                    var name = document.getElementById("escrow_name").value;
-                    if(name == "")
-                    {
-                         $("#res_msg").text("예금주 명을 입력해주세요.");
-                         $('div.modal').modal();
-                         return false;
-                    }
+<!--                    $("input[type=hidden][name=depositName]").val(name);-->
+<!--                    $("input[type=hidden][name=depositReceipt]").val(receipt[0].checked);-->
+<!--                }-->
+<!--                else if(payway_checked == 'escrow')-->
+<!--                {-->
+<!--                    var name = document.getElementById("escrow_name").value;-->
+<!--                    if(name == "")-->
+<!--                    {-->
+<!--                         $("#res_msg").text("예금주 명을 입력해주세요.");-->
+<!--                         $('div.modal').modal();-->
+<!--                         return false;-->
+<!--                    }-->
 
-                    var escrow_checked = document.getElementById("escrow_check")
-                    if(escrow_checked.checked != true)
-                    {
-                        $("#res_msg").text("에스크로 서비스 적용에 동의해 주세요.");
-                        $('div.modal').modal();
-                        return false;
-                    }
+<!--                    var escrow_checked = document.getElementById("escrow_check")-->
+<!--                    if(escrow_checked.checked != true)-->
+<!--                    {-->
+<!--                        $("#res_msg").text("에스크로 서비스 적용에 동의해 주세요.");-->
+<!--                        $('div.modal').modal();-->
+<!--                        return false;-->
+<!--                    }-->
 
-                    $("input[type=hidden][name=escrowName]").val(name);
-                    $("input[type=hidden][name=escrowReceipt]").val( document.getElementById("escrow_receipt").value);
-                }
+<!--                    $("input[type=hidden][name=escrowName]").val(name);-->
+<!--                    $("input[type=hidden][name=escrowReceipt]").val( document.getElementById("escrow_receipt").value);-->
+<!--                }-->
 
-                var addr_checked = $(":input:radio[name=addr]:checked").val();
+<!--                var addr_checked = $(":input:radio[name=addr]:checked").val();-->
 
                 $("input[type=hidden][name=idx]").val(order_idx);
-                $("input[type=hidden][name=addr_num]").val(addr_checked);
-                $("input[type=hidden][name=payway]").val(payway_checked);
+<!--                $("input[type=hidden][name=addr_num]").val(addr_checked);-->
+<!--                $("input[type=hidden][name=payway]").val(payway_checked);-->
 
-                if(user_type == 'user')
-                    document.getElementById("order_form").submit();
-                else if(user_type == 'noUser')
-                    noUserPay();
-             }
-         }
-
-         function noUserPay()
-         {
-            var add01 = document.getElementById("noUser_add01").value;
-            var add02 = document.getElementById("noUser_add02").value;
-            if(add01 == "" || add02 == "")
-            {
-                $("#res_msg").text("배송받을 주소를 입력해주세요.");
-                $('div.modal').modal();
-                return false;
-            }
-            else
-            {
-                $("input[type=hidden][name=noUser_info_addr01]").val(add01);
-                $("input[type=hidden][name=noUser_info_addr02]").val(add02);
-            }
-
-            var add03 = document.getElementById("noUser_add03").value;
-            if(add03 == "")
-            {
-                $("#res_msg").text("배송받을 주소의 상세주소를 입력해주세요.");
-                $('div.modal').modal();
-                return false;
-            }
-            else
-                $("input[type=hidden][name=noUser_info_addr03]").val(add03);
-
-            var name = document.getElementById("noUser_name").value;
-            if(name == "")
-            {
-                $("#res_msg").text("사용자 이름을 입력해주세요.(배송에 필요)");
-                $('div.modal').modal();
-                return false;
-            }
-            else
-                $("input[type=hidden][name=noUser_info_name]").val(name);
-
-            var number = document.getElementById("noUser_number").value;
-            if(number == "")
-            {
-                $("#res_msg").text("사용자 전화번호를 입력해주세요.(배송에 필요)");
-                $('div.modal').modal();
-                return false;
-            }
-            else
-                $("input[type=hidden][name=noUser_info_number]").val(number);
-
-            var email = document.getElementById("noUser_email").value;
-            if(email == "")
-            {
-                $("#res_msg").text("사용자 이메일 주소를 입력해주세요.(배송에 필요)");
-                $('div.modal').modal();
-                return false;
-            }
-            else
-                $("input[type=hidden][name=noUser_info_email]").val(email);
-
-            $("input[type=hidden][name=pg_type]").val('kcp_nouser');
-            document.getElementById("order_form").submit();
+                document.getElementById("order_form").submit();
+  //           }
          }
 
         // 수량 더하기
@@ -1001,15 +673,15 @@
 
             document.getElementById("div_total_prd_price").innerHTML = "<strong>" + numberWithCommas(total_summary_price) + "</<strong>";
 			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
-			document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
+<!--			document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";-->
 
 			$("input[type=hidden][name=total_prd_price]").val(total_summary_price);
 			$("input[type=hidden][name=total_delivery_price]").val(delivery);
             $("input[type=hidden][name=total_option_prd_price]").val(total);
 
-            document.getElementById("coupon").selectedIndex = 0;
-            $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);
-            $("input[type=hidden][name=coupon_num]").val(0);
+<!--            document.getElementById("coupon").selectedIndex = 0;-->
+<!--            $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);-->
+<!--            $("input[type=hidden][name=coupon_num]").val(0);-->
         }
 
         function check()
@@ -1059,55 +731,55 @@
             newForm.submit();
         }
 
-        function myPayway(val)
-        {
-            if(val == 'deposit')
-                $("#deposit").show();
-            else
-                $("#deposit").hide();
+<!--        function myPayway(val)-->
+<!--        {-->
+<!--            if(val == 'deposit')-->
+<!--                $("#deposit").show();-->
+<!--            else-->
+<!--                $("#deposit").hide();-->
 
-            if(val == 'escrow')
-                $("#escrow").show();
-            else
-                $("#escrow").hide();
+<!--            if(val == 'escrow')-->
+<!--                $("#escrow").show();-->
+<!--            else-->
+<!--                $("#escrow").hide();-->
 
-        }
+<!--        }-->
 
-        function receipt_check(value)
-        {
-            if(value == 'deposit')
-            {
-                var receipt = document.getElementsByName("deposit_receipt");
-                if(receipt[0].checked == true)
-                    $("#receipt_number").show();
-                else
-                    $("#receipt_number").hide();
-            }
-            else if(value == 'escrow')
-            {
-                var receipt = document.getElementsByName("escrow_receipt");
-                if(receipt[0].checked == true)
-                    $("#escrow_number").show();
-                else
-                    $("#escrow_number").hide();
+<!--        function receipt_check(value)-->
+<!--        {-->
+<!--            if(value == 'deposit')-->
+<!--            {-->
+<!--                var receipt = document.getElementsByName("deposit_receipt");-->
+<!--                if(receipt[0].checked == true)-->
+<!--                    $("#receipt_number").show();-->
+<!--                else-->
+<!--                    $("#receipt_number").hide();-->
+<!--            }-->
+<!--            else if(value == 'escrow')-->
+<!--            {-->
+<!--                var receipt = document.getElementsByName("escrow_receipt");-->
+<!--                if(receipt[0].checked == true)-->
+<!--                    $("#escrow_number").show();-->
+<!--                else-->
+<!--                    $("#escrow_number").hide();-->
 
-            }
-        }
+<!--            }-->
+<!--        }-->
 
-        function getAddress()
-        {
-            chkAddr = 1;
-            new daum.Postcode({
-                oncomplete: function(data)
-                {
-                    $('[name=noUser_add01]').val(data.zonecode); // 우편번호 (5자리)
-                    $('[name=noUser_add02]').val(data.address);
-                    $('[name=noUser_add03]').val(data.buildingName);
-                }
-            }).open();
+<!--        function getAddress()-->
+<!--        {-->
+<!--            chkAddr = 1;-->
+<!--            new daum.Postcode({-->
+<!--                oncomplete: function(data)-->
+<!--                {-->
+<!--                    $('[name=noUser_add01]').val(data.zonecode); // 우편번호 (5자리)-->
+<!--                    $('[name=noUser_add02]').val(data.address);-->
+<!--                    $('[name=noUser_add03]').val(data.buildingName);-->
+<!--                }-->
+<!--            }).open();-->
 
-            return true;
-        }
+<!--            return true;-->
+<!--        }-->
 
     </script>
 

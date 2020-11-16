@@ -58,6 +58,7 @@ urlpatterns = [
     path('order/', order_page),
     path('order_del/', order_delete),
     path('run_pay/', payment),
+    path('run_paying/', payment_ing),
     path('run_order/', order),
     path('pay_result/', pay_result),
 

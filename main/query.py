@@ -364,6 +364,10 @@ def select_payway_value(value):
     payway_info = PayWayTB.objects.filter(dbstat='A', value=value)
     return payway_info
 
+def select_payway_value_all(value):
+    payway_info = PayWayTB.objects.filter(value=value)
+    return payway_info
+
 def select_refund_idx(idx):
     refund_info = refundTB.objects.filter(refund_idx=idx)
 
@@ -438,10 +442,9 @@ def update_order_prdCode(order_prd_info, count, option1, option2, option3):
     new_orderPrd.option3_selectNum = option3
     new_orderPrd.save()
 
-def update_order_idx(count, order_info, addr_num, option1, option2, option3, pay_num):
+def update_order_idx(count, order_info, option1, option2, option3, pay_num):
     new_order = order_info[0]
     new_order.count = count
-    new_order.delevery_addr_num = addr_num
     new_order.option1_selectNum = option1
     new_order.option2_selectNum = option2
     new_order.option3_selectNum = option3

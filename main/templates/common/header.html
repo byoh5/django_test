@@ -56,6 +56,11 @@
         }
     }
 
+    window.onbeforeunload = function()
+    {
+        window.history.back();
+    };
+
     </script>
 
     <div class="header_wrap">
