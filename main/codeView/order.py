@@ -65,12 +65,13 @@ def order(request):
 
     logger.debug('session is : '.format(session))
 
-    prd_code = request.POST['prd_code']
+    #prd_code = request.POST['prd_code']
     flag = int(request.POST['flag'])
     option1 = int(request.POST['option1'])
     option2 = int(request.POST['option2'])
     option3 = int(request.POST['option3'])
     count = int(request.POST['count'])
+    prd_code = request.POST['option_level']
 
     messages = 0
     user_id = request.session.get('user_id', '')
