@@ -253,10 +253,6 @@ def select_class_list():
     prd_info = PrdTB.objects.filter(dbstat='A', list__isnull=False)
     return prd_info
 
-def select_prd_tag(tag):
-    prd_info = PrdTB.objects.filter(dbstat='A', tag=tag)
-    return prd_info
-
 def select_prd(prd_code):
     prd_info = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
     return prd_info

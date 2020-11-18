@@ -276,7 +276,9 @@
             </div>
             <div class="btn-center" style="margin-bottom:40px">
                 <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:gopg();">주문하기</a>
+                 {% if request.session.runcoding > 5 %}
                  <div id="naverpay_btn" class="btn-center" style="margin-bottom:40px;"></div>
+                {% endif %}
 <!--                <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay('noUser');">비회원 주문하기</a>-->
             </div>
 
@@ -294,31 +296,34 @@
 
 
     <script>
-        naver.NaverPayButton.apply({
-            BUTTON_KEY: "CE196A42-5C47-46D0-A871-00BB22E69FB6",
-            TYPE: "A", //버튼 스타일
-            COLOR: 1, //버튼 색상타입
-            COUNT: 1, // 네이버페이버튼 + 찜하기버튼 모두 출력 여부
-            ENABLE: "Y", //네이버페이 활성여부(재고부족 등에는 N으로 비활성처리)
-            EMBED_ID: "naverpay_btn", //네이버페이 버튼 UI가 부착될 HTML element의 ID
-            BUY_BUTTON_HANDLER : function() {
-                //중략
-                //핸들러 내에서 아임포트 네이버페이 결제 함수 호출
-<!--                 $("input[type=hidden][name=pg_type]").val("naverco");-->
-<!--                 goPay('user');-->
-               // IMP.request_pay(param);
-               $("#res_msg").text('곧 오픈 됩니다.');
-                $('div.modal').modal();
-                return false;
-            },
-            WISHLIST_BUTTON_HANDLER : function() {
-                //중략
+    var runcoding = '{{request.session.runcoding}}';
+    if(runcoding > 5)
+    {
+            naver.NaverPayButton.apply({
+                BUTTON_KEY: "CE196A42-5C47-46D0-A871-00BB22E69FB6",
+                TYPE: "A", //버튼 스타일
+                COLOR: 1, //버튼 색상타입
+                COUNT: 1, // 네이버페이버튼 + 찜하기버튼 모두 출력 여부
+                ENABLE: "Y", //네이버페이 활성여부(재고부족 등에는 N으로 비활성처리)
+                EMBED_ID: "naverpay_btn", //네이버페이 버튼 UI가 부착될 HTML element의 ID
+                BUY_BUTTON_HANDLER : function() {
+                    //중략
+                    //핸들러 내에서 아임포트 네이버페이 결제 함수 호출
+                     $("input[type=hidden][name=pg_type]").val("naverco");
+                     goPay();
+                   // IMP.request_pay(param);
+    <!--               $("#res_msg").text('곧 오픈 됩니다.');-->
+    <!--                $('div.modal').modal();-->
+    <!--                return false;-->
+                },
+                WISHLIST_BUTTON_HANDLER : function() {
+                    //중략
 
-                //핸들러 내에서 아임포트 네이버페이 찜하기 함수 호출(iamport.payment-1.1.6.js부터 지원됨)
-               // IMP.naver_zzim(param);
-            }
-        });
-
+                    //핸들러 내에서 아임포트 네이버페이 찜하기 함수 호출(iamport.payment-1.1.6.js부터 지원됨)
+                   // IMP.naver_zzim(param);
+                }
+            });
+        }
        function removeComma(str)
        {
           n = parseInt(str.replace(/,/g,""));
@@ -471,68 +476,8 @@
                     }
                 }
              }
-
-<!--             if(order_idx != "")-->
-<!--             {-->
-<!--                var payway_checked =  $("input[type=radio][name=payway]:checked").val();-->
-
-<!--                if(payway_checked == 'deposit')-->
-<!--                {-->
-<!--                    var name = document.getElementById("deposit_name").value;-->
-<!--                    var receipt = document.getElementsByName("deposit_receipt");-->
-<!--                    if(name == "")-->
-<!--                    {-->
-<!--                         $("#res_msg").text("입금자 명을 입력해주세요.");-->
-<!--                         $('div.modal').modal();-->
-<!--                         return false;-->
-<!--                    }-->
-
-<!--                    if(receipt[0].checked == true)-->
-<!--                    {-->
-<!--                         var number = document.getElementById("receipt_number").value;-->
-<!--                         if(number == "")-->
-<!--                         {-->
-<!--                             $("#res_msg").text("현금영수증 신청을 위한 번호를 입력해주세요.");-->
-<!--                             $('div.modal').modal();-->
-<!--                             return false;-->
-<!--                        }-->
-<!--                        else-->
-<!--                            name += number;-->
-<!--                    }-->
-
-<!--                    $("input[type=hidden][name=depositName]").val(name);-->
-<!--                    $("input[type=hidden][name=depositReceipt]").val(receipt[0].checked);-->
-<!--                }-->
-<!--                else if(payway_checked == 'escrow')-->
-<!--                {-->
-<!--                    var name = document.getElementById("escrow_name").value;-->
-<!--                    if(name == "")-->
-<!--                    {-->
-<!--                         $("#res_msg").text("예금주 명을 입력해주세요.");-->
-<!--                         $('div.modal').modal();-->
-<!--                         return false;-->
-<!--                    }-->
-
-<!--                    var escrow_checked = document.getElementById("escrow_check")-->
-<!--                    if(escrow_checked.checked != true)-->
-<!--                    {-->
-<!--                        $("#res_msg").text("에스크로 서비스 적용에 동의해 주세요.");-->
-<!--                        $('div.modal').modal();-->
-<!--                        return false;-->
-<!--                    }-->
-
-<!--                    $("input[type=hidden][name=escrowName]").val(name);-->
-<!--                    $("input[type=hidden][name=escrowReceipt]").val( document.getElementById("escrow_receipt").value);-->
-<!--                }-->
-
-<!--                var addr_checked = $(":input:radio[name=addr]:checked").val();-->
-
-                $("input[type=hidden][name=idx]").val(order_idx);
-<!--                $("input[type=hidden][name=addr_num]").val(addr_checked);-->
-<!--                $("input[type=hidden][name=payway]").val(payway_checked);-->
-
-                document.getElementById("order_form").submit();
-  //           }
+            $("input[type=hidden][name=idx]").val(order_idx);
+            document.getElementById("order_form").submit();
          }
 
         // 수량 더하기

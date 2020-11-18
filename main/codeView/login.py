@@ -56,5 +56,6 @@ def logout(request):
         delete_login(user_id)
     request.session['client_id'] = ''
     request.session['user_id'] = ''
+    request.session['runcoding'] = 0
     return render(request, 'main/index_runcoding.html')
 

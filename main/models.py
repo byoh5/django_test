@@ -39,7 +39,6 @@ class PrdTB(models.Model):
     title = models.CharField(max_length=50)
     title2 = models.CharField(max_length=50,  null=True, blank=True) #img sub title
     list = models.CharField(max_length=50,  null=True,  blank=True) #group by 있으면 list에 표시
-    tag = models.CharField(max_length=50, default='')
     img = models.CharField(max_length=50, default='')
     gif = models.CharField(max_length=50, default='')
     period = models.IntegerField(default='0')

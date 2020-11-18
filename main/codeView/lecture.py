@@ -13,15 +13,12 @@ def class_detail_page(request):
     prd_code = request.POST['detail_prd_code']
     items_info = select_class_detail(prd_code)
     html_file = ""
-    prd_tag = ""
-    
+
     if items_info.count() > 0:
-        html_file = "product/" + items_info[0].prd.tag + ".html"
-        prd_tag = select_prd_tag(items_info[0].prd.tag)
+        html_file = "product/" + items_info[0].prd.list + ".html"
 
         context = {
             "prd_detail": items_info[0].prd,
-            "prd_tag": prd_tag,
             "html_file": html_file,
         }
 

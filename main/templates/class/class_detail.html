@@ -61,13 +61,6 @@
                                 <li>
                                     <span class="li_title">옵션 </span>
 
-                                     <select id="options_level" name="options_level" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;"">
-                                        <option value="0">----------아두이노 or 엠블럭----------</option>
-                                        {% for tag_info in prd_tag %}
-                                        <option value={{tag_info.prd_code}}>{{tag_info.keyword}}</option>
-                                        {% endfor %}
-                                     </select>
-
                                     {% if prd_detail.option1 != "" %}
                                      <select id="options_1" name="options_1" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, 1);">
                                         <option value="0">--------------필수옵션----------</option>
@@ -134,6 +127,9 @@
                 //중략
                 //핸들러 내에서 아임포트 네이버페이 결제 함수 호출
 <!--                IMP.request_pay(param);-->
+                       $("#res_msg").text('곧 오픈 됩니다.');
+                        $('div.modal').modal();
+                        return false;
             },
             WISHLIST_BUTTON_HANDLER : function() {
                 //중략
@@ -175,15 +171,6 @@
         function goOrder(flag)
         {
             var quantity = document.getElementById("prodQuantity").value;
-
-            option_level = document.getElementById("options_level")
-
-            if (option_level.selectedIndex == 0)
-            {
-                $("#res_msg").text("아두이노/엠블럭 선택해주세요.");
-                $('div.modal').modal();
-                return false;
-            }
 
             var id = '{{client_id}}';
             if(id == "")
