@@ -27,6 +27,7 @@ def myclass_list_page(request):
 
 def myclass_page(request):
     prdCode = request.POST['prdCode']
+    itemCode = request.POST['itemCode']
     myclass_idx = request.POST['myclass_idx']
     play = request.POST['myclass_play']
     user_id = request.session.get('user_id')
@@ -34,8 +35,8 @@ def myclass_page(request):
 
     if user_id is not None:
         if checkSession(session, user_id):
-            item_info = select_class_detail(prdCode)
-            item_common_info = select_class_common_detail(prdCode)
+            item_info = select_class_item_detail(prdCode, itemCode)
+            item_common_info = select_class_item_common_detail(prdCode, itemCode)
 
             if item_info.count() > 0:
                 context = {

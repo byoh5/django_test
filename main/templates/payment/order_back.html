@@ -1,0 +1,1120 @@
+{% include "common/header.html" %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'resource/css/order.css' %}">
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+<!-- content -->
+<div class="wrap">
+    <section class="sub_visual">
+        <div class="section_wrap">
+            <div class="slogan">
+                        <span class="bigSlg">
+                            장바구니
+                        </span>
+            </div>
+            <img class="subVisual codingLounge" src="{% static 'resource/img/sub/sv_basket.png' %}" alt="장바구니">
+        </div>
+    </section>
+
+    <div class="container" > <!--style="display: none" -->
+         <div class="margin-top-40">
+             <div class="row">
+                  <div class="col-xs-offset-1 col-xs-10">
+                      <div class="row">
+                        <div class="col-xs-12">
+                            <h2 class="col-xs-offset-1"><b>주문하기</b></h2>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div >
+                          <div class="col-xs-12">
+                             <div class="border-radius-none margin-top-30">
+                                  <div class="panel panel-default panel-body">
+
+                                      <!-- table -->
+                                      <table class="order-table">
+                                            <colgroup>
+                                                 <col width="3%" />
+                                                <col width="10%" />
+                                                <col width="20%" />
+                                                <col width="10%" />
+                                                <col width="20%" />
+                                                <col width="10%" />
+                                                <col width="10%" />
+                                                <col width="10%" />
+                                            </colgroup>
+                                            <thead class="order-package">
+                                            <tr>
+                                                <th class="text-center">&nbsp;</th>
+                                                <th class="text-center">&nbsp;</th>
+                                                <th class="text-center">상품정보</th>
+                                                <th class="text-left">판매가</th>
+                                                <th class="text-center">옵션선택</th>
+                                                <th class="text-left">수량선택</th>
+                                                <th class="text-left">구매가</th>
+                                                <th class="text-right">배송비</th>
+                                            </tr>
+                                            </thead>
+                                          <form id="order_form" method="post" action="/run_pay/">
+                                            {% csrf_token %}
+                                              <tbody class="order-option">
+                                              {% for orderDetail in order_detail %}
+                                                <tr>
+                                                    <input type="hidden" id="idx" name="idx" value="0">
+                                                    <input type="hidden" id="addr_num" name="addr_num" value="1">
+                                                    <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
+                                                    <input type="hidden" id="total_delivery_price" name="total_delivery_price" value="0">
+                                                    <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
+                                                    <input type="hidden" id="total_option_coupon_prd_price" name="total_option_coupon_prd_price" value="0">
+                                                    <input type="hidden" id="coupon_num" name="coupon_num" value="0">
+                                                    <input type="hidden" id="payway" name="payway" value="0">
+                                                    <input type="hidden" id="pg_type" name="pg_type" value="kcp_user">
+                                                    <input type="hidden" id="depositName" name="depositName" value="0">
+                                                    <input type="hidden" id="depositReceipt" name="depositReceipt" value="D">
+                                                    <input type="hidden" id="escrowName" name="escrowName" value="0">
+                                                    <input type="hidden" id="escrowReceipt" name="escrowReceipt" value="D">
+
+                                                    <!-- noUser -->
+                                                    <input type="hidden" id="noUser_info_name" name="noUser_info_name" value="">
+                                                    <input type="hidden" id="noUser_info_number" name="noUser_info_number" value="">
+                                                    <input type="hidden" id="noUser_info_email" name="noUser_info_email" value="">
+                                                    <input type="hidden" id="noUser_info_addr01" name="noUser_info_addr01" value="">
+                                                    <input type="hidden" id="noUser_info_addr02" name="noUser_info_addr02" value="">
+                                                    <input type="hidden" id="noUser_info_addr03" name="noUser_info_addr03" value="">
+
+                                                    <td>
+                                                        <input type="hidden" name="orderIdxs_{{forloop.counter0}}" id="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
+                                                        <input type="hidden" id="len" name="len" value="0">
+                                                        <input type="checkbox" name="idxs[]" value={{forloop.counter0}} checked onClick="javascript:check();">
+                                                    </td>
+                                                    <td>
+                                                         <div class="pull-left">
+                                                               <a href='javascript:goDetailPage({{orderDetail.prd.prd_code}});'>
+                                                                   <img class="width-120px border-radius" src={{orderDetail.prd.img}} onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
+                                                               </a>
+                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" id="prd_code_{{forloop.counter0}}" name="prd_code_{{forloop.counter0}}" value="{{orderDetail.prd.prd_code}}">
+                                                         <div class="pull-left">
+                                                             <span>{{orderDetail.prd.title}}({{orderDetail.prd.keyword}})</span>
+                                                         </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div id="prd_price_{{forloop.counter0}}" class="pull-left" >
+                                                            <strong>{{orderDetail.prd.price}}</strong>
+                                                        </div>
+                                                        <div class="pull-left">
+                                                            <strong>원</strong>
+                                                         </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div id="prdModify" class="prdModify">
+                                                            <li>
+                                                                {% if orderDetail.prd.option1 != "" %}
+                                                                    <input type="hidden" id="alreadyOption_{{forloop.counter0}}_1" name="alreadyOption_{{forloop.counter0}}_1" value="{{orderDetail.option1_selectNum}}">
+                                                                    <input type="hidden" id="option_idx_{{forloop.counter0}}_1" name="option_idx_{{forloop.counter0}}_1" value="0">
+                                                                    <select id="options_{{forloop.counter0}}_1" name="options_{{forloop.counter0}}_1" onchange="myOption({{forloop.counter0}})">
+                                                                        <option value="0">---------------옵션------</option>
+                                                                        <option value="0">선택없음</option>
+                                                                        <option value={{orderDetail.prd.option1_price}} >{{orderDetail.prd.option1}} (+{{orderDetail.prd.option1_price}})</option>
+                                                                     </select>
+                                                                {% endif %}
+                                                                {% if orderDetail.prd.option2 != "" %}
+                                                                    <input type="hidden" id="alreadyOption_{{forloop.counter0}}_2" name="alreadyOption_{{forloop.counter0}}_2" value="{{orderDetail.option2_selectNum}}">
+                                                                    <input type="hidden" id="option_idx_{{forloop.counter0}}_2" name="option_idx_{{forloop.counter0}}_2" value="0">
+                                                                    <select id="options_{{forloop.counter0}}_2" name="options_{{forloop.counter0}}_2" onchange="myOption({{forloop.counter0}})">
+                                                                        <option value="0">---------------옵션------</option>
+                                                                        <option value="0">선택없음</option>
+                                                                        <option value={{orderDetail.prd.option2_price}}>{{orderDetail.prd.option2}} (+{{orderDetail.prd.option2_price}})</option>
+                                                                     </select>
+                                                                 {% endif %}
+                                                                 {% if orderDetail.prd.option3 != "" %}
+                                                                    <input type="hidden" id="alreadyOption_{{forloop.counter0}}_3" name="alreadyOption_{{forloop.counter0}}_3" value="{{orderDetail.option3_selectNum}}">
+                                                                    <input type="hidden" id="option_idx_{{forloop.counter0}}_3" name="option_idx_{{forloop.counter0}}_3" value="0">
+                                                                     <select id="options_{{forloop.counter0}}_3" name="options_{{forloop.counter0}}_3" onchange="myOption({{forloop.counter0}})">
+                                                                        <option value="0">---------------옵션------</option>
+                                                                        <option value="0">선택없음</option>
+                                                                        <option value={{orderDetail.prd.option3_price}}>{{orderDetail.prd.option3}} (+{{orderDetail.prd.option3_price}})</option>
+                                                                     </select>
+                                                                  {% endif %}
+                                                            </li>
+                                                        </div>
+                                                    </td>
+                                                    <td class="quantity_td">
+                                                        <span class="quantity" >
+                                                            <input type="text" name="prodQuantity_{{forloop.counter0}}" id="prodQuantity_{{forloop.counter0}}" class="input quantity" value={{orderDetail.count}} >
+                                                            <a href="javascript:up('10','{{forloop.counter0}}')" style="color: #000;">
+                                                                <img src="{% static 'resource/img/sub/btn_quantity_up.png' %}" alt="증가" class="QuantityUp">
+                                                            </a>
+                                                            <a href="javascript:down('1', '{{forloop.counter0}}')" style="color: #000;">
+                                                                <img src="{% static 'resource/img/sub/btn_quantity_down.png' %}" alt="감소" class="QuantityDown">
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                       <div id="prd_real_price_{{forloop.counter0}}" class="pull-left">
+                                                            <strong>{{orderDetail.prd.price}}</strong>
+                                                         </div>
+                                                        <div class="pull-left">
+                                                            <strong>원</strong>
+                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                       <div id="prd_delivery_price_{{forloop.counter0}}" style="float:left;">
+                                                            {% if forloop.counter0 == 0 %}
+                                                            <strong>{{orderDetail.delivery_price}}</strong>
+                                                            {% else %}
+                                                            <strong>0</strong>
+                                                            {%endif%}
+                                                         </div>
+                                                        <div style="float:left;">
+                                                            <strong>원</strong>
+                                                         </div>
+                                                    </td>
+                                                </tr>
+                                              {% endfor %}
+                                              </tbody>
+                                          </form>
+                                      </table>
+                                 </div>
+                             </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+             </div>
+             <div>
+                <a href="javascript:void(0);" class="btn btn-del" onClick="javascript:goDelete();">선택상품 삭제</a>
+             </div>
+
+             <!-- 총금액 -->
+             <div class="row">
+                  <div class="col-xs-offset-1 col-xs-10">
+                      <div class="col-xs-12">
+                         <div class="border-radius-none margin-top-30">
+                              <div class="margin-top-40 xans-order-totalsummary">
+                                  <table summary>
+                                     <colgroup>
+                                         <col style="width:23%;">
+                                         <col style="width:24%;">
+                                         <col style="width:23%;" class="displaynone">
+                                         <col style="width:auto;">
+                                     </colgroup>
+                                     <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">
+                                                <span>총 상품 금액</span>
+                                            </th>
+                                             <th scope="col" class="text-center">
+                                                <span>총 배송비</span>
+                                            </th>
+                                             <th scope="col" class="text-center">
+                                                <span>결제 예상 금액</span>
+                                            </th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                     <tr>
+                                         <td>
+                                            <div id="div_total_prd_price" class="box" style="padding-left:30%; float:left; margin-right:10px;">
+                                                <span class="tail displaynone"></span>
+                                            </div>
+                                             <div style="float:left;">
+                                                <strong>원</strong>
+                                             </div>
+                                         </td>
+                                         <td >
+                                            <div id="div_total_delivery_price" class="box" style="padding-left:35%; float:left; margin-right:10px;">
+                                                <span class="tail displaynone"></span>
+                                            </div>
+                                             <div style="float:left;">
+                                                <strong>원</strong>
+                                             </div>
+                                         </td>
+                                         <td >
+                                            <div id="div_total_option_prd_price" class="box"  style="padding-left:40%; float:left; margin-right:10px;">
+                                                <span class="tail displaynone"></span>
+                                            </div>
+                                             <div style="float:left;">
+                                                <strong>원</strong>
+                                             </div>
+                                         </td>
+                                     </tr>
+                                     </tbody>
+                                 </table>
+                             </div>
+                          </div>
+                      </div>
+                  </div>
+             </div>
+
+             <!-- 쿠폰 -->
+             <div class="row">
+                  <div class="col-xs-offset-1 col-xs-10">
+                      <div class="col-xs-12">
+                         <div class="border-radius-none margin-top-30">
+                              <div class="margin-top-40 xans-order-totalsummary">
+                                  <table summary>
+                                     <colgroup>
+                                         <col style="width:47%;">
+                                         <col style="width:auto;">
+                                     </colgroup>
+                                     <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">
+                                                <span>쿠폰 선택</span>
+                                            </th>
+                                             <th scope="col" class="text-center">
+                                                <span>최종 결제 금액</span>
+                                            </th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                         <tr>
+                                             <td>
+                                                 {% if user == 'n'%}
+                                                 <span>로그인</span>
+                                                 {% else %}
+                                                 <select id="coupon" name="coupon" style="float:center; width:80%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myCoupon(this.value)">
+                                                      {% if coupon_detail.count == 0 %}
+                                                        <option value="0">&nbsp;&nbsp;----------------&nbsp;적용할 수 있는 쿠폰이 없습니다.&nbsp; ------------</option>
+                                                      {% else %}
+                                                        <option value="0">&nbsp;&nbsp;----------------&nbsp;사용 가능한 쿠폰을 선택하세요.&nbsp; ------------</option>
+                                                      {% endif %}
+                                                      {% for couponList in coupon_detail %}
+                                                         <option value={{couponList.coupon.coupon_num}},{{couponList.coupon.discount}},{{couponList.coupon.delivery_price}},{{couponList.coupon.prd.prd_code}},{{couponList.coupon.prd.title}}>{{couponList.coupon.coupon_name}} [유효기한 : {{couponList.expire | date:'y-m-d' }} 까지]</option>
+                                                      {% endfor %}
+                                                 </select>
+                                                 {% endif %}
+                                             </td>
+                                             <td style="background-color: #fffdec !important; ">
+                                                  <div id="coupon_total_price" class="box" style="padding-left:40%; float:left; margin-right:10px;">
+                                                    <span class="tail displaynone"></span>
+                                                  </div>
+                                                  <div style="float:left;">
+                                                    <strong>원</strong>
+                                                  </div>
+                                             </td>
+                                        </tr>
+                                     </tbody>
+                                  </table>
+                              </div>
+                         </div>
+                      </div>
+                  </div>
+               </div>
+
+             <!-- 결제방법 -->
+
+             <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="col-xs-12">
+                         <div class="panel panel-default border-radius-none margin-top-40">
+                              <div class="panel-heading bg-color-gray font-14"><strong>결제방법</strong></div>
+                              <div class="panel-body padding-all-15 font-14">
+                                   <ui class="margin-bottom-20">
+                                       <li>
+                                          {% for payway in payway_info %}
+                                           <div class="order_payinfo">
+                                                {% if user == 'n'%}
+                                                    {% if payway.value == 'credit' %}
+                                                    <span><input type="radio" name="payway" value="{{payway.value}}" onchange="myPayway(this.value)" checked>&nbsp;{{payway.name}}</span>
+                                                    {% endif%}
+                                                {% else %}
+                                               <span><input type="radio" name="payway" value="{{payway.value}}" onchange="myPayway(this.value)" checked>&nbsp;{{payway.name}}</span>
+                                               {% endif %}
+                                           </div>
+                                           {% endfor %}
+                                       </li>
+                                       <br/>
+                                   </ui>
+                              </div>
+                             <div class="panel-body padding-all-15 font-14" id="deposit" style="display:none">
+                                   <ui class="margin-bottom-20">
+                                       <li>
+                                             <div>
+                                                <span><strong>국민은행&nbsp;:&nbsp;422001-04-219407 (런코딩)</strong>&nbsp;</span><br/><br/>
+                                                <span>
+                                                    <input type="text" name="deposit_name" id="deposit_name" placeholder="입금자명"  style="float:center; width:10%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                    <input type="checkbox" name="deposit_receipt" id="deposit_receipt" onchange="receipt_check('deposit')" value="A"> 현금영수증 신청
+                                                    <input type="text" name="receipt_number" id="receipt_number" placeholder="현금영수증 신청번호" style="display:none; float:center; width:15%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+
+                                                </span>
+                                             </div>
+                                       </li>
+                                       <br/>
+                                   </ui>
+                             </div>
+                             <div class="panel-body padding-all-15 font-14" id="escrow" style="display:none">
+                                   <ui class="margin-bottom-20">
+                                       <li>
+                                             <div>
+                                                <span>예금주명
+                                                    <input type="text" name="escrow_name" id="escrow_name" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                    <input type="checkbox" name="escrow_receipt" id="escrow_receipt" onchange="receipt_check('escrow')" value="A"> 현금영수증 신청
+                                                    <input type="text" name="escrow_number" id="escrow_number" placeholder="현금영수증 신청번호" style="display:none; float:center; width:15%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;">
+                                                </span><br/><br/>
+                                                <span><input type="checkbox" name="escrow_check" id="escrow_check" style="margin-left:60px;">
+                                                    에스크로(구매안전) 서비스를 적용합니다. <br/>
+
+                                                </span>
+                                                <span style="margin-left:60px; color:red;">* 소액결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수 있습니다.</span>
+                                             </div>
+                                       </li>
+                                       <br/>
+                                   </ui>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+             </div>
+
+             <!-- 배송지 -->
+             <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="col-xs-12">
+                         <div class="panel panel-default border-radius-none margin-top-30">
+                              <div class="panel-heading bg-color-gray font-14"><strong>배송지</strong></div>
+                              <div class="panel-body padding-all-15 font-14">
+                                  {% if user == 'n'%}
+<!--                                    <div class="font-14"><span><strong>비회원입니다. 배송받을 주소를 직접 입력해주세요.</strong></span></div>-->
+<!--                                    <div class="input_area multiLine">-->
+<!--                                        <input type="text" name="noUser_add01" id="noUser_add01"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" readonly required/><br/>-->
+<!--                                        <input type="text" name="noUser_add02" id="noUser_add02"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" readonly required/>-->
+<!--                                        <input type="text" name="noUser_add03" id="noUser_add03"  style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="상세주소를 입력해주세요." required/>-->
+<!--                                        <button type="button" class="btn" onClick="javascript:getAddress();" style="width:10%; height:24px; font-size:12px; border:1px solid #d4d4d4;">주소찾기</button><br/><br/>-->
+
+<!--                                         <div class="font-14"><span><strong>배송시 필요한 정보입니다. 정확히 기입해주세요.</strong></span></div>-->
+<!--                                         <input type="text" name="noUser_name" id="noUser_name" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 이름">-->
+<!--                                         <input type="text" name="noUser_number" id="noUser_number" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 휴대폰 번호">-->
+<!--                                         <input type="text" name="noUser_email" id="noUser_email" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 이메일주소 : 강의시청 시 필요">-->
+<!--                                    </div>-->
+                                  {% else%}
+                                      {% for userDetail in user_detail %}
+                                       <div class="row padding-all-15 col-xs-3 border-dashed-right" style="display:inline-block;">
+                                           <div class="font-16">
+                                               <input name="addr" type="radio" value="1"checked>
+                                               <strong>{{userDetail.regi_name}}</strong>(기본 배송지)
+                                           </div>
+                                           <div class="font-16">
+                                               {{userDetail.regi_receiver1_add02}}
+                                               {{userDetail.regi_receiver1_add03}}
+                                               ({{userDetail.regi_receiver1_add01}})
+                                           </div>
+                                            <div class="font-16">
+                                               {{userDetail.regi_phone}}
+                                           </div>
+                                       </div>
+                                      <div class="row col-xs-3" style="padding-left:50px; display:inline-block; ">
+                                          {% if userDetail.regi_receiver2_name != "" %}
+                                          <div class="font-16">
+                                              <input name="addr" value="2" type="radio">
+                                              <strong>{{userDetail.regi_receiver2_name}}</strong>
+                                           </div>
+                                           <div class="font-16">
+                                               {{userDetail.regi_receiver2_add02}}
+                                               {{userDetail.regi_receiver2_add03}}
+                                               ({{userDetail.regi_receiver2_add01}})
+                                           </div>
+                                          <div class="font-16">
+                                               {{userDetail.regi_receiver2_phone}}
+                                           </div>
+                                          {% endif %}
+                                      </div>
+                                      {%endfor%}
+                                  {% endif%}
+                              </div>
+                         </div>
+                    </div>
+                </div>
+             </div>
+
+                <!-- 유의사항 -->
+            <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="col-xs-12">
+                         <div class="panel panel-default border-radius-none margin-top-30">
+                              <div class="panel-heading bg-color-gray font-14"><strong>알려드립니다.</strong></div>
+                              <div class="panel-body color-light-yellow">
+                                       <div class="font-14 col-xs-7 padding-all-15">
+                                           * 도서 산간지역은 별도의 배송비가 추가됩니다. <br/>
+
+                                           * 강의는 회원에게만 제공됩니다. <br/>
+                                           * 비회원 구매 시 입력한 email로 가입하면 강의를 들을 수 있습니다.<br/>
+                                           * 비회원 구매 시 환불을 원하시면 고객센터로 연락주시기 바립니다. (runcoding@naver.com)<br/>
+                                       </div>
+                                   </div>
+                              </div>
+                         </div>
+                     </div>
+                </div>
+            </div>
+            <div class="btn-center" style="margin-bottom:40px">
+                <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:gopg();">주문하기</a>
+                <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay('noUser');">비회원 주문하기</a>
+            </div>
+            <div id="naverpay_btn" class="btn-center" style="margin-bottom:40px;"></div>
+         </div>
+
+    {% include "common/banner_bottom.html" %}
+    {% include "common/footer.html" %}
+</div>
+
+
+
+
+ <script type="text/javascript" src="//pay.naver.com/customer/js/naverPayButton.js"></script>
+ <script type="text/javascript" src="//pay.naver.com/customer/js/mobile/naverPayButton.js"></script>
+
+
+    <script>
+        naver.NaverPayButton.apply({
+            BUTTON_KEY: "CE196A42-5C47-46D0-A871-00BB22E69FB6",
+            TYPE: "A", //버튼 스타일
+            COLOR: 1, //버튼 색상타입
+            COUNT: 1, // 네이버페이버튼 + 찜하기버튼 모두 출력 여부
+            ENABLE: "Y", //네이버페이 활성여부(재고부족 등에는 N으로 비활성처리)
+            EMBED_ID: "naverpay_btn", //네이버페이 버튼 UI가 부착될 HTML element의 ID
+            BUY_BUTTON_HANDLER : function() {
+                //중략
+                //핸들러 내에서 아임포트 네이버페이 결제 함수 호출
+                 $("input[type=hidden][name=pg_type]").val("naverco");
+                 goPay('user');
+               // IMP.request_pay(param);
+            },
+            WISHLIST_BUTTON_HANDLER : function() {
+                //중략
+
+                //핸들러 내에서 아임포트 네이버페이 찜하기 함수 호출(iamport.payment-1.1.6.js부터 지원됨)
+                IMP.naver_zzim(param);
+            }
+        });
+
+       function removeComma(str)
+       {
+          n = parseInt(str.replace(/,/g,""));
+          return n;
+       }
+
+       function numberWithCommas(x)
+       {
+           return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+
+        $('.menu-btn').click(function() {
+            $('.line').toggleClass('animate');
+        });
+
+         $(document).ready(function() {
+
+            total_count();
+
+            if('{{ pay_result }}' == 1)
+            {
+                $("#res_msg").text('{{ pay_msg }}');
+                $('div.modal').modal();
+            }
+         });
+
+         function myCoupon(value)
+         {
+            if(value != "0")
+            {
+                var total_price = $("input[type=hidden][name=total_prd_price]").val();
+
+                delivery = {{delivery_price}};
+                if($("input[type=hidden][name=total_delivery_price]").val() == 0)
+                {
+                    $("input[type=hidden][name=total_delivery_price]").val(delivery);
+                    document.getElementById("div_total_delivery_price").innerHTML = "<strong>"+ numberWithCommas(delivery) + "</<strong>";
+                }
+
+                var pay_price = 0;
+
+                var data = value.split(",");
+                var coupon_num = data[0];
+                var discount = data[1];
+                var delivery_price = data[2];
+                var prdCode = data[3];
+                var title = data[4];
+
+                discount *= 1;
+                total_price *= 1;
+                delivery *= 1;
+
+                if(prdCode != "")
+                {
+                    var chks = document.getElementsByName('idxs[]');
+                    var prd_selected = 0;
+                    var prd_price = 0;
+                     for (var i=0,m=chks.length;i<m ;i++)
+                     {
+                        if (chks[i].checked == true)
+                        {
+                            var prd_code = document.getElementById("prd_code_" + i).value;
+
+                            if(prd_code == prdCode)
+                            {
+                                prd_price = removeComma(document.getElementById("prd_price_" + i).innerText);
+                                prd_price *= 1;
+                                prd_selected = 1;
+                            }
+                        }
+                     }
+
+                     if(prd_selected == 1)
+                     {
+                        if(discount == 100)
+                        {
+                            pay_price = total_price - prd_price;
+                            if(delivery_price == 'False')
+                            {
+                                delivery = 0;
+                                $("input[type=hidden][name=total_delivery_price]").val(delivery);
+                                document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + delivery + "</<strong>";
+                            }
+
+                        }
+                        else
+                            pay_price = total_price - (Math.ceil(prd_price * ((100 - discount) / 100)));
+                    }
+                    else
+                    {
+                        document.getElementById("coupon").selectedIndex = 0;
+                        $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);
+                        $("input[type=hidden][name=coupon_num]").val(0);
+
+                        var price = document.getElementById("div_total_option_prd_price").innerText;
+                        document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(price) + "</<strong>";
+
+                        $("#res_msg").text("적용 가능한 키트상품이 없습니다. 다시 확인 후 사용해주세요.");
+                        $('div.modal').modal();
+                        return false;
+                    }
+                }
+                else if(discount > 0)
+                {
+                   pay_price = Math.ceil(total_price * ((100 - discount) / 100));
+                }
+
+                pay_price += delivery;
+                $("input[type=hidden][name=total_option_coupon_prd_price]").val(pay_price);
+                $("input[type=hidden][name=coupon_num]").val(coupon_num);
+                document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(pay_price) + "</<strong>";
+            }
+            else
+            {
+                var price = document.getElementById("div_total_option_prd_price").innerText;
+                document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(price) + "</<strong>";
+            }
+         }
+
+         function myOption(idx)
+         {
+            var chks = document.getElementsByName('idxs[]');
+            var total_summary_price = 0;
+            for (var idx=0,m=chks.length;idx<m ;idx++)
+            {
+                if(chks[idx].checked == true)
+                {
+                    var prd_price = document.getElementById("prd_price_" + idx).innerText;
+                    var count = document.getElementById("prodQuantity_" + idx).value;
+                    prd_price = removeComma(prd_price);
+                    prd_price *= 1;
+
+                    var option = 0;
+
+                    var prd_option1_name = "options_" + idx +"_1";
+                    var prd_option2_name = "options_" + idx +"_2";
+                    var prd_option3_name = "options_" + idx +"_3";
+
+                    var option1 = document.getElementById(prd_option1_name);
+                    var option2 = document.getElementById(prd_option2_name);
+                    var option3 = document.getElementById(prd_option3_name);
+
+                    if(option1 != null && option1.selectedIndex > 0)
+                    {
+                        var option1_val = option1.value;
+                        option1_val *= 1;
+                        option += option1_val;
+                    }
+                    if(option2 != null && option2.selectedIndex > 0)
+                    {
+                        var option2_val = option2.value;
+                        option2_val *= 1;
+                        option += option2_val;
+                    }
+                    if(option3 != null && option3.selectedIndex > 0)
+                    {
+                        var option3_val = option3.value;
+                        option3_val *= 1;
+                        option += option3_val;
+                    }
+
+                    prd_total_price = parseInt(prd_price);
+                    if(option > 0)
+                        prd_total_price += option;
+
+                    if(count > 1)
+                        prd_total_price = (prd_total_price * count);
+
+                    total_summary_price += prd_total_price;
+                    document.getElementById("prd_real_price_" + idx).innerHTML = "<strong>" + numberWithCommas(prd_total_price) + "</<strong>";
+                }
+            }
+             all_total_price(total_summary_price);
+         }
+
+         function gopg()
+         {
+            var session ='{{request.session.user_id}}';
+            if(session == "")
+            {
+                $("#res_msg").text("로그인이 필요합니다.");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                goPay('user');
+         }
+
+         function goPay(user_type)
+         {
+            var chks = document.getElementsByName('idxs[]');
+            var order_idx = '';
+
+             for (var i=0,m=chks.length;i<m ;i++)
+             {
+                if (chks[i].checked == true)
+                {
+                    var prd_option1_name = "options_" + i +"_1";
+                    var prd_option2_name = "options_" + i +"_2";
+                    var prd_option3_name = "options_" + i +"_3";
+
+                    var option1 = document.getElementById(prd_option1_name);
+                    var option2 = document.getElementById(prd_option2_name);
+                    var option3 = document.getElementById(prd_option3_name);
+
+                    var prd_option1_idx = "option_idx_" + i +"_1";
+                    var prd_option2_idx = "option_idx_" + i +"_2";
+                    var prd_option3_idx = "option_idx_" + i +"_3";
+
+                    var option1_idx = document.getElementById(prd_option1_idx);
+                    var option2_idx = document.getElementById(prd_option2_idx);
+                    var option3_idx = document.getElementById(prd_option3_idx);
+
+                    if(option1 != null && option1.selectedIndex == 0)
+                    {
+                         $("#res_msg").text("옵션을 선택해 주세요.");
+                         $('div.modal').modal();
+                         return false;
+                    }
+                    if(option2 != null && option2.selectedIndex == 0)
+                    {
+                         $("#res_msg").text("옵션을 선택해 주세요.");
+                         $('div.modal').modal();
+                         return false;
+                    }
+                    if(option3 != null && option3.selectedIndex == 0)
+                    {
+                         $("#res_msg").text("옵션을 선택해 주세요.");
+                         $('div.modal').modal();
+                         return false;
+                    }
+                    else
+                    {
+                        if(option1 != null)
+                            option1_idx.value = option1.selectedIndex;
+                        if(option2 != null)
+                            option2_idx.value = option2.selectedIndex;
+                        if(option3 != null)
+                            option3_idx.value = option3.selectedIndex;
+
+                        order_idx += i + ",";
+                    }
+                }
+             }
+
+             if(order_idx != "")
+             {
+                var payway_checked =  $("input[type=radio][name=payway]:checked").val();
+
+                if(payway_checked == 'deposit')
+                {
+                    var name = document.getElementById("deposit_name").value;
+                    var receipt = document.getElementsByName("deposit_receipt");
+                    if(name == "")
+                    {
+                         $("#res_msg").text("입금자 명을 입력해주세요.");
+                         $('div.modal').modal();
+                         return false;
+                    }
+
+                    if(receipt[0].checked == true)
+                    {
+                         var number = document.getElementById("receipt_number").value;
+                         if(number == "")
+                         {
+                             $("#res_msg").text("현금영수증 신청을 위한 번호를 입력해주세요.");
+                             $('div.modal').modal();
+                             return false;
+                        }
+                        else
+                            name += number;
+                    }
+
+                    $("input[type=hidden][name=depositName]").val(name);
+                    $("input[type=hidden][name=depositReceipt]").val(receipt[0].checked);
+                }
+                else if(payway_checked == 'escrow')
+                {
+                    var name = document.getElementById("escrow_name").value;
+                    if(name == "")
+                    {
+                         $("#res_msg").text("예금주 명을 입력해주세요.");
+                         $('div.modal').modal();
+                         return false;
+                    }
+
+                    var escrow_checked = document.getElementById("escrow_check")
+                    if(escrow_checked.checked != true)
+                    {
+                        $("#res_msg").text("에스크로 서비스 적용에 동의해 주세요.");
+                        $('div.modal').modal();
+                        return false;
+                    }
+
+                    $("input[type=hidden][name=escrowName]").val(name);
+                    $("input[type=hidden][name=escrowReceipt]").val( document.getElementById("escrow_receipt").value);
+                }
+
+                var addr_checked = $(":input:radio[name=addr]:checked").val();
+
+                $("input[type=hidden][name=idx]").val(order_idx);
+                $("input[type=hidden][name=addr_num]").val(addr_checked);
+                $("input[type=hidden][name=payway]").val(payway_checked);
+
+                if(user_type == 'user')
+                    document.getElementById("order_form").submit();
+                else if(user_type == 'noUser')
+                    noUserPay();
+             }
+         }
+
+         function noUserPay()
+         {
+            var add01 = document.getElementById("noUser_add01").value;
+            var add02 = document.getElementById("noUser_add02").value;
+            if(add01 == "" || add02 == "")
+            {
+                $("#res_msg").text("배송받을 주소를 입력해주세요.");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+            {
+                $("input[type=hidden][name=noUser_info_addr01]").val(add01);
+                $("input[type=hidden][name=noUser_info_addr02]").val(add02);
+            }
+
+            var add03 = document.getElementById("noUser_add03").value;
+            if(add03 == "")
+            {
+                $("#res_msg").text("배송받을 주소의 상세주소를 입력해주세요.");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                $("input[type=hidden][name=noUser_info_addr03]").val(add03);
+
+            var name = document.getElementById("noUser_name").value;
+            if(name == "")
+            {
+                $("#res_msg").text("사용자 이름을 입력해주세요.(배송에 필요)");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                $("input[type=hidden][name=noUser_info_name]").val(name);
+
+            var number = document.getElementById("noUser_number").value;
+            if(number == "")
+            {
+                $("#res_msg").text("사용자 전화번호를 입력해주세요.(배송에 필요)");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                $("input[type=hidden][name=noUser_info_number]").val(number);
+
+            var email = document.getElementById("noUser_email").value;
+            if(email == "")
+            {
+                $("#res_msg").text("사용자 이메일 주소를 입력해주세요.(배송에 필요)");
+                $('div.modal').modal();
+                return false;
+            }
+            else
+                $("input[type=hidden][name=noUser_info_email]").val(email);
+
+            $("input[type=hidden][name=pg_type]").val('kcp_nouser');
+            document.getElementById("order_form").submit();
+         }
+
+        // 수량 더하기
+        function up(max, id)
+        {
+            var quantity_name = "prodQuantity_" + id;
+            var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) + 1;
+            if (document.getElementById(quantity_name).value >= parseInt(max))
+                document.getElementById(quantity_name).value = max;
+
+            myOption(id);
+
+        }
+        function down(min, id) {
+            var quantity_name = "prodQuantity_" + id;
+            var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) - 1;
+            if (document.getElementById(quantity_name).value <= parseInt(min))
+                document.getElementById(quantity_name).value = min;
+
+            myOption(id);
+        }
+
+        // total 금액 계산하기
+        function total_count()
+        {
+            var chks = document.getElementsByName('idxs[]');
+
+            var prd_price = 0;
+            var prd_total_price = 0;
+            var delivery = 0;
+
+            var count = 1;
+            var first = 1;
+
+            var prd_price_name;
+            var quantity_name;
+            var prd_delivery_name;
+            var total_summary_price = 0;
+
+            for (var i=0,m=chks.length;i<m ;i++)
+            {
+                prd_price_name = "prd_price_" + i;
+                quantity_name = "prodQuantity_" + i;
+                prd_delivery_name ="prd_delivery_price_" + i;
+                prd_option_name = "options_" + i;
+
+                prd_price = document.getElementById(prd_price_name).innerText;
+                document.getElementById(prd_price_name).innerHTML = "<strong>" + numberWithCommas(prd_price) + "</<strong>";
+
+				if (chks[i].checked == true)
+				{
+				    var option = 0;
+				    // 여러 상품 중 하나만 배송비 표시하기 위한 변수
+				    prd_price = removeComma(prd_price);
+				    count = document.getElementById(quantity_name).value;
+
+                    var already_option1 = document.getElementById("alreadyOption_" + i + "_1");
+                    var already_option2 = document.getElementById("alreadyOption_" + i + "_2");
+                    var already_option3 = document.getElementById("alreadyOption_" + i + "_3");
+
+                    var prd_option1_name = "options_" + i +"_1";
+                    var prd_option2_name = "options_" + i +"_2";
+                    var prd_option3_name = "options_" + i +"_3";
+
+                    var option1 = document.getElementById(prd_option1_name);
+                    var option2 = document.getElementById(prd_option2_name);
+                    var option3 = document.getElementById(prd_option3_name);
+
+                    if(already_option1 != null)
+                    {
+                        option1.selectedIndex = already_option1.value;
+                    }
+                    if(already_option2 != null)
+                    {
+                        option2.selectedIndex = already_option2.value;
+                    }
+                    if(already_option3 != null)
+                    {
+                        option3.selectedIndex = already_option3.value;
+                    }
+
+                    if(option1 != null && option1.selectedIndex > 0)
+                    {
+                        var option1_val = option1.value;
+                        option1_val *= 1;
+                        option += option1_val;
+                    }
+                    if(option2 != null && option2.selectedIndex > 0)
+                    {
+                        var option2_val = option2.value;
+                        option2_val *= 1;
+                        option += option2_val;
+                    }
+                    if(option3 != null && option3.selectedIndex > 0)
+                    {
+                        var option3_val = option3.value;
+                        option3_val *= 1;
+                        option += option3_val;
+                    }
+
+                    prd_total_price = parseInt(prd_price);
+				    if(option > 0)
+				        prd_total_price += option;
+
+                    if(count > 1)
+				        prd_total_price = (prd_total_price * count);
+
+                    if(first == 1)
+                    {
+                        delivery = {{delivery_price}};
+                        document.getElementById(prd_delivery_name).innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
+                        first++;
+                    }
+                    else
+                    {
+                        delivery = 0;
+                        document.getElementById(prd_delivery_name).innerHTML = "<strong>" + delivery + "</<strong>";
+                     }
+
+                    total_summary_price += prd_total_price;
+                    document.getElementById("prd_real_price_" + i).innerHTML = "<strong>" + numberWithCommas(prd_total_price) + "</<strong>";
+				}
+				else
+				{
+				    delivery = 0;
+				    document.getElementById(prd_delivery_name).innerHTML = "<strong>" + delivery + "</<strong>";
+				}
+			}
+			all_total_price(total_summary_price);
+        }
+
+        function all_total_price(total_summary_price)
+        {
+            delivery = {{delivery_price}};
+            document.getElementById("div_total_delivery_price").innerHTML = "<strong>" + numberWithCommas(delivery) + "</<strong>";
+
+            var total = total_summary_price + parseInt(delivery);
+
+            document.getElementById("div_total_prd_price").innerHTML = "<strong>" + numberWithCommas(total_summary_price) + "</<strong>";
+			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
+			document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
+
+			$("input[type=hidden][name=total_prd_price]").val(total_summary_price);
+			$("input[type=hidden][name=total_delivery_price]").val(delivery);
+            $("input[type=hidden][name=total_option_prd_price]").val(total);
+
+            document.getElementById("coupon").selectedIndex = 0;
+            $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);
+            $("input[type=hidden][name=coupon_num]").val(0);
+        }
+
+        function check()
+        {
+			total_count();
+		}
+
+		function goDetailPage(prdCode)
+		{
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "class_detail");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/class_detail/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'detail_prd_code', value : prdCode}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+
+		}
+
+        function goDelete()
+        {
+            var chks = document.getElementsByName('idxs[]');
+            var order_idx = '';
+            for (var i=0,m=chks.length;i<m ;i++)
+            {
+                if (chks[i].checked == true)
+                {
+                    var order_idx_val= document.getElementById("orderIdxs_" + i).value;
+                    order_idx += order_idx_val + ",";;
+               }
+            }
+
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "order_delete");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/order_del/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'order_idx', value : order_idx}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+        }
+
+        function myPayway(val)
+        {
+            if(val == 'deposit')
+                $("#deposit").show();
+            else
+                $("#deposit").hide();
+
+            if(val == 'escrow')
+                $("#escrow").show();
+            else
+                $("#escrow").hide();
+
+        }
+
+        function receipt_check(value)
+        {
+            if(value == 'deposit')
+            {
+                var receipt = document.getElementsByName("deposit_receipt");
+                if(receipt[0].checked == true)
+                    $("#receipt_number").show();
+                else
+                    $("#receipt_number").hide();
+            }
+            else if(value == 'escrow')
+            {
+                var receipt = document.getElementsByName("escrow_receipt");
+                if(receipt[0].checked == true)
+                    $("#escrow_number").show();
+                else
+                    $("#escrow_number").hide();
+
+            }
+        }
+
+        function getAddress()
+        {
+            chkAddr = 1;
+            new daum.Postcode({
+                oncomplete: function(data)
+                {
+                    $('[name=noUser_add01]').val(data.zonecode); // 우편번호 (5자리)
+                    $('[name=noUser_add02]').val(data.address);
+                    $('[name=noUser_add03]').val(data.buildingName);
+                }
+            }).open();
+
+            return true;
+        }
+
+    </script>
+
+
+</body>
+</html>

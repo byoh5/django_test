@@ -1,0 +1,213 @@
+
+{% include "common/header.html" %}
+{% load static %}
+
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<div class="wrap">
+    <section class="sub_visual">
+            <div class="section_wrap">
+                <div class="slogan">
+                    <span class="bigSlg ck_title">
+                        구매하기
+                    </span>
+
+                </div>
+                <img class="subVisual codingKit" src="{% static 'resource/img/sub/sv_codingKit.png' %}" alt="코딩키트">
+            </div>
+        </section>
+</div>
+
+{% for orderList in order_info %}
+<input type="hidden" name="id_{{forloop.counter0}}" value="{{orderList.prd.prd_code}}">
+<input type="hidden" name="name_{{forloop.counter0}}" value="{{orderList.prd.title}}">
+<input type="hidden" name="basePrice_{{forloop.counter0}}" value={{orderList.prd.price}}>
+<input type="hidden" name="quantity_{{forloop.counter0}}" value={{orderList.count}}>
+<input type="hidden" name="infoUrl_{{forloop.counter0}}" value="http://runcoding.co.kr/detail_prd/?prd_code={{orderList.prd.prd_code}}">
+<input type="hidden" name="imageUrl_{{forloop.counter0}}" value="http://runcoding.co.kr{{orderList.prd.img}}">
+
+{% if orderList.option1_selectNum == 2 %}
+<input type="hidden" name="supplements_id_1_{{forloop.counter0}}" value="{{orderList.prd.prd_code}}_1">
+<input type="hidden" name="supplements_name_1_{{forloop.counter0}}" value="{{orderList.prd.option1}}">
+<input type="hidden" name="supplements_price_1_{{forloop.counter0}}" value={{orderList.prd.option1_price}}>
+<input type="hidden" name="supplements_quantity_1_{{forloop.counter0}}" value={{orderList.count}}>
+{% endif %}
+
+{% if orderList.option2_selectNum == 2 %}
+<input type="hidden" name="supplements_id_2_{{forloop.counter0}}" value="{{orderList.prd.prd_code}}_2">
+<input type="hidden" name="supplements_name_2_{{forloop.counter0}}" value="{{orderList.prd.option2}}">
+<input type="hidden" name="supplements_price_2_{{forloop.counter0}}" value={{orderList.prd.option2_price}}>
+<input type="hidden" name="supplements_quantity_2_{{forloop.counter0}}" value={{orderList.count}}>
+{% endif %}
+
+{% if orderList.option3_selectNum == 2 %}
+<input type="hidden" name="supplements_id_3_{{forloop.counter0}}" value="{{orderList.prd.prd_code}}_3">
+<input type="hidden" name="supplements_name_3_{{forloop.counter0}}" value="{{orderList.prd.option3}}">
+<input type="hidden" name="supplements_price_3_{{forloop.counter0}}" value={{orderList.prd.option3_price}}>
+<input type="hidden" name="supplements_quantity_3_{{forloop.counter0}}" value={{orderList.count}}>
+{% endif %}
+
+<input type="hidden" name="shipping_groupId" value="sipping_{{orderList.pay_num}}">
+<input type="hidden" name="shipping_baseFee" value={{orderList.delivery_price}}>
+{% endfor %}
+
+<input type="hidden" id="imp" name="imp" value="{{imp}}">
+<form id="result_form" method="post" action="/pay_result/" >
+    {% csrf_token %}
+    <input type="hidden" id="pay" name="pay" value={{payment.pay_idx}}>
+    <input type="hidden" id="pay_result" name="pay_result" value="">
+    <input type="hidden" id="pay_msg" name="pay_msg" value="">
+    <input type="hidden" id="merchant_uid" name="merchant_uid" value="">
+    <input type="hidden" id="imp_uid" name="imp_uid" value="">
+    <input type="hidden" id="card_apply" name="card_apply" value="">
+</form>
+<script>
+
+    var title = '{{payment.prd_info}}';
+    var price = '{{payment.prd_price}}';
+    var email = 'iamport@siot.do';
+    var phone = '010-1234-5678';
+    var buyer_name = '{{payment.delivery_name}}';
+    var buyer_addr2 = '{{payment.delivery_addr}}';
+    var buyer_addr3 = '영통구';
+    var buyer_addr = buyer_addr2.concat(" ", buyer_addr3);
+    var buyer_postcode = '123-456';
+
+    var product_cnt = '{{count}}';
+    var imp = '{{imp}}'
+    var pay_num = '{{payment.pay_num}}';
+    var uid = 'merchant_' + pay_num;
+
+
+    var shipping_id = $('[name=shipping_groupId]').val();
+    var shipping_baseFee = $('[name=shipping_baseFee]').val();
+
+    var cpaInflowCode_val = '{{CPAValidator}}';
+    var naverInflowCode_val = '{{NA_CO}}';
+    var saClickId_val = '{{NVADID}}';
+
+    var product = {};
+    let product_m = [];
+    var object = {};
+    var supplements = {};
+
+    for(var i=0; i< product_cnt ; i++)
+    {
+        var id_val = $('[name=id_' + i + ']').val();
+        var name_val = $('[name=name_' + i + ']').val();
+        var basePrice_val = $('[name=basePrice_' + i + ']').val();
+        var quantity_val = $('[name=quantity_' + i + ']').val();
+        var infoUrl_val = $('[name=infoUrl_' + i + ']').val();
+        var imageUrl_val = $('[name=imageUrl_' + i + ']').val();
+
+
+        if($('[name=supplements_id_3_' + i + ']').val() != null)
+        {
+            var supplements_id_3 = $('[name=supplements_id_3_' + i + ']').val();
+            var supplements_name_3 = $('[name=supplements_name_3_' + i + ']').val();
+            var supplements_price_3 = $('[name=supplements_price_3_' + i + ']').val();
+            var supplements_quantity_3 = $('[name=supplements_quantity_3_' + i + ']').val();
+
+<!--            supplements3 = {id: supplements_id_3, name : supplements_name_3, price : supplements_price_3, quantity : supplements_quantity_3};-->
+<!--            supplements = Object.assign({}, supplements, supplements3);-->
+        }
+        else if($('[name=supplements_id_2_' + i + ']').val() != null)
+        {
+            var supplements_id_2 = $('[name=supplements_id_2_' + i + ']').val();
+            var supplements_name_2 = $('[name=supplements_name_2_' + i + ']').val();
+            var supplements_price_2 = $('[name=supplements_price_2_' + i + ']').val();
+            var supplements_quantity_2 = $('[name=supplements_quantity_2_' + i + ']').val();
+
+<!--            supplements2 = {id: supplements_id_2, name : supplements_name_2, price : supplements_price_2, quantity : supplements_quantity_2};-->
+<!--            supplements = Object.assign({}, supplements, supplements2);-->
+        }
+        else if($('[name=supplements_id_1_' + i + ']').val() != null)
+        {
+             var supplements_id_1 = $('[name=supplements_id_1_' + i + ']').val();
+             var supplements_name_1 = $('[name=supplements_name_1_' + i + ']').val();
+             var supplements_price_1 = $('[name=supplements_price_1_' + i + ']').val();
+             var supplements_quantity_1 = $('[name=supplements_quantity_1_' + i + ']').val();
+
+             var basic = {
+                naverProducts:
+                    {id: id_val, name: name_val, basePrice : basePrice_val, taxType : 'TAX', quantity: quantity_val,
+                    infoUrl : infoUrl_val, imageUrl : imageUrl_val,
+                    shipping: {groupId: shipping_id, method : 'DELIVERY', baseFee : shipping_baseFee, feePayType : 'PREPAYED'},
+                    supplements:{id: supplements_id_1, name : supplements_name_1, price : supplements_price_1, quantity : supplements_quantity_1}
+                    },
+                 };
+
+                 product_m = Object.assign([], basic);
+
+        }
+        else
+        {
+             var basic = {
+                naverProducts:
+                    {id: id_val, name: name_val, basePrice : basePrice_val, taxType : 'TAX', quantity: quantity_val,
+                    infoUrl : infoUrl_val, imageUrl : imageUrl_val,
+                    shipping: {groupId: shipping_id, method : 'DELIVERY', baseFee : shipping_baseFee, feePayType : 'PREPAYED'}
+                    },
+                };
+
+                 product_m = Object.assign([], basic);
+
+        }
+}
+
+          for (const [key, value] of Object.entries(product_m)) {
+            console.log(key, value);
+            }
+
+
+<!--[ERR-OR-000006] 주문등록을요청한상품정보가없습니다.-->
+    if(price > 0)
+    {
+        var IMP = window.IMP;
+        IMP.init(imp);
+
+        IMP.request_pay(
+        {
+            pg : 'naverco',
+            pay_method : 'card',
+            merchant_uid : 'merchant_' + pay_num,
+            name :  title,
+            amount : price,
+            buyer_email : email,
+            buyer_name : buyer_name,
+            buyer_tel : phone,
+            buyer_addr : buyer_addr,
+            buyer_postcode : buyer_postcode,
+            naverProducts:[
+               {
+                    id: '2020080013001',
+                    name: 'AI 스마트 휴지통',
+                    basePrice : 48000,
+                    taxType : 'TAX',
+                    quantity: '1',
+                    infoUrl : 'http://runcoding.co.kr/detail_prd/?prd_code=2020080013001',
+                    imageUrl : 'http://runcoding.co.kr/static/resource/img/Trashcan/trashcan_main.jpg',
+                    shipping: {
+                        groupId: 'shipping_id',
+                        method : 'DELIVERY',
+                        baseFee : '3000',
+                        feePayType : 'PREPAYED'
+                    },
+                    supplements: {
+                        id: '2020080013001_1',
+                        name : '아두이노 보드, 러닝캠',
+                        price : '0',
+                        quantity : '1'
+                    }
+               }
+            ]
+        }, function(rsp) {
+
+            alert(rsp.error_msg);
+
+        });
+    }
+
+</script>
+
+</body>
+</html>

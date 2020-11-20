@@ -261,13 +261,26 @@ def select_prd_keyword(keyword):
     prd_info = PrdTB.objects.filter(Q(keyword=keyword, dbstat='A') | Q(title__icontains=keyword, dbstat='A') | Q(title2__icontains=keyword, dbstat='A'))
     return prd_info
 
+def select_item_group(prd_code):
+    item_info = ItemTB.objects.filter(prd__prd_code=prd_code, dbstat='A').values('item_code').annotate(max_count=Count('item_code'))
+    return item_info
+
 def select_class_detail(prd_code):
     item_info = ItemTB.objects.filter(prd__prd_code=prd_code, dbstat='A').order_by('order')
+    return item_info
+
+def select_class_item_detail(prd_code, item_code):
+    item_info = ItemTB.objects.filter(prd__prd_code=prd_code, item_code=item_code, dbstat='A').order_by('order')
     return item_info
 
 def select_class_common_detail(prd_code):
     item_info = ItemCommonTB.objects.filter(prd__prd_code=prd_code, dbstat='A').order_by('order')
     return item_info
+
+def select_class_item_common_detail(prd_code, item_code):
+    item_info = ItemCommonTB.objects.filter(prd__prd_code=prd_code, item_code=item_code, dbstat='A').order_by('order')
+    return item_info
+
 
 def select_lounge():
     lounge_info = loungeListTB.objects.filter(dbstat='A').order_by('-loungeList_idx')

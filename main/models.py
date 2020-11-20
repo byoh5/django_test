@@ -59,7 +59,7 @@ class PrdTB(models.Model):
 class ItemCommonTB(models.Model):
     itemcommon_idx = models.AutoField(primary_key=True)
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
-    item_code = models.CharField(max_length=50, default='')
+    item_code = models.CharField(max_length=50, default='')# 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
     title = models.CharField(max_length=50)
     time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
@@ -72,6 +72,7 @@ class ItemCommonTB(models.Model):
 
 class ItemTB(models.Model): #curriculum
     item_idx = models.AutoField(primary_key=True)
+    item_code = models.CharField(max_length=50, default='') # 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT)
     title = models.CharField(max_length=50)
     time = models.CharField(max_length=50)
@@ -117,6 +118,7 @@ class MyClassListTB(models.Model):
     user_id = models.CharField(max_length=50)
     pay_num = models.CharField(max_length=50, default='')
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True)
+    item_code = models.CharField(max_length=50, default='') # list에 노출되는 이름
     dbstat = models.CharField(max_length=50, default='A')
     play = models.CharField(max_length=50, default='D')  # 첫번째 play되는 데이터 남기기
     play_time = models.CharField(max_length=50, default='', blank=True)

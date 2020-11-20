@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+	<!-- 선택된 옵션이 없는 상품의 상세 정보 -->
+	<product>
+      <id>2020080013001</id>
+      <name>[아두이노 + AI] 스마트 휴지통</name>
+      <basePrice>45000</basePrice>
+      <taxType />
+      <infoUrl>http://runcoding.co.kr/detail_prd/?prd_code=2020080013001</infoUrl>
+      <imageUrl>http://runcoding.co.kr/static/resource/img/Trashcan/trashcan_main.jpg</imageUrl>
+      <status>ON_SALE</status>
+      <supplementSupport>true</supplementSupport>
+      <supplement>
+         <id>2020080013001_1</id>
+         <name>아두이노 보드, 러닝캠</name>
+         <price>0</price>
+         <stockQuantity>1</stockQuantity>
+         <status>true</status>
+     </supplement>
+      <shippingPolicy>
+         <groupId />
+         <method>DELIVERY</method>
+         <feeType>CHARGE</feeType>
+         <feePayType>PREPAYED</feePayType>
+         <feePrice>3000</feePrice>
+      </shippingPolicy>
+   </product>
+    <product>
+      <id>2020080023001</id>
+      <name>[엠블럭 + AI] 스마트 휴지통</name>
+      <basePrice>45000</basePrice>
+      <taxType />
+      <infoUrl>http://runcoding.co.kr/detail_prd/?prd_code=2020080023001</infoUrl>
+      <imageUrl>http://runcoding.co.kr/static/resource/img/Trashcan/trashcan_main.jpg</imageUrl>
+      <status>ON_SALE</status>
+      <supplementSupport>true</supplementSupport>
+      <supplement>
+         <id>2020080023001_1</id>
+         <name>아두이노 보드, 러닝캠</name>
+         <price>0</price>
+         <stockQuantity>1</stockQuantity>
+         <status>true</status>
+     </supplement>
+      <shippingPolicy>
+         <groupId />
+         <method>DELIVERY</method>
+         <feeType>CHARGE</feeType>
+         <feePayType>PREPAYED</feePayType>
+         <feePrice>3000</feePrice>
+      </shippingPolicy>
+   </product>
+</products>

@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.utils import timezone
+
 from main.query import *
 from main.models import *
 import string
 import random
 import requests
 import json
-
+from collections import OrderedDict
 pay_ok = 0
 pay_fail = 1
 
@@ -64,12 +65,12 @@ def payment(request):
         option2 = "0"
         option3 = "0"
 
-        order_idx = request.POST['idx']
+        order_cnt = request.POST['idx']
         prd_price = int(request.POST['total_prd_price'])
         delivery_price = int(request.POST['total_delivery_price'])
         prd_total_price = int(request.POST['total_option_prd_price'])
 
-        split_order = order_idx.split(',')
+        split_order = order_cnt.split(',')
 
         # product -> myclass에 넣고, 장바구니 정리하기
         for data in split_order:
@@ -199,10 +200,11 @@ def pay_deposit(request, payway_info, pay_num):
         new_order.addr_num = addr_num
         new_order.save()
 
-    # insert myclass_list
-    myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd, pay_num=pay_num,
-                                      expire_time=timezone.now(), dbstat='D-deposit')
-    myclass_list_info.save()
+        # insert myclass_list
+        myclass_list_info = MyClassListTB(user_id=user_id, prd=order.prd, pay_num=pay_num,
+                                          expire_time=timezone.now(), dbstat='D-deposit')
+
+        myclass_list_info.save()
 
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
@@ -365,13 +367,82 @@ def pay_escrow(request, payway_info, pay_num):
     else:
         return render(request, 'login/login.html')
 
+def merge_dic(x, y):
+    z = x.copy()
+    z.update(y)
+    return z
+
+def naverpay_prd_text(order_info):
+    count = str(order_info[0].count)
+    prd_price = str(order_info[0].prd.price)
+    prd_title = order_info[0].prd.title
+    prd_code = order_info[0].prd.prd_code
+    delivery_price = str(order_info[0].delivery_price)
+    keyword = str(order_info[0].prd.keyword)
+
+    shipping_data = OrderedDict()
+    shipping_data['groupId'] = 'shipping_' + prd_code
+    shipping_data['method'] = 'DELIVERY'
+    shipping_data['baseFee'] = delivery_price
+    shipping_data['feeRule'] = {'area': 'jeju','surcharge': 5000}
+    shipping_data['feePayType'] = 'PREPAYED'
+
+    selections_data = OrderedDict()
+    selections_data['code'] = keyword
+    selections_data['label'] = '레벨'
+    selections_data['value'] = keyword
+
+    options_data = OrderedDict()
+    options_data['optionQuantity'] = count
+    options_data['optionPrice'] = 0
+    options_data['selections'] = selections_data,
+
+    supplemets_list = []
+    if order_info[0].option1_selectNum == 2:
+        supplements1_data = OrderedDict()
+        supplements1_data['id'] = prd_code + '_1'
+        supplements1_data['name'] = order_info[0].prd.option1
+        supplements1_data['price'] = order_info[0].prd.option1_price
+        supplements1_data['quantity'] = count
+        supplemets_list.append(supplements1_data)
+
+    if order_info[0].option2_selectNum == 2:
+        supplements2_data = OrderedDict()
+        supplements2_data['id'] = prd_code + '_2'
+        supplements2_data['name'] = order_info[0].prd.option2
+        supplements2_data['price'] = order_info[0].prd.option2_price
+        supplements2_data['quantity'] = count
+        supplemets_list.append(supplements2_data)
+
+    if order_info[0].option3_selectNum == 2:
+        supplements3_data = OrderedDict()
+        supplements3_data['id'] = prd_code + '_3'
+        supplements3_data['name'] = order_info[0].prd.option3
+        supplements3_data['price'] = order_info[0].prd.option3_price
+        supplements3_data['quantity'] = count
+        supplemets_list.append(supplements3_data)
+
+    prd_data = OrderedDict()
+    prd_data["id"] = prd_code
+    prd_data["name"] = prd_title
+    prd_data["basePrice"] = prd_price
+    prd_data["taxType"] = 'TAX'
+    prd_data["quantity"] = count
+    prd_data["infoUrl"] = 'http://runcoding.co.kr/detail_prd/?prd_code=' + order_info[0].prd.prd_code
+    prd_data["img_url"] = 'http://runcoding.co.kr' + order_info[0].prd.img
+    prd_data["shipping"] = shipping_data
+    prd_data["options"] = options_data,
+    prd_data["supplements"] = supplemets_list
+
+    return prd_data
 
 def pay_naver(request, payway_info):
     session = request.session.get('client_id')
+    user_id = request.session.get('user_id')
     order_idx = request.POST['idx']
-    prd_price = int(request.POST['total_prd_price'])
-    delivery_price = int(request.POST['total_delivery_price'])
-    pay_price = int(request.POST['total_option_prd_price'])
+    prd_price = request.POST['total_prd_price']
+    delivery_price = request.POST['total_delivery_price']
+    pay_price = request.POST['total_option_prd_price']
 
     order_list = ""
     prd_title = ""
@@ -381,6 +452,7 @@ def pay_naver(request, payway_info):
     option3 = "0"
     coupon_num = ""
 
+
     number_pool = string.digits
     _LENGTH = 12
     pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
@@ -388,7 +460,9 @@ def pay_naver(request, payway_info):
     for i in range(_LENGTH):
         pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
 
+
     split_order = order_idx.split(',')
+    prd_list = []
 
     # product -> myclass에 넣고, 장바구니 정리하기
     for data in split_order:
@@ -396,7 +470,10 @@ def pay_naver(request, payway_info):
             idx = request.POST['orderIdxs_' + str(data)]
             prd_count = request.POST['prodQuantity_' + str(data)]
 
-            order_info = select_order_idx(idx, session)
+            if user_id == "":
+                order_info = select_order_idx(idx, session)
+            else:
+                order_info = select_order_idx(idx, user_id)
             if order_info.count() > 0:
                 if order_info[0].prd.option1 != "":
                     option1 = request.POST['option_idx_' + str(data) + "_1"]
@@ -407,27 +484,57 @@ def pay_naver(request, payway_info):
 
                 prd_total_count += int(prd_count)
                 prd_title = order_info[0].prd.title
-                update_order_idx(prd_count, order_info, 1, option1, option2, option3,
-                                 pay_num)  # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+
+                # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
+                update_order_idx(prd_count, order_info, option1, option2, option3, pay_num)
                 order_list += idx + ","
+
+                #prd_list.append(naverpay_prd_text(order_info))
+
 
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
 
+    if user_id == "":
+        pay_user = ""
+    else:
+        regi_info = select_register(user_id)
+        pay_user = regi_info[0]
+
     pay_userStatus_info = select_userStatue(pay_status_prepay)
-    pay_info = PayTB(pay_num=pay_num, order_id=order_list, coupon_num=coupon_num,
+    pay_info = PayTB(pay_num=pay_num, pay_user=pay_user, order_id=order_list, coupon_num=coupon_num,
                      prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
-                     prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
+                     prd_price=int(prd_price), delivery_price=int(delivery_price), prd_total_price=int(pay_price),
                      delivery_name="runcoding", delivery_addr="경기도 수원시", delivery_phone="01012341234", payWay=payway_info[0])
     pay_info.save()
 
-    order_info = select_order_payNum(pay_num, session)
+    if user_id == "":
+        order_info = select_order_payNum(pay_num, session)
+    else:
+        order_info = select_order_payNum(pay_num, user_id)
+
+    # pay_data = OrderedDict()
+    # pay_data['pg'] = 'naverco'
+    # pay_data["pay_method"] = 'card'
+    # pay_data["merchant_uid"] = 'merchant_' + pay_num
+    # pay_data["name"] = prd_title
+    # pay_data["amount"] = pay_price
+    # pay_data["buyer_email"] = 'iamport@siot.do'
+    # pay_data["buyer_name"] = 'runcoding'
+    # pay_data["buyer_tel"] = '01012341234'
+    # pay_data["buyer_addr"] = '경기도 수원시 영통구'
+    # pay_data["buyer_postcode"] = '123-456'
+    # pay_data["naverProducts"] = prd_list
+
+
+
 
     context = {
         "payment": pay_info,
         "order_info": order_info,
         "count": order_info.count(),
         "imp": imp_id,
+        #"text_data": test,
     }
 
     return render(request, 'payment/pay_naver.html', context)
@@ -477,10 +584,12 @@ def pay_result(request):
                     else:
                         order_info = select_order_idx(data, user_id)
                         if order_info.count() > 0:
-                            myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
-                                                              pay_num=pay_info[0].pay_num,
-                                                              expire_time=timezone.now())
-                            myclass_list_info.save()
+                            item_info = select_item_group(order_info[0].prd.prd_code)
+                            for item in item_info:
+                                myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
+                                                                  pay_num=pay_info[0].pay_num, item_code=item['item_code'],
+                                                                  expire_time=timezone.now())
+                                myclass_list_info.save()
                             delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
             update_pay.save()

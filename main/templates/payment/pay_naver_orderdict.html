@@ -1,0 +1,105 @@
+
+{% include "common/header.html" %}
+{% load static %}
+
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<div class="wrap">
+    <section class="sub_visual">
+            <div class="section_wrap">
+                <div class="slogan">
+                    <span class="bigSlg ck_title">
+                        구매하기
+                    </span>
+
+                </div>
+                <img class="subVisual codingKit" src="{% static 'resource/img/sub/sv_codingKit.png' %}" alt="코딩키트">
+            </div>
+        </section>
+</div>
+
+<input type="hidden" id="imp" name="imp" value="{{imp}}">
+<form id="result_form" method="post" action="/pay_result/" >
+    {% csrf_token %}
+    <input type="hidden" id="pay" name="pay" value={{payment.pay_idx}}>
+    <input type="hidden" id="pay_result" name="pay_result" value="">
+    <input type="hidden" id="pay_msg" name="pay_msg" value="">
+    <input type="hidden" id="merchant_uid" name="merchant_uid" value="">
+    <input type="hidden" id="imp_uid" name="imp_uid" value="">
+    <input type="hidden" id="card_apply" name="card_apply" value="">
+</form>
+<script>
+
+    var imp = '{{imp}}'
+
+    // https://alpha-pay.naver.com/join?url=https%3A%2F%2Ftest-order.pay.naver.com%2Fcustomer%2Fbuy%2F57brCSL_ROGdOk7X4mRq4w%2F300047995
+
+    if(price > 0)
+    {
+        var IMP = window.IMP;
+        IMP.init(imp);
+
+
+        IMP.request_pay(
+        {
+            pg: 'naverco',
+            pay_method: 'card',
+            merchant_uid: 'merchant_20201117144017-702808142020',
+            name: '스마트 휴지통',
+            amount: 48000,
+            buyer_email: 'iamport@siot.do',
+            buyer_name: 'runcoding',
+            buyer_tel: '01012341234',
+            buyer_addr: '경기도 수원시 영통구',
+            buyer_postcode: '123-456',
+            naverProducts: [
+                    {
+                     id: '2020080013001',
+                            name: '스마트 휴지통',
+                            basePrice: 45000,
+                            taxType: 'TAX',
+                            quantity: 1,
+                            infoUrl: 'http://runcoding.co.kr/detail_prd/?prd_code=2020080013001',
+                            img_url: 'http://runcoding.co.kr/static/resource/img/Trashcan/trashcan_main.jpg',
+                            shipping: {
+                                    groupId: 'shipping_2020080013001',
+                                    method: 'DELIVERY',
+                                    baseFee: 3000,
+                                    feeRule: {
+                                            area: 'jeju',
+                                            surcharge: 5000
+                                    },
+                                    feePayType: 'PREPAYED'
+                            },
+                            supplements: [
+                                    {
+                                            id: '2020080013001_1',
+                                            name: '아두이노 보드, 러닝캠',
+                                            price: 0,
+                                            quantity: 1
+                                    }
+                            ],
+                             options: [{
+                                    optionQuantity: 1,
+                                    optionPrice: 0,
+                                    selections: [
+                                            {
+                                                    code: '아두이노',
+                                                    label: '레벨',
+                                                    value: '아두이노'
+                                            }
+                                    ]
+                            }]
+                    }
+            ]
+
+        }, function(rsp) {
+
+            alert(rsp);
+        });
+
+    }
+
+</script>
+
+</body>
+</html>
