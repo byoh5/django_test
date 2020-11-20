@@ -107,7 +107,7 @@ def order(request):
     if flag == 1:
         items_info = select_class_detail(prd_code)
         if items_info.count() > 0:
-            html_file = "product/" + items_info[0].prd.tag + ".html"
+            html_file = "product/" + items_info[0].prd.list + ".html"
         context = {
             "message": messages,
             "prd_detail": items_info[0].prd,
