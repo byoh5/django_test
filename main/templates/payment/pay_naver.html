@@ -65,7 +65,7 @@
     var title = '{{payment.prd_info}}';
     var price = '{{payment.prd_price}}';
     var email = 'iamport@siot.do';
-    var phone = '010-1234-5678';
+    var phone = '01012345678';
     var buyer_name = '{{payment.delivery_name}}';
     var buyer_addr2 = '{{payment.delivery_addr}}';
     var buyer_addr3 = '영통구';
@@ -85,10 +85,8 @@
     var naverInflowCode_val = '{{NA_CO}}';
     var saClickId_val = '{{NVADID}}';
 
-    var product = {};
-    let product_m = [];
-    var object = {};
-    var supplements = {};
+    let product = [];
+    var option = 0;
 
     for(var i=0; i< product_cnt ; i++)
     {
@@ -98,112 +96,85 @@
         var quantity_val = $('[name=quantity_' + i + ']').val();
         var infoUrl_val = $('[name=infoUrl_' + i + ']').val();
         var imageUrl_val = $('[name=imageUrl_' + i + ']').val();
-
+        let supple = [];
+        let basic;
 
         if($('[name=supplements_id_3_' + i + ']').val() != null)
         {
+            option = 1;
             var supplements_id_3 = $('[name=supplements_id_3_' + i + ']').val();
             var supplements_name_3 = $('[name=supplements_name_3_' + i + ']').val();
             var supplements_price_3 = $('[name=supplements_price_3_' + i + ']').val();
             var supplements_quantity_3 = $('[name=supplements_quantity_3_' + i + ']').val();
 
-<!--            supplements3 = {id: supplements_id_3, name : supplements_name_3, price : supplements_price_3, quantity : supplements_quantity_3};-->
-<!--            supplements = Object.assign({}, supplements, supplements3);-->
+            supple.push({id: supplements_id_3, name : supplements_name_3, price : supplements_price_3, quantity : supplements_quantity_3})
         }
-        else if($('[name=supplements_id_2_' + i + ']').val() != null)
+        if($('[name=supplements_id_2_' + i + ']').val() != null)
         {
+            option = 1;
             var supplements_id_2 = $('[name=supplements_id_2_' + i + ']').val();
             var supplements_name_2 = $('[name=supplements_name_2_' + i + ']').val();
             var supplements_price_2 = $('[name=supplements_price_2_' + i + ']').val();
             var supplements_quantity_2 = $('[name=supplements_quantity_2_' + i + ']').val();
 
-<!--            supplements2 = {id: supplements_id_2, name : supplements_name_2, price : supplements_price_2, quantity : supplements_quantity_2};-->
-<!--            supplements = Object.assign({}, supplements, supplements2);-->
+            supple.push({id: supplements_id_2, name : supplements_name_2, price : supplements_price_2, quantity : supplements_quantity_2})
         }
-        else if($('[name=supplements_id_1_' + i + ']').val() != null)
+        if($('[name=supplements_id_1_' + i + ']').val() != null)
         {
+             option = 1;
              var supplements_id_1 = $('[name=supplements_id_1_' + i + ']').val();
              var supplements_name_1 = $('[name=supplements_name_1_' + i + ']').val();
              var supplements_price_1 = $('[name=supplements_price_1_' + i + ']').val();
              var supplements_quantity_1 = $('[name=supplements_quantity_1_' + i + ']').val();
 
-             var basic = {
-                naverProducts:
-                    {id: id_val, name: name_val, basePrice : basePrice_val, taxType : 'TAX', quantity: quantity_val,
-                    infoUrl : infoUrl_val, imageUrl : imageUrl_val,
-                    shipping: {groupId: shipping_id, method : 'DELIVERY', baseFee : shipping_baseFee, feePayType : 'PREPAYED'},
-                    supplements:{id: supplements_id_1, name : supplements_name_1, price : supplements_price_1, quantity : supplements_quantity_1}
-                    },
-                 };
+             supple.push({id: supplements_id_1, name : supplements_name_1, price : supplements_price_1, quantity : supplements_quantity_1})
+        }
 
-                 product_m = Object.assign([], basic);
-
+        if(option == 1)
+        {
+            basic = { id:id_val,name:name_val,basePrice:basePrice_val,taxType:'TAX',quantity:quantity_val,
+                          infoUrl:infoUrl_val,imageUrl:imageUrl_val,
+                          shipping:{groupId:shipping_id, method : 'DELIVERY', baseFee : shipping_baseFee, feePayType : 'PREPAYED'},
+                          supplements : supple
+                        }
         }
         else
         {
-             var basic = {
-                naverProducts:
-                    {id: id_val, name: name_val, basePrice : basePrice_val, taxType : 'TAX', quantity: quantity_val,
-                    infoUrl : infoUrl_val, imageUrl : imageUrl_val,
-                    shipping: {groupId: shipping_id, method : 'DELIVERY', baseFee : shipping_baseFee, feePayType : 'PREPAYED'}
-                    },
-                };
-
-                 product_m = Object.assign([], basic);
-
+            basic = { id:id_val,name:name_val,basePrice:basePrice_val,taxType:'TAX',quantity:quantity_val,
+                      infoUrl:infoUrl_val,imageUrl:imageUrl_val,
+                      shipping:{groupId:shipping_id, method : 'DELIVERY', baseFee : shipping_baseFee, feePayType : 'PREPAYED'}
+                    }
         }
-}
 
-          for (const [key, value] of Object.entries(product_m)) {
-            console.log(key, value);
-            }
+        product.push(basic);
+   }
 
 
-<!--[ERR-OR-000006] 주문등록을요청한상품정보가없습니다.-->
+    console.log(JSON.stringify(product, null, '\t'));
+
+    var import_prd ={"pg":"naverco",
+            "pay_method":"card",
+            "merchant_uid":uid,
+            "name":title,
+            "amount":price,
+            "buyer_email":email,
+            "buyer_name":buyer_name,
+            "buyer_tel":phone,
+            "buyer_addr":buyer_addr,
+            "buyer_postcode":buyer_postcode,
+            "naverProducts":product
+            };
+
+
     if(price > 0)
     {
         var IMP = window.IMP;
         IMP.init(imp);
 
         IMP.request_pay(
-        {
-            pg : 'naverco',
-            pay_method : 'card',
-            merchant_uid : 'merchant_' + pay_num,
-            name :  title,
-            amount : price,
-            buyer_email : email,
-            buyer_name : buyer_name,
-            buyer_tel : phone,
-            buyer_addr : buyer_addr,
-            buyer_postcode : buyer_postcode,
-            naverProducts:[
-               {
-                    id: '2020080013001',
-                    name: 'AI 스마트 휴지통',
-                    basePrice : 48000,
-                    taxType : 'TAX',
-                    quantity: '1',
-                    infoUrl : 'http://runcoding.co.kr/detail_prd/?prd_code=2020080013001',
-                    imageUrl : 'http://runcoding.co.kr/static/resource/img/Trashcan/trashcan_main.jpg',
-                    shipping: {
-                        groupId: 'shipping_id',
-                        method : 'DELIVERY',
-                        baseFee : '3000',
-                        feePayType : 'PREPAYED'
-                    },
-                    supplements: {
-                        id: '2020080013001_1',
-                        name : '아두이노 보드, 러닝캠',
-                        price : '0',
-                        quantity : '1'
-                    }
-               }
-            ]
-        }, function(rsp) {
-
+        import_prd
+        , function(rsp) {
             alert(rsp.error_msg);
-
         });
     }
 

@@ -7,7 +7,6 @@ import string
 import random
 import requests
 import json
-from collections import OrderedDict
 pay_ok = 0
 pay_fail = 1
 
@@ -367,75 +366,6 @@ def pay_escrow(request, payway_info, pay_num):
     else:
         return render(request, 'login/login.html')
 
-def merge_dic(x, y):
-    z = x.copy()
-    z.update(y)
-    return z
-
-def naverpay_prd_text(order_info):
-    count = str(order_info[0].count)
-    prd_price = str(order_info[0].prd.price)
-    prd_title = order_info[0].prd.title
-    prd_code = order_info[0].prd.prd_code
-    delivery_price = str(order_info[0].delivery_price)
-    keyword = str(order_info[0].prd.keyword)
-
-    shipping_data = OrderedDict()
-    shipping_data['groupId'] = 'shipping_' + prd_code
-    shipping_data['method'] = 'DELIVERY'
-    shipping_data['baseFee'] = delivery_price
-    shipping_data['feeRule'] = {'area': 'jeju','surcharge': 5000}
-    shipping_data['feePayType'] = 'PREPAYED'
-
-    selections_data = OrderedDict()
-    selections_data['code'] = keyword
-    selections_data['label'] = '레벨'
-    selections_data['value'] = keyword
-
-    options_data = OrderedDict()
-    options_data['optionQuantity'] = count
-    options_data['optionPrice'] = 0
-    options_data['selections'] = selections_data,
-
-    supplemets_list = []
-    if order_info[0].option1_selectNum == 2:
-        supplements1_data = OrderedDict()
-        supplements1_data['id'] = prd_code + '_1'
-        supplements1_data['name'] = order_info[0].prd.option1
-        supplements1_data['price'] = order_info[0].prd.option1_price
-        supplements1_data['quantity'] = count
-        supplemets_list.append(supplements1_data)
-
-    if order_info[0].option2_selectNum == 2:
-        supplements2_data = OrderedDict()
-        supplements2_data['id'] = prd_code + '_2'
-        supplements2_data['name'] = order_info[0].prd.option2
-        supplements2_data['price'] = order_info[0].prd.option2_price
-        supplements2_data['quantity'] = count
-        supplemets_list.append(supplements2_data)
-
-    if order_info[0].option3_selectNum == 2:
-        supplements3_data = OrderedDict()
-        supplements3_data['id'] = prd_code + '_3'
-        supplements3_data['name'] = order_info[0].prd.option3
-        supplements3_data['price'] = order_info[0].prd.option3_price
-        supplements3_data['quantity'] = count
-        supplemets_list.append(supplements3_data)
-
-    prd_data = OrderedDict()
-    prd_data["id"] = prd_code
-    prd_data["name"] = prd_title
-    prd_data["basePrice"] = prd_price
-    prd_data["taxType"] = 'TAX'
-    prd_data["quantity"] = count
-    prd_data["infoUrl"] = 'http://runcoding.co.kr/detail_prd/?prd_code=' + order_info[0].prd.prd_code
-    prd_data["img_url"] = 'http://runcoding.co.kr' + order_info[0].prd.img
-    prd_data["shipping"] = shipping_data
-    prd_data["options"] = options_data,
-    prd_data["supplements"] = supplemets_list
-
-    return prd_data
-
 def pay_naver(request, payway_info):
     session = request.session.get('client_id')
     user_id = request.session.get('user_id')
@@ -489,9 +419,6 @@ def pay_naver(request, payway_info):
                 update_order_idx(prd_count, order_info, option1, option2, option3, pay_num)
                 order_list += idx + ","
 
-                #prd_list.append(naverpay_prd_text(order_info))
-
-
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
 
@@ -513,28 +440,11 @@ def pay_naver(request, payway_info):
     else:
         order_info = select_order_payNum(pay_num, user_id)
 
-    # pay_data = OrderedDict()
-    # pay_data['pg'] = 'naverco'
-    # pay_data["pay_method"] = 'card'
-    # pay_data["merchant_uid"] = 'merchant_' + pay_num
-    # pay_data["name"] = prd_title
-    # pay_data["amount"] = pay_price
-    # pay_data["buyer_email"] = 'iamport@siot.do'
-    # pay_data["buyer_name"] = 'runcoding'
-    # pay_data["buyer_tel"] = '01012341234'
-    # pay_data["buyer_addr"] = '경기도 수원시 영통구'
-    # pay_data["buyer_postcode"] = '123-456'
-    # pay_data["naverProducts"] = prd_list
-
-
-
-
     context = {
         "payment": pay_info,
         "order_info": order_info,
         "count": order_info.count(),
         "imp": imp_id,
-        #"text_data": test,
     }
 
     return render(request, 'payment/pay_naver.html', context)
