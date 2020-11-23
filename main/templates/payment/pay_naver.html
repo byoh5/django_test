@@ -26,24 +26,21 @@
 <input type="hidden" name="imageUrl_{{forloop.counter0}}" value="http://runcoding.co.kr{{orderList.prd.img}}">
 
 {% if orderList.option1_selectNum == 2 %}
-<input type="hidden" name="supplements_id_1_{{forloop.counter0}}" value="{{orderList.prd.prd_code}}_1">
-<input type="hidden" name="supplements_name_1_{{forloop.counter0}}" value="{{orderList.prd.option1}}">
-<input type="hidden" name="supplements_price_1_{{forloop.counter0}}" value={{orderList.prd.option1_price}}>
-<input type="hidden" name="supplements_quantity_1_{{forloop.counter0}}" value={{orderList.count}}>
+<input type="hidden" name="options_code_1_{{forloop.counter0}}" value="arduino">
+<input type="hidden" name="options_price_1_{{forloop.counter0}}" value={{orderList.prd.option1_price}}>
+<input type="hidden" name="options_value_1_{{forloop.counter0}}" value={{orderList.prd.option1}}>
 {% endif %}
 
 {% if orderList.option2_selectNum == 2 %}
-<input type="hidden" name="supplements_id_2_{{forloop.counter0}}" value="{{orderList.prd.prd_code}}_2">
-<input type="hidden" name="supplements_name_2_{{forloop.counter0}}" value="{{orderList.prd.option2}}">
-<input type="hidden" name="supplements_price_2_{{forloop.counter0}}" value={{orderList.prd.option2_price}}>
-<input type="hidden" name="supplements_quantity_2_{{forloop.counter0}}" value={{orderList.count}}>
+<input type="hidden" name="options_code_2_{{forloop.counter0}}" value="arduino">
+<input type="hidden" name="options_price_2_{{forloop.counter0}}" value={{orderList.prd.option2_price}}>
+<input type="hidden" name="options_value_2_{{forloop.counter0}}" value={{orderList.prd.option2}}>
 {% endif %}
 
 {% if orderList.option3_selectNum == 2 %}
-<input type="hidden" name="supplements_id_3_{{forloop.counter0}}" value="{{orderList.prd.prd_code}}_3">
-<input type="hidden" name="supplements_name_3_{{forloop.counter0}}" value="{{orderList.prd.option3}}">
-<input type="hidden" name="supplements_price_3_{{forloop.counter0}}" value={{orderList.prd.option3_price}}>
-<input type="hidden" name="supplements_quantity_3_{{forloop.counter0}}" value={{orderList.count}}>
+<input type="hidden" name="options_code_3_{{forloop.counter0}}" value="arduino">
+<input type="hidden" name="options_price_3_{{forloop.counter0}}" value={{orderList.prd.option3_price}}>
+<input type="hidden" name="options_value_3_{{forloop.counter0}}" value={{orderList.prd.option3}}>
 {% endif %}
 
 <input type="hidden" name="shipping_groupId" value="sipping_{{orderList.pay_num}}">
@@ -96,38 +93,35 @@
         var quantity_val = $('[name=quantity_' + i + ']').val();
         var infoUrl_val = $('[name=infoUrl_' + i + ']').val();
         var imageUrl_val = $('[name=imageUrl_' + i + ']').val();
-        let supple = [];
+        let option_prd = [];
         let basic;
 
-        if($('[name=supplements_id_3_' + i + ']').val() != null)
+        if($('[name=options_code_3_' + i + ']').val() != null)
         {
             option = 1;
-            var supplements_id_3 = $('[name=supplements_id_3_' + i + ']').val();
-            var supplements_name_3 = $('[name=supplements_name_3_' + i + ']').val();
-            var supplements_price_3 = $('[name=supplements_price_3_' + i + ']').val();
-            var supplements_quantity_3 = $('[name=supplements_quantity_3_' + i + ']').val();
+            var options_code_3 = $('[name=options_code_3_' + i + ']').val();
+            var options_price_3 = $('[name=options_price_3_' + i + ']').val();
+            var options_value_3 = $('[name=options_value_3_' + i + ']').val();
 
-            supple.push({id: supplements_id_3, name : supplements_name_3, price : supplements_price_3, quantity : supplements_quantity_3})
+<!--            option_prd.push(optionQuantity : quantity_val, optionPrice : options_price_3, selections : [{code: options_code_3, label : '추가부품', value : options_value_3}])-->
         }
-        if($('[name=supplements_id_2_' + i + ']').val() != null)
+        if($('[name=options_code_2_' + i + ']').val() != null)
         {
             option = 1;
-            var supplements_id_2 = $('[name=supplements_id_2_' + i + ']').val();
-            var supplements_name_2 = $('[name=supplements_name_2_' + i + ']').val();
-            var supplements_price_2 = $('[name=supplements_price_2_' + i + ']').val();
-            var supplements_quantity_2 = $('[name=supplements_quantity_2_' + i + ']').val();
+            var options_code_2 = $('[name=options_code_2_' + i + ']').val();
+            var options_price_2 = $('[name=options_price_2_' + i + ']').val();
+            var options_value_2 = $('[name=options_value_2_' + i + ']').val();
 
-            supple.push({id: supplements_id_2, name : supplements_name_2, price : supplements_price_2, quantity : supplements_quantity_2})
+<!--             option_prd.push(optionQuantity : quantity_val, optionPrice : options_price_3, selections : [{code: options_code_2,  label : '추가부품', value : options_value_2}])-->
         }
-        if($('[name=supplements_id_1_' + i + ']').val() != null)
+        if($('[name=options_code_1_' + i + ']').val() != null)
         {
              option = 1;
-             var supplements_id_1 = $('[name=supplements_id_1_' + i + ']').val();
-             var supplements_name_1 = $('[name=supplements_name_1_' + i + ']').val();
-             var supplements_price_1 = $('[name=supplements_price_1_' + i + ']').val();
-             var supplements_quantity_1 = $('[name=supplements_quantity_1_' + i + ']').val();
+             var options_code_1 = $('[name=options_code_1_' + i + ']').val();
+             var options_price_1 = $('[name=options_price_1_' + i + ']').val();
+             var options_value_1 = $('[name=options_value_1_' + i + ']').val();
 
-             supple.push({id: supplements_id_1, name : supplements_name_1, price : supplements_price_1, quantity : supplements_quantity_1})
+             option_prd.push({optionQuantity : quantity_val, optionPrice : options_price_3, selections : [{code: options_code_1, label : '추가부품', value : options_value_1}]})
         }
 
         if(option == 1)
@@ -135,7 +129,7 @@
             basic = { id:id_val,name:name_val,basePrice:basePrice_val,taxType:'TAX',quantity:quantity_val,
                           infoUrl:infoUrl_val,imageUrl:imageUrl_val,
                           shipping:{groupId:shipping_id, method : 'DELIVERY', baseFee : shipping_baseFee, feePayType : 'PREPAYED'},
-                          supplements : supple
+                          options : option_prd
                         }
         }
         else
