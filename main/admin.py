@@ -30,12 +30,35 @@ class PrdAdmin(admin.ModelAdmin):
 admin.site.register(PrdTB, PrdAdmin)
 
 class ItemCommonTBAdmin(admin.ModelAdmin):
-    list_display = ['itemcommon_idx', 'item_code', 'title'] # 커스터마이징 코드
+    list_display = ['prd_name', 'prd_code', 'item_code', 'title', 'order'] # 커스터마이징 코드
+
+    def prd_name(self, obj):
+        return obj.prd.title
+
+    def prd_code(self, obj):
+        return obj.prd.prd_code
 
     list_display_links = ['item_code', 'title']
     search_fields = ['item_code', 'title']
+    ordering = ['-order']
 
 admin.site.register(ItemCommonTB, ItemCommonTBAdmin)
+
+
+class ItemSubTBAdmin(admin.ModelAdmin):
+    list_display = ['prd_name', 'prd_code', 'item_code', 'title' , 'order'] # 커스터마이징 코드
+
+    def prd_name(self, obj):
+        return obj.prd.title
+
+    def prd_code(self, obj):
+        return obj.prd.prd_code
+
+    list_display_links = ['item_code', 'title']
+    search_fields = ['item_code', 'title']
+    ordering = ['-order']
+
+admin.site.register(ItemSubTB, ItemSubTBAdmin)
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'title', 'order'] # 커스터마이징 코드

@@ -39,6 +39,18 @@
                         <div class="lecture_info">
                             <ul class="lectureList" id="accordion">
                                  <li class="active">
+                                    <span>환경구축</span>
+                                    <ul class="submenu">
+                                         {% for item_common_detail in myclass_common_detail %}
+                                       <li>
+                                             <a href="javascript:getVideo('{{item_common_detail.prd.prd_code}}', '{{item_common_detail.data}}', '{{item_common_detail.downdata}}', '{{item_common_detail.downdata_name}}');" class="classList">
+                                                 {{forloop.counter}}. {{item_common_detail.title}}</a>
+                                       </li>
+                                         {% endfor %}
+                                    </ul>
+                                </li>
+                                <br/>
+                                 <li class="active">
                                     <span>키트강의</span>
                                     <ul class="submenu">
                                          {% for item_detail in myclass_detail %}
@@ -53,10 +65,10 @@
                                 <li class="active">
                                      <span>세부강의</span>
                                     <ul class="submenu">
-                                         {% for common_detail in myclass_common_detail %}
+                                         {% for sub_detail in myclass_sub_detail %}
                                        <li>
-                                             <a href="javascript:getVideo('{{common_detail.prd.prd_code}}', '{{common_detail.data}}', '{{common_detail.downdata}}', '{{common_detail.downdata_name}}');" class="classList">
-                                                 {{forloop.counter}}. {{common_detail.title}}</a>
+                                             <a href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.data}}', '{{sub_detail.downdata}}', '{{sub_detail.downdata_name}}');" class="classList">
+                                                 {{forloop.counter}}. {{sub_detail.title}}</a>
                                        </li>
                                         {% endfor %}
                                     </ul>

@@ -37,11 +37,13 @@ def myclass_page(request):
         if checkSession(session, user_id):
             item_info = select_class_item_detail(prdCode, itemCode)
             item_common_info = select_class_item_common_detail(prdCode, itemCode)
+            item_sub_info = select_class_item_sub_detail(prdCode, itemCode)
 
             if item_info.count() > 0:
                 context = {
                     "myclass_detail": item_info,
                     "myclass_common_detail": item_common_info,
+                    "myclass_sub_detail": item_sub_info,
                     "title": item_info[0].prd.title,
                     "myclass_idx":myclass_idx,
                     "play":play,

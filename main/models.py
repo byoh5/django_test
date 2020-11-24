@@ -70,6 +70,20 @@ class ItemCommonTB(models.Model):
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
+class ItemSubTB(models.Model):
+    ItemSub_idx = models.AutoField(primary_key=True)
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
+    item_code = models.CharField(max_length=50, default='')# 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
+    title = models.CharField(max_length=50)
+    time = models.CharField(max_length=50)
+    data = models.CharField(max_length=150, default='')
+    order = models.IntegerField(default='0', null=True, blank=True)
+    downdata = models.CharField(max_length=50, null=True, blank=True)
+    downdata_name = models.CharField(max_length=50, null=True, blank=True)
+    dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
+
 class ItemTB(models.Model): #curriculum
     item_idx = models.AutoField(primary_key=True)
     item_code = models.CharField(max_length=50, default='') # 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통

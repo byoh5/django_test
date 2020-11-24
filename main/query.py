@@ -281,6 +281,10 @@ def select_class_item_common_detail(prd_code, item_code):
     item_info = ItemCommonTB.objects.filter(prd__prd_code=prd_code, item_code=item_code, dbstat='A').order_by('order')
     return item_info
 
+def select_class_item_sub_detail(prd_code, item_code):
+    item_info = ItemSubTB.objects.filter(prd__prd_code=prd_code, item_code=item_code, dbstat='A').order_by('order')
+    return item_info
+
 
 def select_lounge():
     lounge_info = loungeListTB.objects.filter(dbstat='A').order_by('-loungeList_idx')
