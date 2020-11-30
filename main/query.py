@@ -232,6 +232,13 @@ def select_myclass_list_date_paging(keyword, start_datetime_filter, end_datetime
 
     return myclass_list_info
 
+def select_myclass_list_naverpay(pay_num):
+    myclass_list_info = MyClassListTB.objects.filter(pay_num=pay_num, dbstat='D-naverco')
+    return myclass_list_info
+
+def select_myclass_list_naverpay_refund(pay_num):
+    myclass_list_info = MyClassListTB.objects.filter(pay_num=pay_num)
+    return myclass_list_info
 
 def select_myclass_list_payNum(user_id, pay_num):
     myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, pay_num=pay_num, dbstat='D-deposit')

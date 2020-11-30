@@ -42,9 +42,11 @@
                                     <span>주문처리상태</span>
                                     <p>{{payUserInfo.pay_user_status.userStatus}}</p>
 
+                                    {% if payUserInfo.payWay.value != 'naverco' %}
                                      <div class="mypageBtn" style="margin-top:5px;">
                                         <a href="#refund" class="btn means">환불요청</a>
                                     </div>
+                                    {% endif %}
 
                                 </li>
                                 <li>

@@ -116,6 +116,7 @@
 
     </div>
 
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.6.js"></script>
     <script>
          var runcoding = '{{request.session.runcoding}}';
          if( runcoding> 5)
@@ -196,8 +197,11 @@
                     var img = "http://runcoding.co.kr"+'{{prd_detail.prd_code}}';
                     var url = "http://runcoding.co.kr/detail_prd/?prd_code=" + prdCode;
 
-                    //핸들러 내에서 아임포트 네이버페이 찜하기 함수 호출(iamport.payment-1.1.6.js부터 지원됨)
-                    IMP.naver_zzim(param)({
+                     var IMP = window.IMP;
+                     var imp_val = '{{imp}}';
+                     IMP.init(imp_val);
+
+                    IMP.naver_zzim({
                         naverProducts: [
                         {
                             id: prdCode,

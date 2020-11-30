@@ -109,20 +109,24 @@
                     </td>
                     <td class="admin_list_body">{{deposit.prd_total_price}}</td>
                     <td class="admin_list_id_body">{{deposit.delivery_name}}<br/>{{deposit.delivery_addr}}<br/>{{deposit.delivery_phone}}</td>
-                    {% if deposit.pay_result == 0 %}
-                        {% if ok_status == deposit.pay_user_status.userStatus_idx %}
-                        <td class="admin_list_body"><a href="javascript:void(0);" onClick="javascript:change({{deposit.pay_idx}}, {{paging_num}});" style="cursor:pointer;color:red;"><strong>배송중 변경하기</strong></a></td>
-                        {% else %}
-                        <td class="admin_list_body">배송중</td>
+                    {% if deposit.payWay.value == 'naverco' %}
+                         <td class="admin_list_body">네이버<br/>관리자센터</td>
+                    {% else %}
+                        {% if deposit.pay_result == 0 %}
+                            {% if ok_status == deposit.pay_user_status.userStatus_idx %}
+                            <td class="admin_list_body"><a href="javascript:void(0);" onClick="javascript:change({{deposit.pay_idx}}, {{paging_num}});" style="cursor:pointer;color:red;"><strong>배송중 변경하기</strong></a></td>
+                            {% else %}
+                            <td class="admin_list_body">배송중</td>
+                            {% endif %}
+                        {% elif deposit.pay_result == 100 %}
+                        <td class="admin_list_body">결제전</td>
+                        {% elif deposit.pay_result == 1 %}
+                         <td class="admin_list_body">결제실패</td>
+                        {% elif deposit.pay_result == 2 %}
+                         <td class="admin_list_body">환불처리됨</td>
+                         {% elif deposit.pay_result == 3 %}
+                         <td class="admin_list_body">환불요청</td>
                         {% endif %}
-                    {% elif deposit.pay_result == 100 %}
-                    <td class="admin_list_body">결제전</td>
-                    {% elif deposit.pay_result == 1 %}
-                     <td class="admin_list_body">결제실패</td>
-                    {% elif deposit.pay_result == 2 %}
-                     <td class="admin_list_body">환불처리됨</td>
-                     {% elif deposit.pay_result == 3 %}
-                     <td class="admin_list_body">환불요청</td>
                     {% endif %}
                 </tr>
                 {% endfor %}

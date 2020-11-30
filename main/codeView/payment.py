@@ -12,6 +12,7 @@ import requests
 import json
 pay_ok = 0
 pay_fail = 1
+pay_refund = 2
 
 pay_status_ok = 1
 pay_status_delivery = 2
@@ -35,7 +36,7 @@ def payment(request):
     pg_type = request.POST['pg_type']
     delivery = 3000
 
-    if pg_type == 'naverco':
+    if pg_type == payway_naver:
         payway_info = select_payway_value_all(pg_type)
         return pay_naver(request, payway_info)
 
@@ -672,97 +673,177 @@ def refund(refund_info, refund_price):
     elif json_user_msg_code == 0:
         return json_user_msg_res
 
+def run_naver_event(request):
+    json_data = json.loads(request.body)
+    merchant_uid = json_data['merchant_uid']
+
+    naverPrd_order_id = json_data['extra']['product_order_id']
+    new_status = json_data['extra']['new_order_status']
+
+    split_uid = merchant_uid.split('_')
+
+    pay_info = select_pay_paynum(split_uid[1])
+    if pay_info.count == 0:
+        return HttpResponse(404)
+
+    pay_num = pay_info[0].pay_num
+    print(pay_num)
+
+    if new_status == 'DELIVERED':
+        # DELIVERED 사용자 상태 변경
+        pay_userStatus_info = select_userStatue(pay_status_delivery_done)  # 배송완료
+
+        # 1. 상태변경
+        # 2. 강의실 오픈
+        pay_user = pay_info[0]
+        pay_user.pay_user_status = pay_userStatus_info[0]
+        pay_user.save()
+
+        naver_pay_info = select_myclass_list_naverpay(pay_num)
+
+        for new_pay_info in naver_pay_info:
+            new_pay_info.dbstat = 'A'
+            new_pay_info.save()
+
+    elif new_status == 'CANCELED':
+        pay_userStatus_info = select_userStatue(pay_status_deposit_refund)  # 취소
+
+        # 1. 상태변경
+        # 2. 강의실 block
+
+        post_data_order = {
+            'product_order_id': naverPrd_order_id,
+        }
+        naver_pay_prd_info = requests.post(url='https://api.iamport.kr/naver/product-orders/',
+                                           data=json.dumps(post_data_order),
+                                           headers={'Content-Type': 'application/json'})
+
+        json_msg = naver_pay_prd_info.json()
+        json_res = json_msg["response"]
+        product = json_res["product_id"]
+
+        pay_user = pay_info[0]
+        pay_user.pay_result = pay_refund
+        pay_user.pay_user_status = pay_userStatus_info[0]
+        pay_user.save()
+
+        naver_myclass_info = select_myclass_list_naverpay_refund(pay_num)
+
+        for myclass_info in naver_myclass_info:
+            print(myclass_info.prd.prd_code)
+            if myclass_info.prd.prd_code == product:
+                myclass_info.dbstat = 'D-naverpay_refund'
+                myclass_info.save()
+
+
+    return HttpResponse(200)
+
+def is_json_key_present(json, key):
+    try:
+        buf = json[key]
+    except KeyError:
+        return False
+
+    return True
+
 @csrf_exempt
 def run_callback(request):
-    imp_uid = request.POST['imp_uid']
-    merchant_uid = request.POST['merchant_uid']
-    status = request.POST['status']
 
-    # pg_provider == naverco 일때만,
+    json_data = json.loads(request.body)
+    print(json_data)
 
-    print(imp_uid)
-    print(merchant_uid)
-    print(status)
+    if is_json_key_present(json_data, 'event') == True:
+        if json_data['event'] == 'Naver.OrderStatus.Changed':
+            return run_naver_event(request)
 
-    # 결제 완료
-    if status == 'paid':
+    else:
+        imp_uid = json_data['imp_uid']
+        merchant_uid = json_data['merchant_uid']
+        status = json_data['status']
 
-        runcoding = select_runcoding()
+        print(imp_uid)
+        print(merchant_uid)
+        print(status)
 
-        key = runcoding[0].imp_key
-        secret = runcoding[0].imp_secret
+        split_uid = merchant_uid.split('_')
+        pay_info = select_pay_paynum(split_uid[1])
 
-        # getToken
-        post_data = {
-            'imp_key': key,
-            'imp_secret': secret
-        }
-        token_msg = requests.post(url='https://api.iamport.kr/users/getToken', data=json.dumps(post_data),
-                                  headers={'Content-Type': 'application/json'})
+        if pay_info.count() == 0:
+            return HttpResponse(404)
 
-        json_msg = token_msg.json()
-        json_res = json_msg["response"]
-        access_token = json_res["access_token"]
-        print(access_token)
+        if pay_info[0].payWay.value == payway_naver: #네이버페이 일때만
 
-        get_pay_msg = requests.get(url='https://api.iamport.kr/payments/' + imp_uid,
-                                        headers={'Authorization': access_token})
+            # 결제 완료
+            if status == 'paid':
+                pay_num = pay_info[0].pay_num
+                print(pay_num)
 
-        json_user_msg = get_pay_msg.json()
-        json_user_msg_res = json_user_msg["response"]
+                runcoding = select_runcoding()
 
-        pg_provider = json_user_msg_res["pg_provider"]
+                key = runcoding[0].imp_key
+                secret = runcoding[0].imp_secret
 
-        if pg_provider == 'naverco':
-            amount = json_user_msg_res["amount"]
-            buyer_addr = json_user_msg_res["buyer_addr"]
-            buyer_postcode = json_user_msg_res["buyer_postcode"]
-            buyer_name = json_user_msg_res["buyer_name"]
-            buyer_tel = json_user_msg_res["buyer_tel"]
-            channel = json_user_msg_res["channel"]
+                # getToken
+                post_data = {
+                    'imp_key': key,
+                    'imp_secret': secret
+                }
+                token_msg = requests.post(url='https://api.iamport.kr/users/getToken', data=json.dumps(post_data),
+                                          headers={'Content-Type': 'application/json'})
 
-            imp_uid_s = json_user_msg_res["imp_uid"]
-            imp_merchant_uid = json_user_msg_res["merchant_uid"]
-            pay_method = json_user_msg_res["pay_method"]
+                json_msg = token_msg.json()
+                json_res = json_msg["response"]
+                access_token = json_res["access_token"]
+                print(access_token)
 
-            split_uid = merchant_uid.split('_')
+                get_pay_msg = requests.get(url='https://api.iamport.kr/payments/' + imp_uid,
+                                                headers={'Authorization': access_token})
 
-            pay_info = select_pay_paynum(split_uid[1])
-            pay_num = pay_info[0].pay_num
-            print(pay_num)
+                json_user_msg = get_pay_msg.json()
+                json_user_msg_res = json_user_msg["response"]
+                pg_provider = json_user_msg_res["pg_provider"]
 
-            pay_userStatus_info = select_userStatue(pay_status_ok)  # 구매성공
+                amount = json_user_msg_res["amount"]
+                buyer_addr = json_user_msg_res["buyer_addr"]
+                buyer_postcode = json_user_msg_res["buyer_postcode"]
+                buyer_name = json_user_msg_res["buyer_name"]
+                buyer_tel = json_user_msg_res["buyer_tel"]
+                channel = json_user_msg_res["channel"]
 
-            if amount == pay_info[0].prd_total_price:
-                pay_user = pay_info[0]
-                pay_user.delivery_name = buyer_name
-                pay_user.delivery_addr = buyer_addr + buyer_postcode
-                pay_user.delivery_phone = buyer_tel
-                pay_user.pay_result = pay_ok
-                pay_user.pay_result_info = channel + "-" + pg_provider
-                pay_user.merchant_uid = imp_merchant_uid
-                pay_user.imp_uid = imp_uid_s
-                pay_user.card_apply = pay_method
-                pay_user.pay_user_status = pay_userStatus_info[0]
-                pay_user.save()
-            else:
-                print('forgery')
+                imp_uid_s = json_user_msg_res["imp_uid"]
+                imp_merchant_uid = json_user_msg_res["merchant_uid"]
+                pay_method = json_user_msg_res["pay_method"]
 
-            split_order = pay_info[0].order_id.split(',')
-            for data in split_order:
-                if len(data) > 0:
-                    order_info = select_order_id(data)
-                    if order_info.count() > 0:
-                        print(order_info[0].pay_num)
-                        if pay_num == order_info[0].pay_num:
-                            item_info = select_item_group(order_info[0].prd.prd_code)
-                            for item in item_info:
-                                myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
-                                                                  pay_num=pay_info[0].pay_num, item_code=item['item_code'],
-                                                                  expire_time=timezone.now())
-                                myclass_list_info.save()
-                            myclass_list_info.save()
-                            delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
+                pay_userStatus_info = select_userStatue(pay_status_ok)  # 구매성공
+
+                if amount == pay_info[0].prd_total_price:
+                    pay_user = pay_info[0]
+                    pay_user.delivery_name = buyer_name
+                    pay_user.delivery_addr = buyer_addr + buyer_postcode
+                    pay_user.delivery_phone = buyer_tel
+                    pay_user.pay_result = pay_ok
+                    pay_user.pay_result_info = channel + "-" + pg_provider
+                    pay_user.merchant_uid = imp_merchant_uid
+                    pay_user.imp_uid = imp_uid_s
+                    pay_user.card_apply = pay_method
+                    pay_user.pay_user_status = pay_userStatus_info[0]
+                    pay_user.save()
+
+                    split_order = pay_info[0].order_id.split(',')
+                    for data in split_order:
+                        if len(data) > 0:
+                            order_info = select_order_id(data)
+                            if order_info.count() > 0:
+                                print(order_info[0].pay_num)
+                                if pay_num == order_info[0].pay_num:
+                                    item_info = select_item_group(order_info[0].prd.prd_code)
+                                    for item in item_info:
+                                        myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
+                                                                          pay_num=pay_info[0].pay_num, item_code=item['item_code'],
+                                                                          expire_time=timezone.now(), dbstat='D-naverco')
+                                        myclass_list_info.save()
+                                    delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
+
 
     return HttpResponse(200)
 

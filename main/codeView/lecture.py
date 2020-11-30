@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from main.query import *
+imp_id = 'imp08800373'
 
 def class_page(request):
     class_list_info = select_class_list()
@@ -20,6 +21,7 @@ def class_detail_page(request):
         context = {
             "prd_detail": items_info[0].prd,
             "html_file": html_file,
+            "imp": imp_id,
         }
 
         return render(request, 'class/class_detail.html', context)
