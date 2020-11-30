@@ -84,6 +84,14 @@ def make_xml(prd_code1, prd_code2):
             x_option_value_txt = SubElement(x_option_value, "text")
             x_option_value_txt.text = prd_detail[0].option1
 
+            x_option_value_1 = SubElement(x_quanItem, "value")
+
+            x_option_value_id_1 = SubElement(x_option_value_1, "id")
+            x_option_value_id_1.text = 'noOption'
+
+            x_option_value_txt_1 = SubElement(x_option_value_1, "text")
+            x_option_value_txt_1.text = '선택없음'
+
             #shipping
             x_shippingPolicy = SubElement(x_product, "shippingPolicy")
 

@@ -1,6 +1,9 @@
+import urllib
+
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-
+from django.views.decorators.csrf import csrf_exempt
 from main.query import *
 from main.models import *
 import string
@@ -373,6 +376,7 @@ def pay_naver(request, payway_info):
     prd_price = request.POST['total_prd_price']
     delivery_price = request.POST['total_delivery_price']
     pay_price = request.POST['total_option_prd_price']
+    pay_email = request.POST.get('pay_email', '')
 
     order_list = ""
     prd_title = ""
@@ -422,17 +426,23 @@ def pay_naver(request, payway_info):
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
 
-    if user_id == "":
-        pay_user = ""
-    else:
+    if pay_email == '':
         regi_info = select_register(user_id)
-        pay_user = regi_info[0]
+        pay_email = regi_info[0].regi_email
 
     pay_userStatus_info = select_userStatue(pay_status_prepay)
-    pay_info = PayTB(pay_num=pay_num, pay_user=pay_user, order_id=order_list, coupon_num=coupon_num,
-                     prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
-                     prd_price=int(prd_price), delivery_price=int(delivery_price), prd_total_price=int(pay_price),
-                     delivery_name="runcoding", delivery_addr="경기도 수원시", delivery_phone="01012341234", payWay=payway_info[0])
+    if user_id == "":
+        pay_info = PayTB(pay_num=pay_num, order_id=order_list, pay_email=pay_email, coupon_num=coupon_num,
+                         prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
+                         prd_price=int(prd_price), delivery_price=int(delivery_price), prd_total_price=int(pay_price),
+                         delivery_name="runcoding", delivery_addr="경기도 수원시", delivery_phone="01012341234",
+                         payWay=payway_info[0])
+    else:
+        regi_info = select_register(user_id)
+        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, pay_email=pay_email, coupon_num=coupon_num,
+                         prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
+                         prd_price=int(prd_price), delivery_price=int(delivery_price), prd_total_price=int(pay_price),
+                         delivery_name="runcoding", delivery_addr="경기도 수원시", delivery_phone="01012341234", payWay=payway_info[0])
     pay_info.save()
 
     if user_id == "":
@@ -448,6 +458,65 @@ def pay_naver(request, payway_info):
     }
 
     return render(request, 'payment/pay_naver.html', context)
+
+def pay_naver_single(request, payway_info, order_info):
+    session = request.session.get('client_id')
+    user_id = request.session.get('user_id')
+    pay_price = request.POST['prd_price']
+
+    number_pool = string.digits
+    _LENGTH = 12
+    pay_num = str(timezone.now().year) + str(timezone.now().month) + str(timezone.now().day) \
+              + str(timezone.now().hour) + str(timezone.now().minute) + str(timezone.now().second) + "-"
+    for i in range(_LENGTH):
+        pay_num += random.choice(number_pool)  # 랜덤한 문자열 하나 선택
+
+
+    new_order = order_info[0]
+    new_order.pay_num = pay_num
+    new_order.save()
+
+    prd_total_count = order_info[0].count
+    prd_title = order_info[0].prd.title
+
+    if prd_total_count > 1:
+        prd_title += "_외 " + str(prd_total_count) + "개"
+
+    pay_userStatus_info = select_userStatue(pay_status_prepay)
+    total_price = int(pay_price) + int(order_info[0].delivery_price)
+
+    if user_id == "":
+        pay_info = PayTB(pay_num=pay_num, order_id=order_info[0].order_idx,
+                         prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
+                         prd_price=int(pay_price), delivery_price=int(order_info[0].delivery_price),
+                         prd_total_price=int(total_price),
+                         delivery_name="runcoding", delivery_addr="경기도 수원시", delivery_phone="01012341234",
+                         payWay=payway_info[0])
+    else:
+        regi_info = select_register(user_id)
+        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_info[0].order_idx,
+                         prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
+                         prd_price=int(pay_price), delivery_price=int(order_info[0].delivery_price),
+                         prd_total_price=int(total_price),
+                         delivery_name="runcoding", delivery_addr="경기도 수원시", delivery_phone="01012341234",
+                         payWay=payway_info[0])
+
+    pay_info.save()
+
+    if user_id == "":
+        new_order_info = select_order_payNum(pay_num, session)
+    else:
+        new_order_info = select_order_payNum(pay_num, user_id)
+
+    context = {
+        "payment": pay_info,
+        "order_info": new_order_info,
+        "count": new_order_info.count(),
+        "imp": imp_id,
+    }
+
+    return render(request, 'payment/pay_naver.html', context)
+
 
 def pay_result(request):
     pay_idx = int(request.POST['pay'])
@@ -603,5 +672,98 @@ def refund(refund_info, refund_price):
     elif json_user_msg_code == 0:
         return json_user_msg_res
 
+@csrf_exempt
+def run_callback(request):
+    imp_uid = request.POST['imp_uid']
+    merchant_uid = request.POST['merchant_uid']
+    status = request.POST['status']
+
+    # pg_provider == naverco 일때만,
+
+    print(imp_uid)
+    print(merchant_uid)
+    print(status)
+
+    # 결제 완료
+    if status == 'paid':
+
+        runcoding = select_runcoding()
+
+        key = runcoding[0].imp_key
+        secret = runcoding[0].imp_secret
+
+        # getToken
+        post_data = {
+            'imp_key': key,
+            'imp_secret': secret
+        }
+        token_msg = requests.post(url='https://api.iamport.kr/users/getToken', data=json.dumps(post_data),
+                                  headers={'Content-Type': 'application/json'})
+
+        json_msg = token_msg.json()
+        json_res = json_msg["response"]
+        access_token = json_res["access_token"]
+        print(access_token)
+
+        get_pay_msg = requests.get(url='https://api.iamport.kr/payments/' + imp_uid,
+                                        headers={'Authorization': access_token})
+
+        json_user_msg = get_pay_msg.json()
+        json_user_msg_res = json_user_msg["response"]
+
+        pg_provider = json_user_msg_res["pg_provider"]
+
+        if pg_provider == 'naverco':
+            amount = json_user_msg_res["amount"]
+            buyer_addr = json_user_msg_res["buyer_addr"]
+            buyer_postcode = json_user_msg_res["buyer_postcode"]
+            buyer_name = json_user_msg_res["buyer_name"]
+            buyer_tel = json_user_msg_res["buyer_tel"]
+            channel = json_user_msg_res["channel"]
+
+            imp_uid_s = json_user_msg_res["imp_uid"]
+            imp_merchant_uid = json_user_msg_res["merchant_uid"]
+            pay_method = json_user_msg_res["pay_method"]
+
+            split_uid = merchant_uid.split('_')
+
+            pay_info = select_pay_paynum(split_uid[1])
+            pay_num = pay_info[0].pay_num
+            print(pay_num)
+
+            pay_userStatus_info = select_userStatue(pay_status_ok)  # 구매성공
+
+            if amount == pay_info[0].prd_total_price:
+                pay_user = pay_info[0]
+                pay_user.delivery_name = buyer_name
+                pay_user.delivery_addr = buyer_addr + buyer_postcode
+                pay_user.delivery_phone = buyer_tel
+                pay_user.pay_result = pay_ok
+                pay_user.pay_result_info = channel + "-" + pg_provider
+                pay_user.merchant_uid = imp_merchant_uid
+                pay_user.imp_uid = imp_uid_s
+                pay_user.card_apply = pay_method
+                pay_user.pay_user_status = pay_userStatus_info[0]
+                pay_user.save()
+            else:
+                print('forgery')
+
+            split_order = pay_info[0].order_id.split(',')
+            for data in split_order:
+                if len(data) > 0:
+                    order_info = select_order_id(data)
+                    if order_info.count() > 0:
+                        print(order_info[0].pay_num)
+                        if pay_num == order_info[0].pay_num:
+                            item_info = select_item_group(order_info[0].prd.prd_code)
+                            for item in item_info:
+                                myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
+                                                                  pay_num=pay_info[0].pay_num, item_code=item['item_code'],
+                                                                  expire_time=timezone.now())
+                                myclass_list_info.save()
+                            myclass_list_info.save()
+                            delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
+
+    return HttpResponse(200)
 
 

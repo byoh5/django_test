@@ -29,18 +29,30 @@
 <input type="hidden" name="options_code_1_{{forloop.counter0}}" value="arduino">
 <input type="hidden" name="options_price_1_{{forloop.counter0}}" value={{orderList.prd.option1_price}}>
 <input type="hidden" name="options_value_1_{{forloop.counter0}}" value={{orderList.prd.option1}}>
+{% elif orderList.option1_selectNum == 1 %}
+<input type="hidden" name="options_code_1_{{forloop.counter0}}" value="noOption">
+<input type="hidden" name="options_price_1_{{forloop.counter0}}" value="0">
+<input type="hidden" name="options_value_1_{{forloop.counter0}}" value="선택없음">
 {% endif %}
 
 {% if orderList.option2_selectNum == 2 %}
 <input type="hidden" name="options_code_2_{{forloop.counter0}}" value="arduino">
 <input type="hidden" name="options_price_2_{{forloop.counter0}}" value={{orderList.prd.option2_price}}>
 <input type="hidden" name="options_value_2_{{forloop.counter0}}" value={{orderList.prd.option2}}>
+{% elif orderList.option2_selectNum == 1 %}
+<input type="hidden" name="options_code_2_{{forloop.counter0}}" value="noOption">
+<input type="hidden" name="options_price_2_{{forloop.counter0}}" value="0">
+<input type="hidden" name="options_value_2_{{forloop.counter0}}" value="선택없음">
 {% endif %}
 
 {% if orderList.option3_selectNum == 2 %}
 <input type="hidden" name="options_code_3_{{forloop.counter0}}" value="arduino">
 <input type="hidden" name="options_price_3_{{forloop.counter0}}" value={{orderList.prd.option3_price}}>
 <input type="hidden" name="options_value_3_{{forloop.counter0}}" value={{orderList.prd.option3}}>
+{% elif orderList.option3_selectNum == 1 %}
+<input type="hidden" name="options_code_3_{{forloop.counter0}}" value="noOption">
+<input type="hidden" name="options_price_3_{{forloop.counter0}}" value="0">
+<input type="hidden" name="options_value_3_{{forloop.counter0}}" value="선택없음">
 {% endif %}
 
 <input type="hidden" name="shipping_groupId" value="sipping_{{orderList.pay_num}}">
@@ -103,7 +115,7 @@
             var options_price_3 = $('[name=options_price_3_' + i + ']').val();
             var options_value_3 = $('[name=options_value_3_' + i + ']').val();
 
-<!--            option_prd.push(optionQuantity : quantity_val, optionPrice : options_price_3, selections : [{code: options_code_3, label : '추가부품', value : options_value_3}])-->
+            option_prd.push({optionQuantity : quantity_val, optionPrice : options_price_3, selections : [{code: options_code_3, label : '추가부품', value : options_value_3}]})
         }
         if($('[name=options_code_2_' + i + ']').val() != null)
         {
@@ -112,16 +124,16 @@
             var options_price_2 = $('[name=options_price_2_' + i + ']').val();
             var options_value_2 = $('[name=options_value_2_' + i + ']').val();
 
-<!--             option_prd.push(optionQuantity : quantity_val, optionPrice : options_price_3, selections : [{code: options_code_2,  label : '추가부품', value : options_value_2}])-->
+            option_prd.push({optionQuantity : quantity_val, optionPrice : options_price_2, selections : [{code: options_code_2, label : '추가부품', value : options_value_2}]})
         }
-        if($('[name=options_code_1_' + i + ']').val() != null)
+         if($('[name=options_code_1_' + i + ']').val() != null)
         {
              option = 1;
              var options_code_1 = $('[name=options_code_1_' + i + ']').val();
              var options_price_1 = $('[name=options_price_1_' + i + ']').val();
              var options_value_1 = $('[name=options_value_1_' + i + ']').val();
 
-             option_prd.push({optionQuantity : quantity_val, optionPrice : options_price_3, selections : [{code: options_code_1, label : '추가부품', value : options_value_1}]})
+             option_prd.push({optionQuantity : quantity_val, optionPrice : options_price_1, selections : [{code: options_code_1, label : '추가부품', value : options_value_1}]})
         }
 
         if(option == 1)
@@ -143,9 +155,6 @@
         product.push(basic);
    }
 
-
-    console.log(JSON.stringify(product, null, '\t'));
-
     var import_prd ={"pg":"naverco",
             "pay_method":"card",
             "merchant_uid":uid,
@@ -156,8 +165,10 @@
             "buyer_tel":phone,
             "buyer_addr":buyer_addr,
             "buyer_postcode":buyer_postcode,
-            "naverProducts":product
+            "naverProducts":product,
             };
+
+      console.log(JSON.stringify(import_prd, null, '\t'));
 
 
     if(price > 0)
@@ -165,12 +176,19 @@
         var IMP = window.IMP;
         IMP.init(imp);
 
-        IMP.request_pay(
-        import_prd
-        , function(rsp) {
-            alert(rsp.error_msg);
-        });
+        IMP.request_pay
+        (
+             import_prd
+        );
+
+        setTimeout(callback, 5000);
     }
+
+    function callback()
+    {
+        location.href = "http://192.168.0.5:8000/naver_pay/";
+    }
+
 
 </script>
 

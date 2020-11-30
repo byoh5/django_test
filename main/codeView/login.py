@@ -14,8 +14,11 @@ message_exist_id = 208
 def login_page(request):
     return render(request, 'login/login.html')
 
-def naverLogin_page(request):
-    return render(request, 'login/naverlogin.html')
+def naver_page(request):
+    context = {
+        "naver": 1,
+    }
+    return render(request, 'main/index_runcoding.html', context)
 
 def login(request):
     if request.method == "POST":
@@ -57,5 +60,8 @@ def logout(request):
     request.session['client_id'] = ''
     request.session['user_id'] = ''
     request.session['runcoding'] = 0
-    return render(request, 'main/index_runcoding.html')
+    context = {
+        "naver": 0,
+    }
+    return render(request, 'main/index_runcoding.html', context)
 

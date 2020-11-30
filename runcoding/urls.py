@@ -38,6 +38,7 @@ urlpatterns = [
     path('login_form/', login),
     path('run_logout/', logout),
     path('check_id/', check_id_popup),
+    path('naver_pay/', naver_page),
 
     path('class/', class_page),
     path('class_detail/', class_detail_page),
@@ -57,6 +58,7 @@ urlpatterns = [
 
     path('order/', order_page),
     path('order_del/', order_delete),
+    path('order_naver/', order_naver),
     path('run_pay/', payment),
     path('run_paying/', payment_ing),
     path('run_order/', order),
@@ -96,7 +98,7 @@ urlpatterns = [
     path('user_refund_rollback/', user_refund_rollback),
     path('watchCam/', watch_esp_cam),
 
-
+    path('callback/', run_callback),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),

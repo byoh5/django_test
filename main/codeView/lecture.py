@@ -10,7 +10,7 @@ def class_page(request):
     return render(request, 'class/class_list.html', context)
 
 def class_detail_page(request):
-    prd_code = request.POST['detail_prd_code']
+    prd_code = request.POST.get('detail_prd_code', 0)
     items_info = select_class_detail(prd_code)
     html_file = ""
 
@@ -30,7 +30,10 @@ def class_detail_page(request):
         request.session['client_id'] = ''
         request.session['user_id'] = ''
 
-        return render(request, 'main/index_runcoding.html')
+        context = {
+            "naver": 0,
+        }
+        return render(request, 'main/index_runcoding.html', context)
 
 def class_detail_page_prd(request):
     prd_code = request.GET.get('prd_code')

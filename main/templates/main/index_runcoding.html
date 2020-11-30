@@ -242,6 +242,16 @@
     </section>
 
     <script>
+        var runcoding = '{{naver}}';
+
+         $(document).ready(function() {
+            if(runcoding > 0)
+            {
+                $("#res_msg").text("결제 결과는 구매내역에서 확인하실 수 있습니다. 강의용 메일주소로 로그인 후 사용가능 합니다.");
+                $('div.modal').modal();
+            }
+        });
+
         function sendEmail()
         {
             var email = document.getElementById('email');

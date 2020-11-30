@@ -41,7 +41,10 @@ def contact_email(request):
     subject = "[b2b] " + email
 
     sendEmail("runcoding@naver.com", subject, text)
-    return render(request, 'main/index_runcoding.html')
+    context = {
+        "naver": 0,
+    }
+    return render(request, 'main/index_runcoding.html', context)
 
 def info_email(request):
     email = request.POST['email']

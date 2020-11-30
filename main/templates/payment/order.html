@@ -63,27 +63,11 @@
                                               {% for orderDetail in order_detail %}
                                                 <tr>
                                                     <input type="hidden" id="idx" name="idx" value="0">
-<!--                                                    <input type="hidden" id="addr_num" name="addr_num" value="1">-->
                                                     <input type="hidden" id="total_prd_price" name="total_prd_price" value="0">
                                                     <input type="hidden" id="total_delivery_price" name="total_delivery_price" value="0">
                                                     <input type="hidden" id="total_option_prd_price" name="total_option_prd_price" value="0">
                                                     <input type="hidden" id="pg_type" name="pg_type" value="kcp_user">
-<!--                                                    <input type="hidden" id="total_option_coupon_prd_price" name="total_option_coupon_prd_price" value="0">-->
-<!--                                                    <input type="hidden" id="coupon_num" name="coupon_num" value="0">-->
-<!--                                                    <input type="hidden" id="payway" name="payway" value="0">-->
-<!--                                                    <input type="hidden" id="pg_type" name="pg_type" value="kcp_user">-->
-<!--                                                    <input type="hidden" id="depositName" name="depositName" value="0">-->
-<!--                                                    <input type="hidden" id="depositReceipt" name="depositReceipt" value="D">-->
-<!--                                                    <input type="hidden" id="escrowName" name="escrowName" value="0">-->
-<!--                                                    <input type="hidden" id="escrowReceipt" name="escrowReceipt" value="D">-->
-
-                                                    <!-- noUser -->
-<!--                                                    <input type="hidden" id="noUser_info_name" name="noUser_info_name" value="">-->
-<!--                                                    <input type="hidden" id="noUser_info_number" name="noUser_info_number" value="">-->
-<!--                                                    <input type="hidden" id="noUser_info_email" name="noUser_info_email" value="">-->
-<!--                                                    <input type="hidden" id="noUser_info_addr01" name="noUser_info_addr01" value="">-->
-<!--                                                    <input type="hidden" id="noUser_info_addr02" name="noUser_info_addr02" value="">-->
-<!--                                                    <input type="hidden" id="noUser_info_addr03" name="noUser_info_addr03" value="">-->
+                                                    <input type="hidden" id="pay_email" name="pay_email" value="">
 
                                                     <td>
                                                         <input type="hidden" name="orderIdxs_{{forloop.counter0}}" id="orderIdxs_{{forloop.counter0}}" value={{orderDetail.order_idx}}>
@@ -254,6 +238,34 @@
                   </div>
              </div>
 
+              <!-- 배송지 -->
+             <div class="row">
+                <div class="col-xs-offset-1 col-xs-10">
+                    <div class="col-xs-12">
+                         <div class="panel panel-default border-radius-none margin-top-30">
+                              <div class="panel-heading bg-color-gray font-14"><strong>강의용 이메일 주소</strong></div>
+                              <div class="panel-body padding-all-15 font-14">
+                                  {% if user == 'n'%}
+                                    <div class="font-14">
+                                        <span>
+                                            <strong>네이버 페이 구매시, </strong><br/><br/>
+                                            강의에 사용될 이메일 주소를 미리 작성해 주셔야 합니다.<br/>
+                                            가입/로그인 할 때 <strong>같은 이메일 주소</strong>를 사용하셔야 합니다. <br/><br/>
+                                        </span>
+                                    </div>
+                                    <div class="input_area multiLine">
+                                         <div class="font-14"><span style="color:red">추후 변경되지 않으니 정확히 기입해주세요.</span></div>
+                                         <input type="text" name="noUser_email" id="noUser_email" style="float:center; width:20%; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="사용자 이메일주소 : 강의시청 시 필요">
+                                    </div>
+                                  {% else %}
+                                        {{request.session.user_id}}
+                                  {% endif%}
+                              </div>
+                         </div>
+                    </div>
+                </div>
+             </div>
+
             <!-- 유의사항 -->
             <div class="row">
                 <div class="col-xs-offset-1 col-xs-10">
@@ -276,10 +288,9 @@
             </div>
             <div class="btn-center" style="margin-bottom:40px">
                 <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:gopg();">주문하기</a>
-                 {% if request.session.runcoding > 5 %}
+                {% if request.session.runcoding > 5 %}
                  <div id="naverpay_btn" class="btn-center" style="margin-bottom:40px;"></div>
                 {% endif %}
-<!--                <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:goPay('noUser');">비회원 주문하기</a>-->
             </div>
 
          </div>
@@ -296,9 +307,9 @@
 
 
     <script>
-    var runcoding = '{{request.session.runcoding}}';
-    if(runcoding > 5)
-    {
+        var runcoding = '{{request.session.runcoding}}';
+        if( runcoding> 5)
+        {
             naver.NaverPayButton.apply({
                 BUTTON_KEY: "CE196A42-5C47-46D0-A871-00BB22E69FB6",
                 TYPE: "A", //버튼 스타일
@@ -309,12 +320,32 @@
                 BUY_BUTTON_HANDLER : function() {
                     //중략
                     //핸들러 내에서 아임포트 네이버페이 결제 함수 호출
+                    var user = '{{user}}';
+
+                    if(user == 'n')
+                    {
+                        var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
+                        email = $("input[type=text][name=noUser_email]").val();
+
+                        if(email == "")
+                        {
+                             $("#res_msg").text("강의용 이메일을 남겨주세요. 로그인 시 사용됩니다.");
+                             $('div.modal').modal();
+                             return false;
+                        }
+                        else if(!email_patten.test(email))
+                        {
+                            $("#res_msg").text("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
+                            $('div.modal').modal();
+                            chkId = 0;
+                            return false;
+                        }
+                        else
+                            $("input[type=hidden][name=pay_email]").val(email);
+                     }
+
                      $("input[type=hidden][name=pg_type]").val("naverco");
                      goPay();
-                   // IMP.request_pay(param);
-    <!--               $("#res_msg").text('곧 오픈 됩니다.');-->
-    <!--                $('div.modal').modal();-->
-    <!--                return false;-->
                 },
                 WISHLIST_BUTTON_HANDLER : function() {
                     //중략
@@ -324,6 +355,7 @@
                 }
             });
         }
+
        function removeComma(str)
        {
           n = parseInt(str.replace(/,/g,""));
@@ -334,11 +366,6 @@
        {
            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-
-
-<!--        $('.menu-btn').click(function() {-->
-<!--            $('.line').toggleClass('animate');-->
-<!--        });-->
 
          $(document).ready(function() {
 
@@ -618,15 +645,11 @@
 
             document.getElementById("div_total_prd_price").innerHTML = "<strong>" + numberWithCommas(total_summary_price) + "</<strong>";
 			document.getElementById("div_total_option_prd_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";
-<!--			document.getElementById("coupon_total_price").innerHTML = "<strong>" + numberWithCommas(total) + "</<strong>";-->
 
 			$("input[type=hidden][name=total_prd_price]").val(total_summary_price);
 			$("input[type=hidden][name=total_delivery_price]").val(delivery);
             $("input[type=hidden][name=total_option_prd_price]").val(total);
 
-<!--            document.getElementById("coupon").selectedIndex = 0;-->
-<!--            $("input[type=hidden][name=total_option_coupon_prd_price]").val(0);-->
-<!--            $("input[type=hidden][name=coupon_num]").val(0);-->
         }
 
         function check()
@@ -675,56 +698,6 @@
             newForm.appendTo('body');
             newForm.submit();
         }
-
-<!--        function myPayway(val)-->
-<!--        {-->
-<!--            if(val == 'deposit')-->
-<!--                $("#deposit").show();-->
-<!--            else-->
-<!--                $("#deposit").hide();-->
-
-<!--            if(val == 'escrow')-->
-<!--                $("#escrow").show();-->
-<!--            else-->
-<!--                $("#escrow").hide();-->
-
-<!--        }-->
-
-<!--        function receipt_check(value)-->
-<!--        {-->
-<!--            if(value == 'deposit')-->
-<!--            {-->
-<!--                var receipt = document.getElementsByName("deposit_receipt");-->
-<!--                if(receipt[0].checked == true)-->
-<!--                    $("#receipt_number").show();-->
-<!--                else-->
-<!--                    $("#receipt_number").hide();-->
-<!--            }-->
-<!--            else if(value == 'escrow')-->
-<!--            {-->
-<!--                var receipt = document.getElementsByName("escrow_receipt");-->
-<!--                if(receipt[0].checked == true)-->
-<!--                    $("#escrow_number").show();-->
-<!--                else-->
-<!--                    $("#escrow_number").hide();-->
-
-<!--            }-->
-<!--        }-->
-
-<!--        function getAddress()-->
-<!--        {-->
-<!--            chkAddr = 1;-->
-<!--            new daum.Postcode({-->
-<!--                oncomplete: function(data)-->
-<!--                {-->
-<!--                    $('[name=noUser_add01]').val(data.zonecode); // 우편번호 (5자리)-->
-<!--                    $('[name=noUser_add02]').val(data.address);-->
-<!--                    $('[name=noUser_add03]').val(data.buildingName);-->
-<!--                }-->
-<!--            }).open();-->
-
-<!--            return true;-->
-<!--        }-->
 
     </script>
 
