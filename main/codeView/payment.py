@@ -453,6 +453,8 @@ def pay_naver(request, payway_info):
     else:
         order_info = select_order_payNum(pay_num, user_id)
 
+    request.session['order_count'] = order_info.count()
+
     context = {
         "payment": pay_info,
         "order_info": order_info,
@@ -519,6 +521,8 @@ def pay_naver_single(request, payway_info, order_info):
         new_order_info = select_order_payNum(pay_num, session)
     else:
         new_order_info = select_order_payNum(pay_num, user_id)
+
+    request.session['order_count'] = new_order_info.count()
 
     context = {
         "payment": pay_info,
