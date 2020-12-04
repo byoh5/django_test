@@ -204,10 +204,13 @@ def pay_deposit(request, payway_info, pay_num):
         new_order.save()
 
         # insert myclass_list
-        myclass_list_info = MyClassListTB(user_id=user_id, prd=order.prd, pay_num=pay_num,
-                                          expire_time=timezone.now(), dbstat='D-deposit')
+        item_info = select_item_group(order_info[0].prd.prd_code)
+        for item in item_info:
+            myclass_list_info = MyClassListTB(user_id=user_id, prd=order.prd, pay_num=pay_num,
+                                              item_code = item['item_code'],
+                                              expire_time=timezone.now(), dbstat='D-deposit')
 
-        myclass_list_info.save()
+            myclass_list_info.save()
         delete_order_idx(order_info, pay_num)
 
     if prd_total_count > 1:
@@ -571,10 +574,12 @@ def pay_result(request):
                     if user_id == '':
                         order_info = select_order_idx(data, session)
                         if order_info.count() > 0:
-                            myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
-                                                              pay_num=pay_info[0].pay_num,
-                                                              expire_time=timezone.now())
-                            myclass_list_info.save()
+                            item_info = select_item_group(order_info[0].prd.prd_code)
+                            for item in item_info:
+                                myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
+                                                                  pay_num=pay_info[0].pay_num, item_code=item['item_code'],
+                                                                  expire_time=timezone.now())
+                                myclass_list_info.save()
                             delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
                     else:
                         order_info = select_order_idx(data, user_id)
