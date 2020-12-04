@@ -288,9 +288,7 @@
             </div>
             <div class="btn-center" style="margin-bottom:40px">
                 <a href="javascript:void(0);" class="btn order_complete" onClick="javascript:gopg();">주문하기</a>
-                {% if request.session.runcoding > 5 %}
                  <div id="naverpay_btn" class="btn-center" style="margin-bottom:40px;"></div>
-                {% endif %}
             </div>
 
          </div>
@@ -302,14 +300,11 @@
 
 
 
- <script type="text/javascript" src="//pay.naver.com/customer/js/naverPayButton.js"></script>
- <script type="text/javascript" src="//pay.naver.com/customer/js/mobile/naverPayButton.js"></script>
-
+ <script type="text/javascript" src="https://pay.naver.com/customer/js/naverPayButton.js"></script>
+ <script type="text/javascript" src="https://pay.naver.com/customer/js/mobile/naverPayButton.js"></script>
+<script type="text/javascript" src="http://wcs.naver.net/wcslog.js"></script>
 
     <script>
-        var runcoding = '{{request.session.runcoding}}';
-        if( runcoding> 5)
-        {
             naver.NaverPayButton.apply({
                 BUTTON_KEY: "CE196A42-5C47-46D0-A871-00BB22E69FB6",
                 TYPE: "A", //버튼 스타일
@@ -354,7 +349,6 @@
                    // IMP.naver_zzim(param);
                 }
             });
-        }
 
        function removeComma(str)
        {

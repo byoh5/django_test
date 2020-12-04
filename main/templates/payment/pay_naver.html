@@ -71,6 +71,12 @@
 </form>
 <script>
 
+ var getCookie = function(name) {
+        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value? value[2] : null;
+    };
+
+
     var title = '{{payment.prd_info}}';
     var price = '{{payment.prd_price}}';
     var email = 'iamport@siot.do';
@@ -90,9 +96,9 @@
     var shipping_id = $('[name=shipping_groupId]').val();
     var shipping_baseFee = $('[name=shipping_baseFee]').val();
 
-    var cpaInflowCode_val = '{{CPAValidator}}';
-    var naverInflowCode_val = '{{NA_CO}}';
-    var saClickId_val = '{{NVADID}}';
+    var cpaInflowCode_val = getCookie('CPAValidator');
+    var naverInflowCode_val = getCookie('NA_CO');
+    var saClickId_val = getCookie('NVADID');
 
     let product = [];
     var option = 0;
@@ -165,6 +171,12 @@
             "buyer_tel":phone,
             "buyer_addr":buyer_addr,
             "buyer_postcode":buyer_postcode,
+            naverInterface :
+            {
+                "cpaInflowCode" : cpaInflowCode_val,
+                "naverInflowCode" : naverInflowCode_val,
+                "saClickId" : saClickId_val
+            },
             "naverProducts":product,
             };
 
