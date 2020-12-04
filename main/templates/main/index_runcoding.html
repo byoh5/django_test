@@ -25,16 +25,14 @@
         </div>
     </section>
 
-    <section class="section02" style="z-index:1;">
+    <section class="section02">
         <img class="bg left" src="{% static 'resource/img/main/bg_sec02left.png' %}" alt="left bg">
         <img class="bg right" src="{% static 'resource/img/main/bg_sec02right.png' %}" alt="right bg">
 
         <div class="video_content">
-            <video id="video_ctrl" width ="860" height="500" id="a_video" controls autoplay loop controlsList="nodownload" src="{% static 'resource/data/main/runcoding.mp4' %}" >
-                        </video>
-<!--            <img class="mainVisual" src="{% static 'resource/img/main/img_video.jpg' %}">-->
-
-
+            <video id="video_ctrl" width ="860" height="500" id="a_video" controls autoplay controlsList="nodownload">
+                    <source src="{% static 'resource/data/main/runcoding.mp4' %}" type="video/mp4"> >
+             </video>
         </div>
 
       <div class="benefit">
@@ -105,13 +103,16 @@
 
     <section class="section03">
         <div class="makers_area">
-            <div class="thumb_list">
-                <img src="{% static 'resource/img/main/img_makres01.png' %}" alt="makers">
-            </div>
+             <div class="video_content03">
+                <video width ="600" height="290"  controls  controlsList="nodownload" poster="{% static 'resource/img/lounge/trashcan/trashcan_xmas.jpg' %}">
+                    <source src="{% static 'resource/data/main/trashcan_xmas.mp4' %}" type="video/mp4">
+                </video>
+              </div>
+
             <div class="text_area">
-                    <span class="sec_title">
-                        런코딩 MAKERS
-                    </span>
+                <span class="sec_title">
+                    런코딩 MAKERS
+                </span>
                 <p>
                     실제 런코딩 키트로<br/>
                     또 다른 MAKER가 된 친구들의<br/>
@@ -121,7 +122,7 @@
             </div>
         </div>
 
-        <div class="ourClass" style="z-index:1;">
+        <div class="ourClass">
             <span class="big_title">융합적 사고를 위한 디자인 코딩 키트</span>
             <p>
                 쉽게! 뚝딱!<br/> 런코딩의 목표에 맞게 교육할 수 있도록<br/>
