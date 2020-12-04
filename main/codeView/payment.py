@@ -423,6 +423,7 @@ def pay_naver(request, payway_info):
 
                 # count 변경 되었을 수 있으니 and 선택된 배송지 번호 정보 update 및 상품 title get
                 update_order_idx(prd_count, order_info, option1, option2, option3, pay_num)
+                delete_order_idx(order_info, pay_num)  # order dbstat 변경
                 order_list += idx + ","
 
     if prd_total_count > 1:
@@ -487,8 +488,10 @@ def pay_naver_single(request, payway_info, order_info):
     pay_userStatus_info = select_userStatue(pay_status_prepay)
     total_price = int(pay_price) + int(order_info[0].delivery_price)
 
+    order_id = str(order_info[0].order_idx) + ","
+
     if user_id == "":
-        pay_info = PayTB(pay_num=pay_num, order_id=order_info[0].order_idx,
+        pay_info = PayTB(pay_num=pay_num, order_id=order_id,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          prd_price=int(pay_price), delivery_price=int(order_info[0].delivery_price),
                          prd_total_price=int(total_price),
@@ -504,6 +507,8 @@ def pay_naver_single(request, payway_info, order_info):
                          payWay=payway_info[0])
 
     pay_info.save()
+
+    delete_order_idx(order_info, pay_num)  # order dbstat 변경
 
     if user_id == "":
         new_order_info = select_order_payNum(pay_num, session)
@@ -843,7 +848,7 @@ def run_callback(request):
                                                                           pay_num=pay_info[0].pay_num, item_code=item['item_code'],
                                                                           expire_time=timezone.now(), dbstat='D-naverco')
                                         myclass_list_info.save()
-                                    delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
+                                    #delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
 
     return HttpResponse(200)

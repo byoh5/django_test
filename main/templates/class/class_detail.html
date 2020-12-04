@@ -97,9 +97,7 @@
                     <div class="btn_area">
                         <a href="javascript:void(0);" class="btn cart" onClick="javascript:goOrder(1);">장바구니 담기</a>
                         <a class="btn buy" href="javascript:void(0);" onClick="javascript:goOrder(2);">바로구매</a>
-                         {% if request.session.runcoding > 5 %}
                          <div id="naverpay_btn" class="btn-center" style="margin-bottom:40px; margin-left:-15px;"></div>
-                        {%endif%}
                     </div>
 
                     <div id="margin" style="margin-top:40px;"></div>
@@ -118,9 +116,6 @@
 
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.6.js"></script>
     <script>
-         var runcoding = '{{request.session.runcoding}}';
-         if( runcoding> 5)
-         {
              naver.NaverPayButton.apply({
                 BUTTON_KEY: "CE196A42-5C47-46D0-A871-00BB22E69FB6",
                 TYPE: "A", //버튼 스타일
@@ -194,29 +189,27 @@
                     var price = removeComma(document.getElementById("total_price").innerText);
                     var prdCode =  $("input[type=hidden][name=prd_code]").val();
                     var title = document.getElementById("title").innerText;
-                    var img = "http://runcoding.co.kr"+'{{prd_detail.prd_code}}';
+                    var title2 =  '{{prd_detail.title2}}';
+                    var prd_title = title + "(" + title2 + ")";
+                    var img_url = '{{prd_detail.img}}';
+                    var img = "http://runcoding.co.kr/" + img_url;
                     var url = "http://runcoding.co.kr/detail_prd/?prd_code=" + prdCode;
+
+                    let naver_prd = [{"id": prdCode, "name": prd_title, "desc" : '상상을 현실로 만드는 코딩학습 런코딩', "uprice": price,
+                                    "url" : url, "thumb":img, "image":img}];
+
+                    console.log(JSON.stringify(naver_prd, null, '\t'));
 
                      var IMP = window.IMP;
                      var imp_val = '{{imp}}';
                      IMP.init(imp_val);
 
                     IMP.naver_zzim({
-                        naverProducts: [
-                        {
-                            id: prdCode,
-                            name:title,
-                            desc:'상상을 현실로',
-                            uprice: price,
-                            url:url,
-                            thumb:img,
-                            image:img
-                        }
-                     ]
+                        naverProducts: naver_prd
                    });
+
                 }
             });
-        }
 
         $(window).scroll(function() {
             var scroll_top = $(window).scrollTop();
