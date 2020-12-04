@@ -139,9 +139,11 @@ function no_comma(data)
 // 삭제 검사 확인
 function del(href)
 {
-    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?"))
+    {
         var iev = -1;
-        if (navigator.appName == 'Microsoft Internet Explorer') {
+        if (navigator.appName == 'Microsoft Internet Explorer')
+        {
             var ua = navigator.userAgent;
             var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
             if (re.exec(ua) != null)
@@ -163,7 +165,8 @@ function set_cookie(name, value, expirehours, domain)
     var today = new Date();
     today.setTime(today.getTime() + (60*60*1000*expirehours));
     document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + today.toGMTString() + ";";
-    if (domain) {
+    if (domain)
+    {
         document.cookie += "domain=" + domain + ";";
     }
 }
@@ -711,8 +714,10 @@ function get_write_token(bo_table)
         cache: false,
         async: false,
         dataType: "json",
-        success: function(data) {
-            if(data.error) {
+        success: function(data)
+        {
+            if(data.error)
+            {
                 alert(data.error);
                 if(data.url)
                     document.location.href = data.url;
@@ -728,17 +733,20 @@ function get_write_token(bo_table)
 }
 
 $(function() {
-    $(document).on("click", "form[name=fwrite] input:submit, form[name=fwrite] button:submit, form[name=fwrite] input:image", function() {
+    $(document).on("click", "form[name=fwrite] input:submit, form[name=fwrite] button:submit, form[name=fwrite] input:image", function()
+    {
         var f = this.form;
 
-        if (typeof(f.bo_table) == "undefined") {
+        if (typeof(f.bo_table) == "undefined")
+        {
             return;
         }
 
         var bo_table = f.bo_table.value;
         var token = get_write_token(bo_table);
 
-        if(!token) {
+        if(!token)
+        {
             alert("토큰 정보가 올바르지 않습니다.");
             return false;
         }
@@ -796,4 +804,3 @@ function popup_exam(url, title)
     if (window.focus) {newwin.focus()}
     return false;
 }
-

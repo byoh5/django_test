@@ -84,8 +84,13 @@
                                      </select>
                                     {% endif %}
 
-
                                 </li>
+                                {% if user == "n" %}
+                                <li>
+                                   <span class="li_title">강의용 이메일주소</span><br/>
+                                   <input type="text" name="noUser_email" id="noUser_email" style="float:center; width:90%; height:30px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="네이버페이 비회원 구매시">
+                                </li>
+                                {% endif%}
                                 <li>
                                    <span class="li_title">총 상품 금액</span>
                                    <p><span class="price" id="total_price">{{prd_detail.price}}</span> 원</p>
@@ -105,6 +110,7 @@
                 </div>
             </div>
         </div>
+
 
         <script type="text/javascript" src="//pay.naver.com/customer/js/naverPayButton.js"></script>
         <script type="text/javascript" src="//pay.naver.com/customer/js/mobile/naverPayButton.js"></script>
@@ -166,23 +172,48 @@
                             option3_val = option3.selectedIndex;
                     }
 
-                var newForm = $('<form></form>');
+                    var user = '{{user}}';
+                    var email = '';
+                    if(user == 'n')
+                    {
+                        var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
+                        email = $("input[type=text][name=noUser_email]").val();
 
-                newForm.attr("name", "order");
-                newForm.attr("method", "post");
-                newForm.attr("action", "/order_naver/");
+                        if(email == "")
+                        {
+                             $("#res_msg").text("강의용 이메일을 남겨주세요. 로그인 시 사용됩니다.");
+                             $('div.modal').modal();
+                             return false;
+                        }
+                        else if(!email_patten.test(email))
+                        {
+                            $("#res_msg").text("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
+                            $('div.modal').modal();
+                            chkId = 0;
+                            return false;
+                        }
+                        else
+                            $("input[type=hidden][name=pay_email]").val(email);
+                     }
 
-                newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-                newForm.append($('<input/>', {type: 'hidden', name: 'prd_code', value : prdCode}));
-                newForm.append($('<input/>', {type: 'hidden', name: 'option1', value : option1_val}));
-                newForm.append($('<input/>', {type: 'hidden', name: 'option2', value : option2_val}));
-                newForm.append($('<input/>', {type: 'hidden', name: 'option3', value : option3_val}));
-                newForm.append($('<input/>', {type: 'hidden', name: 'count', value : quantity}));
-                newForm.append($('<input/>', {type: 'hidden', name: 'prd_price', value : price}));
+                    var newForm = $('<form></form>');
 
-                newForm.appendTo('body');
-                newForm.submit();
+                    newForm.attr("name", "order");
+                    newForm.attr("method", "post");
+                    newForm.attr("action", "/order_naver/");
 
+                    newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+                    newForm.append($('<input/>', {type: 'hidden', name: 'prd_code', value : prdCode}));
+                    newForm.append($('<input/>', {type: 'hidden', name: 'option1', value : option1_val}));
+                    newForm.append($('<input/>', {type: 'hidden', name: 'option2', value : option2_val}));
+                    newForm.append($('<input/>', {type: 'hidden', name: 'option3', value : option3_val}));
+                    newForm.append($('<input/>', {type: 'hidden', name: 'count', value : quantity}));
+                    newForm.append($('<input/>', {type: 'hidden', name: 'prd_price', value : price}));
+                    if(user == 'n')
+                        newForm.append($('<input/>', {type: 'hidden', name: 'pay_email', value : email}));
+
+                    newForm.appendTo('body');
+                    newForm.submit();
 
                 },
                 WISHLIST_BUTTON_HANDLER : function() {

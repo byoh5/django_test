@@ -11,6 +11,12 @@ def class_page(request):
     return render(request, 'class/class_list.html', context)
 
 def class_detail_page(request):
+    user_id = request.session.get('user_id', '')
+    if user_id == '':
+        user = "n"
+    else:
+        user = "y"
+
     prd_code = request.POST.get('detail_prd_code', 0)
     items_info = select_class_detail(prd_code)
     html_file = ""
@@ -22,6 +28,7 @@ def class_detail_page(request):
             "prd_detail": items_info[0].prd,
             "html_file": html_file,
             "imp": imp_id,
+            "user":user,
         }
 
         return render(request, 'class/class_detail.html', context)

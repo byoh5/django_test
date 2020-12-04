@@ -13,6 +13,10 @@ def select_order_id(idx):
     order_info = OrderTB.objects.filter(order_idx=idx, dbstat='A')
     return order_info
 
+def select_order_id_d(idx):
+    order_info = OrderTB.objects.filter(order_idx=idx)
+    return order_info
+
 def select_order_d(user_id):
     order_info = OrderTB.objects.filter(user_id=user_id, dbstat='D-')
     return order_info

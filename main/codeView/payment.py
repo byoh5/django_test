@@ -466,6 +466,7 @@ def pay_naver_single(request, payway_info, order_info):
     session = request.session.get('client_id')
     user_id = request.session.get('user_id')
     pay_price = request.POST['prd_price']
+    pay_email = request.POST.get('pay_email', '')
 
     number_pool = string.digits
     _LENGTH = 12
@@ -490,8 +491,12 @@ def pay_naver_single(request, payway_info, order_info):
 
     order_id = str(order_info[0].order_idx) + ","
 
+    if pay_email == '':
+        regi_info = select_register(user_id)
+        pay_email = regi_info[0].regi_email
+
     if user_id == "":
-        pay_info = PayTB(pay_num=pay_num, order_id=order_id,
+        pay_info = PayTB(pay_num=pay_num, order_id=order_id, pay_email=pay_email,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          prd_price=int(pay_price), delivery_price=int(order_info[0].delivery_price),
                          prd_total_price=int(total_price),
@@ -499,7 +504,7 @@ def pay_naver_single(request, payway_info, order_info):
                          payWay=payway_info[0])
     else:
         regi_info = select_register(user_id)
-        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_info[0].order_idx,
+        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], pay_email=pay_email, order_id=order_info[0].order_idx,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          prd_price=int(pay_price), delivery_price=int(order_info[0].delivery_price),
                          prd_total_price=int(total_price),
@@ -717,15 +722,30 @@ def run_naver_event(request):
         # 1. 상태변경
         # 2. 강의실 block
 
-        post_data_order = {
-            'product_order_id': naverPrd_order_id,
+        runcoding = select_runcoding()
+
+        key = runcoding[0].imp_key
+        secret = runcoding[0].imp_secret
+
+        # getToken
+        post_data = {
+            'imp_key': key,
+            'imp_secret': secret
         }
-        naver_pay_prd_info = requests.post(url='https://api.iamport.kr/naver/product-orders/',
-                                           data=json.dumps(post_data_order),
-                                           headers={'Content-Type': 'application/json'})
+        token_msg = requests.post(url='https://api.iamport.kr/users/getToken', data=json.dumps(post_data),
+                                  headers={'Content-Type': 'application/json'})
+
+        json_msg = token_msg.json()
+        json_res = json_msg["response"]
+        access_token = json_res["access_token"]
+        print(access_token)
+
+        naver_pay_prd_info = requests.get(url='https://api.iamport.kr/naver/product-orders/' + naverPrd_order_id,
+                                           headers={'Authorization': access_token})
 
         json_msg = naver_pay_prd_info.json()
         json_res = json_msg["response"]
+        print(json_res)
         product = json_res["product_id"]
 
         pay_user = pay_info[0]
@@ -838,7 +858,7 @@ def run_callback(request):
                     split_order = pay_info[0].order_id.split(',')
                     for data in split_order:
                         if len(data) > 0:
-                            order_info = select_order_id(data)
+                            order_info = select_order_id_d(data)
                             if order_info.count() > 0:
                                 print(order_info[0].pay_num)
                                 if pay_num == order_info[0].pay_num:
