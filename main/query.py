@@ -82,7 +82,7 @@ def select_pay_paynum(pay_num):
 
 def select_pay_user(user_id):
     pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id) |
-                                    Q(pay_result=100, pay_user__regi_email=user_id) |
+                                    Q(pay_result=100, pay_user__regi_email=user_id, payWay__value='deposit') |
                                     Q(pay_result=2, pay_user__regi_email=user_id) |
                                     Q(pay_result=3, pay_user__regi_email=user_id)).order_by('-pay_idx')
     return pay_info
