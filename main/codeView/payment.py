@@ -208,6 +208,7 @@ def pay_deposit(request, payway_info, pay_num):
                                           expire_time=timezone.now(), dbstat='D-deposit')
 
         myclass_list_info.save()
+        delete_order_idx(order_info, pay_num)
 
     if prd_total_count > 1:
         prd_title += "_외 " + str(prd_total_count) + "개"
