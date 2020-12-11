@@ -6,7 +6,7 @@
             <div class="section_wrap">
                 <div class="slogan">
                    <span class="bigSlg ck_title">
-                        {{title}}
+                        {{title}}({{subTitle}})
                     </span>
 
                 </div>
@@ -25,9 +25,12 @@
                     </div>
 
                     <input type="hidden" name="play_enable" value="{{play}}">
-                    <div class="class_list_precaution">
 
-                        <div id="lecture_data"></div>
+
+                    <div class="board_community">
+                        <div class="point_content_faq"><strong>강의 자료실</strong></div>
+                         <div id="lecture_data" class="accordion" style="padding-left:25px;">
+                        </div>
                     </div>
                 </div>
                 <a href="/myclass_list/" class="btn list_more">목록으로</a>
@@ -37,14 +40,54 @@
                     <div class="info_area">
                         <span>강의목록</span>
                         <div class="lecture_info">
-                            <ul class="lectureList" id="accordion">
+                            <ul class="lectureList" id="lecture_accordion">
                                  <li class="active">
                                     <span>환경구축</span>
                                     <ul class="submenu">
                                          {% for item_common_detail in myclass_common_detail %}
                                        <li>
-                                             <a href="javascript:getVideo('{{item_common_detail.prd.prd_code}}', '{{item_common_detail.data}}', '{{item_common_detail.downdata}}', '{{item_common_detail.downdata_name}}');" class="classList">
+                                             <a href="javascript:getVideo('{{item_common_detail.prd.prd_code}}', '{{item_common_detail.data}}', 'common', '{{forloop.counter}}', '{{item_common_detail.iteminfo_1}}', '{{item_common_detail.iteminfo_2}}', '{{item_common_detail.iteminfo_3}}', '{{item_common_detail.iteminfo_4}}', '{{item_common_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{item_common_detail.title}}</a>
+
+                                             <!-- iteminfo1 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_title" value="{{item_common_detail.iteminfo_1.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_type" value="{{item_common_detail.iteminfo_1.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_downdata" value="{{item_common_detail.iteminfo_1.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_downdata_sub" value="{{item_common_detail.iteminfo_1.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_downdata_name" value="{{item_common_detail.iteminfo_1.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_downdata_name_sub" value="{{item_common_detail.iteminfo_1.downdata_name_sub}}">
+
+                                             <!-- iteminfo2 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_title" value="{{item_common_detail.iteminfo_2.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_type" value="{{item_common_detail.iteminfo_2.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_downdata" value="{{item_common_detail.iteminfo_2.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_downdata_sub" value="{{item_common_detail.iteminfo_2.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_downdata_name" value="{{item_common_detail.iteminfo_2.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_downdata_name_sub" value="{{item_common_detail.iteminfo_2.downdata_name_sub}}">
+
+                                            <!-- iteminfo3 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_title" value="{{item_common_detail.iteminfo_3.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_type" value="{{item_common_detail.iteminfo_3.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_downdata" value="{{item_common_detail.iteminfo_3.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_downdata_sub" value="{{item_common_detail.iteminfo_3.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_downdata_name" value="{{item_common_detail.iteminfo_3.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_downdata_name_sub" value="{{item_common_detail.iteminfo_3.downdata_name_sub}}">
+
+                                            <!-- iteminfo4 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_title" value="{{item_common_detail.iteminfo_4.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_type" value="{{item_common_detail.iteminfo_4.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_downdata" value="{{item_common_detail.iteminfo_4.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_downdata_sub" value="{{item_common_detail.iteminfo_4.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_downdata_name" value="{{item_common_detail.iteminfo_4.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_downdata_name_sub" value="{{item_common_detail.iteminfo_4.downdata_name_sub}}">
+
+                                           <!-- iteminfo5 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_title" value="{{item_common_detail.iteminfo_5.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_type" value="{{item_common_detail.iteminfo_5.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_downdata" value="{{item_common_detail.iteminfo_5.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_downdata_sub" value="{{item_common_detail.iteminfo_5.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_downdata_name" value="{{item_common_detail.iteminfo_5.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_downdata_name_sub" value="{{item_common_detail.iteminfo_5.downdata_name_sub}}">
                                        </li>
                                          {% endfor %}
                                     </ul>
@@ -55,8 +98,48 @@
                                     <ul class="submenu">
                                          {% for item_detail in myclass_detail %}
                                        <li>
-                                             <a href="javascript:getVideo('{{item_detail.prd.prd_code}}', '{{item_detail.data}}', '{{item_detail.downdata}}', '{{item_detail.downdata_name}}');" class="classList">
+                                             <a href="javascript:getVideo('{{item_detail.prd.prd_code}}', '{{item_detail.data}}',  'kit', '{{forloop.counter}}', '{{item_detail.iteminfo_1}}', '{{item_detail.iteminfo_2}}', '{{item_detail.iteminfo_3}}', '{{item_detail.iteminfo_4}}', '{{item_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{item_detail.title}}</a>
+
+                                            <!-- iteminfo1 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_title" value="{{item_detail.iteminfo_1.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_type" value="{{item_detail.iteminfo_1.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_downdata" value="{{item_detail.iteminfo_1.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_downdata_sub" value="{{item_detail.iteminfo_1.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_downdata_name" value="{{item_detail.iteminfo_1.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_downdata_name_sub" value="{{item_detail.iteminfo_1.downdata_name_sub}}">
+
+                                             <!-- iteminfo2 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_title" value="{{item_detail.iteminfo_2.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_type" value="{{item_detail.iteminfo_2.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_downdata" value="{{item_detail.iteminfo_2.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_downdata_sub" value="{{item_detail.iteminfo_2.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_downdata_name" value="{{item_detail.iteminfo_2.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_downdata_name_sub" value="{{item_detail.iteminfo_2.downdata_name_sub}}">
+
+                                            <!-- iteminfo3 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_title" value="{{item_detail.iteminfo_3.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_type" value="{{item_detail.iteminfo_3.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_downdata" value="{{item_detail.iteminfo_3.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_downdata_sub" value="{{item_detail.iteminfo_3.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_downdata_name" value="{{item_detail.iteminfo_3.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_downdata_name_sub" value="{{item_detail.iteminfo_3.downdata_name_sub}}">
+
+                                            <!-- iteminfo4 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_title" value="{{item_detail.iteminfo_4.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_type" value="{{item_detail.iteminfo_4.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_downdata" value="{{item_detail.iteminfo_4.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_downdata_sub" value="{{item_detail.iteminfo_4.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_downdata_name" value="{{item_detail.iteminfo_4.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_downdata_name_sub" value="{{item_detail.iteminfo_4.downdata_name_sub}}">
+
+                                           <!-- iteminfo5 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_title" value="{{item_detail.iteminfo_5.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_type" value="{{item_detail.iteminfo_5.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_downdata" value="{{item_detail.iteminfo_5.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_downdata_sub" value="{{item_detail.iteminfo_5.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_downdata_name" value="{{item_detail.iteminfo_5.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_downdata_name_sub" value="{{item_detail.iteminfo_5.downdata_name_sub}}">
                                        </li>
                                          {% endfor %}
                                     </ul>
@@ -66,10 +149,52 @@
                                      <span>세부강의</span>
                                     <ul class="submenu">
                                          {% for sub_detail in myclass_sub_detail %}
-                                       <li>
-                                             <a href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.data}}', '{{sub_detail.downdata}}', '{{sub_detail.downdata_name}}');" class="classList">
+                                       <li >
+                                             <a href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.data}}',  'sub', '{{forloop.counter}}', '{{sub_detail.iteminfo_1}}', '{{sub_detail.iteminfo_2}}', '{{sub_detail.iteminfo_3}}', '{{sub_detail.iteminfo_4}}', '{{sub_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{sub_detail.title}}</a>
+
+                                           <!-- iteminfo1 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_title" value="{{sub_detail.iteminfo_1.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_type" value="{{sub_detail.iteminfo_1.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_downdata" value="{{sub_detail.iteminfo_1.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_downdata_sub" value="{{sub_detail.iteminfo_1.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_downdata_name" value="{{sub_detail.iteminfo_1.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_downdata_name_sub" value="{{sub_detail.iteminfo_1.downdata_name_sub}}">
+
+                                             <!-- iteminfo2 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_title" value="{{sub_detail.iteminfo_2.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_type" value="{{sub_detail.iteminfo_2.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_downdata" value="{{sub_detail.iteminfo_2.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_downdata_sub" value="{{sub_detail.iteminfo_2.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_downdata_name" value="{{sub_detail.iteminfo_2.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_downdata_name_sub" value="{{sub_detail.iteminfo_2.downdata_name_sub}}">
+
+                                            <!-- iteminfo3 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_title" value="{{sub_detail.iteminfo_3.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_type" value="{{sub_detail.iteminfo_3.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_downdata" value="{{sub_detail.iteminfo_3.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_downdata_sub" value="{{sub_detail.iteminfo_3.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_downdata_name" value="{{sub_detail.iteminfo_3.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_downdata_name_sub" value="{{sub_detail.iteminfo_3.downdata_name_sub}}">
+
+                                            <!-- iteminfo4 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_title" value="{{sub_detail.iteminfo_4.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_type" value="{{sub_detail.iteminfo_4.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_downdata" value="{{sub_detail.iteminfo_4.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_downdata_sub" value="{{sub_detail.iteminfo_4.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_downdata_name" value="{{sub_detail.iteminfo_4.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_downdata_name_sub" value="{{sub_detail.iteminfo_4.downdata_name_sub}}">
+
+                                           <!-- iteminfo5 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_title" value="{{sub_detail.iteminfo_5.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_type" value="{{sub_detail.iteminfo_5.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_downdata" value="{{sub_detail.iteminfo_5.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_downdata_sub" value="{{sub_detail.iteminfo_5.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_downdata_name" value="{{sub_detail.iteminfo_5.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_downdata_name_sub" value="{{sub_detail.iteminfo_5.downdata_name_sub}}">
                                        </li>
+
+
                                         {% endfor %}
                                     </ul>
                                 </li>
@@ -85,6 +210,10 @@
 
     </div>
 
+ <a class="up_scroll" href="javascript:void(0);" onclick="javascript:top_val();">
+        <img src="{% static 'resource/img/sub/up.png' %}" style="float:right;">
+    </a>
+
     <script>
        $(document).ready(function() {
             if($("input[type=hidden][name=clientId]").val() == "")
@@ -96,25 +225,13 @@
 
         // accordion menu
         $(document).ready(function() {
-            $("#accordion .section_title").click(function() {
-                var link = $(this);
-                var closest_ul = link.closest("ul");
-                var parallel_active_links = closest_ul.find(".active")
-                var closest_li = link.closest("li");
-                var link_status = closest_li.hasClass("active");
-                var count = 0;
-
-                closest_ul.find("ul").slideUp(function() {
-                    if (++count == closest_ul.find("ul").length)
-                        parallel_active_links.removeClass("active");
-                });
-
-                if (!link_status) {
-                    closest_li.children("ul").slideDown();
-                    closest_li.addClass("active");
-                }
-            })
-
+               $(function(){
+                  var sBtn = $("#lecture_accordion .submenu > li");    //  ul > li 이를 sBtn으로 칭한다. (클릭이벤트는 li에 적용 된다.)
+                  sBtn.find("a").click(function(){   // sBtn에 속해 있는  a 찾아 클릭 하면.
+                   sBtn.removeClass("now");     // sBtn 속에 (active) 클래스를 삭제 한다.
+                   $(this).parent().addClass("now"); // 클릭한 a에 (active)클래스를 넣는다.
+                  })
+                 })
             document.getElementById('video_ctrl').setAttribute('poster','/static/resource/img/sub/myclass_preload.png');
         });
 
@@ -136,21 +253,159 @@
             }
         });
 
-        function getVideo(prdCode, data, downdata, downdata_name)
+         function top_val()
         {
+            $('html, body').animate({scrollTop : 0}, 600);
+        }
+
+        function show_itmeinfo(answer, count, prdCode, iteminfo_title, iteminfo_type, iteminfo_downdata_name, iteminfo_downdata, iteminfo_downdata_sub, iteminfo_downdata_name_sub)
+        {
+            var iteminfo_html = '<input type="radio" name="accordion" id=' + answer + '>';
+            iteminfo_html += '<label for=' + answer + '>' + iteminfo_title + '<em></em></label><div><p>';
+
+            if(iteminfo_type == 'download')
+            {
+                var down_src = '/static/resource/data/download/' + prdCode + '/' + iteminfo_downdata;
+                iteminfo_html += '<a href=' + down_src + ' download>' + iteminfo_downdata_name + '</a>';
+                if(iteminfo_downdata_name_sub != 'None')
+                {
+                    var down_sub_src = '/static/resource/data/download/' + prdCode + '/' + iteminfo_downdata_sub;
+                    iteminfo_html += '<br/><a href=' + down_sub_src + ' download>' + iteminfo_downdata_name_sub + '</a>';
+                }
+            }
+            if(iteminfo_type == 'link')
+            {
+                iteminfo_html += '<a href=' + iteminfo_downdata + ' target="_blank">' + iteminfo_downdata_name + '</a>';
+            }
+            if(iteminfo_type == 'img')
+            {
+                var img_file = '/static/resource/img/' + iteminfo_downdata_name;
+                iteminfo_html += '<img class="subVisual myClass" src=' + img_file + ' >';
+            }
+            if(iteminfo_type == 'text')
+            {
+                iteminfo_html += iteminfo_downdata + '<br/>' + iteminfo_downdata_sub + '<br/>' + iteminfo_downdata_name + '<br/>';
+            }
+
+             iteminfo_html += '</p></div>';
+
+              $('#lecture_data').append($(iteminfo_html));
+
+        }
+
+        function getVideo(prdCode, data, class_type, count, iteminfo1, iteminfo2, iteminfo3, iteminfo4, iteminfo5)
+        {
+               document.getElementById('lecture_data').innerHTML = '';
+
+              if(iteminfo1 != 'None')
+              {
+                    var iteminfo1_title = class_type + "_" + count + "_iteminfo_1_title";
+                    var iteminfo1_type = class_type + "_" + count +"_iteminfo_1_type";
+                    var iteminfo1_downdata = class_type+"_" + count+"_iteminfo_1_downdata";
+                    var iteminfo1_downdata_sub = class_type+"_" + count+"_iteminfo_1_downdata_sub";
+                    var iteminfo1_downdata_name = class_type+"_" + count+"_iteminfo_1_downdata_name";
+                    var iteminfo1_downdata_name_sub = class_type+"_" + count+"_iteminfo_1_downdata_name_sub";
+
+                    var iteminfo1_title_val = document.getElementById(iteminfo1_title).value;
+                    var iteminfo1_type_val = document.getElementById(iteminfo1_type).value;
+                    var iteminfo1_downdata_val = document.getElementById(iteminfo1_downdata).value;
+                    var iteminfo1_downdata_sub_val = document.getElementById(iteminfo1_downdata_sub).value;
+                    var iteminfo1_downdata_name_val = document.getElementById(iteminfo1_downdata_name).value;
+                    var iteminfo1_downdata_name_sub_val = document.getElementById(iteminfo1_downdata_name_sub).value;
+
+                    show_itmeinfo("class01", 1,  prdCode, iteminfo1_title_val, iteminfo1_type_val, iteminfo1_downdata_name_val, iteminfo1_downdata_val, iteminfo1_downdata_sub_val, iteminfo1_downdata_name_sub_val);
+
+              }
+
+              if(iteminfo2 != 'None')
+              {
+                    var iteminfo2_title = class_type + "_" + count + "_iteminfo_2_title";
+                    var iteminfo2_type = class_type+"_" + count+"_iteminfo_2_type";
+                    var iteminfo2_downdata = class_type+"_" + count+"_iteminfo_2_downdata";
+                    var iteminfo2_downdata_sub = class_type+"_" + count+"_iteminfo_2_downdata_sub";
+                    var iteminfo2_downdata_name = class_type+"_" + count+"_iteminfo_2_downdata_name";
+                    var iteminfo2_downdata_name_sub = class_type+"_" + count+"_iteminfo_2_downdata_name_sub";
+
+                    var iteminfo2_title_val = document.getElementById(iteminfo2_title).value;
+                    var iteminfo2_type_val = document.getElementById(iteminfo2_type).value;
+                    var iteminfo2_downdata_val = document.getElementById(iteminfo2_downdata).value;
+                    var iteminfo2_downdata_sub_val = document.getElementById(iteminfo2_downdata_sub).value;
+                    var iteminfo2_downdata_name_val = document.getElementById(iteminfo2_downdata_name).value;
+                    var iteminfo2_downdata_name_sub_val = document.getElementById(iteminfo2_downdata_name_sub).value;
+
+                    show_itmeinfo("class02", 2, prdCode, iteminfo2_title_val, iteminfo2_type_val, iteminfo2_downdata_name_val, iteminfo2_downdata_val, iteminfo2_downdata_sub_val, iteminfo2_downdata_name_sub_val);
+              }
+
+              if(iteminfo3 != 'None')
+              {
+                    var iteminfo3_title = class_type + "_" + count + "_iteminfo_3_title";
+                    var iteminfo3_type = class_type+"_" + count+"_iteminfo_3_type";
+                    var iteminfo3_downdata = class_type+"_" + count+"_iteminfo_3_downdata";
+                    var iteminfo3_downdata_sub = class_type+"_" + count+"_iteminfo_3_downdata_sub";
+                    var iteminfo3_downdata_name = class_type+"_" + count+"_iteminfo_3_downdata_name";
+                    var iteminfo3_downdata_name_sub = class_type+"_" + count+"_iteminfo_3_downdata_name_sub";
+
+                    var iteminfo3_title_val = document.getElementById(iteminfo3_title).value;
+                    var iteminfo3_type_val = document.getElementById(iteminfo3_type).value;
+                    var iteminfo3_downdata_val = document.getElementById(iteminfo3_downdata).value;
+                    var iteminfo3_downdata_sub_val = document.getElementById(iteminfo3_downdata_sub).value;
+                    var iteminfo3_downdata_name_val = document.getElementById(iteminfo3_downdata_name).value;
+                    var iteminfo3_downdata_name_sub_val = document.getElementById(iteminfo3_downdata_name_sub).value;
+
+                    show_itmeinfo("class03", 3, prdCode, iteminfo3_title_val, iteminfo3_type_val, iteminfo3_downdata_name_val, iteminfo3_downdata_val, iteminfo3_downdata_sub_val, iteminfo3_downdata_name_sub_val);
+              }
+
+              if(iteminfo4 != 'None')
+              {
+                    var iteminfo4_title = class_type + "_" + count + "_iteminfo_4_title";
+                    var iteminfo4_type = class_type+"_" + count+"_iteminfo_4_type";
+                    var iteminfo4_downdata = class_type+"_" + count+"_iteminfo_4_downdata";
+                    var iteminfo4_downdata_sub = class_type+"_" + count+"_iteminfo_4_downdata_sub";
+                    var iteminfo4_downdata_name = class_type+"_" + count+"_iteminfo_4_downdata_name";
+                    var iteminfo4_downdata_name_sub = class_type+"_" + count+"_iteminfo_4_downdata_name_sub";
+
+                    var iteminfo4_title_val = document.getElementById(iteminfo4_title).value;
+                    var iteminfo4_type_val = document.getElementById(iteminfo4_type).value;
+                    var iteminfo4_downdata_val = document.getElementById(iteminfo4_downdata).value;
+                    var iteminfo4_downdata_sub_val = document.getElementById(iteminfo4_downdata_sub).value;
+                    var iteminfo4_downdata_name_val = document.getElementById(iteminfo4_downdata_name).value;
+                    var iteminfo4_downdata_name_sub_val = document.getElementById(iteminfo4_downdata_name_sub).value;
+
+                    show_itmeinfo("class04", 4, prdCode, iteminfo4_title_val, iteminfo4_type_val, iteminfo4_downdata_name_val, iteminfo4_downdata_val, iteminfo4_downdata_sub_val, iteminfo4_downdata_name_sub_val);
+              }
+
+              if(iteminfo5 != 'None')
+              {
+                    var iteminfo5_title = class_type + "_" + count + "_iteminfo_5_title";
+                    var iteminfo5_type = class_type+"_" + count+"_iteminfo_5_type";
+                    var iteminfo5_downdata = class_type+"_" + count+"_iteminfo_5_downdata";
+                    var iteminfo5_downdata_sub = class_type+"_" + count+"_iteminfo_5_downdata_sub";
+                    var iteminfo5_downdata_name = class_type+"_" + count+"_iteminfo_5_downdata_name";
+                    var iteminfo5_downdata_name_sub = class_type+"_" + count+"_iteminfo_5_downdata_name_sub";
+
+                    var iteminfo5_title_val = document.getElementById(iteminfo5_title).value;
+                    var iteminfo5_type_val = document.getElementById(iteminfo5_type).value;
+                    var iteminfo5_downdata_val = document.getElementById(iteminfo5_downdata).value;
+                    var iteminfo5_downdata_sub_val = document.getElementById(iteminfo5_downdata_sub).value;
+                    var iteminfo5_downdata_name_val = document.getElementById(iteminfo5_downdata_name).value;
+                    var iteminfo5_downdata_name_sub_val = document.getElementById(iteminfo5_downdata_name_sub).value;
+
+                    show_itmeinfo("class05", 5, prdCode, iteminfo5_title_val, iteminfo5_type_val, iteminfo5_downdata_name_val, iteminfo5_downdata_val, iteminfo5_downdata_sub_val, iteminfo5_downdata_name_sub_val);
+              }
+
             var src = '/static/resource/data/lecture/' + prdCode + '/' + data;
             var video  = document.getElementById('video_ctrl');
             video.src = src;
 
-            if(downdata == 'None')
-            {
-                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><li>자료가 없습니다.</li></ul>';
-            }
-            else
-            {
-                var down_src = '/static/resource/data/download/' + prdCode + '/' + downdata
-                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><a href=' + down_src + ' download><li>' + downdata_name + '</li></a></ul>';
-            }
+<!--            if(downdata == 'None')-->
+<!--            {-->
+<!--                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><li>자료가 없습니다.</li></ul>';-->
+<!--            }-->
+<!--            else-->
+<!--            {-->
+<!--                var down_src = '/static/resource/data/download/' + prdCode + '/' + downdata-->
+<!--                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><a href=' + down_src + ' download><li>' + downdata_name + '</li></a></ul>';-->
+<!--            }-->
 
             var play = $("input[type=hidden][name=play_enable]").val();
             if(play == 'D')

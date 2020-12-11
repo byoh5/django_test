@@ -29,6 +29,15 @@ class PrdAdmin(admin.ModelAdmin):
 
 admin.site.register(PrdTB, PrdAdmin)
 
+class ItemInfoTBAdmin(admin.ModelAdmin):
+    list_display = ['ItemInfo_idx', 'title', 'type', 'downdata_name', 'dbstat'] # 커스터마이징 코드
+
+    list_display_links = ['title']
+    search_fields = ['title', 'type']
+    ordering = ['-ItemInfo_idx']
+
+admin.site.register(ItemInfoTB, ItemInfoTBAdmin)
+
 class ItemCommonTBAdmin(admin.ModelAdmin):
     list_display = ['prd_name', 'prd_code', 'item_code', 'title', 'order'] # 커스터마이징 코드
 

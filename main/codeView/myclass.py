@@ -26,7 +26,11 @@ def myclass_list_page(request):
 
 
 def myclass_page(request):
-    prdCode = request.POST['prdCode']
+    prdCode = request.POST.get('prdCode', '')
+    if prdCode == '':
+       return myclass_list_page(request)
+
+
     itemCode = request.POST['itemCode']
     myclass_idx = request.POST['myclass_idx']
     play = request.POST['myclass_play']
@@ -44,19 +48,12 @@ def myclass_page(request):
                     "myclass_detail": item_info,
                     "myclass_common_detail": item_common_info,
                     "myclass_sub_detail": item_sub_info,
-                    "title": item_info[0].prd.title,
+                    "title": item_info[0].item_code,
+                    "subTitle": item_info[0].prd.keyword,
                     "myclass_idx":myclass_idx,
                     "play":play,
                 }
                 return render(request, 'myclass/myclass.html', context)
-
-            else:
-                myclass_list_info = select_myclass_list(user_id)
-                context = {
-                    "myclass_list_detail": myclass_list_info,
-                    "count": myclass_list_info.count(),
-                }
-                return render(request, 'myclass/myclass_list.html', context)
         else:
             disableSession(user_id, request)
             return render(request, 'login/login.html')

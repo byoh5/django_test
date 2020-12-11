@@ -56,6 +56,19 @@ class PrdTB(models.Model):
     modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
+class ItemInfoTB(models.Model):
+    ItemInfo_idx = models.AutoField(primary_key=True)
+    #label_name = models.CharField(max_length=50, default='') # 페이지에서 title과 des를 연결해줄 이름- item 별로 넣기
+    title = models.CharField(max_length=50)
+    type = models.CharField(max_length=50) # text, img, link, download
+    downdata = models.CharField(max_length=50, null=True, blank=True) # 실제 데이터 파일
+    downdata_sub = models.CharField(max_length=500, null=True, blank=True) # 실제 데이터 내용 긴 내용(text)
+    downdata_name = models.CharField(max_length=50, null=True, blank=True) # 화면에 표시되는 이름
+    downdata_name_sub = models.CharField(max_length=50, null=True, blank=True)  # 화면에 표시되는 이름 - download 일때만
+    dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
+
 class ItemCommonTB(models.Model):
     itemcommon_idx = models.AutoField(primary_key=True)
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
@@ -64,8 +77,11 @@ class ItemCommonTB(models.Model):
     time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0', null=True, blank=True)
-    downdata = models.CharField(max_length=50, null=True, blank=True)
-    downdata_name = models.CharField(max_length=50, null=True, blank=True)
+    iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_1', on_delete=models.PROTECT, null=True, blank=True) #answer01
+    iteminfo_2 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_2', on_delete=models.PROTECT, null=True, blank=True) #answer02
+    iteminfo_3 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_3', on_delete=models.PROTECT, null=True, blank=True) #answer03
+    iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
+    iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
@@ -78,8 +94,11 @@ class ItemSubTB(models.Model):
     time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0', null=True, blank=True)
-    downdata = models.CharField(max_length=50, null=True, blank=True)
-    downdata_name = models.CharField(max_length=50, null=True, blank=True)
+    iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_1', on_delete=models.PROTECT, null=True, blank=True) #answer01
+    iteminfo_2 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_2', on_delete=models.PROTECT, null=True, blank=True) #answer02
+    iteminfo_3 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_3', on_delete=models.PROTECT, null=True, blank=True) #answer03
+    iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
+    iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
@@ -92,8 +111,11 @@ class ItemTB(models.Model): #curriculum
     time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0', null=True, blank=True)
-    downdata = models.CharField(max_length=50, null=True, blank=True)
-    downdata_name = models.CharField(max_length=50, null=True, blank=True)
+    iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_1', on_delete=models.PROTECT, null=True, blank=True) #answer01
+    iteminfo_2 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_2', on_delete=models.PROTECT, null=True, blank=True) #answer02
+    iteminfo_3 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_3', on_delete=models.PROTECT, null=True, blank=True) #answer03
+    iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
+    iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
