@@ -18,10 +18,17 @@ payway_kakao = 'kakao'
 payway_naver = 'naver'
 
 def deposit_list(request):
+    userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     return render(request, 'runAdmin/deposit_list.html')
 
 def deposit_search(request):
     userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     user_info = select_register(userid)
     page_cnt = display_count  # display count 노출되는 리스트 갯수
 
@@ -137,6 +144,10 @@ def deposit_change(request):
     return render(request, 'runAdmin/deposit_list.html', context)
 
 def pay_list(request):
+    userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     userStatus_info = select_userStatus_all()
     context = {
         "userStatus_info": userStatus_info,
@@ -146,6 +157,10 @@ def pay_list(request):
     return render(request, 'runAdmin/pay_list.html', context)
 
 def pay_search(request):
+    userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     start_date = request.POST.get('start_date', '0')
     if start_date == '0':
         return pay_list(request)
@@ -283,6 +298,10 @@ def pay_change(request):
     return render(request, 'runAdmin/pay_list.html', context)
 
 def user_list(request):
+    userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     context = {
         "page_cnt": '2',
         "status": '0',
@@ -290,6 +309,10 @@ def user_list(request):
     return render(request, 'runAdmin/user_list.html', context)
 
 def user_search(request):
+    userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     user_id = request.POST.get('searchBox', '0')
     if user_id == '0':
         return user_list(request)
@@ -364,12 +387,20 @@ def user_search(request):
 
 
 def refund_list(request):
+    userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     context = {
         "page_cnt": '10',
     }
     return render(request, 'runAdmin/refund_list.html', context)
 
 def refund_search(request):
+    userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     start_date = request.POST.get('start_date', '0')
     if start_date == '0':
         return pay_list(request)
@@ -423,6 +454,10 @@ def refund_search(request):
     return render(request, 'runAdmin/refund_list.html', context)
 
 def user_refund(request):
+    userid = request.session.get('user_id')
+    if userid == '':
+        return render(request, 'login/login.html')
+
     refund_idx = request.POST.get('refund_idx', 0)
     if refund_idx == 0:
         context = {
