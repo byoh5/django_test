@@ -6,7 +6,7 @@
             <div class="section_wrap">
                 <div class="slogan">
                    <span class="bigSlg ck_title">
-                        {{title}}({{subTitle}})
+                        {{title}}<br/>({{subTitle}})
                     </span>
 
                 </div>
@@ -215,6 +215,7 @@
     </a>
 
     <script>
+
        $(document).ready(function() {
             if($("input[type=hidden][name=clientId]").val() == "")
             {
@@ -223,7 +224,7 @@
             }
          });
 
-        // accordion menu
+        // accordion menu - info
         $(document).ready(function() {
                $(function(){
                   var sBtn = $("#lecture_accordion .submenu > li");    //  ul > li 이를 sBtn으로 칭한다. (클릭이벤트는 li에 적용 된다.)
@@ -253,6 +254,12 @@
             }
         });
 
+        function itemImg_close(div_id)
+        {
+            $('input[id*="class"]').prop('checked', false);
+            document.getElementById(div_id).animate({height:'0px','background-position':'0 0px'}, 500);
+        }
+
          function top_val()
         {
             $('html, body').animate({scrollTop : 0}, 600);
@@ -261,7 +268,8 @@
         function show_itmeinfo(answer, count, prdCode, iteminfo_title, iteminfo_type, iteminfo_downdata_name, iteminfo_downdata, iteminfo_downdata_sub, iteminfo_downdata_name_sub)
         {
             var iteminfo_html = '<input type="radio" name="accordion" id=' + answer + '>';
-            iteminfo_html += '<label for=' + answer + '>' + iteminfo_title + '<em></em></label><div><p>';
+            var div_id = "div_"+ answer ;
+            iteminfo_html += '<label for=' + answer + '>' + iteminfo_title + '<em></em></label><div id=' + div_id + '><p>';
 
             if(iteminfo_type == 'download')
             {
@@ -280,7 +288,8 @@
             if(iteminfo_type == 'img')
             {
                 var img_file = '/static/resource/img/' + iteminfo_downdata_name;
-                iteminfo_html += '<img class="subVisual myClass" src=' + img_file + ' >';
+                var call_func = 'javascript:itemImg_close("' + div_id + '");';
+                iteminfo_html += '<img class="subVisual myClass" src=' + img_file + ' onclick=' + call_func + '>';
             }
             if(iteminfo_type == 'text')
             {
@@ -397,34 +406,23 @@
             var video  = document.getElementById('video_ctrl');
             video.src = src;
 
-<!--            if(downdata == 'None')-->
-<!--            {-->
-<!--                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><li>자료가 없습니다.</li></ul>';-->
-<!--            }-->
-<!--            else-->
-<!--            {-->
-<!--                var down_src = '/static/resource/data/download/' + prdCode + '/' + downdata-->
-<!--                document.getElementById('lecture_data').innerHTML = '<span class="summaryTitle">강의 자료실</span><ul><a href=' + down_src + ' download><li>' + downdata_name + '</li></a></ul>';-->
-<!--            }-->
 
             var play = $("input[type=hidden][name=play_enable]").val();
-            if(play == 'D')
-            {
-                var myclass_idx = '{{myclass_idx}}';
 
-                 $.ajax({
-                    data: {prdCode:prdCode, data:data, myclass_idx:myclass_idx, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                    type: 'post',
-                    url: '/video_play/',
-                    dataType: 'json',
-                    success:function(result){
-                        if(result == 200)
-                        {
-                            $("input[type=hidden][name=play_enable]").val('A');
-                        }
+            var myclass_idx = '{{myclass_idx}}';
+
+             $.ajax({
+                data: {prdCode:prdCode, data:data, myclass_idx:myclass_idx, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                type: 'post',
+                url: '/video_play/',
+                dataType: 'json',
+                success:function(result){
+                    if(result == 200)
+                    {
+                        $("input[type=hidden][name=play_enable]").val('A');
                     }
-                 });
-            }
+                }
+             });
         }
     </script>
 

@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<products>
+ <product>
+  <id>2020080023001</id>
+  <name>스마트 휴지통</name>
+  <basePrice>45000</basePrice>
+  <infoUrl>http://runcoding.co.kr/detail_prd/?prd_code=2020080023001</infoUrl>
+  <imageUrl>http://runcoding.co.kr/static/resource/img/Trashcan/trashcan_main.jpg</imageUrl>
+  <status>ON_SALE</status>
+  <optionSupport>true</optionSupport>
+  <option>
+   <optionItem>
+    <type>SELECT</type>
+    <name>추가부품</name>
+    <value>
+     <id>arduino</id>
+     <text>아두이노보드_러닝캠</text>
+    </value>
+    <value>
+     <id>noOption</id>
+     <text>선택없음</text>
+    </value>
+   </optionItem>
+  </option>
+  <shippingPolicy>
+   <groupId />
+   <method>DELIVERY</method>
+   <feeType>CHARGE</feeType>
+   <feePayType>PREPAYED</feePayType>
+   <feePrice>3000</feePrice>
+  </shippingPolicy>
+ </product>
+ <product>
+  <id>2020080013001</id>
+  <name>스마트 휴지통</name>
+  <basePrice>45000</basePrice>
+  <infoUrl>http://runcoding.co.kr/detail_prd/?prd_code=2020080013001</infoUrl>
+  <imageUrl>http://runcoding.co.kr/static/resource/img/Trashcan/trashcan_main.jpg</imageUrl>
+  <status>ON_SALE</status>
+  <optionSupport>true</optionSupport>
+  <option>
+   <optionItem>
+    <type>SELECT</type>
+    <name>추가부품</name>
+    <value>
+     <id>arduino</id>
+     <text>아두이노보드_러닝캠</text>
+    </value>
+   </optionItem>
+  </option>
+  <shippingPolicy>
+   <groupId />
+   <method>DELIVERY</method>
+   <feeType>CHARGE</feeType>
+   <feePayType>PREPAYED</feePayType>
+   <feePrice>3000</feePrice>
+  </shippingPolicy>
+ </product>
+ <product>
+  <id>2020120030002</id>
+  <name>초롱초롱 눈망울 네오픽셀</name>
+  <basePrice>35000</basePrice>
+  <infoUrl>http://runcoding.co.kr/detail_prd/?prd_code=2020120030002</infoUrl>
+  <imageUrl>http://runcoding.co.kr/static/resource/img/Neopixel/neopixel_arduino.jpg</imageUrl>
+  <status>ON_SALE</status>
+  <optionSupport>true</optionSupport>
+  <option>
+   <optionItem>
+    <type>SELECT</type>
+    <name>추가부품</name>
+    <value>
+     <id>arduino</id>
+     <text>아두이노 보드</text>
+    </value>
+   </optionItem>
+  </option>
+  <shippingPolicy>
+   <groupId />
+   <method>DELIVERY</method>
+   <feeType>CHARGE</feeType>
+   <feePayType>PREPAYED</feePayType>
+   <feePrice>3000</feePrice>
+  </shippingPolicy>
+ </product>
+ <product>
+  <id>2020120040002</id>
+  <name>초롱초롱 눈망울 네오픽셀</name>
+  <basePrice>35000</basePrice>
+  <infoUrl>http://runcoding.co.kr/detail_prd/?prd_code=2020120040002</infoUrl>
+  <imageUrl>http://runcoding.co.kr/static/resource/img/Neopixel/neopixel_mblock.jpg</imageUrl>
+  <status>ON_SALE</status>
+  <optionSupport>true</optionSupport>
+  <option>
+   <optionItem>
+    <type>SELECT</type>
+    <name>추가부품</name>
+    <value>
+     <id>arduino</id>
+     <text>아두이노 보드</text>
+    </value>
+   </optionItem>
+  </option>
+  <shippingPolicy>
+   <groupId />
+   <method>DELIVERY</method>
+   <feeType>CHARGE</feeType>
+   <feePayType>PREPAYED</feePayType>
+   <feePrice>3000</feePrice>
+  </shippingPolicy>
+ </product>
+</products>

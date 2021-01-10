@@ -6,6 +6,8 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from main.query import *
 from main.models import *
+from main.codeView.stat import stat_menu_step
+
 import string
 import random
 import requests
@@ -35,6 +37,8 @@ def payment(request):
     user_id = request.session.get('user_id', '')
     pg_type = request.POST['pg_type']
     delivery = 3000
+
+    stat_menu_step(request, "order_page", "payment", pg_type)
 
     if pg_type == payway_naver:
         payway_info = select_payway_value_all(pg_type)
@@ -121,6 +125,8 @@ def payment_ing(request):
     payway_val = request.POST.get('payway', '0')
     pay_num = request.POST.get('pay_num', '0')
 
+    stat_menu_step(request, "order_page", "payment_ing", pay_num + "||" + payway_val)
+
     if payway_val == 0:
         order_info = select_order(user_id)
         user_info = select_register(user_id)
@@ -205,10 +211,12 @@ def pay_deposit(request, payway_info, pay_num):
 
         # insert myclass_list
         item_info = select_item_group(order_info[0].prd.prd_code)
+        period = order_info[0].prd.period * 30
+        expireTime = timezone.now() + timezone.timedelta(days=period)
         for item in item_info:
             myclass_list_info = MyClassListTB(user_id=user_id, prd=order.prd, pay_num=pay_num,
-                                              item_code = item['item_code'],
-                                              expire_time=timezone.now(), dbstat='D-deposit')
+                                              item_code=item['item_code'],
+                                              expire_time=expireTime, dbstat='D-deposit')
 
             myclass_list_info.save()
         delete_order_idx(order_info, pay_num)
@@ -436,6 +444,8 @@ def pay_naver(request, payway_info):
         regi_info = select_register(user_id)
         pay_email = regi_info[0].regi_email
 
+    stat_menu_step(request, "payment", "naverpay", pay_email + "||" + pay_num)
+
     pay_userStatus_info = select_userStatue(pay_status_prepay)
     if user_id == "":
         pay_info = PayTB(pay_num=pay_num, order_id=order_list, pay_email=pay_email, coupon_num=coupon_num,
@@ -552,6 +562,8 @@ def pay_result(request):
     pay_info = select_pay(pay_idx)
     payway_info = select_payway()
 
+    stat_menu_step(request, "payment_ing", "result", pay_msg)
+
     if pay_info.count() is not 0:
         update_pay = pay_info[0]
         update_pay.pay_result_info = pay_msg
@@ -575,20 +587,24 @@ def pay_result(request):
                         order_info = select_order_idx(data, session)
                         if order_info.count() > 0:
                             item_info = select_item_group(order_info[0].prd.prd_code)
+                            period = order_info[0].prd.period * 30
+                            expireTime = timezone.now() + timezone.timedelta(days=period)
                             for item in item_info:
                                 myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
                                                                   pay_num=pay_info[0].pay_num, item_code=item['item_code'],
-                                                                  expire_time=timezone.now())
+                                                                  expire_time=expireTime)
                                 myclass_list_info.save()
                             delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
                     else:
                         order_info = select_order_idx(data, user_id)
                         if order_info.count() > 0:
                             item_info = select_item_group(order_info[0].prd.prd_code)
+                            period = order_info[0].prd.period * 30
+                            expireTime = timezone.now() + timezone.timedelta(days=period)
                             for item in item_info:
                                 myclass_list_info = MyClassListTB(user_id=user_id, prd=order_info[0].prd,
                                                                   pay_num=pay_info[0].pay_num, item_code=item['item_code'],
-                                                                  expire_time=timezone.now())
+                                                                  expire_time=expireTime)
                                 myclass_list_info.save()
                             delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
@@ -872,10 +888,12 @@ def run_callback(request):
                                 print(order_info[0].pay_num)
                                 if pay_num == order_info[0].pay_num:
                                     item_info = select_item_group(order_info[0].prd.prd_code)
+                                    period = order_info[0].prd.period * 30
+                                    expireTime = timezone.now() + timezone.timedelta(days=period)
                                     for item in item_info:
                                         myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
                                                                           pay_num=pay_info[0].pay_num, item_code=item['item_code'],
-                                                                          expire_time=timezone.now(), dbstat='D-naverco')
+                                                                          expire_time=expireTime, dbstat='D-naverco')
                                         myclass_list_info.save()
                                     #delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 

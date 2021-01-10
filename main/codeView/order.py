@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from main.codeView.payment import pay_naver_single
+from main.codeView.stat import stat_menu_step
 from main.query import *
 from main.models import *
 import string
@@ -33,6 +34,8 @@ def order_page(request):
     delivery = 0
     if order_info.count() > 0:
         delivery = order_info[0].delivery_price
+
+    stat_menu_step(request, "order_page", "", "")
 
     payway_info = select_payway()
     request.session['order_count'] = order_info.count()
@@ -76,6 +79,8 @@ def order(request):
     option3 = int(request.POST['option3'])
     count = int(request.POST['count'])
 
+
+
     messages = 0
     if user_id == '':
         order_prd_info = select_order_prdCode(session, prd_code)
@@ -109,10 +114,14 @@ def order(request):
             new_order_info = select_order(user_id)
             request.session['order_count'] = new_order_info.count()
 
+    stat_menu_step(request, "class_detail", "order", prd_code)
+
     if flag == 1:
         items_info = select_class_detail(prd_code)
         if items_info.count() > 0:
             html_file = "product/" + items_info[0].prd.list + ".html"
+
+        stat_menu_step(request, "class_detail", items_info[0].prd.keyword + "(" + prd_code + ") ||" + html_file, "")
         context = {
             "message": messages,
             "prd_detail": items_info[0].prd,

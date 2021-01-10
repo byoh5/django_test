@@ -23,7 +23,7 @@
 <input type="hidden" name="basePrice_{{forloop.counter0}}" value={{orderList.prd.price}}>
 <input type="hidden" name="quantity_{{forloop.counter0}}" value={{orderList.count}}>
 <input type="hidden" name="infoUrl_{{forloop.counter0}}" value="http://runcoding.co.kr/detail_prd/?prd_code={{orderList.prd.prd_code}}">
-<input type="hidden" name="imageUrl_{{forloop.counter0}}" value="http://runcoding.co.kr{{orderList.prd.img}}">
+<input type="hidden" name="imageUrl_{{forloop.counter0}}" value="http://runcoding.co.kr{{orderList.prd.prd_list_img}}">
 
 {% if orderList.option1_selectNum == 2 %}
 <input type="hidden" name="options_code_1_{{forloop.counter0}}" value="arduino">

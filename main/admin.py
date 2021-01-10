@@ -20,6 +20,15 @@ class LoginAdmin(admin.ModelAdmin):
 
 admin.site.register(LoginTB,LoginAdmin)
 
+class codingkit_category_largeAdmin(admin.ModelAdmin):
+    list_display = ['codingkit_category_large_idx', 'name', 'dbstat'] # 커스터마이징 코드
+    list_display_links = ['name']
+    list_filter = ['name', 'dbstat']
+
+    search_fields = ['name', 'dbstat']
+
+admin.site.register(codingkit_category_large, codingkit_category_largeAdmin)
+
 class PrdAdmin(admin.ModelAdmin):
     list_display = ['prd_code', 'title', 'period', 'price', 'keyword', 'dbstat'] # 커스터마이징 코드
     list_display_links = ['prd_code']
@@ -223,3 +232,22 @@ admin.site.register(PayWayTB, PayWayAdmin)
 
 
 admin.site.register(refundTB)
+
+
+class stat_classAdmin(admin.ModelAdmin):
+    list_display = ['pay_email', 'item_code', 'class_title', 'class_data', 'stime'] # 커스터마이징 코드
+
+    list_filter = ['stat_class_idx']
+    list_display_links = ['pay_email', 'item_code', 'class_title']
+    search_fields = ['pay_email', 'item_code', 'class_title']
+
+admin.site.register(stat_class, stat_classAdmin)
+
+class stat_menuAdmin(admin.ModelAdmin):
+    list_display = ['user', 'main_menu', 'sub_menu', 'info_search_etc'] # 커스터마이징 코드
+
+    list_filter = ['stat_menu_idx']
+    list_display_links = ['user', 'main_menu']
+    search_fields = ['user', 'main_menu', 'sub_menu', 'search_title']
+
+admin.site.register(stat_menu, stat_menuAdmin)

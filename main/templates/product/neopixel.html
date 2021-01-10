@@ -1,0 +1,94 @@
+ {% load static %}
+
+    <div class="prd_title"><strong>{{prd_detail.title}}</strong></div>
+
+    <div class="info_detail">
+       <div class="prd_title_sub" style="padding-top:-10px;">
+            <div class="content_sub">코딩키트&nbsp;</div>
+            <img src="{% static 'resource/img/sub/detail_set.png' %}" alt="set" class="content_sub" style="padding-top:3px;">
+            <div class="content_sub">&nbsp;{{prd_detail.category_large.name}}&nbsp;</div>
+            <img src="{% static 'resource/img/sub/detail_set.png' %}" alt="set" class="content_sub" style="padding-top:3px;">
+            <div class="content_sub">&nbsp;{{prd_detail.title}} 상세보기</div>
+        </div>
+
+        <img src="{{prd_detail.prd_detail_img}}" alt="상품상세 이미지" style="padding-top:80px;">
+
+        <div class="point_content">Outline</div>
+        <div class="content_gray">
+            <span>네오픽셀 / 사운드센서을 이용한 코딩 키트!</span><br/>
+            <span>강의를 하나씩 진행하면서 프로그래밍 문법을 익히고, 부품을 이용하여 만들어 나가는 초롱초롱 눈망울 네오픽셀 입니다.</span><br/><br/>
+            <span>음악 음향에 따라서 네오픽셀의 불빛을 다르게 표현해 보아요.</span><br/><br/>
+            <span>쉽고 재미있게! 기초부터 응용까지! 상상을 현실로 만드는 뚝딱 코딩키트를 만나보세요.</span><br/>
+        </div>
+
+        <div class="point_content">Curriculum</div>
+
+        <div class="content"><strong>part1. 환경구축 </strong></div>
+        <div class="content_curriculum">
+            <li>
+                 <div style="width:100%"><b>1. </b>아두이노 설치
+                     <div style="float:right;">3:54</div>
+                 </div>
+            </li>
+            <li>
+                 <div style="width:100%"><b>2. </b>네오픽셀 라이브러리 설치
+                     <div style="float:right;">3:54</div>
+                 </div>
+            </li>
+        </div>
+
+         <div class="content"  style="padding-top:20px;"><strong>part2. 키트 강의</strong></div>
+        <div class="content_curriculum">
+            <li>
+                 <div style="width:100%"><b>1. </b>네오픽셀 키트 만들기
+                     <div style="float:right;">12:13</div>
+                 </div>
+            </li>
+            <li>
+                 <div style="width:100%"><b>2. </b>네오픽셀 키트 이해하기
+                     <div style="float:right;">4:26</div>
+                 </div>
+            </li>
+        </div>
+
+        <div class="content" style="padding-top:20px;"><strong>part3. 세부강의 </strong></div>
+        <div class="content_curriculum">
+            <li>
+                 <div style="width:100%"><b>1. </b>시리얼 모니터 [이론/문법]
+                     <div style="float:right;">1:48</div>
+                 </div>
+            </li>
+            <li>
+                 <div style="width:100%"><b>2. </b>연산자 기초 [이론/키트미션]
+                     <div style="float:right;">6:02</div>
+                 </div>
+            </li>
+            <li>
+                 <div style="width:100%"><b>3. </b>함수 [이론/키트미션]
+                     <div style="float:right;">12:17</div>
+                 </div>
+            </li>
+             <li>
+                 <div style="width:100%"><b>4. </b>조건문 [이론,문법/키트미션]
+                     <div style="float:right;">11:47</div>
+                 </div>
+            </li>
+
+        </div>
+        <div class="content_gray" style="padding-top:20px; float:right; font-size:10px;">* 초롱초롱 눈망울 네오픽셀 아두이노 버전입니다.</div>
+
+         <div class="point_content">Detail</div>
+         <div>
+            <img src="{% static 'resource/img/Neopixel/detail_neopixel_01.jpg' %}"alt="상품상세 이미지1">
+            <img src="{% static 'resource/img/Neopixel/detail_neopixel_02.gif' %}"alt="상품상세 이미지1">
+
+            <img src="{% static 'resource/img/Neopixel/detail_neopixel_03.jpg' %}"alt="상품상세 이미지1">
+            <img src="{% static 'resource/img/Neopixel/detail_neopixel_04.gif' %}"alt="상품상세 이미지1">
+            <img src="{% static 'resource/img/Neopixel/detail_neopixel_05.gif' %}"alt="상품상세 이미지1">
+            <img src="{% static 'resource/img/Neopixel/detail_neopixel_06.jpg' %}"alt="상품상세 이미지1">
+             <img src="{% static 'resource/img/Neopixel/detail_neopixel_07.gif' %}"alt="상품상세 이미지1">
+             <img src="{% static 'resource/img/Neopixel/detail_neopixel_08.jpg' %}"alt="상품상세 이미지1">
+         </div>
+    </div>
+
+  {% include "product/common.html" %}

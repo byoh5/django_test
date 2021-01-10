@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from main.query import *
 from main.models import *
-
+from main.codeView.stat import stat_menu_step
 
 def comunity_page(request):
     comunity_info = select_comunity()
     category_info = select_category()
+    stat_menu_step(request, "comunity", "", "")
+
     context = {
         "comunity_list": comunity_info,
         "category_list": category_info,
@@ -19,6 +21,8 @@ def comunity_page_category(request):
         comunity_info = select_comunity_category(category_idx)
     else:
         comunity_info = select_comunity()
+
+    stat_menu_step(request, "comunity", "", comunity_info[0].category.name)
     context = {
         "comunity_list": comunity_info,
         "category_list": category_info,

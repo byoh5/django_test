@@ -77,7 +77,7 @@
                                                     <td>
                                                          <div class="pull-left">
                                                                <a href='javascript:goDetailPage({{orderDetail.prd.prd_code}});'>
-                                                                   <img class="width-120px border-radius" src={{orderDetail.prd.img}} onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
+                                                                   <img class="width-120px border-radius" src={{orderDetail.prd.prd_list_img}} onError="this.onerror=null;this.src='/img/404/no_gig_sm_image.jpg';">
                                                                </a>
                                                          </div>
                                                     </td>
@@ -103,7 +103,7 @@
                                                                 {% if orderDetail.prd.option1 != "" %}
                                                                     <input type="hidden" id="alreadyOption_{{forloop.counter0}}_1" name="alreadyOption_{{forloop.counter0}}_1" value="{{orderDetail.option1_selectNum}}">
                                                                     <input type="hidden" id="option_idx_{{forloop.counter0}}_1" name="option_idx_{{forloop.counter0}}_1" value="0">
-                                                                    <select id="options_{{forloop.counter0}}_1" name="options_{{forloop.counter0}}_1" onchange="myOption({{forloop.counter0}})">
+                                                                    <select id="options_{{forloop.counter0}}_1" name="options_{{forloop.counter0}}_1" onchange="myOption({{forloop.counter0}})" style="background: white;">
                                                                         <option value="0">---------------옵션------</option>
                                                                         <option value="0">선택없음</option>
                                                                         <option value={{orderDetail.prd.option1_price}} >{{orderDetail.prd.option1}} (+{{orderDetail.prd.option1_price}})</option>
@@ -112,7 +112,7 @@
                                                                 {% if orderDetail.prd.option2 != "" %}
                                                                     <input type="hidden" id="alreadyOption_{{forloop.counter0}}_2" name="alreadyOption_{{forloop.counter0}}_2" value="{{orderDetail.option2_selectNum}}">
                                                                     <input type="hidden" id="option_idx_{{forloop.counter0}}_2" name="option_idx_{{forloop.counter0}}_2" value="0">
-                                                                    <select id="options_{{forloop.counter0}}_2" name="options_{{forloop.counter0}}_2" onchange="myOption({{forloop.counter0}})">
+                                                                    <select id="options_{{forloop.counter0}}_2" name="options_{{forloop.counter0}}_2" onchange="myOption({{forloop.counter0}})" style="background: white;">
                                                                         <option value="0">---------------옵션------</option>
                                                                         <option value="0">선택없음</option>
                                                                         <option value={{orderDetail.prd.option2_price}}>{{orderDetail.prd.option2}} (+{{orderDetail.prd.option2_price}})</option>
@@ -121,7 +121,7 @@
                                                                  {% if orderDetail.prd.option3 != "" %}
                                                                     <input type="hidden" id="alreadyOption_{{forloop.counter0}}_3" name="alreadyOption_{{forloop.counter0}}_3" value="{{orderDetail.option3_selectNum}}">
                                                                     <input type="hidden" id="option_idx_{{forloop.counter0}}_3" name="option_idx_{{forloop.counter0}}_3" value="0">
-                                                                     <select id="options_{{forloop.counter0}}_3" name="options_{{forloop.counter0}}_3" onchange="myOption({{forloop.counter0}})">
+                                                                     <select id="options_{{forloop.counter0}}_3" name="options_{{forloop.counter0}}_3" onchange="myOption({{forloop.counter0}})" style="background: white;">
                                                                         <option value="0">---------------옵션------</option>
                                                                         <option value="0">선택없음</option>
                                                                         <option value={{orderDetail.prd.option3_price}}>{{orderDetail.prd.option3}} (+{{orderDetail.prd.option3_price}})</option>

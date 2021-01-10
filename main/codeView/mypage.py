@@ -3,6 +3,7 @@ from django.utils import timezone
 from main.query import *
 from main.models import *
 import bcrypt
+from main.codeView.stat import stat_menu_step
 
 message_ok = 200
 message_diff_pass = 202
@@ -24,6 +25,8 @@ def mypage_profile(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
 
+    stat_menu_step(request, "myprofile", "", "")
+
     if checkSession(session, user_id):
         user_info = select_register(user_id)
         context = {
@@ -42,6 +45,8 @@ def mypage_profile(request):
 def mypage_order(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
+
+    stat_menu_step(request, "myprofile", "myorder", "")
 
     if checkSession(session, user_id):
         pay_user_info = select_pay_user(user_id)
@@ -69,6 +74,8 @@ def mypage_order_detail(request):
         option_name = ""
         delivery_time =""
         play_time = ""
+
+        stat_menu_step(request, "myprofile", "myorder_deatil", pay_info[0].pay_num)
 
         if pay_info.count() > 0 :
             if pay_info[0].coupon_num != "" :
@@ -132,6 +139,8 @@ def mypage_order_detail(request):
 def mypage_order_refund(request):
     user_id = request.session.get('user_id')
     pay_num = request.POST.get('pay_num', '0')
+
+    stat_menu_step(request, "myorder_deatil", "refund", pay_num)
     if pay_num == '0':
         pay_user_info = select_pay_user(user_id)
         context = {
@@ -213,15 +222,16 @@ def mypage_order_refund(request):
 
 def mypage_profile_modify_addr(request):
     user_id = request.session.get('user_id')
-    name = request.POST['regi_receiver1_name']
     add01 = request.POST['regi_add01']
     add02 = request.POST['regi_add02']
     add03 = request.POST['regi_add03']
 
     session = request.session.get('client_id')
 
+    stat_menu_step(request, "myprofile", "modify_addr", add01 + "||" + add02 + "||" + add03)
+
     if checkSession(session, user_id):
-        update_user_addr(user_id, name, add01, add02, add03)
+        update_user_addr(user_id, add01, add02, add03)
 
         user_info = select_register(user_id)
         context = {
@@ -246,6 +256,8 @@ def mypage_profile_modify_addr2(request):
 
     session = request.session.get('client_id')
 
+    stat_menu_step(request, "myprofile", "modify_addr2||" + receiver2_name, receiver2_add01 + "||" + receiver2_add02 + "||" + receiver2_add03 + "||" + receiver2_phone)
+
     if checkSession(session, user_id):
         update_user_addr2(user_id, receiver2_name,  receiver2_phone, receiver2_add01, receiver2_add02, receiver2_add03)
 
@@ -267,6 +279,8 @@ def mypage_profile_modify_pw(request):
     beforePW = request.POST['beforePW']
     newPW = request.POST['newPW']
     session = request.session.get('client_id')
+
+    stat_menu_step(request, "myprofile", "modify_pw" ,"")
 
     if checkSession(session, user_id):
         user_info = select_register(user_id)
@@ -301,6 +315,8 @@ def mypage_coupon_list(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
 
+    stat_menu_step(request, "myprofile", "coupon_list", "")
+
     if checkSession(session, user_id):
         myCoupon_info = select_myCoupon(user_id)
         context = {
@@ -319,6 +335,8 @@ def mypage_add_coupon(request):
     coupon_num = request.POST['add_coupon_num']
     session = request.session.get('client_id')
 
+    stat_menu_step(request, "myprofile", "coupon_add", coupon_num)
+
     if checkSession(session, user_id):
         add_coupon_info = select_coupon_all(coupon_num)
         if add_coupon_info.count() == 1:
@@ -329,12 +347,27 @@ def mypage_add_coupon(request):
                     message = message_coupon_already_used
                 else:
                     user_info = select_register(user_id)
+                    
+                    if add_coupon_info[0].coupon_type == 100:
+                        #강의실 열어
+                        item_info = select_item_group(add_coupon_info[0].prd.prd_code)
+                        period = add_coupon_info[0].prd.period * 30
+                        expireTime = timezone.now() + timezone.timedelta(days=period)
+                        for item in item_info:
+                            myclass_list_info = MyClassListTB(user_id=user_id, prd=add_coupon_info[0].prd, pay_num=add_coupon_info[0].coupon_num,
+                                                              item_code=item['item_code'],
+                                                              expire_time=expireTime, dbstat='A')
 
-                    period = add_coupon_info[0].period * 30  # preiod * 개월(30)
-                    expireTime = timezone.now() + timezone.timedelta(days=period)
+                            myclass_list_info.save()
 
-                    my_addCoupon = myCouponTB(user=user_info[0],coupon=add_coupon_info[0],expire=expireTime)
-                    my_addCoupon.save()
+                            my_addCoupon = myCouponTB(user=user_info[0], coupon=add_coupon_info[0], used=True, expire= timezone.now())
+                            my_addCoupon.save()
+                    else:
+                        period = add_coupon_info[0].period * 30  # preiod * 개월(30)
+                        expireTime = timezone.now() + timezone.timedelta(days=period)
+
+                        my_addCoupon = myCouponTB(user=user_info[0],coupon=add_coupon_info[0],expire=expireTime)
+                        my_addCoupon.save()
 
                     message = message_coupon_ok
             else:

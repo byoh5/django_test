@@ -3,12 +3,13 @@ from django.shortcuts import render
 from django.utils import timezone
 from main.query import *
 from main.models import *
-
+from main.codeView.stat import stat_menu_step
 message_no_login = 210
 
 def myclass_list_page(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
+    stat_menu_step(request, "myclass_list", "", "")
     if user_id is not None:
         if checkSession(session, user_id):
             myclass_list_info = select_myclass_list(user_id)
@@ -37,6 +38,8 @@ def myclass_page(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
 
+    stat_menu_step(request, "myclass_list", "myclass", prdCode + "||" + itemCode)
+
     if user_id is not None:
         if checkSession(session, user_id):
             item_info = select_class_item_detail(prdCode, itemCode)
@@ -62,26 +65,25 @@ def myclass_page(request):
 
 def video_play_page(request):
     myclass_idx = request.POST['myclass_idx']
-    prdCode = request.POST['prdCode']
     data = request.POST['data']
 
     myclass_list_info = select_myclass_list_play(myclass_idx)
 
-    time = timezone.localtime()
-
-    year = time.year
-    month = time.month
-    day = time.day
-
     if myclass_list_info.count() > 0:
-        new_myclass = myclass_list_info[0]
-        new_myclass.play = 'A'
-        new_myclass.play_time = str(year) + "-" + str(month) + "-" + str(day)
-        new_myclass.play_video = prdCode + "|" + data
+        stat_class_info = stat_class(pay_email=myclass_list_info[0].user_id, myclass=myclass_list_info[0],
+                                     prd_code=myclass_list_info[0].prd.prd_code, item_code=myclass_list_info[0].item_code,
+                                     class_title=myclass_list_info[0].prd.title, class_data=data)
+        stat_class_info.save()
 
-        period = myclass_list_info[0].prd.period * 30  # preiod * 개월(30)
-        expireTime = time + timezone.timedelta(hours=9, days=period)
-        new_myclass.expire_time = expireTime
-        new_myclass.save()
+        year = timezone.localtime().year
+        month = timezone.localtime().month
+        day = timezone.localtime().day
+
+        if myclass_list_info[0].play == 'D':
+            new_myclass = myclass_list_info[0]
+            new_myclass.play = 'A'
+            new_myclass.play_time = str(year) + "-" + str(month) + "-" + str(day)
+            new_myclass.play_video = data
+            new_myclass.save()
 
     return HttpResponse(200)

@@ -249,11 +249,11 @@
             newForm.attr("method", "post");
             newForm.attr("action", "/my_modify_addr2/");
 
-            var phoneVal = chkItemPhone($('[name=regi_receiver2_phone]').val());
+           // var phoneVal = chkItemPhone($('[name=regi_receiver2_phone]').val());
 
             newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_name', value : $('[name=regi_receiver2_name]').val()}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_phone', value : phoneVal}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_phone', value : $('[name=regi_receiver2_phone]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add01', value : $('[name=regi_receiver2_add01]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add02', value : $('[name=regi_receiver2_add02]').val()}));
             newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add03', value : $('[name=regi_receiver2_add03]').val()}));

@@ -40,7 +40,7 @@
                                 </li>
                                 <li>
                                     <span class="li_title">학습 목표</span>
-                                    <p>{{prd_detail.goal}} </p>
+                                    <p>{{prd_detail.category_sub}} </p>
                                 </li>
                                 <li>
                                     <span class="li_title">학습 기간</span>
@@ -220,9 +220,10 @@
                     var price = removeComma(document.getElementById("total_price").innerText);
                     var prdCode =  $("input[type=hidden][name=prd_code]").val();
                     var title = document.getElementById("title").innerText;
-                    var title2 =  '{{prd_detail.title2}}';
-                    var prd_title = title + "(" + title2 + ")";
-                    var img_url = '{{prd_detail.img}}';
+                    var category =  '{{prd_detail.category_large.name}}';
+                    var prd_title = title + "(" + category + ")";
+
+                    var img_url = '{{prd_detail.prd_list_img}}';
                     var img = "http://runcoding.co.kr/" + img_url;
                     var url = "http://runcoding.co.kr/detail_prd/?prd_code=" + prdCode;
 

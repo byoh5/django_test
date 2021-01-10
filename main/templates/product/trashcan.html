@@ -1,17 +1,17 @@
  {% load static %}
 
-    <div class="prd_title"><strong>스마트 휴지통</strong></div>
+    <div class="prd_title"><strong>{{prd_detail.title}}</strong></div>
 
     <div class="info_detail">
        <div class="prd_title_sub" style="padding-top:-10px;">
             <div class="content_sub">코딩키트&nbsp;</div>
             <img src="{% static 'resource/img/sub/detail_set.png' %}" alt="set" class="content_sub" style="padding-top:3px;">
-            <div class="content_sub">&nbsp;아두이노&nbsp;/&nbsp;엠블럭&nbsp;</div>
+            <div class="content_sub">&nbsp;{{prd_detail.category_large.name}}&nbsp;</div>
             <img src="{% static 'resource/img/sub/detail_set.png' %}" alt="set" class="content_sub" style="padding-top:3px;">
-            <div class="content_sub">&nbsp;스마트 휴지통 상세보기</div>
+            <div class="content_sub">&nbsp;{{prd_detail.title}} 상세보기</div>
         </div>
 
-        <img src="{{prd_detail.img}}" alt="상품상세 이미지" style="padding-top:80px;">
+        <img src="{{prd_detail.prd_detail_img}}" alt="상품상세 이미지" style="padding-top:80px;">
 
         <div class="point_content">Outline</div>
         <div class="content_gray">
@@ -31,62 +31,9 @@
                      <div style="float:right;">3:54</div>
                  </div>
             </li>
-            <li>
-                 <div style="width:100%"><b>2. </b>러닝봇(인공지능 프로그램) 설치
-                     <div style="float:right;">6:35</div>
-                 </div>
-            </li>
         </div>
 
-        <div class="content" style="padding-top:20px;"><strong>part2. 익히기 </strong></div>
-        <div class="content_curriculum">
-            <li>
-                 <div style="width:100%"><b>1. </b>변수
-                     <div style="float:right;">7:48</div>
-                 </div>
-            </li>
-            <li>
-                 <div style="width:100%"><b>2. </b>연산자 기초
-                     <div style="float:right;">9:08</div>
-                 </div>
-            </li>
-            <li>
-                 <div style="width:100%"><b>3. </b>함수
-                     <div style="float:right;">7:32</div>
-                 </div>
-            </li>
-             <li>
-                 <div style="width:100%"><b>4. </b>조건문 if
-                     <div style="float:right;">14:47</div>
-                 </div>
-            </li>
-            <li>
-                 <div style="width:100%"><b>5. </b>인공지능 이란?
-                     <div style="float:right;">3:28</div>
-                 </div>
-            </li>
-        </div>
-
-        <div class="content"  style="padding-top:20px;"><strong>part3. 다루기</strong></div>
-        <div class="content_curriculum">
-            <li>
-                 <div style="width:100%"><b>1. </b>시리얼모니터
-                     <div style="float:right;">1:49</div>
-                 </div>
-            </li>
-            <li>
-                 <div style="width:100%"><b>2. </b>초음파센서
-                     <div style="float:right;">7:39</div>
-                 </div>
-            </li>
-            <li>
-                 <div style="width:100%"><b>3. </b>서보모터
-                     <div style="float:right;">4:29</div>
-                 </div>
-            </li>
-        </div>
-
-        <div class="content" style="padding-top:20px;"><strong>part4. 키트 만들기 </strong></div>
+         <div class="content"  style="padding-top:20px;"><strong>part2. 키트 강의</strong></div>
         <div class="content_curriculum">
             <li>
                  <div style="width:100%"><b>1. </b>스마트 휴지통 키트 만들기
@@ -94,22 +41,49 @@
                  </div>
             </li>
             <li>
-                 <div style="width:100%"><b>2. </b>인공지능 휴지통 키트 만들기
-                     <div style="float:right;">14:18</div>
-                 </div>
-            </li>
-            <li>
-                 <div style="width:100%"><b>3. </b>나만의 인공지능 만들기
-                     <div style="float:right;">8:43</div>
+                 <div style="width:100%"><b>2. </b>스마트 휴지통 키트 이해하기
+                     <div style="float:right;">4:26</div>
                  </div>
             </li>
         </div>
+
+        <div class="content" style="padding-top:20px;"><strong>part3. 세부강의 </strong></div>
+        <div class="content_curriculum">
+            <li>
+                 <div style="width:100%"><b>1. </b>시리얼 모니터 [이론/문법]
+                     <div style="float:right;">1:48</div>
+                 </div>
+            </li>
+            <li>
+                 <div style="width:100%"><b>2. </b>서보모터 [이론/실습]
+                     <div style="float:right;">4:25</div>
+                 </div>
+            </li>
+            <li>
+                 <div style="width:100%"><b>3. </b>연산자 기초 [이론/키트미션]
+                     <div style="float:right;">6:02</div>
+                 </div>
+            </li>
+             <li>
+                 <div style="width:100%"><b>4. </b>조건문 [이론,문법/키트미션]
+                     <div style="float:right;">11:47</div>
+                 </div>
+            </li>
+            <li>
+                 <div style="width:100%"><b>5. </b>초음파 센서 [이론/키트미션]
+                     <div style="float:right;">12:17</div>
+                 </div>
+            </li>
+        </div>
+        <div class="content_gray" style="padding-top:20px; float:right; font-size:10px;">* 스마트 휴지통 아두이노 버전입니다.</div>
 
          <div class="point_content">Detail</div>
          <div>
             <img src="{% static 'resource/img/Trashcan/detail_trashcan_01.jpg' %}"alt="상품상세 이미지1">
             <img src="{% static 'resource/img/Trashcan/detail_trashcan_02.gif' %}"alt="상품상세 이미지1">
+
             <img src="{% static 'resource/img/Trashcan/detail_trashcan_03.jpg' %}"alt="상품상세 이미지1">
+
             <img src="{% static 'resource/img/Trashcan/detail_trashcan_04.gif' %}"alt="상품상세 이미지1">
             <img src="{% static 'resource/img/Trashcan/detail_trashcan_05.jpg' %}"alt="상품상세 이미지1">
          </div>

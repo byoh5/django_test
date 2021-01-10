@@ -30,6 +30,7 @@ from main.codeView.confirm_user import *
 from main.codeView.runAdmin import *
 from main.codeView.watch import *
 from main.codeView.prodcut_xml import *
+from main.codeView.bizMsg import *
 
 urlpatterns = [
     path('regi/', register_page),
@@ -99,6 +100,8 @@ urlpatterns = [
     path('watchCam/', watch_esp_cam),
 
     path('callback/', run_callback),
+
+    path('biz_token/', get_token),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),

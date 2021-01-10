@@ -389,7 +389,14 @@ tfoot tr td {
 .order-option .prdModify li { padding:6px 0 0; *zoom:1; }
 .order-option .prdModify li:after { content:""; display:block; clear:both; }
 .order-option .prdModify li span { float:center width:110px; margin:3px 0 0; }
-.prdModify li select { width:180px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px; }
+.prdModify li select {
+    width:180px;
+    height:24px;
+    border:1px solid #d4d4d4;
+    line-height:24px;
+    font-size:12px;
+    background: white;
+}
 .prdModify li input { float:right; width:286px; height:22px; padding:0 0 0 6px; border:1px solid #d4d4d4; color:#3c3c3c; line-height:22px; }
 
 .xans-order-totalsummary {

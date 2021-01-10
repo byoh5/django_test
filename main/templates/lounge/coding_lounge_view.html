@@ -34,7 +34,7 @@
 
         <!-- codingKit list -->
         <div class="codingKit_list detail myClass">
-            <div class="lecture_list detail">
+            <div class="lounge_list detail">
                 <div class="detail_area">
                     <!-- 동영상 영역입니다. -->
                     <div class="video_area">
@@ -42,15 +42,44 @@
                         src="http://www.youtube.com/embed/{{lounge_video}}?autoplay=1" frameborder="0"></iframe>
                     </div>
 
-<!--                    <div class="precaution">-->
-<!--                        <span class="summaryTitle">영상 소개</span>-->
-<!--                        <ul>-->
-<!--                            <li>스마트 휴지통 키트를 완성해 보세요.</li>-->
-<!--                            <li>강의에 대한 요약된 정보를 입력해주세요.</li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
+                     <!-- 코드 & 회로-->
+                    <div class="board_community">
+                        <div class="point_content_faq"><strong>영상 자료실</strong></div>
+                         <div class="accordion" style="padding-left:25px;">
+                            {% for lounge in lounge_info %}
+                                {% if lounge.down_mblock_code != "" %}
+                                <input type="radio" name="accordion" id="lounge0">
+                                <label for="lounge0">엠블럭 코드 다운로드<em></em></label>
+                                <div>
+                                    <p>
+                                        <a href="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.down_mblock_code}}" download>{{lounge.title}} 엠블럭 코드</a>
+                                    </p>
+                                </div>
+                                {% endif %}
+                              {% if lounge.down_arduino_code != "" %}
+                                <input type="radio" name="accordion" id="lounge1">
+                                <label for="lounge1">아두이노 코드 다운로드<em></em></label>
+                                <div>
+                                    <p>
+                                        <a href="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.down_arduino_code}}" download>{{lounge.title}} 아두이노 코드</a>
+                                    </p>
+                                </div>
+                                {% endif %}
+                             {% if lounge.diagram_img != "" %}
+                                <input type="radio" name="accordion" id="lounge2">
+                                <label for="lounge2">회로 구성<em></em></label>
+                                <div>
+                                    <p>
+                                        <img class="subVisual myClass" src="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.diagram_img}}" onclick="javascript:itemImg_close(lounge2);">
+                                    </p>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                         </div>
+                    </div>
+
                 </div>
-                <div style="padding-left:300px;">
+                <div>
                 <a href="/lounge/" class="btn list_more" >목록으로</a>
                </div>
             </div>
@@ -114,6 +143,12 @@
                 $(".scr").removeClass("end");
             }
         });
+
+        function itemImg_close(div_id)
+        {
+            $('input[id*="lounge"]').prop('checked', false);
+            document.getElementById(div_id).animate({height:'0px','background-position':'0 0px'}, 500);
+        }
 
 
     </script>

@@ -264,17 +264,33 @@ def select_myclass_list_play(myclass_idx):
     myclass_list_info = MyClassListTB.objects.filter(myclassList_idx=myclass_idx)
     return myclass_list_info
 
+def select_class_category_lar_list():
+    category_large_info = codingkit_category_large.objects.filter(dbstat='A')
+    return category_large_info
+
 def select_class_list():
-    prd_info = PrdTB.objects.filter(dbstat='A', list__isnull=False)
+    prd_info = PrdTB.objects.filter(dbstat='A').order_by('-prd_idx')
     return prd_info
+
 
 def select_prd(prd_code):
     prd_info = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
     return prd_info
 
-def select_prd_keyword(keyword):
-    prd_info = PrdTB.objects.filter(Q(keyword=keyword, dbstat='A') | Q(title__icontains=keyword, dbstat='A') | Q(title2__icontains=keyword, dbstat='A'))
+def select_prd_category_search(large, keyword):
+    query_search = Q()
+
+    if large is not "":
+        query_search.add(Q(category_large__name=large , dbstat='A') | Q(category_large__value=large , dbstat='A'), query_search.AND)
+
+    if keyword is not "":
+        query_search.add(Q(keyword__icontains=keyword, dbstat='A') | Q(title__icontains=keyword, dbstat='A') | Q(category_large__name__icontains=keyword, dbstat='A')
+                         | Q(category_large__value__icontains=keyword, dbstat='A') | Q(category_sub__icontains=keyword, dbstat='A'), query_search.AND)
+
+    prd_info = PrdTB.objects.filter(query_search).order_by('-prd_idx')
+
     return prd_info
+
 
 def select_item_group(prd_code):
     item_info = ItemTB.objects.filter(prd__prd_code=prd_code, dbstat='A').values('item_code').annotate(max_count=Count('item_code'))
@@ -309,44 +325,34 @@ def select_lounge_cnt(start_cnt, end_cnt):
     lounge_info = loungeListTB.objects.filter(dbstat='A').order_by('-loungeList_idx')[start_cnt:end_cnt]
     return lounge_info
 
-def select_lounge_search(sort, category, keyword):
-    sort_order = 'loungeList_idx'
-    if sort == 'new':
-        sort_order = '-loungeList_idx'
-
+def select_lounge_search(keyword):
     query_search = Q()
 
-    if int(category) > 0:
-        query_search.add(Q(loungeList_idx=category), query_search.AND)
-
     if keyword is not "":
-        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword), query_search.AND)
+        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword) | Q(search_title__icontains=keyword), query_search.AND)
 
-    lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by(sort_order)
+    lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by('-loungeList_idx')
 
     return lounge_info
 
 
-def select_lounge_search_cnt(sort, category, keyword, start_cnt, end_cnt):
-    sort_order = 'loungeList_idx'
-    if sort == 'new':
-        sort_order = '-loungeList_idx'
-
+def select_lounge_search_cnt(keyword, start_cnt, end_cnt):
     query_search = Q()
 
-    if int(category) > 0:
-        query_search.add(Q(loungeList_idx=category), query_search.AND)
-
     if keyword is not "":
-        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword), query_search.AND)
+        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword) | Q(search_title__icontains=keyword), query_search.AND)
 
-    lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by(sort_order)[start_cnt:end_cnt]
+    lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by( '-loungeList_idx')[start_cnt:end_cnt]
 
     return lounge_info
 
 def select_lounge_categoy():
     category_info = loungeListTB.objects.filter(dbstat='A').only("data_name", "loungeList_idx")
     return category_info
+
+def select_lounge_videoId(videoId):
+    lounge_info = loungeListTB.objects.filter(video_id=videoId, dbstat='A')
+    return lounge_info
 
 def select_comunity():
     comunity_info = comunityTB.objects.filter(dbstat='A')

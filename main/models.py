@@ -33,14 +33,22 @@ class LoginTB(models.Model):
     modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
+class codingkit_category_large(models.Model):
+    codingkit_category_large_idx = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50, default='')
+    value = models.CharField(max_length=50, default='')
+    dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
+
 class PrdTB(models.Model):
     prd_idx = models.AutoField(primary_key=True)
     prd_code = models.CharField(max_length=50, default='') #year(2020) + month(08) + trashcan(001), AI(300), kit count(1)
     title = models.CharField(max_length=50)
-    title2 = models.CharField(max_length=50,  null=True, blank=True) #img sub title
-    list = models.CharField(max_length=50,  null=True,  blank=True) #group by 있으면 list에 표시
-    img = models.CharField(max_length=50, default='')
-    gif = models.CharField(max_length=50, default='')
+    list = models.CharField(max_length=50,  null=True,  blank=True) #group by 있으면 list에 표시 - 상세페이지 이름으로 지정
+    category_large = models.ForeignKey(codingkit_category_large, on_delete=models.PROTECT, null=True, blank=True)
+    prd_list_img = models.CharField(max_length=50, default='')
+    prd_detail_img = models.CharField(max_length=50, default='')
     period = models.IntegerField(default='0')
     class_count = models.IntegerField(default='0')
     price = models.IntegerField(default='0')
@@ -50,7 +58,7 @@ class PrdTB(models.Model):
     option2_price = models.IntegerField(null=True, blank=True)
     option3 = models.CharField(max_length=50, blank=True)
     option3_price = models.IntegerField(null=True, blank=True)
-    goal = models.CharField(max_length=150)
+    category_sub = models.CharField(max_length=150)
     keyword = models.CharField(max_length=50, default = '') #search 용
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
@@ -58,7 +66,6 @@ class PrdTB(models.Model):
 
 class ItemInfoTB(models.Model):
     ItemInfo_idx = models.AutoField(primary_key=True)
-    #label_name = models.CharField(max_length=50, default='') # 페이지에서 title과 des를 연결해줄 이름- item 별로 넣기
     title = models.CharField(max_length=50)
     type = models.CharField(max_length=50) # text, img, link, download
     downdata = models.CharField(max_length=50, null=True, blank=True) # 실제 데이터 파일
@@ -169,8 +176,11 @@ class loungeListTB(models.Model):
     title = models.CharField(max_length=50)
     user = models.CharField(max_length=50)
     data_name = models.CharField(max_length=50, default='') #directory name
-    description = models.CharField(max_length=50, default='', blank=True)
+    search_title = models.CharField(max_length=150, default='', blank=True) #검색에 걸리고 싶은 단어
     video_id = models.CharField(max_length=150, default='')
+    down_mblock_code = models.CharField(max_length=50, default='', blank=True)
+    down_arduino_code = models.CharField(max_length=50, default='', blank=True)
+    diagram_img = models.CharField(max_length=50, default='', blank=True)
     dbstat = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
@@ -226,6 +236,7 @@ class couponTB(models.Model):
     coupon_idx = models.AutoField(primary_key=True)
     coupon_num = models.CharField(max_length=150, unique=True)
     coupon_name = models.CharField(max_length=150, default='')
+    coupon_type = models.IntegerField(default='0', blank=True) #100 : 즉시 강의실 열림(discount와는 쓸 수 없음)
     delivery_price = models.BooleanField(default=False) #False:배송비무료 , True:기존정책
     discount = models.IntegerField(default='0', blank=True)
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, default='', blank=True, null=True)
@@ -304,3 +315,22 @@ class refundTB(models.Model):
     card_type = models.CharField(max_length=10, default='', blank=True)
     refund_time = models.DateTimeField(default=timezone.now) #환불요청 날
     dbstat = models.CharField(max_length=50, default='A') #D : 환불완료
+
+
+class stat_class(models.Model):
+    stat_class_idx = models.AutoField(primary_key=True)
+    pay_email = models.CharField(max_length=50, default='', blank=True)
+    myclass = models.ForeignKey(MyClassListTB, on_delete=models.PROTECT)
+    prd_code = models.CharField(max_length=50, default='')
+    item_code = models.CharField(max_length=50, default='')  # list에 노출되는 이름
+    class_title = models.CharField(max_length=50, default='')
+    class_data = models.CharField(max_length=50, default='')
+    stime = models.DateTimeField(default=timezone.now)
+
+class stat_menu(models.Model):
+    stat_menu_idx = models.AutoField(primary_key=True)
+    user = models.CharField(max_length=50)
+    main_menu = models.CharField(max_length=50, default='', blank=True)
+    sub_menu = models.CharField(max_length=150, default='', blank=True)
+    info_search_etc = models.CharField(max_length=150, default='', blank=True)
+    stime = models.DateTimeField(default=timezone.now)

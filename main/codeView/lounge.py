@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from main.query import *
 from main.models import *
+from main.codeView.stat import stat_menu_step
 
 page_cnt = 6 # display count 노출되는 리스트 갯수
 
@@ -21,6 +22,8 @@ def lounge_page(request):
 
     lounge_info_paging = select_lounge_cnt(start_cnt, end_cnt)
 
+    stat_menu_step(request, "coding_lounge", "", "")
+
     context = {
         "lounge_list": lounge_info_paging,
         "category_list" : category_info,
@@ -36,15 +39,10 @@ def lounge_page(request):
 def lounge_page_paging(request):
     lounge_all_cnt = request.POST['lounge_all_cnt']  # payInfo total count
     paging_num = int(request.POST['paging_num'])  # 옮기고자 하는 paging 번호
-    sort = request.POST['sort']
-    category = request.POST['category']
     keyword = request.POST['search_input']
 
     if lounge_all_cnt == 0:
-        if category == "":
-            lounge_info = select_lounge()
-        else:
-            lounge_info = select_lounge_search(sort, category, keyword)
+        lounge_info = select_lounge_search(keyword)
         total = lounge_info.count()  # use paging
     else:
         total = lounge_all_cnt
@@ -62,16 +60,13 @@ def lounge_page_paging(request):
             start_cnt = end_cnt
         end_cnt = start_cnt + page_cnt
 
-    if category == "":
-        lounge_info_paging = select_lounge_cnt(start_cnt, end_cnt)
-    else:
-        lounge_info_paging = select_lounge_search_cnt(sort, category, keyword, start_cnt, end_cnt)
-    category_info = select_lounge_categoy()
+
+    lounge_info_paging = select_lounge_search_cnt(keyword, start_cnt, end_cnt)
+
+    stat_menu_step(request, "coding_lounge", "", keyword)
 
     context = {
         "lounge_list": lounge_info_paging,
-        "category_list": category_info,
-        "current_category": category,
         "last_page": int(last_page),
         "paging_num": paging_num,
         "page_cnt": page_cnt,
@@ -81,11 +76,19 @@ def lounge_page_paging(request):
 
 
 def loungeView_page(request):
-    lounge_video = request.POST['lounge_video']
+    lounge_video = request.POST.get('lounge_video', 0)
+    lounge_info = select_lounge_videoId(lounge_video)
 
-    context = {
-        "lounge_video": lounge_video,
-    }
+    stat_menu_step(request, "coding_lounge", "lounge_detail", lounge_info[0].title)
+    if lounge_info.count() > 0:
+        context = {
+            "lounge_video": lounge_video,
+            "lounge_info":lounge_info,
+        }
 
-    return render(request, 'lounge/coding_lounge_view.html', context)
+        return render(request, 'lounge/coding_lounge_view.html', context)
+
+    else:
+        return lounge_page(request)
+
 

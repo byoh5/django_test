@@ -31,14 +31,14 @@
             <ul class="thumb_list">
                  {% for list_detail in myclass_list_detail %}
                 <li>
-                    <img src={{list_detail.prd.img}} alt="코딩 라운지 리스트 썸네일">
+                    <img src={{list_detail.prd.prd_detail_img}} alt="코딩 라운지 리스트 썸네일">
                     <div class="text_area">
                         <span class="title">{{list_detail.item_code}}({{list_detail.prd.keyword}})</span>
                             {% if list_detail.play == 'D'%}
                              <p class="date"> 강의시작 전입니다.</p>
                              <p class="date">&nbsp;</p>
                             {% else %}
-                            <p class="writer">{{list_detail.play_time}} ~ </p>
+                            <p class="writer">{{list_detail.play_time }} ~ </p>
                             <p class="date"> {{list_detail.expire_time | date:'Y-m-d' }}</p>
                             {% endif %}
                         <a href="javascript:void(0);" onclick="javascript:goMyClass('{{list_detail.prd.prd_code}}', '{{list_detail.item_code}}', '{{list_detail.myclassList_idx}}', '{{list_detail.play}}');" class="btn brd_detail">강의 보기</a>
