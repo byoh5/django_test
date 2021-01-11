@@ -5,7 +5,7 @@ import random
 
 def stat_menu_step(request, main, sub, search):
     session = request.session.get('client_id', '')
-    user_id = request.session.get('user_id')
+    user_id = request.session.get('user_id', '')
 
     if user_id == '' and session == '':
         number_pool = string.digits
