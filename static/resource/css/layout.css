@@ -704,6 +704,41 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	padding:2.083em 0;
 }
 
+/* codingkit kitplus */
+.codingKit_list.detail .lecture_list.kitplus {
+	padding:0;
+	width:1100px;
+}
+.codingKit_list.detail .lecture_list.kitplus .detail_area {
+	margin-bottom:1.66em;
+	background-color:#fff;
+	border-radius:5px;
+	/*box-shadow:10px 10px 20px rgba(0,0,0,.1);*/
+}
+
+.codingKit_list .lecture_list.kitplus .prd_title{
+    font-size:40px;
+    padding-left:15px;
+}
+
+.codingKit_list .lecture_list.kitplus .prd_title_sub{
+   font-size:12px;
+   float:left;
+}
+
+.codingKit_list .lecture_list.kitplus .prd_title_sub .content_sub {
+   float:left;
+   color:gray;
+   padding-right:3px;
+   font-size:12px;
+}
+
+.codingKit_list .lecture_list.kitplus .info_detail {
+	margin:0 0.83em 2.083em;
+	padding:2.083em 0;
+}
+
+
 .info_detail .title {
 	position:relative;
 	padding-left:0.5em;
@@ -981,10 +1016,19 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	top:auto;
 	bottom:0;
 }
+
+
 .codingKit_list .filter_area.detail .lecture_info {
 	padding:0.83em;
 	border:1px solid #646464;
 }
+
+.codingKit_list .filter_area.detail .lecture_info .section {
+	color:#b14739;
+	font-size:18px;
+	font-weight:900;
+}
+
 .codingKit_list .filter_area.detail .lecture_info ul li {
 	margin-bottom:0.25em;
 	padding-bottom:0.25em;
@@ -1038,12 +1082,13 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 
 .codingKit_list.myClass {
 	align-items:stretch;
+	height:100%;
 }
 .codingKit_list.myClass .lecture_list.detail .precaution {
 	border-bottom:none;
 }
 .codingKit_list.myClass .filter_area.detail .lecture_info ul.lectureList > li {
-	margin:0;
+	margin-bottom:15px;
 	padding:0.25em 0;
 	border-bottom:1px solid #969696;
 }
@@ -1131,6 +1176,12 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	position:relative;
 	padding:0.83em;
 }
+
+.codingLounge_list ul li .text_area .search{
+	font-size:14px;
+	color:gray;
+}
+
 .codingLounge_list ul li .text_area span.title {
 	display:block;
 	font-size:0.83em;

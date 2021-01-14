@@ -41,8 +41,9 @@
                         <span>강의목록</span>
                         <div class="lecture_info">
                             <ul class="lectureList" id="lecture_accordion">
+                                <span class="section">Maker Class</span>
                                  <li class="active">
-                                    <span>환경구축</span>
+                                    <span>1-1. 환경구축</span>
                                     <ul class="submenu">
                                          {% for item_common_detail in myclass_common_detail %}
                                        <li>
@@ -92,9 +93,8 @@
                                          {% endfor %}
                                     </ul>
                                 </li>
-                                <br/>
                                  <li class="active">
-                                    <span>키트강의</span>
+                                    <span>1-2. 키트만들기</span>
                                     <ul class="submenu">
                                          {% for item_detail in myclass_detail %}
                                        <li>
@@ -144,9 +144,9 @@
                                          {% endfor %}
                                     </ul>
                                 </li>
-                                <br/>
+                                <span class="section">Study Class</span>
                                 <li class="active">
-                                     <span>세부강의</span>
+                                     <span>2-1. 문법/이론</span>
                                     <ul class="submenu">
                                          {% for sub_detail in myclass_sub_detail %}
                                        <li >
@@ -198,6 +198,59 @@
                                         {% endfor %}
                                     </ul>
                                 </li>
+                                 <li class="active">
+                                     <span>2-2. 키트미션</span>
+                                    <ul class="submenu">
+                                         {% for sub_section_detail in myclass_sub_section2_detail %}
+                                       <li >
+                                             <a href="javascript:getVideo('{{sub_section_detail.prd.prd_code}}', '{{sub_section_detail.data}}',  'sub_section2', '{{forloop.counter}}', '{{sub_section_detail.iteminfo_1}}', '{{sub_section_detail.iteminfo_2}}', '{{sub_section_detail.iteminfo_3}}', '{{sub_section_detail.iteminfo_4}}', '{{sub_section_detail.iteminfo_5}}');" class="classList">
+                                                 {{forloop.counter}}. {{sub_section_detail.title}}</a>
+
+                                           <!-- iteminfo1 -->
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_1_title" value="{{sub_section_detail.iteminfo_1.title}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_1_type" value="{{sub_section_detail.iteminfo_1.type}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_1_downdata" value="{{sub_section_detail.iteminfo_1.downdata}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_1_downdata_sub" value="{{sub_section_detail.iteminfo_1.downdata_sub}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_1_downdata_name" value="{{sub_section_detail.iteminfo_1.downdata_name}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_1_downdata_name_sub" value="{{sub_section_detail.iteminfo_1.downdata_name_sub}}">
+
+                                             <!-- iteminfo2 -->
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_2_title" value="{{sub_section_detail.iteminfo_2.title}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_2_type" value="{{sub_section_detail.iteminfo_2.type}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_2_downdata" value="{{sub_section_detail.iteminfo_2.downdata}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_2_downdata_sub" value="{{sub_section_detail.iteminfo_2.downdata_sub}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_2_downdata_name" value="{{sub_section_detail.iteminfo_2.downdata_name}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_2_downdata_name_sub" value="{{sub_section_detail.iteminfo_2.downdata_name_sub}}">
+
+                                            <!-- iteminfo3 -->
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_3_title" value="{{sub_detail.iteminfo_3.title}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_3_type" value="{{sub_detail.iteminfo_3.type}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_3_downdata" value="{{sub_detail.iteminfo_3.downdata}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_3_downdata_sub" value="{{sub_detail.iteminfo_3.downdata_sub}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_3_downdata_name" value="{{sub_detail.iteminfo_3.downdata_name}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_3_downdata_name_sub" value="{{sub_detail.iteminfo_3.downdata_name_sub}}">
+
+                                            <!-- iteminfo4 -->
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_4_title" value="{{sub_section_detail.iteminfo_4.title}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_4_type" value="{{sub_section_detail.iteminfo_4.type}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_4_downdata" value="{{sub_section_detail.iteminfo_4.downdata}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_4_downdata_sub" value="{{sub_section_detail.iteminfo_4.downdata_sub}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_4_downdata_name" value="{{sub_section_detail.iteminfo_4.downdata_name}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_4_downdata_name_sub" value="{{sub_section_detail.iteminfo_4.downdata_name_sub}}">
+
+                                           <!-- iteminfo5 -->
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_5_title" value="{{sub_section_detail.iteminfo_5.title}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_5_type" value="{{sub_section_detail.iteminfo_5.type}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_5_downdata" value="{{sub_section_detail.iteminfo_5.downdata}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_5_downdata_sub" value="{{sub_section_detail.iteminfo_5.downdata_sub}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_5_downdata_name" value="{{sub_section_detail.iteminfo_5.downdata_name}}">
+                                             <input type="hidden" id="sub_section2_{{forloop.counter}}_iteminfo_5_downdata_name_sub" value="{{sub_section_detail.iteminfo_5.downdata_name_sub}}">
+                                       </li>
+
+
+                                        {% endfor %}
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -239,9 +292,9 @@
         $(window).scroll(function() {
             var scroll_top = $(window).scrollTop();
             if (scroll_top >= $(".sub_visual").outerHeight()) {
-                $(".filter_area").addClass("scr");
+                $(".lecture_list").addClass("scr");
             } else {
-                $(".filter_area").removeClass("scr");
+                $(".lecture_list").removeClass("scr");
             }
         });
 
