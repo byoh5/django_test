@@ -1,9 +1,6 @@
-from django.shortcuts import render
+from main.codeView.main import main_page
 
 def index(request):
-    context = {
-        "naver": 0,
-    }
-    return render(request, 'main/index_runcoding.html', context)
+    return main_page(request)
 
 

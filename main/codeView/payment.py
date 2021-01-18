@@ -12,6 +12,9 @@ import string
 import random
 import requests
 import json
+
+from main.codeView.lecture import bonus_class
+
 pay_ok = 0
 pay_fail = 1
 pay_refund = 2
@@ -219,6 +222,7 @@ def pay_deposit(request, payway_info, pay_num):
                                               expire_time=expireTime, dbstat='D-deposit')
 
             myclass_list_info.save()
+        bonus_class(user_id, order_info[0].prd.prd_code, pay_num, 'D-deposit')
         delete_order_idx(order_info, pay_num)
 
     if prd_total_count > 1:
@@ -594,6 +598,8 @@ def pay_result(request):
                                                                   pay_num=pay_info[0].pay_num, item_code=item['item_code'],
                                                                   expire_time=expireTime)
                                 myclass_list_info.save()
+
+                            bonus_class(pay_info[0].pay_email, order_info[0].prd.prd_code, pay_info[0].pay_num, 'A')
                             delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
                     else:
                         order_info = select_order_idx(data, user_id)
@@ -606,6 +612,8 @@ def pay_result(request):
                                                                   pay_num=pay_info[0].pay_num, item_code=item['item_code'],
                                                                   expire_time=expireTime)
                                 myclass_list_info.save()
+
+                            bonus_class(user_id, order_info[0].prd.prd_code, pay_info[0].pay_num, 'A')
                             delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
             update_pay.save()
@@ -692,22 +700,41 @@ def refund(refund_info, refund_price):
     json_res = json_msg["response"]
     access_token = json_res["access_token"]
 
+    print(access_token)
+
     # get auth user
     post_data_cancle = {
         'amount': price,
         'reason':run_reason,
         'imp_uid':run_uid
     }
+
+    print(price, run_reason, run_uid)
     cancle_user_msg = requests.post(url='https://api.iamport.kr/payments/cancel/', data=json.dumps(post_data_cancle),
                                     headers={'Content-Type': 'application/json', 'Authorization': access_token})
     json_user_msg = cancle_user_msg.json()
     json_user_msg_res = json_user_msg["response"]
     json_user_msg_code = json_user_msg["code"]
 
-    if json_user_msg_code == 1: #이미취소된
-        return json_user_msg_code
-    elif json_user_msg_code == 0:
-        return json_user_msg_res
+    print(json_user_msg)
+    print(json_user_msg_res, json_user_msg_code)
+
+    new_refund = refund_info[0]
+    if json_user_msg_code == 0:
+        new_refund.card_code = json_user_msg_res["card_code"]
+        new_refund.card_name = json_user_msg_res["card_name"]
+        new_refund.card_number = json_user_msg_res["card_number"]
+        new_refund.card_type = json_user_msg_res["card_type"]
+        new_refund.channel = json_user_msg_res["channel"]
+
+    else:
+        new_refund.card_code = json_user_msg_code
+        new_refund.card_name = json_user_msg["message"]
+
+    new_refund.save()
+
+    return json_user_msg_code
+
 
 def run_naver_event(request):
     json_data = json.loads(request.body)
@@ -895,6 +922,7 @@ def run_callback(request):
                                                                           pay_num=pay_info[0].pay_num, item_code=item['item_code'],
                                                                           expire_time=expireTime, dbstat='D-naverco')
                                         myclass_list_info.save()
+                                    bonus_class(pay_info[0].pay_email, order_info[0].prd.prd_code, pay_info[0].pay_num, 'D-naverco')
                                     #delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
 
 

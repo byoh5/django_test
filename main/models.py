@@ -64,6 +64,21 @@ class PrdTB(models.Model):
     modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
+
+class bonus_prd(models.Model):
+    bonus_prd_idx = models.AutoField(primary_key=True)
+    targetPrd_1 = models.ForeignKey(PrdTB, related_name='targetPrd_1', on_delete=models.PROTECT) # target prd 구매자에게 bonus class가 들어감
+    targetPrd_2 = models.ForeignKey(PrdTB, related_name='targetPrd_2', on_delete=models.PROTECT) # target prd 구매자에게 bonus class가 들어감
+    targetPrd_3 = models.ForeignKey(PrdTB, related_name='targetPrd_3', on_delete=models.PROTECT, null=True, default='', blank=True) # target prd 구매자에게 bonus class가 들어감
+    bonus_prdCode = models.CharField(max_length=50, default='')
+    prd_list_img = models.CharField(max_length=50, default='')
+    title = models.CharField(max_length=50, default='')
+    keyword = models.CharField(max_length=50, default='')
+    period = models.IntegerField(default='0')
+    stime = models.DateTimeField(default=timezone.now)
+    cron =  models.CharField(max_length=50, default='R')  # D : done, R: ready, A: active
+    dbstat = models.CharField(max_length=50, default='D') # cron done이 되면 A로
+
 class ItemInfoTB(models.Model):
     ItemInfo_idx = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
@@ -81,7 +96,6 @@ class ItemCommonTB(models.Model):
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
     item_code = models.CharField(max_length=50, default='')# 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
     title = models.CharField(max_length=50)
-    time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0', null=True, blank=True)
     iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_1', on_delete=models.PROTECT, null=True, blank=True) #answer01
@@ -93,12 +107,29 @@ class ItemCommonTB(models.Model):
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
-class ItemSubTB(models.Model):
-    ItemSub_idx = models.AutoField(primary_key=True)
+
+class ItemSubKitTB(models.Model):
+    ItemSubKit_idx = models.AutoField(primary_key=True)
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
     item_code = models.CharField(max_length=50, default='')# 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
     title = models.CharField(max_length=50)
-    time = models.CharField(max_length=50)
+    data = models.CharField(max_length=150, default='')
+    description = models.CharField(max_length=150, default='') # 어떤 문법의 어떤 키트의 미션인지 설명남기기
+    iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_1', on_delete=models.PROTECT, null=True, blank=True) #answer01
+    iteminfo_2 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_2', on_delete=models.PROTECT, null=True, blank=True) #answer02
+    iteminfo_3 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_3', on_delete=models.PROTECT, null=True, blank=True) #answer03
+    iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
+    iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
+    dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
+
+class ItemSubTB(models.Model):
+    ItemSub_idx = models.AutoField(primary_key=True)
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
+    subKit = models.ForeignKey(ItemSubKitTB, on_delete=models.PROTECT, null=True, blank=True)
+    item_code = models.CharField(max_length=50, default='')# 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
+    title = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0', null=True, blank=True)
     iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_1', on_delete=models.PROTECT, null=True, blank=True) #answer01
@@ -110,12 +141,12 @@ class ItemSubTB(models.Model):
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
+
 class ItemTB(models.Model): #curriculum
     item_idx = models.AutoField(primary_key=True)
     item_code = models.CharField(max_length=50, default='') # 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT)
     title = models.CharField(max_length=50)
-    time = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0', null=True, blank=True)
     iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_1', on_delete=models.PROTECT, null=True, blank=True) #answer01
@@ -123,6 +154,28 @@ class ItemTB(models.Model): #curriculum
     iteminfo_3 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_3', on_delete=models.PROTECT, null=True, blank=True) #answer03
     iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
     iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
+    dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(auto_now=True, blank=True)
+
+class BonusItemTB(models.Model):
+    Bonusitem_idx = models.AutoField(primary_key=True)
+    item_code = models.CharField(max_length=50, default='')  # 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
+    prd = models.ForeignKey(bonus_prd, on_delete=models.PROTECT)
+    title = models.CharField(max_length=50) #강의실 상단에 쓰일 제목
+    subTitle = models.CharField(max_length=50, null=True, blank=True)  # 개행해서 쓰고 싶은 제목
+    data = models.CharField(max_length=150, default='')
+    order = models.IntegerField(default='0', null=True, blank=True)
+    iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='KitItemInfoTB_1', on_delete=models.PROTECT, null=True,
+                                   blank=True)  # answer01
+    iteminfo_2 = models.ForeignKey(ItemInfoTB, related_name='KitItemInfoTB_2', on_delete=models.PROTECT, null=True,
+                                   blank=True)  # answer02
+    iteminfo_3 = models.ForeignKey(ItemInfoTB, related_name='KitItemInfoTB_3', on_delete=models.PROTECT, null=True,
+                                   blank=True)  # answer03
+    iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='KitItemInfoTB_4', on_delete=models.PROTECT, null=True,
+                                   blank=True)  # answer04
+    iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='KitItemInfoTB_5', on_delete=models.PROTECT, null=True,
+                                   blank=True)  # answer05
     dbstat = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
@@ -160,7 +213,8 @@ class MyClassListTB(models.Model):
     myclassList_idx = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=50)
     pay_num = models.CharField(max_length=50, default='')
-    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True)
+    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, default='', null=True, blank=True)
+    bonus = models.ForeignKey(bonus_prd, on_delete=models.PROTECT, default='', null=True, blank=True)
     item_code = models.CharField(max_length=50, default='') # list에 노출되는 이름
     dbstat = models.CharField(max_length=50, default='A')
     play = models.CharField(max_length=50, default='D')  # 첫번째 play되는 데이터 남기기
@@ -231,6 +285,15 @@ class runcodingTB(models.Model):
     mail_port = models.CharField(max_length=50)
     imp_key = models.CharField(max_length=150)
     imp_secret = models.CharField(max_length=300)
+    dbstat = models.CharField(max_length=50, default='A')
+
+class runcoding_bizTB(models.Model):
+    runcodingbiz_idx = models.AutoField(primary_key=True)
+    biz_id = models.CharField(max_length=50)
+    biz_pw = models.CharField(max_length=50)
+    token = models.CharField(max_length=500, default='', blank=True)
+    expire = models.DateTimeField(default='', blank=True)
+    dbstat = models.CharField(max_length=50, default='A')
 
 class couponTB(models.Model):
     coupon_idx = models.AutoField(primary_key=True)
@@ -334,3 +397,13 @@ class stat_menu(models.Model):
     sub_menu = models.CharField(max_length=150, default='', blank=True)
     info_search_etc = models.CharField(max_length=150, default='', blank=True)
     stime = models.DateTimeField(default=timezone.now)
+
+
+class popup(models.Model):
+    popup_idx = models.AutoField(primary_key=True)
+    img = models.CharField(max_length=50, default='', blank=True)
+    text = models.CharField(max_length=50, default='', blank=True)
+    link = models.CharField(max_length=50, default='', blank=True)
+    btn_img = models.CharField(max_length=50, default='', blank=True)
+    expire_time = models.DateTimeField(default='')
+    dbstat = models.CharField(max_length=50, default='R')  # D : done, R: ready, A: active

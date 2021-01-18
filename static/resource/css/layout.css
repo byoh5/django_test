@@ -83,6 +83,46 @@ body,th,td,input,select,textarea,button {font-size:24px;}
     text-align:center;
 }
 
+.codingLounge_list .filter_area .search_area .input_area_admin {
+    box-sizing:border-box;
+	padding:0.5em;
+	display:flex;
+	justify-content:flex-start;
+	align-items:center;
+	width:100%;
+}
+
+.codingLounge_list .filter_area .search_area .input_area_admin input{
+    font-size:0.75em;
+    align-items:center;
+    border-radius:5em;
+    height: 100%; /* 높이값 초기화 */
+    line-height : normal; /* line-height 초기화 */
+    padding: .4em .5em;
+    font-family: inherit; /* 폰트 상속 */
+    border: 1px solid #eee; /*#999; */
+    outline-style: none; /* 포커스시 발생하는 효과 제거를 원한다면 */
+    -webkit-appearance: none; /* 브라우저별 기본 스타일링 제거 */
+
+}
+
+.codingLounge_list .filter_area .search_area .input_area_admin button {
+	display:block;
+	width:100%;
+	color:#646464;
+	font-size:0.63em;
+	text-align:center;
+	border:1px solid #dcdcdc;
+	border-radius:5em;
+	background:none;
+	cursor:pointer;
+	align-items:center;
+
+	-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
 .excel {
     color:#fff;
     background-color:#101a4e;
@@ -704,36 +744,36 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	padding:2.083em 0;
 }
 
-/* codingkit kitplus */
-.codingKit_list.detail .lecture_list.kitplus {
+/* codingkit Bonus */
+.codingKit_list.detail .lecture_list.Bonus_list {
 	padding:0;
 	width:1100px;
 }
-.codingKit_list.detail .lecture_list.kitplus .detail_area {
+.codingKit_list.detail .lecture_list.Bonus_list .detail_area {
 	margin-bottom:1.66em;
 	background-color:#fff;
 	border-radius:5px;
 	/*box-shadow:10px 10px 20px rgba(0,0,0,.1);*/
 }
 
-.codingKit_list .lecture_list.kitplus .prd_title{
+.codingKit_list .lecture_list.Bonus_list .prd_title{
     font-size:40px;
     padding-left:15px;
 }
 
-.codingKit_list .lecture_list.kitplus .prd_title_sub{
+.codingKit_list .lecture_list.Bonus_list .prd_title_sub{
    font-size:12px;
    float:left;
 }
 
-.codingKit_list .lecture_list.kitplus .prd_title_sub .content_sub {
+.codingKit_list .lecture_list.Bonus_list .prd_title_sub .content_sub {
    float:left;
    color:gray;
    padding-right:3px;
    font-size:12px;
 }
 
-.codingKit_list .lecture_list.kitplus .info_detail {
+.codingKit_list .lecture_list.Bonus_list .info_detail {
 	margin:0 0.83em 2.083em;
 	padding:2.083em 0;
 }
@@ -1030,10 +1070,22 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 
 .codingKit_list .filter_area.detail .lecture_info ul li {
-	margin-bottom:0.25em;
-	padding-bottom:0.25em;
-	border-bottom:1px solid #dcdcdc;
+	margin-top:0.25em;
+	padding-top:0.25em;
+	border-top:1px solid #dcdcdc;
 }
+
+.codingKit_list .filter_area.detail .lecture_info ul li .subkit{
+    border-top: none;
+}
+
+.codingKit_list .filter_area.detail .lecture_info ul li:first-child {
+    margin-top:0;
+	padding-top:0;
+	border-top:0;
+}
+
+
 .codingKit_list .filter_area.detail .lecture_info ul li:last-child {
 	margin-bottom:0;
 	padding-bottom:0;
@@ -1092,6 +1144,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	padding:0.25em 0;
 	border-bottom:1px solid #969696;
 }
+
 .codingKit_list.myClass .filter_area.detail .lecture_info ul.lectureList li > span {
 	display:block;
 	width:100%;
@@ -1115,9 +1168,14 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 
 
-.codingKit_list .filter_area.detail .lecture_info ul.lectureList li ul.submenu li.now a,
+.codingKit_list .filter_area.detail .lecture_info ul.lectureList li ul.submenu li.now a{
+    color:#b14739;
+    font-weight:bold;
+}
+
 .codingKit_list .filter_area.detail .lecture_info ul.lectureList li ul.submenu li:hover a {
 	color:#b14739;
+	text-decoration:underline;
 }
 
 .codingKit_list .filter_area.detail .lecture_info ul.lectureList li ul.submenu {

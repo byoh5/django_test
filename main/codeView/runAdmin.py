@@ -487,16 +487,25 @@ def user_refund(request):
     new_refund = refund_info[0]
     new_refund.reason = refund_msg
     new_refund.refund_price = refund_price
-    new_refund.dbstat = 'D'
+
     if refund_info[0].pay_way != payway_deposit:
-        if response is not 1:
-            new_refund.card_code = response["card_code"]
-            new_refund.card_name = response["card_name"]
-            new_refund.card_number = response["card_number"]
-            new_refund.card_type = response["card_type"]
-            new_refund.channel = response["channel"]
+        if response == 0:
+            new_refund.dbstat = 'D'
+    else:
+        new_refund.dbstat = 'D'
 
     new_refund.save()
+
+    myclass_list = select_myclass_list_payNum_active(user_id, pay_num)
+    for class_list in myclass_list:
+        if class_list.prd != None:
+            new_myclass = class_list
+            new_myclass.dbstat = 'D-refund'
+            new_myclass.save()
+        elif class_list.bonus != None:
+            new_myclass = class_list
+            new_myclass.dbstat = 'D-refund'
+            new_myclass.save()
 
     return refund_search(request)
 

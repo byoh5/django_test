@@ -25,14 +25,62 @@ def myclass_list_page(request):
     else:
         return render(request, 'login/login.html')
 
+def Bonus_page(request):
+    prdCode = request.POST.get('prdCode', '')
+    if prdCode == '':
+        return myclass_list_page(request)
+
+    itemCode = request.POST['itemCode']
+
+    myclass_idx = request.POST['myclass_idx']
+    play = request.POST['myclass_play']
+    user_id = request.session.get('user_id')
+    session = request.session.get('client_id')
+
+    stat_menu_step(request, "myclass_list", "BonusClass", prdCode + "||" + itemCode)
+
+    if user_id is not None:
+        if checkSession(session, user_id):
+            item_Bonus_info = select_class_item_Bonus(prdCode, itemCode)
+
+            print(prdCode, itemCode)
+            print(item_Bonus_info.count())
+
+            print(item_Bonus_info[0].iteminfo_2.downdata_name)
+
+            if item_Bonus_info.count() > 0:
+                context = {
+                    "Bonus_list": item_Bonus_info,
+                    "data" : item_Bonus_info[0].data,
+                    "title": item_Bonus_info[0].title,
+                    "subTitle": item_Bonus_info[0].subTitle,
+                    "myclass_idx": myclass_idx,
+                    "play": play,
+                }
+                return render(request, 'myclass/myclass_Bonus.html', context)
+        else:
+            disableSession(user_id, request)
+            return render(request, 'login/login.html')
+    else:
+        return render(request, 'login/login.html')
+
 
 def myclass_page(request):
     prdCode = request.POST.get('prdCode', '')
     if prdCode == '':
        return myclass_list_page(request)
 
+    print(prdCode)
+
+    bonus_code = prdCode.split('_')
+
+    print(bonus_code)
+
+    if bonus_code[0] == 'bonus':
+        return Bonus_page(request)
 
     itemCode = request.POST['itemCode']
+
     myclass_idx = request.POST['myclass_idx']
     play = request.POST['myclass_play']
     user_id = request.session.get('user_id')

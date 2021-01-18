@@ -17,32 +17,32 @@
         </div>
     </div>
 
-    <div class="codingLounge_list" style="margin-left:300px;">
+    <div class="codingLounge_list" >
         <div class="filter_area fixed">
             <div class="search_area">
-                <div class="input_area_lounge">
+                <div class="input_area_admin">
                      <input type="date" name="start_date" id="start_date" value="{{start_date}}">
                 </div>
-                <div class="input_area_lounge">
+                <div class="input_area_admin">
                      <input type="date" name="end_date" id="end_date" value="{{end_date}}">
                 </div>
-                <div class="input_area_lounge">
-                      <select id="status" name="status" style="width:200px; height:35px; border:1px solid #d4d4d4; line-height:30px; font-size:12px;">
-                        <option value="0">-----------사용자 상태------</option>
+                <div class="input_area_admin">
+                      <select id="status" name="status" style="width:120px; height:35px; border:1px solid #d4d4d4; line-height:30px; font-size:12px;">
+                        <option value="0">사용자 상태</option>
                         {% for userStatus in userStatus_info %}
                             <option value={{userStatus.userStatus_idx}}>{{userStatus.userStatus}}</option>
                         {% endfor %}
                      </select>
                 </div>
-                <div class="input_area_lounge">
-                      <select id="page_cnt" name="page_cnt" style="width:60px; height:35px; border:1px solid #d4d4d4; line-height:30px; font-size:12px;">
+                <div>
+                      <select id="page_cnt" name="page_cnt" style="width:50px; height:35px; border:1px solid #d4d4d4; line-height:30px; font-size:12px;">
                         <option value="10">10</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
                      </select>
                 </div>
-                <div class="input_area_lounge" style="margin-left:-150px;">
-                     <input type="text" name="search_box" id="search_box" value='{{search}}' placeholder="아이디 or 주문번호">
+                <div class="input_area_admin" >
+                     <input type="text" name="search_box" id="search_box" value='{{search}}' placeholder="아이디 or 주문번호" style="width:100%;">
                 </div>
                  <div class="btn_area">
                     <a class="btn" href="javascript:void(0);" onclick="javascript:goSearch(1);">&nbsp;조회하기&nbsp;</a>
@@ -51,11 +51,11 @@
         </div>
     </div>
 
-    <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-bottom:10px;">total : {{total_count}}
+    <div style="width: 100%; font-size: 20px !important; padding-bottom:10px;">total : {{total_count}}
         <button id="excel" class="excel" type="button" onclick="fnExcelReport('payList');">Excel</button>
     </div>
     <div style="overflow: hidden; position: relative; border: 0px; width: 100%;">
-        <table id="payList" style="margin-left: 300px; width: 1130px;">
+        <table id="payList" style="width:100%;">
             <thread>
                 <tr class="row">
                     <th class="admin_list_check">&nbsp;</th>
@@ -139,7 +139,7 @@
         </div>
     </div>
 
-    <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-top:50px; padding-bottom:150px;">
+    <div style="width:100%; font-size: 20px !important; padding-top:50px; padding-bottom:150px;">
         <button id="delivery" type="button" class="delivery_chg" onClick="javascript:change('all');">배송중으로 변경</button>
     </div>
 </div>

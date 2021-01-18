@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from main.query import select_register
 from main.codeView.comunity import *
+from main.codeView.main import *
 
 import string
 import random
@@ -41,10 +42,7 @@ def contact_email(request):
     subject = "[b2b] " + email
 
     sendEmail("runcoding@naver.com", subject, text)
-    context = {
-        "naver": 0,
-    }
-    return render(request, 'main/index_runcoding.html', context)
+    return main_page(request)
 
 def info_email(request):
     email = request.POST['email']

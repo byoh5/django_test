@@ -3,6 +3,8 @@ from main.models import *
 
 # Register your models here.
 
+
+
 class RegisterAdmin(admin.ModelAdmin):
     list_display = ['regi_idx', 'regi_email', 'regi_name', 'regi_phone', 'stime', 'dbstat', 'modified'] # 커스터마이징 코드
     list_display_links = ['regi_email', 'regi_name']
@@ -78,6 +80,20 @@ class ItemSubTBAdmin(admin.ModelAdmin):
 
 admin.site.register(ItemSubTB, ItemSubTBAdmin)
 
+class ItemSubKitTBAdmin(admin.ModelAdmin):
+    list_display = ['ItemSubKit_idx', 'prd_name', 'prd_code', 'item_code', 'title', 'description'] # 커스터마이징 코드
+
+    def prd_name(self, obj):
+        return obj.prd.title
+
+    def prd_code(self, obj):
+        return obj.prd.prd_code
+
+    list_display_links = ['item_code', 'title', 'description']
+    search_fields = ['item_code', 'title', 'description']
+
+admin.site.register(ItemSubKitTB, ItemSubKitTBAdmin)
+
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'title', 'order'] # 커스터마이징 코드
 
@@ -91,6 +107,20 @@ class ItemAdmin(admin.ModelAdmin):
     ordering = ['-order']
 
 admin.site.register(ItemTB, ItemAdmin)
+
+class BonusItemTBAdmin(admin.ModelAdmin):
+    list_display = ['get_name', 'title', 'subTitle', 'order'] # 커스터마이징 코드
+
+    def get_name(self, obj):
+        return obj.prd.bonus_prdCode
+
+    get_name.short_description = 'prd code'  # Renames column
+
+    list_display_links = ['title', 'subTitle']
+    search_fields = ['title', 'subTitle']
+    ordering = ['-order']
+
+admin.site.register(BonusItemTB, BonusItemTBAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['order_idx', 'user_id', 'get_name', 'count', 'order_time', 'dbstat'] # 커스터마이징 코드
@@ -134,16 +164,12 @@ admin.site.register(PayTB, PayAdmin)
 
 
 class MyClassListAdmin(admin.ModelAdmin):
-    list_display = ['myclassList_idx', 'pay_num', 'user_id', 'get_name', 'start_time', 'expire_time', 'dbstat'] # 커스터마이징 코드
+    list_display = ['myclassList_idx', 'pay_num', 'user_id', 'item_code', 'start_time', 'expire_time', 'dbstat'] # 커스터마이징 코드
 
-    list_filter = ['start_time', 'expire_time','dbstat']
-    def get_name(self, obj):
-        return obj.prd.prd_code
+    list_filter = ['dbstat', 'item_code']
 
-    get_name.short_description = 'prd code'  # Renames column head
-
-    list_display_links = ['user_id']
-    search_fields = ['user_id', 'pay_num']
+    list_display_links = ['user_id','item_code']
+    search_fields = ['user_id', 'pay_num','item_code']
 
 admin.site.register(MyClassListTB, MyClassListAdmin)
 
@@ -183,6 +209,7 @@ admin.site.register(statTB, statAdmin)
 
 admin.site.register(danal_confirmTB)
 admin.site.register(runcodingTB)
+admin.site.register(runcoding_bizTB)
 
 class couponAdmin(admin.ModelAdmin):
     list_display = ['coupon_num', 'coupon_name', 'delivery_price', 'period', 'discount','expire']  # 커스터마이징 코드
@@ -230,24 +257,55 @@ class PayWayAdmin(admin.ModelAdmin):
 
 admin.site.register(PayWayTB, PayWayAdmin)
 
+class refundTBAdmin(admin.ModelAdmin):
+    list_display = ['user_name', 'user_email', 'prd_title', 'pay_way', 'refund_time', 'dbstat'] # 커스터마이징 코드
 
-admin.site.register(refundTB)
+    list_filter = ['dbstat']
+    list_display_links = ['user_name', 'user_email', 'prd_title']
+    search_fields = ['user_name', 'user_email', 'prd_title', 'pay_way']
+
+admin.site.register(refundTB, refundTBAdmin)
 
 
 class stat_classAdmin(admin.ModelAdmin):
     list_display = ['pay_email', 'item_code', 'class_title', 'class_data', 'stime'] # 커스터마이징 코드
 
-    list_filter = ['stat_class_idx']
+    list_filter = ['item_code', 'class_title']
     list_display_links = ['pay_email', 'item_code', 'class_title']
     search_fields = ['pay_email', 'item_code', 'class_title']
 
 admin.site.register(stat_class, stat_classAdmin)
 
 class stat_menuAdmin(admin.ModelAdmin):
-    list_display = ['user', 'main_menu', 'sub_menu', 'info_search_etc'] # 커스터마이징 코드
+    list_display = ['user', 'main_menu', 'sub_menu', 'info_search_etc', 'stime'] # 커스터마이징 코드
 
-    list_filter = ['stat_menu_idx']
+    list_filter = ['main_menu']
     list_display_links = ['user', 'main_menu']
-    search_fields = ['user', 'main_menu', 'sub_menu', 'search_title']
+    search_fields = ['user', 'main_menu', 'sub_menu', 'info_search_etc', 'stime']
 
 admin.site.register(stat_menu, stat_menuAdmin)
+
+class bonus_prdAdmin(admin.ModelAdmin):
+    list_display = ['target1_name', 'target2_name', 'bonus_prdCode', 'dbstat'] # 커스터마이징 코드
+
+    def target1_name(self, obj):
+        return obj.targetPrd_1.title
+
+    def target2_name(self, obj):
+        return obj.targetPrd_2.title
+
+    list_filter = ['dbstat']
+    list_display_links = ['bonus_prdCode', 'dbstat']
+    search_fields = ['target1_name', 'target2_name', 'bonus_prdCode', 'dbstat']
+
+admin.site.register(bonus_prd, bonus_prdAdmin)
+
+
+class popupAdmin(admin.ModelAdmin):
+    list_display = ['img', 'text', 'link', 'btn_img', 'expire_time', 'dbstat'] # 커스터마이징 코드
+
+    list_filter = ['dbstat']
+    list_display_links = ['img', 'text', 'link', 'btn_img']
+    search_fields = ['img', 'text', 'link', 'dbstat']
+
+admin.site.register(popup, popupAdmin)

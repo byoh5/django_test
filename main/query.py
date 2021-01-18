@@ -264,6 +264,14 @@ def select_myclass_list_play(myclass_idx):
     myclass_list_info = MyClassListTB.objects.filter(myclassList_idx=myclass_idx)
     return myclass_list_info
 
+def select_myclass_list_bonus(user_id, prd_code, item_code):
+    myclass_list_info = MyClassListTB.objects.filter(user_id=user_id, bonus__bonus_prdCode=prd_code, item_code=item_code, dbstat='A')
+    return myclass_list_info
+
+def select_myclass_list_prd(prd_code):
+    myclass_list_info = MyClassListTB.objects.filter(prd__prd_code=prd_code, dbstat='A')
+    return myclass_list_info
+
 def select_class_category_lar_list():
     category_large_info = codingkit_category_large.objects.filter(dbstat='A')
     return category_large_info
@@ -291,6 +299,9 @@ def select_prd_category_search(large, keyword):
 
     return prd_info
 
+def select_bonus_item(prd_code):
+    item_info = BonusItemTB.objects.filter(prd__bonus_prdCode=prd_code, dbstat='A')
+    return item_info
 
 def select_item_group(prd_code):
     item_info = ItemTB.objects.filter(prd__prd_code=prd_code, dbstat='A').values('item_code').annotate(max_count=Count('item_code'))
@@ -316,6 +327,9 @@ def select_class_item_sub_detail(prd_code, item_code):
     item_info = ItemSubTB.objects.filter(prd__prd_code=prd_code, item_code=item_code, dbstat='A').order_by('order')
     return item_info
 
+def select_class_item_Bonus(prd_code, item_code):
+    item_info = BonusItemTB.objects.filter(prd__bonus_prdCode=prd_code, item_code=item_code, dbstat='A').order_by('order')
+    return item_info
 
 def select_lounge():
     lounge_info = loungeListTB.objects.filter(dbstat='A').order_by('-loungeList_idx')
@@ -367,8 +381,12 @@ def select_comunity_category(idx):
     return comunity_info
 
 def select_runcoding():
-    runcoding_info = runcodingTB.objects.filter(runcoding_idx=1)
+    runcoding_info = runcodingTB.objects.filter(dbstat='A')
     return runcoding_info
+
+def select_runcoding_biz():
+    runcoding_biz_info = runcoding_bizTB.objects.filter(dbstat='A')
+    return runcoding_biz_info
 
 def select_myCoupon(user_id):
     myCoupon_info = myCouponTB.objects.filter(user__regi_email=user_id, dbstat='A')
@@ -441,6 +459,19 @@ def select_refund_search_cnt(search, start_datetime_filter, end_datetime_filter,
     refund_info = refundTB.objects.filter(query_search).order_by(sort_order)[start_cnt:end_cnt]
 
     return refund_info
+
+def select_bonus_cron():
+    bonus_info = bonus_prd.objects.filter(cron='A', dbstat='A')
+    return bonus_info
+
+def select_bonus_prd(prd_code):
+    bonus_info = bonus_prd.objects.filter(Q(targetPrd_1__prd_code=prd_code, dbstat='A') | Q(targetPrd_2__prd_code=prd_code, dbstat='A')
+                                           | Q(targetPrd_3__prd_code=prd_code, dbstat='A'))
+    return bonus_info
+
+def select_poopup_active():
+    popup_info = popup.objects.filter(dbstat='A')
+    return popup_info
 
 def update_user_addr(user_id, add01,add02,add03):
     user_info = select_register(user_id)

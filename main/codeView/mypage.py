@@ -180,10 +180,15 @@ def mypage_order_refund(request):
             order_info = select_order_info(idx, user_id)
             myclass_list = select_myclass_list_payNum_active(user_id, pay_num)
             for class_list in myclass_list:
-                if class_list.prd.prd_code == order_info[0].prd.prd_code: #요청한 키트의 강의만 block
-                    new_myclass = class_list
-                    new_myclass.dbstat = 'D-refund'
-                    new_myclass.save()
+                if class_list.prd != None:
+                    if class_list.prd.prd_code == order_info[0].prd.prd_code: #요청한 키트의 강의만 block
+                        new_myclass = class_list
+                        new_myclass.dbstat = 'D-refund'
+                        new_myclass.save()
+                elif class_list.bonus != None:
+                        new_myclass = class_list
+                        new_myclass.dbstat = 'D-refund'
+                        new_myclass.save()
 
             option1_price = 0
             option2_price = 0

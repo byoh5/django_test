@@ -17,23 +17,23 @@
         </div>
     </div>
 
-    <div class="codingLounge_list" style="margin-left:300px;">
+    <div class="codingLounge_list" >
         <div class="filter_area fixed">
             <div class="search_area">
-                <div class="input_area_lounge">
+                <div class="input_area_admin">
                      <input type="date" name="start_date" id="start_date" value="{{start_date}}">
                 </div>
-                <div class="input_area_lounge">
+                <div class="input_area_admin">
                      <input type="date" name="end_date" id="end_date" value="{{end_date}}">
                 </div>
-                <div class="input_area_lounge">
+                <div class="input_area_admin">
                       <select id="page_cnt" name="page_cnt" style="width:60px; height:35px; border:1px solid #d4d4d4; line-height:30px; font-size:12px;">
                         <option value="10">10</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
                      </select>
                 </div>
-                <div class="input_area_lounge" style="margin-left:-220px;">
+                <div class="input_area_admin">
                      <input type="text" name="search_box" id="search_box" value='{{search}}' placeholder="아이디 or 주문번호">
                 </div>
                  <div class="btn_area">
@@ -43,10 +43,10 @@
         </div>
     </div>
 
-    <div style="margin-left: 300px; width: 1130px; font-size: 20px !important; padding-bottom:10px;">total : {{total_count}}
+    <div style="width: 1120px; font-size: 20px !important; padding-bottom:10px;">total : {{total_count}}
     </div>
     <div style="overflow: hidden; position: relative; border: 0px; width: 100%;">
-        <table id="payList" style="margin-left: 300px; width: 1130px;">
+        <table id="payList" style="width:100%;">
             <thread>
                 <tr class="row">
                     <th class="admin_list">이름</th>
@@ -61,6 +61,7 @@
                     <th class="admin_list_id">환불금액</th>
                     <th class="admin_list_id">메세지</th>
                     <th class="admin_list">환불취소</th>
+                    <th class="admin_list">환불결과</th>
                     <th class="admin_list">환불</th>
                 </tr>
             </thread>
@@ -123,6 +124,11 @@
                     <td class="admin_list_body">
                         {% if refund.dbstat == 'A' %}
                             <a href="javascript:void(0);" onClick="javascript:rollback('{{refund.refund_idx}}', '{{paging_num}}');" style="cursor:pointer;">환불취소</a>
+                        {% endif %}
+                    </td>
+                    <td class="admin_list_body">
+                        {% if refund.dbstat == 'A' %}
+                            <a href="javascript:void(0);" onClick="javascript:alert('code : {{refund.card_code}}\n msg: {{refund.card_name}}');" style="cursor:pointer;">결과확인</a>
                         {% endif %}
                     </td>
                     <td class="admin_list_body">

@@ -251,6 +251,15 @@
                 $("#res_msg").text("결제 결과는 구매내역에서 확인하실 수 있습니다. 강의용 메일주소로 로그인 후 사용가능 합니다.");
                 $('div.modal').modal();
             }
+
+
+            var popup_cnt = '{{popup_cnt}}';
+
+            if (popup_cnt > 0)
+            {
+                var option = "width = 500, height = 500, top = 100, left = 200, location = no)"
+                window.open("popup/", "test", option);
+            }
         });
 
         function sendEmail()

@@ -3,7 +3,10 @@ from django.shortcuts import render, redirect
 from main.query import *
 from main.models import *
 from main.codeView.email import *
+from main.codeView.main import *
+
 import bcrypt
+
 
 
 message_ok = 200
@@ -15,10 +18,7 @@ def login_page(request):
     return render(request, 'login/login.html')
 
 def naver_page(request):
-    context = {
-        "naver": 1,
-    }
-    return render(request, 'main/index_runcoding.html', context)
+    return main_naver_page(request)
 
 def login(request):
     if request.method == "POST":
@@ -60,8 +60,5 @@ def logout(request):
     request.session['client_id'] = ''
     request.session['user_id'] = ''
     request.session['runcoding'] = 0
-    context = {
-        "naver": 0,
-    }
-    return render(request, 'main/index_runcoding.html', context)
+    return main_page(request)
 
