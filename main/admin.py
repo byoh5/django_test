@@ -272,7 +272,7 @@ class stat_classAdmin(admin.ModelAdmin):
 
     list_filter = ['item_code', 'class_title']
     list_display_links = ['pay_email', 'item_code', 'class_title']
-    search_fields = ['pay_email', 'item_code', 'class_title']
+    search_fields = ['pay_email', 'item_code', 'class_title', 'class_data']
 
 admin.site.register(stat_class, stat_classAdmin)
 

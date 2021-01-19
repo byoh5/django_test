@@ -819,6 +819,15 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	padding-top:80px;
 }
 
+.info_detail .point_content_small {
+	position:relative;
+	font-size:0.73em;
+	font-weight:400;
+	color:#b14739;
+	padding-top:20px;
+	padding-bottom:10px;
+}
+
 .info_detail .point_content_faq{
 	position:relative;
 	font-size:0.73em;
@@ -841,7 +850,7 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	font-size:0.6em;
 	font-weight:400;
 	color:gray;
-	padding-bottom:20px;
+	padding-bottom:10px;
 }
 
 .info_detail .content_faq {
@@ -1076,6 +1085,8 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 
 .codingKit_list .filter_area.detail .lecture_info ul li .subkit{
+    margin-top:0;
+	padding-top:0;
     border-top: none;
 }
 

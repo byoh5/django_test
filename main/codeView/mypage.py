@@ -75,9 +75,8 @@ def mypage_order_detail(request):
         delivery_time =""
         play_time = ""
 
-        stat_menu_step(request, "myprofile", "myorder_deatil", pay_info[0].pay_num)
-
         if pay_info.count() > 0 :
+            stat_menu_step(request, "myprofile", "myorder_deatil", pay_info[0].pay_num)
             if pay_info[0].coupon_num != "" :
                 mycoupon_info = select_myCoupon_couponNum(user_id, pay_info[0].coupon_num)
                 if mycoupon_info.count() > 0:
