@@ -30,7 +30,7 @@
         <img class="bg right" src="{% static 'resource/img/main/bg_sec02right.png' %}" alt="right bg">
 
         <div class="video_content">
-            <video id="video_ctrl" width ="860" height="500" id="a_video" controls autoplay controlsList="nodownload">
+            <video id="video_ctrl" width ="860" height="500" id="a_video" controls autoplay playsinline controlsList="nodownload">
                     <source src="{% static 'resource/data/main/runcoding.mp4' %}" type="video/mp4"> >
              </video>
         </div>
@@ -104,8 +104,8 @@
     <section class="section03">
         <div class="makers_area">
              <div class="video_content03">
-                <video width ="600" height="290"  controls  controlsList="nodownload" poster="{% static 'resource/img/lounge/trashcan/trashcan_xmas.jpg' %}">
-                    <source src="{% static 'resource/data/main/X_mas.mp4' %}" type="video/mp4">
+                <video width ="600" height="290"  controls  controlsList="nodownload" poster="{% static 'resource/img/lounge/neopixel/neopixel_hi.jpg' %}">
+                    <source src="{% static 'resource/data/main/hello_neopixel.mp4' %}" type="video/mp4">
                 </video>
               </div>
 
@@ -258,7 +258,7 @@
             if (popup_cnt > 0)
             {
                 var option = "width = 500, height = 500, top = 100, left = 200, location = no)"
-                window.open("popup/", "test", option);
+                window.open("popup/", "run_info", option);
             }
         });
 
