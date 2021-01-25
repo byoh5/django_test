@@ -212,7 +212,7 @@ admin.site.register(runcodingTB)
 admin.site.register(runcoding_bizTB)
 
 class couponAdmin(admin.ModelAdmin):
-    list_display = ['coupon_num', 'coupon_name', 'delivery_price', 'period', 'discount','expire']  # 커스터마이징 코드
+    list_display = ['coupon_num', 'coupon_name', 'delivery_price', 'period', 'discount','expire', 'dbstat']  # 커스터마이징 코드
 
     list_filter = ['expire']
 

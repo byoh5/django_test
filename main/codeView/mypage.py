@@ -366,6 +366,28 @@ def mypage_add_coupon(request):
 
                             my_addCoupon = myCouponTB(user=user_info[0], coupon=add_coupon_info[0], used=True, expire= timezone.now())
                             my_addCoupon.save()
+                    elif add_coupon_info[0].coupon_type == 200: #1회성
+                        # 강의실 열어
+                        item_info = select_item_group(add_coupon_info[0].prd.prd_code)
+                        period = add_coupon_info[0].prd.period * 30
+                        expireTime = timezone.now() + timezone.timedelta(days=period)
+                        for item in item_info:
+                            myclass_list_info = MyClassListTB(user_id=user_id, prd=add_coupon_info[0].prd,
+                                                              pay_num=add_coupon_info[0].coupon_num,
+                                                              item_code=item['item_code'],
+                                                              expire_time=expireTime, dbstat='A')
+
+                        if item_info.count() > 0 :
+                            myclass_list_info.save()
+
+                            my_addCoupon = myCouponTB(user=user_info[0], coupon=add_coupon_info[0], used=True,
+                                                      expire=timezone.now())
+                            my_addCoupon.save()
+
+                            off_coupon = add_coupon_info[0]
+                            off_coupon.dbstat = 'D'
+                            off_coupon.save()
+
                     else:
                         period = add_coupon_info[0].period * 30  # preiod * 개월(30)
                         expireTime = timezone.now() + timezone.timedelta(days=period)

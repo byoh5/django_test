@@ -1,4 +1,7 @@
+import os
 from datetime import datetime
+
+from django.http import HttpResponse
 from main.codeView.payment import *
 
 pay_status_ok = 1
@@ -544,3 +547,37 @@ def user_refund_rollback(request):
     new_refund.save()
 
     return refund_search(request)
+
+def upload_page(request):
+    return render(request, 'runAdmin/upload_file.html')
+
+def upload_file(request):
+    print(os.path.realpath(__file__))
+
+    if request.method == 'POST':
+        #/home/ubuntu/django_test/main/codeView/runAdmin.py
+        UPLOAD_DIR = '../../../static/resource/data/uploads'
+        print(UPLOAD_DIR)
+        print(request.FILES)
+        if 'file1' in request.FILES:
+            file = request.FILES['file1']
+            filename = file._name
+
+            print(filename)
+
+
+            fp = open('%s/%s' % (UPLOAD_DIR, filename), 'w')
+            for chunk in file.chunks():
+                fp.write(chunk)
+            fp.close()
+            return HttpResponse('File Uploaded')
+    return HttpResponse('Failed to Upload File')
+
+
+def select_coupon_list(request):
+    couponList = select_coupon_200()
+    context = {
+        "coupon_detail": couponList,
+        "total_count": couponList.count(),
+    }
+    return render(request, 'runAdmin/coupon_list.html', context)

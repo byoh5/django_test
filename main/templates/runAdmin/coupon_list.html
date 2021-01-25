@@ -1,0 +1,173 @@
+{% load static %}
+{% include "common/head_admin.html" %}
+
+    <div class="wrap">
+        <div class="admin_sub_visual">
+             <div class="tabs section_wrap">
+                <ul>
+                   <a href="/deposit_list/">무통장 입금 조회</a></li>
+                    <li><a href="/pay_list/">구매 데이터 조회</a></li>
+                    <li><a href="/user_list/">사용자 조회</a></li>
+                    <li><a href="/refund_list/">환불</a></li>
+                    <li class="admin_active"><a href="/coupon_list/">쿠폰 리스트</a></li>
+<!--                    <li><a href="/upload/">파일 업로드</a></li>-->
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <li><a href="https://admin.iamport.kr/users/login" target="_blank">아임포트 관리자</a></li>
+                    <li><a href="https://partner.danalpay.com/account/login?next=%2F#" target="_blank">다날 (휴대폰인증)</a></li>
+                    <li><a href="http://admin8.kcp.co.kr" target="_blank">KCP</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="width: 100%; font-size: 20px !important; padding-bottom:10px;">total : {{total_count}}
+         <button id="excel" class="excel" type="button" onclick="fnExcelReport('couponList');">Excel</button>
+        </div>
+        <div style="overflow: hidden; position: relative; border: 0px; width: 100%; " >
+            <table id="couponList" style="width:100%">
+                <thread>
+                    <tr class="row">
+                        <th class="admin_list">쿠폰번호</th>
+                        <th class="admin_list_id">쿠폰이름</th>
+                        <th class="admin_list">키트이름</th>
+                        <th class="admin_list">A/D</th>
+                        <th class="admin_list">expire</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    {% for coupon in coupon_detail %}
+                    <tr class="row">
+                        <td class="admin_list_body">{{coupon.coupon_num}}</td>
+                        <td class="admin_list_id_body">{{coupon.coupon_name}}</td>
+                        <td class="admin_list_body">{{coupon.prd.title}}</td>
+                        <td class="admin_list_body">{{coupon.dbstat}}</td>
+                        <td class="admin_list_body">{{coupon.expire}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div id="total_data" class="page"><span>조회 데이터가 없습니다.</span></div>
+             <div class="page">
+                <ul id="paging" class="pagination modal"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    $(document).ready(function() {
+       $('#page_cnt').val('{{page_cnt}}').prop("selected",true);
+
+       var total = '{{total_count}}';
+       if (total == 0)
+       {
+            $("#total_data").show();
+       }
+       else
+       {
+            $("#total_data").hide();
+       }
+
+       var page = '{{last_page}}';
+       var cur_page = '{{paging_num}}';
+
+       page *= 1;
+
+       for(var i = 1; i <= page; i ++)
+       {
+            if(i == cur_page)
+                document.getElementById('paging').innerHTML += "<li><a href='javascript:void(0);' onclick='javascript:goSearch(" + i + ");' class='active num' >" + i + "</a></li>";
+            else
+                document.getElementById('paging').innerHTML += "<li><a href='javascript:void(0);' onclick='javascript:goSearch(" + i + ");' class='num' >" + i + "</a></li>";
+       }
+
+     });
+
+     function goSearch(paging_num)
+     {
+
+        var start_date = document.getElementById('start_date').value;
+        var end_date = document.getElementById('end_date').value;
+        var searchBox = $('[name=search_box]').val();
+
+        if(start_date == "" || end_date == "")
+        {
+            alert("날짜선택하세요");
+            return false;
+        }
+
+        if(start_date > end_date)
+        {
+            alert("날짜 설정을 다시 해주세요");
+            return false;
+        }
+
+
+        var newForm = $('<form></form>');
+
+        newForm.attr("name", "deposit_search");
+        newForm.attr("method", "post");
+        newForm.attr("action", "/deposit_search/");
+
+        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'start_date', value : start_date }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'end_date', value : end_date }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'searchBox', value : searchBox }));
+        newForm.append($('<input/>', {type: 'hidden', name: 'paging_num', value : paging_num }));
+
+        newForm.appendTo('body');
+        newForm.submit();
+
+     }
+
+     function fnExcelReport(id)
+     {
+
+        var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+        tab_text = tab_text + '<head><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
+        tab_text = tab_text + '<xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>'
+        tab_text = tab_text + '<x:Name>Test Sheet</x:Name>';
+        tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+        tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+        tab_text = tab_text + "<table border='1px'>";
+
+        var exportTable = $('#' + id).clone();
+        exportTable.find('input').each(function (index, elem) { $(elem).remove(); });
+        tab_text = tab_text + exportTable.html();
+        tab_text = tab_text + '</table></body></html>';
+        var data_type = 'data:application/vnd.ms-excel';
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+
+
+        var fileName ='coupon_list.xls';
+
+        //Explorer 환경에서 다운로드
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))
+        {
+            if (window.navigator.msSaveBlob)
+            {
+                var blob = new Blob([tab_text], {
+                    type: "application/csv;charset=utf-8;"
+                });
+                navigator.msSaveBlob(blob, fileName);
+            }
+        }
+        else
+        {
+            var blob2 = new Blob([tab_text], {
+                type: "application/csv;charset=utf-8;"
+            });
+            var filename = fileName;
+            var elem = window.document.createElement('a');
+            elem.href = window.URL.createObjectURL(blob2);
+            elem.download = filename;
+            document.body.appendChild(elem);
+            elem.click();
+            document.body.removeChild(elem);
+        }
+     }
+
+
+    </script>
+</body></html>

@@ -408,6 +408,10 @@ def select_coupon_all(coupon_num):
     coupon_info = couponTB.objects.filter(coupon_num=coupon_num)
     return coupon_info
 
+def select_coupon_200():
+    coupon_info = couponTB.objects.filter(coupon_type=200, dbstat='A')
+    return coupon_info
+
 def select_payway():
     payway_info = PayWayTB.objects.filter(dbstat='A')
     return payway_info

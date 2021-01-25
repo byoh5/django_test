@@ -299,7 +299,7 @@ class couponTB(models.Model):
     coupon_idx = models.AutoField(primary_key=True)
     coupon_num = models.CharField(max_length=150, unique=True)
     coupon_name = models.CharField(max_length=150, default='')
-    coupon_type = models.IntegerField(default='0', blank=True) #100 : 즉시 강의실 열림(discount와는 쓸 수 없음)
+    coupon_type = models.IntegerField(default='0', blank=True) #100 : 즉시 강의실 열림(discount와는 쓸 수 없음) #200 : 쿠팡/1회성/즉시 강의실 열림
     delivery_price = models.BooleanField(default=False) #False:배송비무료 , True:기존정책
     discount = models.IntegerField(default='0', blank=True)
     prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, default='', blank=True, null=True)

@@ -76,12 +76,14 @@ urlpatterns = [
 
     path('coupon/', mypage_coupon_list),
     path('add_coupon/', mypage_add_coupon),
+    path('coupon_list/', select_coupon_list),
 
     path('contact_email/', contact_email),
     path('find_pass/', find_pass_viaEmail),
     path('info_email/', info_email),
 
     path('search/', search_prd),
+    path('popup/', popup_page),
 
     path('confirm/', getConfirm),
 
@@ -98,10 +100,13 @@ urlpatterns = [
     path('refund_search/', refund_search),
     path('user_refund_rollback/', user_refund_rollback),
     path('watchCam/', watch_esp_cam),
+    path('upload/', upload_page),
+    path('upload_file/', upload_file),
 
     path('callback/', run_callback),
 
     path('biz_token/', get_token),
+    path('biz_sned_at/', send_msg_at),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
