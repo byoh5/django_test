@@ -56,10 +56,43 @@
         }
     }
 
-<!--    window.onbeforeunload = function()-->
-<!--    {-->
-<!--        window.history.back();-->
-<!--    };-->
+
+    function setCookie(name, value, expiredays)
+    {
+        var date = new Date();
+        date.setDate(date.getDate() + expiredays);
+        document.cookie = escape(name) + "=" + escape(value) + "; path=/; expires=" + date.toUTCString();
+    }
+
+    function getCookie(name)
+    {
+
+         var cookie = document.cookie;
+
+         if (document.cookie != "")
+         {
+              var cookieArray = cookie.split("; ");
+              for (var index in cookieArray)
+              {
+                  var cookieName = cookieArray[index].split("=");
+                  if (cookieName[0] == "popup_coo")
+                  {
+                       return cookieName[1];
+                  }
+              }
+         } return ;
+    }
+
+    function delete_cookie(name)
+    {
+        var today = new Date();
+
+        today.setTime(today.getTime() - 1);
+        var value = get_cookie(name);
+        if(value != "")
+            document.cookie = name + "=" + value + "; path=/; expires=" + today.toGMTString();
+    }
+
 
     </script>
 

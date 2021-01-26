@@ -242,6 +242,7 @@
         </div>
     </section>
 
+
     <script>
         var runcoding = '{{naver}}';
 
@@ -252,15 +253,19 @@
                 $('div.modal').modal();
             }
 
-
             var popup_cnt = '{{popup_cnt}}';
+            popup = getCookie('popup_coo');
 
-            if (popup_cnt > 0)
+            if (popup_cnt > 0 && (popup == null || popup == 'Y'))
             {
-                var option = "width = 500, height = 500, top = 100, left = 200, location = no)"
+                if(popup == null)
+                    setCookie('popup_coo', 'Y', 1);
+
+                var option = "width = 500, height = 700, top = 100, left = 200, location = no)"
                 window.open("popup/", "run_info", option);
             }
         });
+
 
         function sendEmail()
         {

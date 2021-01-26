@@ -12,15 +12,23 @@
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/layout.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/main.css' %}">
 
-
-    <img src="{% static 'resource/img/BonusClass/trashcan_sound.jpg' %}" onclick='javascript:go_page();'>
+    <img src="{% static 'resource/img/BonusClass/trashcan_sound_popup.jpg' %}" onclick='javascript:go_page();'>
 
 <script>
     function go_page()
     {
-        location.href = "/myclass_list/";
         window.close();
+        setCookie('popup_coo', 'N', 1);
+
     }
+
+     function setCookie(name, value, expiredays)
+    {
+        var date = new Date();
+        date.setDate(date.getDate() + expiredays);
+        document.cookie = escape(name) + "=" + escape(value) + "; path=/; expires=" + date.toUTCString();
+    }
+
 
 </script>
 

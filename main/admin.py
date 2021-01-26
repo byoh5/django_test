@@ -109,7 +109,7 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(ItemTB, ItemAdmin)
 
 class BonusItemTBAdmin(admin.ModelAdmin):
-    list_display = ['get_name', 'title', 'subTitle', 'order'] # 커스터마이징 코드
+    list_display = ['get_name', 'title', 'subTitle', 'item_code', 'order'] # 커스터마이징 코드
 
     def get_name(self, obj):
         return obj.prd.bonus_prdCode
