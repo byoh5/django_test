@@ -4,6 +4,8 @@ from datetime import datetime
 from django.http import HttpResponse
 from main.codeView.payment import *
 
+from runcoding.settings import STATICFILES_DIRS
+
 pay_status_ok = 1
 pay_status_delivery = 2
 pay_status_delivery_done = 3
@@ -549,29 +551,128 @@ def user_refund_rollback(request):
     return refund_search(request)
 
 def upload_page(request):
-    return render(request, 'runAdmin/upload_file.html')
+    context = {
+        "txt": "",
+    }
+    return render(request, 'runAdmin/upload_file.html', context)
 
 def upload_file(request):
-    print(os.path.realpath(__file__))
+    copy_static = '/static/files/path/resource/'
+    server_static = 'static/resource/'
+
+    naver_status = request.POST.get('naver', 0)
+    delivery_status = request.POST.get('delivery_id', 0)
+    lounge_status = request.POST.get('img_id', 0)
+
+    print(naver_status, delivery_status)
 
     if request.method == 'POST':
-        #/home/ubuntu/django_test/main/codeView/runAdmin.py
-        UPLOAD_DIR = '../../../static/resource/data/uploads'
-        print(UPLOAD_DIR)
-        print(request.FILES)
-        if 'file1' in request.FILES:
-            file = request.FILES['file1']
+        if 'file' in request.FILES:
+            file = request.FILES['file']
             filename = file._name
-
             print(filename)
 
+            if naver_status == 'naverstore':
+                static_naverstore = server_static + naver_status
+                copy_naverstore = copy_static + naver_status
 
-            fp = open('%s/%s' % (UPLOAD_DIR, filename), 'w')
-            for chunk in file.chunks():
-                fp.write(chunk)
-            fp.close()
-            return HttpResponse('File Uploaded')
-    return HttpResponse('Failed to Upload File')
+                fp = open('%s/%s' % (static_naverstore, filename), 'wb')
+                for chunk in file.chunks():
+                    fp.write(chunk)
+                fp.close()
+
+                naverstore_file = static_naverstore + "/*"
+                static_naverstore_file = copy_naverstore
+
+                print(naverstore_file, static_naverstore_file)
+                os.system('sudo cp ' + naverstore_file +' ' + static_naverstore_file)
+                context = {
+                    "txt": "SUCCESS UPLOAD",
+                }
+
+                return render(request, 'runAdmin/upload_file.html', context)
+
+            elif delivery_status == 'delivery_list':
+                static_delivery = server_static + delivery_status
+
+                print(static_delivery, filename)
+
+                fp = open('%s/%s' % (static_delivery, filename), 'wb')
+                for chunk in file.chunks():
+                    fp.write(chunk)
+                fp.close()
+
+                context = {
+                    "txt": "SUCCESS UPLOAD",
+                }
+
+                return render(request, 'runAdmin/upload_file.html', context)
+
+            elif lounge_status == 'lounge_list':
+
+                title = request.POST.get('title', 0)
+                user = request.POST.get('user', 0)
+                video = request.POST.get('video', 0)
+                kit = request.POST.get('kit', 0)
+
+                if title is "" or user is "" or video is "" or kit is "":
+                    context = {
+                        "txt": "title/user/video/kit fill in the blank.",
+                    }
+
+                    return render(request, 'runAdmin/upload_file.html', context)
+
+                static_lounge = server_static + "img/lounge/" + kit
+                copy_lounge = copy_static + "img/lounge/" + kit
+
+                check = 0
+                if kit == 'trashcan':
+                    search = '스마트휴지통/서보모터/초음파센서'
+                    check = 1
+                elif kit == 'neopixel':
+                    search = '초롱초롱눈망울/네오픽셀/사운드센서'
+                    check = 1
+                elif kit == 'AI':
+                    search = '러닝봇/인공지능/AI'
+                    check = 1
+
+                if check == 0:
+                    context = {
+                        "txt": "check the kit name. only trashcan / neopixel / AI",
+                    }
+
+                    return render(request, 'runAdmin/upload_file.html', context)
+
+                print(static_lounge, filename)
+
+                fp = open('%s/%s' % (static_lounge, filename), 'wb')
+                for chunk in file.chunks():
+                    fp.write(chunk)
+                fp.close()
+
+                lounge_file = static_lounge + "/*"
+                static_lounge_file = copy_lounge
+
+                print(lounge_file, static_lounge_file)
+                os.system('sudo cp ' + lounge_file + ' ' + static_lounge_file)
+
+
+                lounge_list = loungeListTB(img=filename, title=title, user=user, data_name=kit,
+                                                  video_id=video, search_title=search)
+
+                lounge_list.save()
+
+                context = {
+                    "txt": "SUCCESS UPLOAD",
+                }
+
+                return render(request, 'runAdmin/upload_file.html', context)
+
+        context = {
+            "txt": "FAIL!!!!  upload file pls.",
+        }
+
+        return render(request, 'runAdmin/upload_file.html', context)
 
 
 def select_coupon_list(request):
