@@ -926,7 +926,6 @@ def run_callback(request):
                                     split_item = order_info[0].prd.item_code.split(',')
                                     stat_menu_step(request, "callback", "payment_ing-2-2", split_item)
 
-                                    # 강의가 생기지 않음 ERROR!!!! TODO
                                     for item in split_item:
                                         if len(item) > 0:
                                             if pay_info[0].payWay.value == payway_naver:  # 네이버페이 일때만
