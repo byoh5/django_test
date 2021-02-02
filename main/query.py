@@ -84,6 +84,11 @@ def select_pay_paynum(pay_num):
     pay_info = PayTB.objects.filter(pay_num=pay_num)
     return pay_info
 
+def select_pay_user_delivery(user_id):
+    pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id, pay_user_status__userStatus_idx=1) |
+                                    Q(pay_result=0, pay_email=user_id, pay_user_status__userStatus_idx=1))
+    return pay_info
+
 def select_pay_user(user_id):
     pay_info = PayTB.objects.filter(Q(pay_result=0, pay_user__regi_email=user_id) |
                                     Q(pay_result=100, pay_user__regi_email=user_id, payWay__value='deposit') |
@@ -476,6 +481,10 @@ def select_bonus_prd(prd_code):
 def select_poopup_active():
     popup_info = popup.objects.filter(dbstat='A')
     return popup_info
+
+def select_deliveryList():
+    delivery_info = delivery_list.objects.filter(dbstat='A')
+    return delivery_info
 
 def update_user_addr(user_id, add01,add02,add03):
     user_info = select_register(user_id)

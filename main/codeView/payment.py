@@ -515,7 +515,8 @@ def pay_naver_single(request, payway_info, order_info):
         pay_email = regi_info[0].regi_email
 
     if user_id == "":
-        pay_info = PayTB(pay_num=pay_num, order_id=order_id, pay_email=pay_email,
+        orderid_str = str(order_id) + ","
+        pay_info = PayTB(pay_num=pay_num, order_id=orderid_str, pay_email=pay_email,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          prd_price=int(pay_price), delivery_price=int(order_info[0].delivery_price),
                          prd_total_price=int(total_price),
@@ -523,7 +524,8 @@ def pay_naver_single(request, payway_info, order_info):
                          payWay=payway_info[0])
     else:
         regi_info = select_register(user_id)
-        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], pay_email=pay_email, order_id=order_info[0].order_idx,
+        orderid_str = str(order_info[0].order_idx) + ","
+        pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], pay_email=pay_email, order_id=orderid_str,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          prd_price=int(pay_price), delivery_price=int(order_info[0].delivery_price),
                          prd_total_price=int(total_price),
@@ -843,16 +845,14 @@ def run_callback(request):
         print(merchant_uid)
         print(status)
 
+        stat_menu_step(request, "callback", "payment_ing", merchant_uid + "||" + status)
+
         split_uid = merchant_uid.split('_')
         pay_info = select_pay_paynum(split_uid[1])
 
-        if pay_info.count() == 0:
-            return HttpResponse(404)
-
-        if pay_info[0].payWay.value == payway_naver: #네이버페이 일때만
-
+        if pay_info.count() > 0:
             # 결제 완료
-            if status == 'paid':
+            if pay_info[0].pay_result == 100 and status == 'paid': # 중복 체크를 막기 위해서
                 pay_num = pay_info[0].pay_num
                 print(pay_num)
 
@@ -873,6 +873,7 @@ def run_callback(request):
                 json_res = json_msg["response"]
                 access_token = json_res["access_token"]
                 print(access_token)
+
 
                 get_pay_msg = requests.get(url='https://api.iamport.kr/payments/' + imp_uid,
                                                 headers={'Authorization': access_token})
@@ -896,9 +897,10 @@ def run_callback(request):
 
                 if amount == pay_info[0].prd_total_price:
                     pay_user = pay_info[0]
-                    pay_user.delivery_name = buyer_name
-                    pay_user.delivery_addr = buyer_addr + buyer_postcode
-                    pay_user.delivery_phone = buyer_tel
+                    if pay_info[0].payWay.value == payway_naver:
+                        pay_user.delivery_name = buyer_name
+                        pay_user.delivery_addr = buyer_addr + buyer_postcode
+                        pay_user.delivery_phone = buyer_tel
                     pay_user.pay_result = pay_ok
                     pay_user.pay_result_info = channel + "-" + pg_provider
                     pay_user.merchant_uid = imp_merchant_uid
@@ -908,23 +910,50 @@ def run_callback(request):
                     pay_user.save()
 
                     split_order = pay_info[0].order_id.split(',')
+                    stat_menu_step(request, "callback", "payment_ing-1", split_order)
                     for data in split_order:
                         if len(data) > 0:
                             order_info = select_order_id_d(data)
                             if order_info.count() > 0:
                                 print(order_info[0].pay_num)
+                                stat_menu_step(request, "callback", "payment_ing-2", order_info[0].pay_num + "||" + pay_num)
                                 if pay_num == order_info[0].pay_num:
-                                    item_info = select_item_group(order_info[0].prd.prd_code)
+                                    #item_info = select_item_group(order_info[0].prd.prd_code)
                                     period = order_info[0].prd.period * 30
                                     expireTime = timezone.now() + timezone.timedelta(days=period)
-                                    for item in item_info:
-                                        myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
-                                                                          pay_num=pay_info[0].pay_num, item_code=item['item_code'],
-                                                                          expire_time=expireTime, dbstat='D-naverco')
-                                        myclass_list_info.save()
-                                    bonus_class(pay_info[0].pay_email, order_info[0].prd.prd_code, pay_info[0].pay_num, 'D-naverco')
-                                    #delete_order_idx(order_info, pay_info[0].pay_num)  # order dbstat 변경
+                                    stat_menu_step(request, "callback", "payment_ing-2-1", pay_info[0].payWay.value + "||" + order_info[0].prd.prd_code)
 
+                                    split_item = order_info[0].prd.item_code.split(',')
+                                    stat_menu_step(request, "callback", "payment_ing-2-2", split_item)
+
+                                    # 강의가 생기지 않음 ERROR!!!! TODO
+                                    for item in split_item:
+                                        if len(item) > 0:
+                                            if pay_info[0].payWay.value == payway_naver:  # 네이버페이 일때만
+                                                stat_menu_step(request, "callback", "payment_ing_naver-3", pay_info[0].pay_email + "||" + item)
+                                                myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_email, prd=order_info[0].prd,
+                                                                                  pay_num=pay_info[0].pay_num, item_code=item,
+                                                                                  expire_time=expireTime, dbstat='D-naverco')
+                                                myclass_list_info.save()
+                                                bonus_class(pay_info[0].pay_email, order_info[0].prd.prd_code,
+                                                            pay_info[0].pay_num, 'D-naverco')
+                                            else:
+                                                stat_menu_step(request, "callback", "payment_ing-3", pay_info[0].pay_user.regi_email + "||" + item)
+                                                myclass_list_info = MyClassListTB(user_id=pay_info[0].pay_user.regi_email,
+                                                                                  prd=order_info[0].prd,
+                                                                                  pay_num=pay_info[0].pay_num,
+                                                                                  item_code=item,
+                                                                                  expire_time=expireTime)
+                                                myclass_list_info.save()
+                                                bonus_class(pay_info[0].pay_user.regi_email, order_info[0].prd.prd_code,
+                                                            pay_info[0].pay_num, 'A')
+
+
+                                    # 구매완료된 장바구니 지우기
+                                    new_order = order_info[0]
+                                    new_order.dbstat = 'D-'
+                                    new_order.pay_num = pay_num
+                                    new_order.save()
 
     return HttpResponse(200)
 

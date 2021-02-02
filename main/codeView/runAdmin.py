@@ -1,10 +1,9 @@
 import os
 from datetime import datetime
 
-from django.http import HttpResponse
 from main.codeView.payment import *
 
-from runcoding.settings import STATICFILES_DIRS
+from main.models import *
 
 pay_status_ok = 1
 pay_status_delivery = 2
@@ -588,6 +587,7 @@ def upload_file(request):
                 os.system('sudo cp ' + naverstore_file +' ' + static_naverstore_file)
                 context = {
                     "txt": "SUCCESS UPLOAD",
+                    "code": 200,
                 }
 
                 return render(request, 'runAdmin/upload_file.html', context)
@@ -602,8 +602,13 @@ def upload_file(request):
                     fp.write(chunk)
                 fp.close()
 
+                delivery_list_info = delivery_list(filename=filename)
+                delivery_list_info.save()
+
                 context = {
                     "txt": "SUCCESS UPLOAD",
+                    "code": 300,
+                    "file": filename,
                 }
 
                 return render(request, 'runAdmin/upload_file.html', context)
@@ -618,6 +623,7 @@ def upload_file(request):
                 if title is "" or user is "" or video is "" or kit is "":
                     context = {
                         "txt": "title/user/video/kit fill in the blank.",
+                        "code": 1,
                     }
 
                     return render(request, 'runAdmin/upload_file.html', context)
@@ -639,6 +645,7 @@ def upload_file(request):
                 if check == 0:
                     context = {
                         "txt": "check the kit name. only trashcan / neopixel / AI",
+                        "code": 1,
                     }
 
                     return render(request, 'runAdmin/upload_file.html', context)
@@ -664,12 +671,14 @@ def upload_file(request):
 
                 context = {
                     "txt": "SUCCESS UPLOAD",
+                    "code": 400,
                 }
 
                 return render(request, 'runAdmin/upload_file.html', context)
 
         context = {
             "txt": "FAIL!!!!  upload file pls.",
+            "code": 1,
         }
 
         return render(request, 'runAdmin/upload_file.html', context)

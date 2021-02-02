@@ -44,7 +44,7 @@
         <div id="delivery" class="filebox">
              <form action="/upload_file/" method="POST" enctype="multipart/form-data">
                   {% csrf_token %}
-                 <input class="upload-name" value="csv 파일선택" disabled="disabled">
+                 <input class="upload-name" value="엑셀(xlsx) 파일선택" disabled="disabled">
                   <input type="hidden" value="delivery_list" id="delivery_id" name="delivery_id">
 
                 <label for="delivery_filename">업로드 파일 선택</label>
@@ -74,7 +74,11 @@
          </div>
 
         <div id="result">
-            <p>{{txt}}</p>
+            <span style="font-size:15px;"><p>{{txt}}</p></span>
+            {% if code  == 300 %}
+                <span style="font-size:15px;"><p>{{file}}</p></span>
+                <button type="button" onClick="javascript:send_msg();" style="border:1px solid #ebebeb; font-size:15px; border-radius: .25em; background-color: #e1a394; padding: .5em .75em;">알림톡 발송하기</button>
+            {%endif %}
         </div>
 
     </div>
@@ -127,6 +131,21 @@
            $("#upload_img").show();
            $("#result").hide();
         }
+    }
+
+    function send_msg()
+    {
+         var newForm = $('<form></form>');
+
+        newForm.attr("name", "delivery_list");
+        newForm.attr("method", "post");
+        newForm.attr("action", "/delivery_list/");
+
+        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+
+        newForm.appendTo('body');
+        newForm.submit();
+
     }
 
     </script>

@@ -52,6 +52,7 @@ class PrdTB(models.Model):
     period = models.IntegerField(default='0')
     class_count = models.IntegerField(default='0')
     price = models.IntegerField(default='0')
+    item_code = models.CharField(max_length=150, default='') # , 로 구분한 item code = 강의 item_code
     option1 = models.CharField(max_length=50, blank=True)
     option1_price = models.IntegerField(null=True, blank=True)
     option2 = models.CharField(max_length=50, blank=True)
@@ -285,14 +286,14 @@ class runcodingTB(models.Model):
     mail_port = models.CharField(max_length=50)
     imp_key = models.CharField(max_length=150)
     imp_secret = models.CharField(max_length=300)
+    biz_id = models.CharField(max_length=50, default='')
+    biz_pw = models.CharField(max_length=50, default='')
     dbstat = models.CharField(max_length=50, default='A')
 
 class runcoding_bizTB(models.Model):
     runcodingbiz_idx = models.AutoField(primary_key=True)
-    biz_id = models.CharField(max_length=50)
-    biz_pw = models.CharField(max_length=50)
     token = models.CharField(max_length=500, default='', blank=True)
-    expire = models.DateTimeField(default='', blank=True)
+    expire = models.CharField(max_length=50, default='', blank=True)
     dbstat = models.CharField(max_length=50, default='A')
 
 class couponTB(models.Model):
@@ -407,3 +408,9 @@ class popup(models.Model):
     btn_img = models.CharField(max_length=50, default='', blank=True)
     expire_time = models.DateTimeField(default='')
     dbstat = models.CharField(max_length=50, default='R')  # D : done, R: ready, A: active
+
+class delivery_list(models.Model):
+    deliveryList_idx = models.AutoField(primary_key=True)
+    filename = models.CharField(max_length=50)
+    dbstat = models.CharField(max_length=50, default='A')
+    stime = models.DateTimeField(default=timezone.now)

@@ -309,3 +309,12 @@ class popupAdmin(admin.ModelAdmin):
     search_fields = ['img', 'text', 'link', 'dbstat']
 
 admin.site.register(popup, popupAdmin)
+
+class delivery_listAdmin(admin.ModelAdmin):
+    list_display = ['filename', 'dbstat'] # 커스터마이징 코드
+
+    list_filter = ['filename']
+    list_display_links = ['filename']
+    search_fields = ['filename', 'dbstat']
+
+admin.site.register(delivery_list, delivery_listAdmin)

@@ -31,6 +31,7 @@ from main.codeView.runAdmin import *
 from main.codeView.watch import *
 from main.codeView.prodcut_xml import *
 from main.codeView.bizMsg import *
+from main.codeView.delivery_notify import *
 
 urlpatterns = [
     path('regi/', register_page),
@@ -107,6 +108,8 @@ urlpatterns = [
 
     path('biz_token/', get_token),
     path('biz_sned_at/', send_msg_at),
+
+    path('delivery_list/', get_delivery_list),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
