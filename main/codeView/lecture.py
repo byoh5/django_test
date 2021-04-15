@@ -29,31 +29,22 @@ def class_detail_page(request):
         user = "y"
 
     prd_code = request.POST.get('detail_prd_code', 0)
-    items_info = select_class_detail(prd_code)
+    # items_info = select_class_detail(prd_code)
+    prd_info = select_prd(prd_code)
     print(prd_code)
     html_file = ""
 
-    if items_info.count() > 0:
-        html_file = "product/" + items_info[0].prd.list + ".html"
+    html_file = "product/" + prd_info[0].list + ".html"
 
-        stat_menu_step(request, "codingkit_detail", items_info[0].prd.keyword + "(" + prd_code + ") ||" + html_file, "")
+    stat_menu_step(request, "codingkit_detail", prd_info[0].title + "(" + prd_code + ") ||" + html_file, "")
 
-        context = {
-            "prd_detail": items_info[0].prd,
-            "html_file": html_file,
-            "imp": imp_id,
-            "user":user,
-        }
+    context = {
+        "prd_detail": prd_info[0],
+        "html_file": html_file,
+    }
 
-        return render(request, 'class/class_detail.html', context)
-    else:
-        user_id = request.session.get('user_id')
-        if user_id is not None:
-            delete_login(user_id)
-        request.session['client_id'] = ''
-        request.session['user_id'] = ''
+    return render(request, 'class/class_detail.html', context)
 
-        return main_page(request)
 
 def class_detail_page_prd(request):
     prd_code = request.GET.get('prd_code')

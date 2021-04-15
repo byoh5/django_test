@@ -1,0 +1,84 @@
+ {% load static %}
+
+    <div class="prd_title"><strong>{{prd_detail.title}}</strong></div>
+
+    <div class="info_detail">
+       <div class="prd_title_sub" style="padding-top:-10px;">
+            <div class="content_sub">코딩키트&nbsp;</div>
+            <img src="{% static 'resource/img/sub/detail_set.png' %}" alt="set" class="content_sub" style="padding-top:3px;">
+            <div class="content_sub">&nbsp;{{prd_detail.category_large.name}}&nbsp;</div>
+            <img src="{% static 'resource/img/sub/detail_set.png' %}" alt="set" class="content_sub" style="padding-top:3px;">
+            <div class="content_sub">&nbsp;{{prd_detail.title}} 상세보기</div>
+        </div>
+
+        <img src="{{prd_detail.prd_detail_img}}" alt="상품상세 이미지" style="padding-top:80px;">
+
+        <div class="point_content">Outline</div>
+        <div class="content_gray">
+            <span>서보모터 / 초음파센서 / 러닝캠을 이용한 코딩 키트!</span><br/>
+            <span>강의를 하나씩 진행하면서 프로그래밍 문법을 익히고, 부품을 이용하여 만들어 나가는 스마트 휴지통 입니다.</span><br/><br/>
+            <span>1. 초음파 센서를 이용한 가까이 다가가면 뚜껑이 열리는 버전</span><br/>
+            <span>2. 인공지능 프로그램 러닝봇을 이용하여 캔,우유,페트를 인식하여 분리수거함을 만드는 버전</span><br/><br/>
+            <span>쉽고 재미있게! 기초부터 응용까지! 상상을 현실로 만드는 뚝딱 코딩키트를 만나보세요.</span><br/>
+        </div>
+
+        <div class="point_content">Curriculum</div>
+
+        <div class="point_content_small">Maker Class</div>
+        <div class="content"><strong>환경구축 </strong></div>
+        <div class="content_curriculum">
+            <li>
+                 <div style="width:100%">1. 아두이노 설치
+                 </div>
+            </li>
+        </div>
+
+         <div class="content"  style="padding-top:20px;"><strong>키트 만들기</strong></div>
+        <div class="content_curriculum">
+            <li>
+                 <div style="width:100%">1. 스마트 휴지통 키트 만들기
+                 </div>
+            </li>
+            <li>
+                 <div style="width:100%">2. 스마트 휴지통 키트 이해하기
+                 </div>
+            </li>
+        </div>
+
+        <div class="point_content_small">Study Class</div>
+        <div class="content"><strong>문법/이론/키트미션</strong></div>
+        <div class="content_curriculum">
+            <li>
+                 <div style="width:100%">1. 시리얼 모니터</div>
+            </li>
+            <li>
+                 <div style="width:100%">2. 서보모터</div>
+            </li>
+            <li>
+                 <div style="width:100%">3. 연산자 기초</div>
+                 <div style="width:100%">&nbsp;└&nbsp;키트미션 : 뚜껑을 꼬옥 닫기</div>
+            </li>
+             <li>
+                 <div style="width:100%">4. 조건문 초급</div>
+                 <div style="width:100%">&nbsp;└&nbsp;키트미션 : 반대로 동작하기</div>
+            </li>
+            <li>
+                 <div style="width:100%">5. 초음파 센서</div>
+                 <div style="width:100%">&nbsp;└&nbsp;키트미션 : 거리와 각도조절</div>
+            </li>
+        </div>
+        <div class="content_gray" style="padding-top:20px; float:right; font-size:10px;">* 스마트 휴지통 아두이노 버전입니다.</div>
+
+         <div class="point_content">Detail</div>
+         <div>
+            <img src="{% static 'resource/img/Trashcan/detail_trashcan_01.jpg' %}"alt="상품상세 이미지1">
+            <img src="{% static 'resource/img/Trashcan/detail_trashcan_02.gif' %}"alt="상품상세 이미지1">
+
+            <img src="{% static 'resource/img/Trashcan/detail_trashcan_03.jpg' %}"alt="상품상세 이미지1">
+
+            <img src="{% static 'resource/img/Trashcan/detail_trashcan_04.gif' %}"alt="상품상세 이미지1">
+            <img src="{% static 'resource/img/Trashcan/detail_trashcan_05.jpg' %}"alt="상품상세 이미지1">
+         </div>
+    </div>
+
+  {% include "product/common.html" %}

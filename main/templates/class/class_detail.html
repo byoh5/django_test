@@ -32,81 +32,33 @@
                                         <input type="hidden" id="count" name="count" value="1">
                                         <input type="hidden" id="id" name="id" value="1">
                                      </form>
-                                    <p><span id="prd_price">{{prd_detail.price}}</span> 원</p>
+                                    <p><div id="prd_price" style="color: #b14739; font-size:20px;"></div></p>
                                 </li>
                                 <li>
                                     <span class="li_title">키트명</span>
                                     <p><span id="title">{{prd_detail.title}}</span></p>
                                 </li>
                                 <li>
-                                    <span class="li_title">학습 목표</span>
-                                    <p>{{prd_detail.category_sub}} </p>
+                                    <span class="li_title">메인부품</span>
+                                    <p>아두이노보드/{{prd_detail.category_sub}} </p>
+                                </li>
+                                 <li>
+                                    <span class="li_title">코딩언어</span>
+                                    <p>{{prd_detail.keyword}} </p>
+                                </li>
+                                  <li>
+                                    <span class="li_title">강의수</span>
+                                    <p>{{prd_detail.class_count}} 개</p>
                                 </li>
                                 <li>
                                     <span class="li_title">학습 기간</span>
                                     <p>{{prd_detail.period}}개월</p>
                                 </li>
-                                <li>
-                                   <span class="li_title" style="float:left; padding-right:110px;">수량</span>
 
-                                    <input type="text" name="prodQuantity" id="prodQuantity" class="input quantity" style="width:20%; height:25px; border:1px solid #d4d4d4; line-height:24px; font-size:12px; float:left;" value="1" >
-                                    <a href="javascript:up('10');" style="color: #000; ">
-                                        <img src="{% static 'resource/img/sub/btn_quantity_up.png' %}" alt="증가" class="QuantityUp" style="border: 1px solid #d4d8d9;">
-                                    </a>
-                                    <a href="javascript:down('1');" style="color: #000;" >
-                                        <img src="{% static 'resource/img/sub/btn_quantity_down.png' %}" alt="감소" class="QuantityDown" style="border: 1px solid #d4d8d9;">
-                                    </a>
-                                </li>
-                                <li>
-                                    <span class="li_title">옵션 </span>
 
-                                    {% if prd_detail.option1 != "" %}
-                                     <select id="options_1" name="options_1" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, 1);">
-                                        <option value="0">--------------필수옵션----------</option>
-                                        <option value="0">선택없음</option>
-                                        <option value={{prd_detail.option1_price}}>{{prd_detail.option1}} (+{{prd_detail.option1_price}})</option>
-                                     </select>
-                                    {% endif %}
-
-                                    {% if prd_detail.option2 != "" %}
-                                     <select id="options_2" name="options_2" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, 2);">
-                                        <option value="0">--------------필수옵션----------</option>
-                                        <option value="0">선택없음</option>
-                                        <option value={{prd_detail.option2_price}}>{{prd_detail.option2}} (+{{prd_detail.option2_price}})</option>
-                                     </select>
-                                    {% endif %}
-
-                                    {% if prd_detail.option3 != "" %}
-                                     <select id="options_3" name="options_3" style="width:200px; height:24px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" onchange="myOption(this.value, 3);">
-                                        <option value="0">--------------필수옵션----------</option>
-                                        <option value="0">선택없음</option>
-                                        <option value={{prd_detail.option3_price}}>{{prd_detail.option3}} (+{{prd_detail.option3_price}})</option>
-                                     </select>
-                                    {% endif %}
-
-                                </li>
-                                {% if user == "n" %}
-                                <li>
-                                   <span class="li_title">강의용 이메일주소</span><br/>
-                                   <input type="text" name="noUser_email" id="noUser_email" style="float:center; width:90%; height:30px; border:1px solid #d4d4d4; line-height:24px; font-size:12px;" placeholder="네이버페이 비회원 구매시">
-                                </li>
-                                {% endif%}
-                                <li>
-                                   <span class="li_title">총 상품 금액</span>
-                                   <p><span class="price" id="total_price">{{prd_detail.price}}</span> 원</p>
-                                </li>
                             </ul>
                         </div>
                     </div>
-                    <div></div>
-                    <div class="btn_area">
-                        <a href="javascript:void(0);" class="btn cart" onClick="javascript:goOrder(1);">장바구니 담기</a>
-                        <a class="btn buy" href="javascript:void(0);" onClick="javascript:goOrder(2);">바로구매</a>
-                         <div id="naverpay_btn" class="btn-center" style="margin-bottom:40px; margin-left:-15px;"></div>
-                    </div>
-
-                    <div id="margin" style="margin-top:40px;"></div>
-                    <input type="hidden" name="message" value="{{message}}" readonly>
                 </div>
             </div>
         </div>
@@ -122,126 +74,11 @@
 
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.6.js"></script>
     <script>
-             naver.NaverPayButton.apply({
-                BUTTON_KEY: "CE196A42-5C47-46D0-A871-00BB22E69FB6",
-                TYPE: "A", //버튼 스타일
-                COLOR: 1, //버튼 색상타입
-                COUNT: 2, // 네이버페이버튼 + 찜하기버튼 모두 출력 여부
-                ENABLE: "Y", //네이버페이 활성여부(재고부족 등에는 N으로 비활성처리)
-                EMBED_ID: "naverpay_btn", //네이버페이 버튼 UI가 부착될 HTML element의 ID
-                BUY_BUTTON_HANDLER : function() {
-                    //중략
-                    //핸들러 내에서 아임포트 네이버페이 결제 함수 호출
+        $(document).ready(function() {
 
-                    var option1 = document.getElementById("options_1");
-                    var option2 = document.getElementById("options_2");
-                    var option3 = document.getElementById("options_3");
-                    var quantity = document.getElementById("prodQuantity").value;
-                    var price = removeComma(document.getElementById("total_price").innerText);
-                    var prdCode =  $("input[type=hidden][name=prd_code]").val();
-
-                    var option1_val = 0;
-                    var option2_val = 0;
-                    var option3_val = 0;
-
-                    if(option1 != null && option1.selectedIndex == 0)
-                    {
-                         $("#res_msg").text("옵션을 선택해 주세요.");
-                         $('div.modal').modal();
-                         return false;
-                    }
-                    if(option2 != null && option2.selectedIndex == 0)
-                    {
-                         $("#res_msg").text("옵션을 선택해 주세요.");
-                         $('div.modal').modal();
-                         return false;
-                    }
-                    if(option3 != null && option3.selectedIndex == 0)
-                    {
-                         $("#res_msg").text("옵션을 선택해 주세요.");
-                         $('div.modal').modal();
-                         return false;
-                    }
-                    else
-                    {
-                        if(option1 != null)
-                            option1_val = option1.selectedIndex;
-                        if(option2 != null)
-                            option2_val = option2.selectedIndex;
-                        if(option3 != null)
-                            option3_val = option3.selectedIndex;
-                    }
-
-                    var user = '{{user}}';
-                    var email = '';
-                    if(user == 'n')
-                    {
-                        var email_patten = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일이 적합한지 검사할 정규식
-                        email = $("input[type=text][name=noUser_email]").val();
-
-                        if(email == "")
-                        {
-                             $("#res_msg").text("강의용 이메일을 남겨주세요. 로그인 시 사용됩니다.");
-                             $('div.modal').modal();
-                             return false;
-                        }
-                        else if(!email_patten.test(email))
-                        {
-                            $("#res_msg").text("이메일 주소 형식을 맞춰주세요. (ex.runcoding@***.com)");
-                            $('div.modal').modal();
-                            chkId = 0;
-                            return false;
-                        }
-                        else
-                            $("input[type=hidden][name=pay_email]").val(email);
-                     }
-
-                    var newForm = $('<form></form>');
-
-                    newForm.attr("name", "order");
-                    newForm.attr("method", "post");
-                    newForm.attr("action", "/order_naver/");
-
-                    newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-                    newForm.append($('<input/>', {type: 'hidden', name: 'prd_code', value : prdCode}));
-                    newForm.append($('<input/>', {type: 'hidden', name: 'option1', value : option1_val}));
-                    newForm.append($('<input/>', {type: 'hidden', name: 'option2', value : option2_val}));
-                    newForm.append($('<input/>', {type: 'hidden', name: 'option3', value : option3_val}));
-                    newForm.append($('<input/>', {type: 'hidden', name: 'count', value : quantity}));
-                    newForm.append($('<input/>', {type: 'hidden', name: 'prd_price', value : price}));
-                    if(user == 'n')
-                        newForm.append($('<input/>', {type: 'hidden', name: 'pay_email', value : email}));
-
-                    newForm.appendTo('body');
-                    newForm.submit();
-
-                },
-                WISHLIST_BUTTON_HANDLER : function() {
-                    var price = removeComma(document.getElementById("total_price").innerText);
-                    var prdCode =  $("input[type=hidden][name=prd_code]").val();
-                    var title = document.getElementById("title").innerText;
-                    var category =  '{{prd_detail.category_large.name}}';
-                    var prd_title = title + "(" + category + ")";
-
-                    var img_url = '{{prd_detail.prd_list_img}}';
-                    var img = "http://runcoding.co.kr/" + img_url;
-                    var url = "http://runcoding.co.kr/detail_prd/?prd_code=" + prdCode;
-
-                    let naver_prd = [{"id": prdCode, "name": prd_title, "desc" : '상상을 현실로 만드는 코딩학습 런코딩', "uprice": price,
-                                    "url" : url, "thumb":img, "image":img}];
-
-                    console.log(JSON.stringify(naver_prd, null, '\t'));
-
-                     var IMP = window.IMP;
-                     var imp_val = '{{imp}}';
-                     IMP.init(imp_val);
-
-                    IMP.naver_zzim({
-                        naverProducts: naver_prd
-                   });
-
-                }
-            });
+            var price = {{prd_detail.price}};
+            document.getElementById("prd_price").innerHTML = numberWithCommas(price) +"원";
+         });
 
         $(window).scroll(function() {
             var scroll_top = $(window).scrollTop();
@@ -271,125 +108,15 @@
            $('html, body').animate({scrollTop : ($(document).height() - 2000)}, 600);
         }
 
-        function goOrder(flag)
-        {
-            var quantity = document.getElementById("prodQuantity").value;
-
-            var id = '{{client_id}}';
-            if(id == "")
-            {
-                 $("input[type=hidden][name=id]").val('100');
-            }
-
-            $("input[type=hidden][name=flag]").val(flag);
-            $("input[type=hidden][name=count]").val(quantity);
-            document.getElementById("prd_form").submit();
-         }
-
          function numberWithCommas(x)
          {
               return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
          }
 
-         function removeComma(str)
-        {
-          n = parseInt(str.replace(/,/g,""));
-          return n;
-        }
-
-          $(document).ready(function()
-          {
-               price_format = numberWithCommas(document.getElementById("prd_price").innerText);
-               document.getElementById("prd_price").innerText = price_format;
-               document.getElementById("total_price").innerText = price_format;
-
-              var msg = $("input[type=hidden][name=message]").val();
-              if (msg == 1)
-              {
-                  $("#res_msg").text("장바구니에 담겼습니다.");
-                  $('div.modal').modal();
-              }
-         });
 
 
-         function myOption(option_val, num)
-         {
-            if(num == 1)
-            {
-                $("input[type=hidden][name=option1]").val(document.getElementById("options_1").selectedIndex);
-            }
-            if(num == 2)
-            {
-                $("input[type=hidden][name=option2]").val(document.getElementById("options_2").selectedIndex);
-            }
-            if(num == 3)
-            {
-                $("input[type=hidden][name=option3]").val(document.getElementById("options_3").selectedIndex);
-            }
 
-            totalPrice();
-         }
 
-          // 수량 더하기
-        function up(max)
-        {
-            var quantity_name = "prodQuantity";
-            var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) + 1;
-            if (document.getElementById(quantity_name).value >= parseInt(max))
-                document.getElementById(quantity_name).value = max;
-
-            totalPrice();
-
-        }
-        function down(min)
-        {
-            var quantity_name = "prodQuantity";
-            var quantity = document.getElementById(quantity_name).value = parseInt(document.getElementById(quantity_name).value) - 1;
-            if (document.getElementById(quantity_name).value <= parseInt(min))
-                document.getElementById(quantity_name).value = min;
-
-            totalPrice();
-        }
-
-        function totalPrice()
-        {
-            var count = document.getElementById("prodQuantity").value;
-            var prd = removeComma(document.getElementById("prd_price").innerText);
-
-            var option1_name = document.getElementById("options_1");
-            var option2_name = document.getElementById("options_2");
-            var option3_name = document.getElementById("options_3");
-
-            prd *= 1;
-            var option_price = 0;
-            option_price *= 1;
-            if(option1_name != null)
-            {
-                var option1 =  option1_name.value;
-                option1 *= 1;
-                option_price += option1;
-            }
-
-            if(option2_name != null)
-            {
-                var option2 =  option2_name.value;
-                option2 *= 1;
-                option_price += option2;
-            }
-
-            if(option3_name != null)
-            {
-                var option3 =  option3_name.value;
-                option3 *= 1;
-                option_price += option3;
-            }
-
-            count *= 1;
-            prd = prd + option_price;
-            prd =  prd * count;
-            document.getElementById("total_price").innerHTML =  numberWithCommas(prd);
-
-        }
     </script>
 
       <a class="up_scroll" href="javascript:void(0);" onclick="javascript:top_val();">
