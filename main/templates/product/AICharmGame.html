@@ -1,0 +1,39 @@
+ {% load static %}
+
+    <div class="prd_title"><strong>{{prd_detail.title}}</strong></div>
+
+    <div class="info_detail">
+       <div class="prd_title_sub" style="padding-top:-10px;">
+            <div class="content_sub">코딩키트&nbsp;</div>
+            <img src="{% static 'resource/img/sub/detail_set.png' %}" alt="set" class="content_sub" style="padding-top:3px;">
+            <div class="content_sub">&nbsp;{{prd_detail.category_large.name}}&nbsp;</div>
+            <img src="{% static 'resource/img/sub/detail_set.png' %}" alt="set" class="content_sub" style="padding-top:3px;">
+            <div class="content_sub">&nbsp;{{prd_detail.title}} 상세보기</div>
+        </div>
+
+        <img src="{{prd_detail.prd_detail_img}}" alt="상품상세 이미지" style="padding-top:80px;">
+
+
+
+         <div>
+            <img src="{% static 'resource/img/charmcharm/charm_detail_01.jpg' %}"alt="상품상세 이미지1">
+            <img src="{% static 'resource/img/charmcharm/charm_detail_02.jpg' %}"alt="상품상세 이미지1">
+
+            <img src="{% static 'resource/img/charmcharm/charm_detail_03.jpg' %}"alt="상품상세 이미지1">
+
+            <img src="{% static 'resource/img/charmcharm/charm_detail_04.jpg' %}"alt="상품상세 이미지1">
+             <video width ="680" height="500" controls playsinline controlsList="nodownload" style="padding-left:45px">
+                    <source src="{% static 'resource/img/charmcharm/charm_detail_05_restore.mp4' %}" type="video/mp4"> >
+             </video>
+
+            <img src="{% static 'resource/img/charmcharm/charm_detail_06.jpg' %}"alt="상품상세 이미지1">
+             <video width ="680" height="500" controls playsinline controlsList="nodownload" style="padding-left:45px">
+                    <source src="{% static 'resource/img/charmcharm/charm_detail_07_restore.mp4' %}" type="video/mp4"> >
+             </video>
+
+            <img src="{% static 'resource/img/charmcharm/charm_detail_08.jpg' %}"alt="상품상세 이미지1">
+            <img src="{% static 'resource/img/charmcharm/charm_detail_09.jpg' %}"alt="상품상세 이미지1">
+         </div>
+    </div>
+
+  {% include "product/common.html" %}
