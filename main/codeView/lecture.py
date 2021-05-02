@@ -30,6 +30,10 @@ def class_detail_page(request):
 
     prd_code = request.POST.get('detail_prd_code', 0)
     # items_info = select_class_detail(prd_code)
+
+    if prd_code == 0:
+        return class_page(request)
+
     prd_info = select_prd(prd_code)
     print(prd_code)
     html_file = ""

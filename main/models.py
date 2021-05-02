@@ -61,6 +61,7 @@ class PrdTB(models.Model):
     option3_price = models.IntegerField(null=True, blank=True)
     category_sub = models.CharField(max_length=150)
     keyword = models.CharField(max_length=50, default = '') #search 용
+    link = models.CharField(max_length=150, null=True, blank=True)
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
