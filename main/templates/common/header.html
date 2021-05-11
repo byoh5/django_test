@@ -93,17 +93,24 @@
             document.cookie = name + "=" + value + "; path=/; expires=" + today.toGMTString();
     }
 
+    function goPay()
+     {
+        var win = window.open('https://smartstore.naver.com/runcoding', '_blank');
+        win.focus();
+     }
+
 
     </script>
 
     <div class="header_wrap">
+        <input type="hidden" id="clientId" name="clientId" value={{ request.session.user_id }}>
         <a href="/" class="logo">
             <img src="{% static 'resource/img/common/logo.png' %}" alt="runcoding">
         </a>
         <!-- gnb -->
         <ul class="menu">
             <li>
-                <a href="/class/">코딩키트</a>
+                <a class="btn buy" href="javascript:void(0);" onClick="javascript:goPay();" >구매하기</a>
             </li>
             <li>
                 <a href="/lounge/">코딩라운지</a>
@@ -113,13 +120,46 @@
                 <a href="/comunity/">커뮤니티</a>
             </li>
             <li>
-                <a>나의 강의실</a>
+                <a href="javascript:goMyClass_header();">나의 강의실</a>
             </li>
         </ul>
         <div class="ab_right">
-                <div class="user_menu">
-                    <span class="userImg"><img src="{% static 'resource/img/sub/img_user.png' %}" alt="유저 프로필"></span>
-                </div>
+            <div class="user_menu">
+                <span class="userImg"><img src="{% static 'resource/img/sub/img_user.png' %}" alt="유저 프로필"></span>
+                <ul class="sub_menu">
+                     <div id="logout" >
+                         {% if request.session.runcoding > 10 %}
+                         <a href="/deposit_list/" target="_blank">
+                            <li style="border-bottom:1px solid #dcdcdc;">
+                                관리자모드
+                            </li>
+                        </a>
+                         {% endif %}
+                          <a href="/myprofile/">
+                              <li style="border-bottom:1px solid #dcdcdc;">
+                               내 프로필
+                            </li>
+                          </a>
+                         <a href="/coupon/">
+                              <li style="border-bottom:1px solid #dcdcdc;">
+                               쿠폰
+                            </li>
+                          </a>
+                        <a href="/run_logout/">
+                            <li>
+                                로그아웃
+                            </li>
+                        </a>
+                     </div>
+                     <div id="login">
+                         <a href="/run_login/">
+                             <li>
+                                로그인
+                             </li>
+                         </a>
+                     </div>
+                </ul>
+            </div>
         </div>
     </div>
 </header>
