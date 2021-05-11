@@ -9,6 +9,11 @@ import string
 import random
 import bcrypt
 
+import smtplib
+from email.mime.text import MIMEText
+
+
+
 HTTP_200_OK = 200
 HTTP_400_BAD_REQUEST = 400
 
@@ -17,22 +22,42 @@ message_diff_pass = 202
 message_no_regi = 204
 message_exist_id = 208
 
-# smtp 버전 안정성 하
 
 def sendEmailWithHtml(to, subject, html_content):
 
-    text_content = ''
-    msg = EmailMultiAlternatives(subject, text_content, '', [to])
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+    # text_content = ''
+    # msg = EmailMultiAlternatives(subject, text_content, '', [to])
+    # msg.attach_alternative(html_content, "text/html")
+    # msg.send()
+
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.starttls()
+    s.login('runcoding.authteam@gmail.com', 'adyogkcsmuoweuue')
+
+    msg = MIMEText(html_content)
+    msg['Subject'] = subject
+
+    s.sendmail("runcoding@naver.com", to, msg.as_string())
+    s.quit()
 
     return HTTP_200_OK
 
 def sendEmail(to, subject, message):
-    subject = subject
-    message = message
-    mail = EmailMessage(subject, message, to=[to])
-    mail.send()
+    # subject = subject
+    # message = message
+    # mail = EmailMessage(subject, message, to=[to])
+    # mail.send()
+
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.starttls()
+    s.login('runcoding.authteam@gmail.com', 'adyogkcsmuoweuue')
+
+    msg = MIMEText(message)
+    msg['Subject'] = subject
+
+    s.sendmail("runcoding.authteam@gmail.com", to, msg.as_string())
+    s.quit()
+
     return HTTP_200_OK
 
 def contact_email(request):
@@ -75,9 +100,9 @@ def find_pass_viaEmail(request):
             new_user.regi_pass = password_encrypt.decode('utf-8')
             new_user.save()
 
-            html_content = '안녕하세요. 런코딩 입니다. <br/><br/>' \
-                           '임시로 발급된 비밀번호는 <strong>[' + newPW + ']</strong> 입니다. <br/> ' \
-                           '로그인 후, 비밀번호를 다시 설정해 주세요. <br /><br /> 런코딩 드림.<br />'
+            html_content = '안녕하세요. 런코딩 입니다. ' \
+                           '임시로 발급된 비밀번호는 [' + newPW + '] 입니다. ' \
+                           '로그인 후, 비밀번호를 다시 설정해 주세요. '
 
             result = sendEmailWithHtml(find_loginId, '런코딩에서 임시 비밀번호를 발송해 드렸습니다.', html_content)
             if result == 200:
