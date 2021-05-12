@@ -8,7 +8,6 @@
             <ul>
                 <li><a href="/myprofile/">내 프로필</a></li>
                 <li class="active"><a href="/coupon/">내 쿠폰</a></li>
-                <li><a href="/myorder/">주문내역</a></li>
 
             </ul>
         </div>
@@ -36,14 +35,12 @@
                             <li class="thead">
                                 <span class="name">쿠폰 이름</span>
                                 <span class="issueDate">발급일</span>
-                                <span class="endDate">만료일</span>
                                 <span class="condition">사용여부</span>
                             </li>
                             {% for couponList in coupon_detail %}
                             <li class="tbody">
                                 <span class="name">{{couponList.coupon.coupon_name}}</span>
                                 <span class="issueDate">{{couponList.stime  | date:'y-m-d' }}</span>
-                                <span class="endDate">{{couponList.expire | date:'y-m-d' }}</span>
                                 {% if couponList.used == True %}
                                 <span class="condition ready">사용</span>
                                 {% else %}

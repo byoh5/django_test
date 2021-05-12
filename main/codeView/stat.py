@@ -3,6 +3,7 @@ from main.models import *
 import string
 import random
 
+
 def stat_menu_step(request, main, sub, search):
     session = request.session.get('client_id', '')
     user_id = request.session.get('user_id', '')

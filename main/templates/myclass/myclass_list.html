@@ -70,13 +70,20 @@
                 <img class="bg right" src="{% static 'resource/img/sub/bg_botBanner_right.png' %}" alt="bg03">
                 <span>
                     코딩 키트 구매 후, 이용 가능합니다 <br/>
-                    코딩 키트를 구매하면, 강의가 무료!
-
                 </span>
-                <a href="/class/" class="btn">둘러보기</a>
+                 <a class="btn" style="float:left; margin-left:250px; margin-top:50px;"  href="javascript:void(0);" onClick="javascript:goPay();" >구매하기</a>
+                 <a href="/coupon/"  class="btn" style="margin-left:10px; margin-top:50px;" >쿠폰등록</a>
             </div>
         {% else %}
-            {% include "common/banner_bottom.html" %}
+            <div class="banner bottom" style="z-index:1;">
+                <img class="bg left01" src="{% static 'resource/img/sub/bg_botBanner_left01.png' %}" alt="bg01">
+                <img class="bg left02" src="{% static 'resource/img/sub/bg_botBanner_left02.png' %}" alt="bg02">
+                <img class="bg right" src="{% static 'resource/img/sub/bg_botBanner_right.png' %}" alt="bg03">
+                <span>
+                    CREATIVE CODING KIT로 학습하는 <b>런코딩!</b><br/>
+                </span>
+               <a class="btn" href="/coupon/" style="margin-top:50px;">쿠폰등록</a>
+        </div>
         {% endif %}
         {% include "common/footer.html" %}
 
@@ -102,6 +109,12 @@
             $("input[type=hidden][name=myclass_play]").val(play);
             document.getElementById("myclass_form").submit();
          }
+
+        function goPay()
+        {
+            var win = window.open('https://smartstore.naver.com/runcoding', '_blank');
+            win.focus();
+        }
 
     </script>
 

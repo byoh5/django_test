@@ -9,7 +9,7 @@ message_no_login = 210
 def myclass_list_page(request):
     user_id = request.session.get('user_id')
     session = request.session.get('client_id')
-    stat_menu_step(request, "myclass_list", "", "")
+    stat_menu_step(request, "myclass_list", "", user_id)
     if user_id is not None:
         if checkSession(session, user_id):
             myclass_list_info = select_myclass_list(user_id)

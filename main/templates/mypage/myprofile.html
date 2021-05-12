@@ -11,7 +11,6 @@
             <ul>
                 <li class="active"><a href="/myprofile/">내 프로필</a></li>
                 <li><a href="/coupon/">내 쿠폰</a></li>
-                <li><a href="/myorder/">주문내역</a></li>
             </ul>
         </div>
 
@@ -30,19 +29,6 @@
                         <span class="infoTit">phone</span>
                         <p>{{userInfo.regi_phone}}</p>
                         <a href="#phone" class="btn edit">변경</a>
-                    </li>
-                    <li class="address">
-                        <span class="infoTit">({{userInfo.regi_name}}) 기본배송지</span>
-                        <p>({{userInfo.regi_receiver1_add01}}) {{userInfo.regi_receiver1_add02}} {{userInfo.regi_receiver1_add03}}</p>
-                        <a href="#address1" class="btn edit">변경</a>
-                    </li>
-                     <li class="address">
-                        <span class="infoTit">({{userInfo.regi_receiver2_name}}) 배송지</span>
-                         {% if userInfo.regi_receiver2_name != "" %}
-                        <span><p>{{userInfo.regi_receiver2_phone}}</p></span>
-                        <p>({{userInfo.regi_receiver2_add01}}) {{userInfo.regi_receiver2_add02}} {{userInfo.regi_receiver2_add03}}</p>
-                         {% endif %}
-                        <a href="#address2" class="btn edit">변경</a>
                     </li>
                     <li class="password">
                         <span class="infoTit">비밀번호 변경 </span>
@@ -103,31 +89,6 @@
             </div>
         </div>
 
-         <!-- 주소 변경 팝업 -->
-        <div data-ml-modal="" id="address2">
-            <a href="" class="modal-overlay"></a>
-            <div class="modal-dialog modal-dialog-lg mypage">
-                <a href="#" class="modal-close">×</a>
-                <h3>주소 변경</h3>
-                <div class="modal-content">
-                    <span>추가 배송지 정보를 입력해주세요.</span>
-                        <div class="input_area address">
-                            <input type="text" name="regi_receiver2_add01" id="regi_receiver2_add01" class="login_inp add01 w50">
-                            <button class="btn address w30" onClick="javascript:getAddress(2);">주소 찾기</button>
-                            <input type="text" name="regi_receiver2_add02" id="regi_receiver2_add02" class="login_inp add02 w80">
-                            <input type="text" name="regi_receiver2_add03" id="regi_receiver2_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
-                        </div>
-                        <div class="input_area" style="margin-left:10px; margin-top:10px">
-                             <input type="text" name="regi_receiver2_name" id="regi_receiver2_name" class="w40" style="margin-right:10px;" placeholder="받는 분 이름을 작성해주세요.">
-                             <input type="text" name="regi_receiver2_phone" id="regi_receiver2_phone" class="w40" style="margin-right:10px;" placeholder="받는 분 휴대폰 번호를 작성해주세요.">
-                         </div>
-                    <div class="btn_area">
-                        <a href="#" class="btn cancle">변경 취소</a>
-                        <a href="javascript:void(0);" onclick="javascript:changeAddr2();" class="btn apply">변경사항 적용</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         {% include "common/footer.html" %}
     </div>
@@ -170,98 +131,6 @@
              changePW();
         }
     }
-
-    function getAddress(data)
-    {
-        if(data == 2)
-        {
-            new daum.Postcode({
-                oncomplete: function(data)
-                {
-                    $('[name=regi_receiver2_add01]').val(data.zonecode); // 우편번호 (5자리)
-                    $('[name=regi_receiver2_add02]').val(data.address);
-                    $('[name=regi_receiver2_add03]').val(data.buildingName);
-                }
-            }).open();
-
-        }
-        else
-        {
-            new daum.Postcode({
-            oncomplete: function(data)
-            {
-                $('[name=regi_add01]').val(data.zonecode); // 우편번호 (5자리)
-                $('[name=regi_add02]').val(data.address);
-                $('[name=regi_add03]').val(data.buildingName);
-            }
-	    }).open();
-
-        }
-
-
-	    return true;
-	}
-
-	function changeAddr()
-	{
-	    if($('[name=regi_add01]').val() == "" || $('[name=regi_add02]').val() == "" || $('[name=regi_add03]').val() == "")
-	    {
-             alert("주소를 바르게 입력해주세요.");
-             return false;
-	    }
-	    else
-	    {
-            var newForm = $('<form></form>');
-
-            newForm.attr("name", "modify");
-            newForm.attr("method", "post");
-            newForm.attr("action", "/my_modify_addr/");
-
-            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add01', value : $('[name=regi_add01]').val()}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add02', value : $('[name=regi_add02]').val()}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add03', value : $('[name=regi_add03]').val()}));
-
-            newForm.appendTo('body');
-            newForm.submit();
-        }
-	}
-
-	function changeAddr2()
-	{
-	    if($('[name=regi_receiver2_add01]').val() == "" || $('[name=regi_receiver2_add02]').val() == "" || $('[name=regi_receiver2_add03]').val() == "")
-	    {
-             alert("주소를 바르게 입력해주세요.");
-	    }
-	    else if($('[name=regi_receiver2_name]').val() == "")
-	    {
-            alert("이름을 입력해주세요.");
-	    }
-	    else if($('[name=regi_receiver2_phone]').val() == "")
-	    {
-            alert("휴대폰 정보를 입력해주세요.");
-	    }
-	    else
-	    {
-            var newForm = $('<form></form>');
-
-            newForm.attr("name", "modify");
-            newForm.attr("method", "post");
-            newForm.attr("action", "/my_modify_addr2/");
-
-           // var phoneVal = chkItemPhone($('[name=regi_receiver2_phone]').val());
-
-            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_name', value : $('[name=regi_receiver2_name]').val()}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_phone', value : $('[name=regi_receiver2_phone]').val()}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add01', value : $('[name=regi_receiver2_add01]').val()}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add02', value : $('[name=regi_receiver2_add02]').val()}));
-            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add03', value : $('[name=regi_receiver2_add03]').val()}));
-
-            newForm.appendTo('body');
-            newForm.submit();
-        }
-	}
 
 	function changePW()
 	{
