@@ -7,14 +7,6 @@ class RegisterTB(models.Model):
     regi_email = models.CharField(max_length=50)
     regi_name = models.CharField(max_length=50)
     regi_phone = models.CharField(max_length=50)
-    regi_receiver1_add01 = models.CharField(max_length=50)
-    regi_receiver1_add02 = models.CharField(max_length=50)
-    regi_receiver1_add03 = models.CharField(max_length=50)
-    regi_receiver2_name = models.CharField(max_length=50, default='', blank=True)
-    regi_receiver2_phone = models.CharField(max_length=50, default='', blank=True)
-    regi_receiver2_add01 = models.CharField(max_length=50, default='', blank=True)
-    regi_receiver2_add02 = models.CharField(max_length=50, default='', blank=True)
-    regi_receiver2_add03 = models.CharField(max_length=50, default='', blank=True)
     regi_pass = models.CharField(max_length=150)
     level = models.IntegerField(default=0)
     imp_birth = models.CharField(max_length=50, default='', blank=True)
@@ -232,7 +224,8 @@ class loungeListTB(models.Model):
     title = models.CharField(max_length=50)
     user = models.CharField(max_length=50)
     data_name = models.CharField(max_length=50, default='') #directory name
-    search_title = models.CharField(max_length=150, default='', blank=True) #검색에 걸리고 싶은 단어
+    search_title = models.CharField(max_length=150, default='', blank=True) #검색에 걸리고 싶은 단어 화면노출 o
+    search_title2 = models.CharField(max_length=150, default='', blank=True)  # 검색에 걸리고 싶은 단어 화면노출 X
     video_id = models.CharField(max_length=150, default='')
     down_mblock_code = models.CharField(max_length=50, default='', blank=True)
     down_arduino_code = models.CharField(max_length=50, default='', blank=True)

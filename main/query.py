@@ -348,7 +348,8 @@ def select_lounge_search(keyword):
     query_search = Q()
 
     if keyword is not "":
-        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword) | Q(search_title__icontains=keyword), query_search.AND)
+        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword) | Q(search_title__icontains=keyword)
+                         | Q(search_title2__icontains=keyword), query_search.AND)
 
     lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by('-loungeList_idx')
 
@@ -359,9 +360,10 @@ def select_lounge_search_cnt(keyword, start_cnt, end_cnt):
     query_search = Q()
 
     if keyword is not "":
-        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword) | Q(search_title__icontains=keyword), query_search.AND)
+        query_search.add(Q(title__icontains=keyword) | Q(user__icontains=keyword) | Q(search_title__icontains=keyword)
+                         | Q(search_title2__icontains=keyword), query_search.AND)
 
-    lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by( '-loungeList_idx')[start_cnt:end_cnt]
+    lounge_info = loungeListTB.objects.filter(query_search, dbstat='A').order_by('-loungeList_idx')[start_cnt:end_cnt]
 
     return lounge_info
 
@@ -486,31 +488,31 @@ def select_deliveryList():
     delivery_info = delivery_list.objects.filter(dbstat='A')
     return delivery_info
 
-def update_user_addr(user_id, add01,add02,add03):
-    user_info = select_register(user_id)
+# def update_user_addr(user_id, add01,add02,add03):
+#     user_info = select_register(user_id)
+#
+#     if user_info.count() is not 0:
+#         new_user = user_info[0]
+#         new_user.regi_receiver1_add01 = add01
+#         new_user.regi_receiver1_add02 = add02
+#         new_user.regi_receiver1_add03 = add03
+#         new_user.save()
+#
+#         return new_user
 
-    if user_info.count() is not 0:
-        new_user = user_info[0]
-        new_user.regi_receiver1_add01 = add01
-        new_user.regi_receiver1_add02 = add02
-        new_user.regi_receiver1_add03 = add03
-        new_user.save()
-
-        return new_user
-
-def update_user_addr2(user_id, name, phone, add01,add02,add03):
-    user_info = select_register(user_id)
-
-    if user_info.count() is not 0:
-        new_user = user_info[0]
-        new_user.regi_receiver2_name = name
-        new_user.regi_receiver2_phone = phone
-        new_user.regi_receiver2_add01 = add01
-        new_user.regi_receiver2_add02 = add02
-        new_user.regi_receiver2_add03 = add03
-        new_user.save()
-
-        return new_user
+# def update_user_addr2(user_id, name, phone, add01,add02,add03):
+#     user_info = select_register(user_id)
+#
+#     if user_info.count() is not 0:
+#         new_user = user_info[0]
+#         new_user.regi_receiver2_name = name
+#         new_user.regi_receiver2_phone = phone
+#         new_user.regi_receiver2_add01 = add01
+#         new_user.regi_receiver2_add02 = add02
+#         new_user.regi_receiver2_add03 = add03
+#         new_user.save()
+#
+#         return new_user
 
 def update_order_prdCode(order_prd_info, count, option1, option2, option3):
     new_orderPrd = order_prd_info[0]
