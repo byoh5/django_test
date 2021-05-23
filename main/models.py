@@ -98,6 +98,7 @@ class ItemCommonTB(models.Model):
     iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
     iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
+    viewtype = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
@@ -115,6 +116,7 @@ class ItemSubKitTB(models.Model):
     iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
     iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
+    viewtype = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
@@ -132,6 +134,7 @@ class ItemSubTB(models.Model):
     iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
     iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
+    viewtype = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
@@ -149,6 +152,7 @@ class ItemTB(models.Model): #curriculum
     iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
     iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
+    viewtype = models.CharField(max_length=50, default='A')
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 

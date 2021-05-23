@@ -32,6 +32,11 @@ from main.codeView.watch import *
 from main.codeView.prodcut_xml import *
 from main.codeView.bizMsg import *
 from main.codeView.delivery_notify import *
+from main.codeView.auth import *
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('regi/', register_page),
@@ -40,7 +45,7 @@ urlpatterns = [
     path('login_form/', login),
     path('run_logout/', logout),
     path('check_id/', check_id_popup),
-    path('naver_pay/', naver_page),
+    #path('naver_pay/', naver_page),
 
     path('class/', class_page),
     path('class_detail/', class_detail_page),
@@ -58,13 +63,13 @@ urlpatterns = [
     path('lounge_view/', loungeView_page),
     path('lounge_page_paging/', lounge_page_paging),
 
-    path('order/', order_page),
-    path('order_del/', order_delete),
-    path('order_naver/', order_naver),
-    path('run_pay/', payment),
-    path('run_paying/', payment_ing),
-    path('run_order/', order),
-    path('pay_result/', pay_result),
+    # path('order/', order_page),
+    # path('order_del/', order_delete),
+    # path('order_naver/', order_naver),
+    # path('run_pay/', payment),
+    # path('run_paying/', payment_ing),
+    # path('run_order/', order),
+    # path('pay_result/', pay_result),
 
     path('myprofile/', mypage_profile),
     path('myorder/', mypage_order),
@@ -111,6 +116,13 @@ urlpatterns = [
 
     path('delivery_list/', get_delivery_list),
 
+    path('auth_user/', auth_user_regi),
+    path('auth_user_no/', auth_user_regi_fail),
+
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
+
+
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

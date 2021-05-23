@@ -11,10 +11,6 @@ django.setup()
 from main.models import couponTB
 from main.models import PrdTB
 
-#cuas
-#cums
-#cuan
-#cumn
 
 def add_coupon(coupon_num, coupon_name, prd_code):
     prd = PrdTB.objects.filter(prd_code=prd_code, dbstat='A')
@@ -34,26 +30,21 @@ def add_coupon(coupon_num, coupon_name, prd_code):
     print(coupon_num, coupon_name, prd_code[0].title)
 
 def make():
-    coupon_num_as = 'cuas'
-    coupon_num_ms = 'cums'
-    coupon_num_an = 'cuan'
-    coupon_num_mn = 'cumn'
+    coupon_num_mblock_smart = 'msm_'
+    coupon_num_mblock_ai_trashcan = 'mait_'
+    coupon_num_mblock_neopixel = 'mneo_'
 
-    for i in range(50):
-        print(coupon_num_as, i)
-        add_coupon(coupon_num_as, "스마트 휴지통(+AI) 아두이노 버전", "2020080013001")
+    for i in range(5):
+        print(coupon_num_mblock_smart, i)
+        add_coupon(coupon_num_mblock_smart, "스마트 휴지통 엠블럭 버전", "2020080023001") #	2020080023001
 
-    for i in range(50):
-        print(coupon_num_ms, i)
-        add_coupon(coupon_num_ms, "스마트 휴지통(+AI) 엠블럭 버전", "2020080023001")
+    for i in range(5):
+        print(coupon_num_mblock_ai_trashcan, i)
+        add_coupon(coupon_num_mblock_ai_trashcan, "인공지능 휴지통 엠블럭 버전", "2020080023002") #	2020080023002
 
-    for i in range(50):
-        print(coupon_num_an, i)
-        add_coupon(coupon_num_an, "네오픽셀 아두이노 버전", "2020120030002")
-
-    for i in range(50):
-        print(coupon_num_mn, i)
-        add_coupon(coupon_num_mn, "네오픽셀 엠블럭 버전", "2020120040002")
+    for i in range(5):
+        print(coupon_num_mblock_neopixel, i)
+        add_coupon(coupon_num_mblock_neopixel, "네오픽셀 엠블럭 버전", "2020120040002") #2020120040002
 
 if __name__ == '__main__':
     make()

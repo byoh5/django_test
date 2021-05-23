@@ -7,14 +7,32 @@
     <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
 
 <header>
+
+
     <script>
+    Object.defineProperty(console, '_commandLineAPI', { get : function() { throw '콘솔을 사용할 수 없습니다.' } });
+
+
     // F12 버튼 방지
     $(document).ready(function(){
         $(document).bind('keydown',function(e){
-            if ( e.keyCode == 123 /* F12 */) {
+            if ( e.keyCode == 123 /* F12 */)
+           {
                 e.preventDefault();
                 e.returnValue = false;
+
+                $("#res_msg").text("접근하시면 안됩니다.");
+                $('div.modal').modal();
             }
+            if ( e.keyCode == 16 /* F12 */)
+           {
+                e.preventDefault();
+                e.returnValue = false;
+
+                $("#res_msg").text("접근하시면 안됩니다.");
+                $('div.modal').modal();
+            }
+
         });
 
         if($("input[type=hidden][name=clientId]").val() != "")

@@ -1,5 +1,6 @@
 {% load static %}
 {% include "common/header.html" %}
+
     <div class="wrap">
         <!-- sub visual -->
         <section class="sub_visual">
@@ -16,13 +17,16 @@
         <!-- sub visual -->
 
         <!-- codingKit list -->
-        <div class="codingKit_list detail myClass">
+        <div class="codingKit_list detail myClass" aria-hidden="true">
             <div class="lecture_list detail">
                 <div class="detail_area">
                     <!-- 동영상 영역입니다. -->
                     <div class="video_area">
-                        <video id="video_ctrl" width ="100%" height="100%" controls autoplay playsinline controlsList="nodownload"  poster="" src="" />
+                        <video id="video_ctrl" width ="100%" height="100%" controls autoplay playsinline controlsList="nodownload"  disablepictureinpicture="true">
+                            <source id="movie_src" type="video/mp4" src="sample_1.mp4" />
+                        </video>
                     </div>
+
 
                     <input type="hidden" name="play_enable" value="{{play}}">
 
@@ -47,8 +51,12 @@
                                     <ul class="submenu">
                                          {% for item_common_detail in myclass_common_detail %}
                                        <li>
+                                            {% if item_common_detail.viewtype == 'D' %}
+                                            <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{item_common_detail.title}}</p>
+                                           {% else %}
                                              <a href="javascript:getVideo('{{item_common_detail.prd.prd_code}}', '{{item_common_detail.data}}', 'common', '{{forloop.counter}}', '{{item_common_detail.iteminfo_1}}', '{{item_common_detail.iteminfo_2}}', '{{item_common_detail.iteminfo_3}}', '{{item_common_detail.iteminfo_4}}', '{{item_common_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{item_common_detail.title}}</a>
+                                            {% endif %}
 
                                              <!-- iteminfo1 -->
                                              <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_title" value="{{item_common_detail.iteminfo_1.title}}">
@@ -98,9 +106,12 @@
                                     <ul class="submenu">
                                          {% for item_detail in myclass_detail %}
                                        <li>
+                                            {% if item_detail.viewtype == 'D' %}
+                                            <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{item_detail.title}}</p>
+                                           {% else %}
                                              <a href="javascript:getVideo('{{item_detail.prd.prd_code}}', '{{item_detail.data}}',  'kit', '{{forloop.counter}}', '{{item_detail.iteminfo_1}}', '{{item_detail.iteminfo_2}}', '{{item_detail.iteminfo_3}}', '{{item_detail.iteminfo_4}}', '{{item_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{item_detail.title}}</a>
-
+                                            {%endif %}
                                             <!-- iteminfo1 -->
                                              <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_title" value="{{item_detail.iteminfo_1.title}}">
                                              <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_type" value="{{item_detail.iteminfo_1.type}}">
@@ -150,9 +161,12 @@
                                     <ul class="submenu">
                                          {% for sub_detail in myclass_sub_detail %}
                                        <li>
+                                            {% if sub_detail.viewtype == 'D' %}
+                                            <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{sub_detail.title}}</p>
+                                           {% else %}
                                              <a href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.data}}',  'sub', '{{forloop.counter}}', '{{sub_detail.iteminfo_1}}', '{{sub_detail.iteminfo_2}}', '{{sub_detail.iteminfo_3}}', '{{sub_detail.iteminfo_4}}', '{{sub_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{sub_detail.title}}</a>
-
+                                            {% endif %}
 
                                            <!-- iteminfo1 -->
                                              <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_title" value="{{sub_detail.iteminfo_1.title}}">
@@ -198,9 +212,12 @@
                                         {% if sub_detail.subKit != null %}
                                             <li class="subkit">
 
+                                                 {% if sub_detail.subKit.viewtype == 'D' %}
+                                                    <p style="color:#d4cece; padding-top:5px; padding-left:15px;">└&nbsp; 키트미션 : {{sub_detail.subKit.title}}</p>
+                                                 {% else %}
                                                   <a style="padding-top:5px; padding-left:15px;" href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.subKit.data}}',  'subkit', '{{forloop.counter}}', '{{sub_detail.subKit.iteminfo_1}}', '{{sub_detail.subKit.iteminfo_2}}', '{{sub_detail.subKit.iteminfo_3}}', '{{sub_detail.subKit.iteminfo_4}}', '{{sub_detail.subKit.iteminfo_5}}');" class="classList">
                                                   &nbsp;&nbsp;└&nbsp; 키트미션 : {{sub_detail.subKit.title}}</a>
-
+                                                  {% endif %}
                                                     <!-- iteminfo1 -->
                                                  <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_title" value="{{sub_detail.subKit.iteminfo_1.title}}">
                                                  <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_type" value="{{sub_detail.subKit.iteminfo_1.type}}">
@@ -478,14 +495,16 @@
 
             var src;
             if (class_type == 'common')
-                src = '/static/resource/data/lecture/common/' + data;
+                src = '/common/' + data;
             else if (class_type == 'sub')
-                src = '/static/resource/data/lecture/common/' + data;
+                src = '/common/' + data;
             else
-                src = '/static/resource/data/lecture/' + prdCode + '/' + data;
+                src = prdCode + '/' + data;
 
             var video  = document.getElementById('video_ctrl');
-            video.src = src;
+            video.setAttribute("src", "/static/resource/data/lecture/" + src);
+            video.load();
+            video.play();
 
 
             var play = $("input[type=hidden][name=play_enable]").val();
