@@ -34,7 +34,7 @@
                     {% if list_detail.prd != None %}
                     <img src='/static/resource/img/{{list_detail.prd.prd_list_img}}' alt="코딩 라운지 리스트 썸네일">
                     <div class="text_area">
-                        <span class="title">{{list_detail.item_code}}({{list_detail.prd.keyword}})</span>
+                        <span class="title">{{list_detail.prd.title}}({{list_detail.prd.keyword}})</span>
                             {% if list_detail.play == 'D'%}
                              <p class="date"> 강의시작 전입니다.</p>
                              <p class="date">&nbsp;</p>
@@ -47,7 +47,7 @@
                     {% elif list_detail.bonus != None %}
                     <img src='/static/resource/img/{{list_detail.bonus.prd_list_img}}' alt="코딩 라운지 리스트 썸네일">
                     <div class="text_area">
-                        <span class="title">{{list_detail.item_code}}({{list_detail.bonus.keyword}})</span>
+                        <span class="title">{{list_detail.prd.title}}({{list_detail.bonus.keyword}})</span>
                             {% if list_detail.play == 'D'%}
                              <p class="date"> 강의시작 전입니다.</p>
                              <p class="date">&nbsp;</p>

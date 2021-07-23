@@ -99,12 +99,16 @@ def myclass_page(request):
                     "myclass_detail": item_info,
                     "myclass_common_detail": item_common_info,
                     "myclass_sub_detail": item_sub_info,
-                    "title": item_info[0].item_code,
+                    "title": item_info[0].prd.title,
                     "subTitle": item_info[0].prd.keyword,
                     "myclass_idx":myclass_idx,
                     "play":play,
                 }
-                return render(request, 'myclass/myclass.html', context)
+
+                if item_info[0].prd.viewType == 'A':
+                    return render(request, 'myclass/myclass.html', context)
+                elif item_info[0].prd.viewType == 'B':
+                    return render(request, 'myclass/myclass_teach.html', context)
         else:
             disableSession(user_id, request)
             return render(request, 'login/login.html')

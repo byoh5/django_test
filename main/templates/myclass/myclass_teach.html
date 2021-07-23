@@ -1,0 +1,566 @@
+{% load static %}
+{% include "common/header.html" %}
+
+    <div class="wrap">
+        <!-- sub visual -->
+        <section class="sub_visual">
+            <div class="section_wrap">
+                <div class="slogan">
+                   <span class="bigSlg ck_title">
+                        {{title}}<br/>({{subTitle}})
+                    </span>
+
+                </div>
+                <img class="subVisual myClass" src="{% static 'resource/img/sub/sv_myClass.png' %}" alt="나의 강의실">
+            </div>
+        </section>
+        <!-- sub visual -->
+
+        <!-- codingKit list -->
+        <div class="codingKit_list detail myClass" aria-hidden="true">
+            <div class="lecture_list detail">
+                <div class="detail_area">
+                    <!-- 동영상 영역입니다. -->
+                    <div class="video_area">
+                        <video id="video_ctrl" width ="100%" height="100%" controls autoplay playsinline controlsList="nodownload"  disablepictureinpicture="true">
+                            <source id="movie_src" type="video/mp4" src="sample_1.mp4" />
+                        </video>
+                    </div>
+
+
+                    <input type="hidden" name="play_enable" value="{{play}}">
+
+
+                    <div class="board_community">
+                        <div class="point_content_faq"><strong>강의 자료실</strong></div>
+                         <div id="lecture_data" class="accordion" style="padding-left:25px;">
+                        </div>
+                    </div>
+                </div>
+                <a href="/myclass_list/" class="btn list_more">나의강의실</a>
+            </div>
+            <div class="filter_area detail">
+                <div class="fixedArea">
+                    <div class="info_area">
+                        <span>강의목록</span>
+                        <div class="lecture_info">
+                            <ul class="lectureList" id="lecture_accordion">
+                                <span class="section">Study Class</span>
+                                 <li class="active" style="border-top: none;">
+                                    <span>환경구축</span>
+                                    <ul class="submenu">
+                                         {% for item_common_detail in myclass_common_detail %}
+                                       <li>
+                                            {% if item_common_detail.viewtype == 'D' %}
+                                            <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{item_common_detail.title}}</p>
+                                           {% else %}
+                                             <a href="javascript:getVideo('{{item_common_detail.prd.prd_code}}', '{{item_common_detail.data}}', 'common', '{{forloop.counter}}', '{{item_common_detail.iteminfo_1}}', '{{item_common_detail.iteminfo_2}}', '{{item_common_detail.iteminfo_3}}', '{{item_common_detail.iteminfo_4}}', '{{item_common_detail.iteminfo_5}}');" class="classList">
+                                                 {{forloop.counter}}. {{item_common_detail.title}}</a>
+                                            {% endif %}
+
+                                             <!-- iteminfo1 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_title" value="{{item_common_detail.iteminfo_1.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_type" value="{{item_common_detail.iteminfo_1.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_downdata" value="{{item_common_detail.iteminfo_1.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_downdata_sub" value="{{item_common_detail.iteminfo_1.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_downdata_name" value="{{item_common_detail.iteminfo_1.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_downdata_name_sub" value="{{item_common_detail.iteminfo_1.downdata_name_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_1_stat" value="{{item_common_detail.iteminfo_1.dbstat}}">
+
+                                             <!-- iteminfo2 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_title" value="{{item_common_detail.iteminfo_2.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_type" value="{{item_common_detail.iteminfo_2.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_downdata" value="{{item_common_detail.iteminfo_2.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_downdata_sub" value="{{item_common_detail.iteminfo_2.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_downdata_name" value="{{item_common_detail.iteminfo_2.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_downdata_name_sub" value="{{item_common_detail.iteminfo_2.downdata_name_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_2_stat" value="{{item_common_detail.iteminfo_2.dbstat}}">
+
+                                            <!-- iteminfo3 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_title" value="{{item_common_detail.iteminfo_3.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_type" value="{{item_common_detail.iteminfo_3.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_downdata" value="{{item_common_detail.iteminfo_3.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_downdata_sub" value="{{item_common_detail.iteminfo_3.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_downdata_name" value="{{item_common_detail.iteminfo_3.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_downdata_name_sub" value="{{item_common_detail.iteminfo_3.downdata_name_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_3_stat" value="{{item_common_detail.iteminfo_3.dbstat}}">
+
+                                            <!-- iteminfo4 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_title" value="{{item_common_detail.iteminfo_4.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_type" value="{{item_common_detail.iteminfo_4.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_downdata" value="{{item_common_detail.iteminfo_4.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_downdata_sub" value="{{item_common_detail.iteminfo_4.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_downdata_name" value="{{item_common_detail.iteminfo_4.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_downdata_name_sub" value="{{item_common_detail.iteminfo_4.downdata_name_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_4_stat" value="{{item_common_detail.iteminfo_4.dbstat}}">
+
+                                           <!-- iteminfo5 -->
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_title" value="{{item_common_detail.iteminfo_5.title}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_type" value="{{item_common_detail.iteminfo_5.type}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_downdata" value="{{item_common_detail.iteminfo_5.downdata}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_downdata_sub" value="{{item_common_detail.iteminfo_5.downdata_sub}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_downdata_name" value="{{item_common_detail.iteminfo_5.downdata_name}}">
+                                             <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_downdata_name_sub" value="{{item_common_detail.iteminfo_5.downdata_name_sub}}">
+                                            <input type="hidden" id="common_{{forloop.counter}}_iteminfo_5_stat" value="{{item_common_detail.iteminfo_5.dbstat}}">
+                                       </li>
+                                         {% endfor %}
+                                    </ul>
+                                </li>
+
+
+                                <li class="active" style="border-top: none;">
+                                     <span>문법/이론/키트미션</span>
+                                    <ul class="submenu">
+                                         {% for sub_detail in myclass_sub_detail %}
+                                       <li>
+                                            {% if sub_detail.viewtype == 'D' %}
+                                            <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{sub_detail.title}}</p>
+                                           {% else %}
+                                             <a href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.data}}',  'sub', '{{forloop.counter}}', '{{sub_detail.iteminfo_1}}', '{{sub_detail.iteminfo_2}}', '{{sub_detail.iteminfo_3}}', '{{sub_detail.iteminfo_4}}', '{{sub_detail.iteminfo_5}}');" class="classList">
+                                                 {{forloop.counter}}. {{sub_detail.title}}</a>
+                                            {% endif %}
+
+                                           <!-- iteminfo1 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_title" value="{{sub_detail.iteminfo_1.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_type" value="{{sub_detail.iteminfo_1.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_downdata" value="{{sub_detail.iteminfo_1.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_downdata_sub" value="{{sub_detail.iteminfo_1.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_downdata_name" value="{{sub_detail.iteminfo_1.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_downdata_name_sub" value="{{sub_detail.iteminfo_1.downdata_name_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_1_stat" value="{{sub_detail.iteminfo_1.dbstat}}">
+
+                                             <!-- iteminfo2 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_title" value="{{sub_detail.iteminfo_2.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_type" value="{{sub_detail.iteminfo_2.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_downdata" value="{{sub_detail.iteminfo_2.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_downdata_sub" value="{{sub_detail.iteminfo_2.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_downdata_name" value="{{sub_detail.iteminfo_2.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_downdata_name_sub" value="{{sub_detail.iteminfo_2.downdata_name_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_2_stat" value="{{sub_detail.iteminfo_2.dbstat}}">
+
+                                            <!-- iteminfo3 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_title" value="{{sub_detail.iteminfo_3.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_type" value="{{sub_detail.iteminfo_3.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_downdata" value="{{sub_detail.iteminfo_3.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_downdata_sub" value="{{sub_detail.iteminfo_3.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_downdata_name" value="{{sub_detail.iteminfo_3.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_downdata_name_sub" value="{{sub_detail.iteminfo_3.downdata_name_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_3_stat" value="{{sub_detail.iteminfo_3.dbstat}}">
+
+                                            <!-- iteminfo4 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_title" value="{{sub_detail.iteminfo_4.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_type" value="{{sub_detail.iteminfo_4.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_downdata" value="{{sub_detail.iteminfo_4.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_downdata_sub" value="{{sub_detail.iteminfo_4.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_downdata_name" value="{{sub_detail.iteminfo_4.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_downdata_name_sub" value="{{sub_detail.iteminfo_4.downdata_name_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_4_stat" value="{{sub_detail.iteminfo_4.dbstat}}">
+
+                                           <!-- iteminfo5 -->
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_title" value="{{sub_detail.iteminfo_5.title}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_type" value="{{sub_detail.iteminfo_5.type}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_downdata" value="{{sub_detail.iteminfo_5.downdata}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_downdata_sub" value="{{sub_detail.iteminfo_5.downdata_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_downdata_name" value="{{sub_detail.iteminfo_5.downdata_name}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_downdata_name_sub" value="{{sub_detail.iteminfo_5.downdata_name_sub}}">
+                                             <input type="hidden" id="sub_{{forloop.counter}}_iteminfo_5_stat" value="{{sub_detail.iteminfo_5.dbstat}}">
+
+                                         </li>
+                                        {% if sub_detail.subKit != null %}
+                                            <li class="subkit">
+
+                                                 {% if sub_detail.subKit.viewtype == 'D' %}
+                                                    <p style="color:#d4cece; padding-top:5px; padding-left:15px;">└&nbsp; 키트미션 : {{sub_detail.subKit.title}}</p>
+                                                 {% else %}
+                                                  <a style="padding-top:5px; padding-left:15px;" href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.subKit.data}}',  'subkit', '{{forloop.counter}}', '{{sub_detail.subKit.iteminfo_1}}', '{{sub_detail.subKit.iteminfo_2}}', '{{sub_detail.subKit.iteminfo_3}}', '{{sub_detail.subKit.iteminfo_4}}', '{{sub_detail.subKit.iteminfo_5}}');" class="classList">
+                                                  &nbsp;&nbsp;└&nbsp; 키트미션 : {{sub_detail.subKit.title}}</a>
+                                                  {% endif %}
+                                                    <!-- iteminfo1 -->
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_title" value="{{sub_detail.subKit.iteminfo_1.title}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_type" value="{{sub_detail.subKit.iteminfo_1.type}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_downdata" value="{{sub_detail.subKit.iteminfo_1.downdata}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_downdata_sub" value="{{sub_detail.subKit.iteminfo_1.downdata_sub}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_downdata_name" value="{{sub_detail.subKit.iteminfo_1.downdata_name}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_downdata_name_sub" value="{{sub_detail.subKit.iteminfo_1.downdata_name_sub}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_1_stat" value="{{sub_detail.subKit.iteminfo_1.dbstat}}">
+
+                                                 <!-- iteminfo2 -->
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_2_title" value="{{sub_detail.subKit.iteminfo_2.title}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_2_type" value="{{sub_detail.subKit.iteminfo_2.type}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_2_downdata" value="{{sub_detail.subKit.iteminfo_2.downdata}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_2_downdata_sub" value="{{sub_detail.subKit.iteminfo_2.downdata_sub}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_2_downdata_name" value="{{sub_detail.subKit.iteminfo_2.downdata_name}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_2_downdata_name_sub" value="{{sub_detail.subKit.iteminfo_2.downdata_name_sub}}">
+                                                <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_2_stat" value="{{sub_detail.subKit.iteminfo_2.dbstat}}">
+
+                                                <!-- iteminfo3 -->
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_3_title" value="{{sub_detail.subKit.iteminfo_3.title}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_3_type" value="{{sub_detail.subKit.iteminfo_3.type}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_3_downdata" value="{{sub_detail.subKit.iteminfo_3.downdata}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_3_downdata_sub" value="{{sub_detail.subKit.iteminfo_3.downdata_sub}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_3_downdata_name" value="{{sub_detail.subKit.iteminfo_3.downdata_name}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_3_downdata_name_sub" value="{{sub_detail.subKit.iteminfo_3.downdata_name_sub}}">
+                                                <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_3_stat" value="{{sub_detail.subKit.iteminfo_3.dbstat}}">
+
+                                                <!-- iteminfo4 -->
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_4_title" value="{{sub_detail.subKit.iteminfo_4.title}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_4_type" value="{{sub_detail.subKit.iteminfo_4.type}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_4_downdata" value="{{sub_detail.subKit.iteminfo_4.downdata}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_4_downdata_sub" value="{{sub_detail.subKit.iteminfo_4.downdata_sub}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_4_downdata_name" value="{{sub_detail.subKit.iteminfo_4.downdata_name}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_4_downdata_name_sub" value="{{sub_detail.subKit.iteminfo_4.downdata_name_sub}}">
+                                                <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_4_stat" value="{{sub_detail.subKit.iteminfo_4.dbstat}}">
+
+                                               <!-- iteminfo5 -->
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_5_title" value="{{sub_detail.subKit.iteminfo_5.title}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_5_type" value="{{sub_detail.subKit.iteminfo_5.type}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_5_downdata" value="{{sub_detail.subKit.iteminfo_5.downdata}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_5_downdata_sub" value="{{sub_detail.subKit.iteminfo_5.downdata_sub}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_5_downdata_name" value="{{sub_detail.subKit.iteminfo_5.downdata_name}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_5_downdata_name_sub" value="{{sub_detail.subKit.iteminfo_5.downdata_name_sub}}">
+                                                 <input type="hidden" id="subkit_{{forloop.counter}}_iteminfo_5_stat" value="{{sub_detail.subKit.iteminfo_5.dbstat}}">
+                                            </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                 <span class="section">Maker Class</span>
+                                <li class="active" style="border-top: none;">
+                                    <span>키트만들기</span>
+                                    <ul class="submenu">
+                                         {% for item_detail in myclass_detail %}
+                                       <li>
+                                            {% if item_detail.viewtype == 'D' %}
+                                            <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{item_detail.title}}</p>
+                                           {% else %}
+                                             <a href="javascript:getVideo('{{item_detail.prd.prd_code}}', '{{item_detail.data}}',  'kit', '{{forloop.counter}}', '{{item_detail.iteminfo_1}}', '{{item_detail.iteminfo_2}}', '{{item_detail.iteminfo_3}}', '{{item_detail.iteminfo_4}}', '{{item_detail.iteminfo_5}}');" class="classList">
+                                                 {{forloop.counter}}. {{item_detail.title}}</a>
+                                            {%endif %}
+                                            <!-- iteminfo1 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_title" value="{{item_detail.iteminfo_1.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_type" value="{{item_detail.iteminfo_1.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_downdata" value="{{item_detail.iteminfo_1.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_downdata_sub" value="{{item_detail.iteminfo_1.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_downdata_name" value="{{item_detail.iteminfo_1.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_downdata_name_sub" value="{{item_detail.iteminfo_1.downdata_name_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_1_stat" value="{{item_detail.iteminfo_1.dbstat}}">
+
+                                             <!-- iteminfo2 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_title" value="{{item_detail.iteminfo_2.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_type" value="{{item_detail.iteminfo_2.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_downdata" value="{{item_detail.iteminfo_2.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_downdata_sub" value="{{item_detail.iteminfo_2.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_downdata_name" value="{{item_detail.iteminfo_2.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_downdata_name_sub" value="{{item_detail.iteminfo_2.downdata_name_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_2_stat" value="{{item_detail.iteminfo_2.dbstat}}">
+
+                                            <!-- iteminfo3 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_title" value="{{item_detail.iteminfo_3.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_type" value="{{item_detail.iteminfo_3.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_downdata" value="{{item_detail.iteminfo_3.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_downdata_sub" value="{{item_detail.iteminfo_3.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_downdata_name" value="{{item_detail.iteminfo_3.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_downdata_name_sub" value="{{item_detail.iteminfo_3.downdata_name_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_3_stat" value="{{item_detail.iteminfo_3.dbstat}}">
+
+                                            <!-- iteminfo4 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_title" value="{{item_detail.iteminfo_4.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_type" value="{{item_detail.iteminfo_4.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_downdata" value="{{item_detail.iteminfo_4.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_downdata_sub" value="{{item_detail.iteminfo_4.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_downdata_name" value="{{item_detail.iteminfo_4.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_downdata_name_sub" value="{{item_detail.iteminfo_4.downdata_name_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_4_stat" value="{{item_detail.iteminfo_4.dbstat}}">
+
+                                           <!-- iteminfo5 -->
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_title" value="{{item_detail.iteminfo_5.title}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_type" value="{{item_detail.iteminfo_5.type}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_downdata" value="{{item_detail.iteminfo_5.downdata}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_downdata_sub" value="{{item_detail.iteminfo_5.downdata_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_downdata_name" value="{{item_detail.iteminfo_5.downdata_name}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_downdata_name_sub" value="{{item_detail.iteminfo_5.downdata_name_sub}}">
+                                             <input type="hidden" id="kit_{{forloop.counter}}_iteminfo_5_stat" value="{{item_detail.iteminfo_5.dbstat}}">
+                                       </li>
+                                         {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:50px"></div>
+        {% include "common/footer.html" %}
+
+    </div>
+
+ <a class="up_scroll" href="javascript:void(0);" onclick="javascript:top_val();">
+        <img src="{% static 'resource/img/sub/up.png' %}" style="float:right;">
+    </a>
+
+    <script>
+
+       $(document).ready(function() {
+            if($("input[type=hidden][name=clientId]").val() == "")
+            {
+                alert("로그인이 필요합니다.");
+                location.href = "/run_login/";
+            }
+         });
+
+        // accordion menu - info
+        $(document).ready(function() {
+               $(function(){
+                  var sBtn = $("#lecture_accordion .submenu > li");    //  ul > li 이를 sBtn으로 칭한다. (클릭이벤트는 li에 적용 된다.)
+                  sBtn.find("a").click(function(){   // sBtn에 속해 있는  a 찾아 클릭 하면.
+                   sBtn.removeClass("now");     // sBtn 속에 (active) 클래스를 삭제 한다.
+                   $(this).parent().addClass("now"); // 클릭한 a에 (active)클래스를 넣는다.
+                  })
+                 })
+            document.getElementById('video_ctrl').setAttribute('poster','/static/resource/img/sub/myclass_preload.png');
+        });
+
+        $(window).scroll(function() {
+            var scroll_top = $(window).scrollTop();
+            if (scroll_top >= $(".sub_visual").outerHeight()) {
+                $(".lecture_list").addClass("scr");
+            } else {
+                $(".lecture_list").removeClass("scr");
+            }
+        });
+
+        $(window).scroll(function () {
+            var scroll_top = $(window).scrollTop();
+            if ( $(".sub_visual").outerHeight() + $(".lecture_list").height() <= scroll_top + $(".fixedArea").height()) {
+                $(".scr").addClass("end");
+            } else {
+                $(".scr").removeClass("end");
+            }
+        });
+
+        function itemImg_close(div_id)
+        {
+            $('input[id*="class"]').prop('checked', false);
+            document.getElementById(div_id).animate({height:'0px','background-position':'0 0px'}, 500);
+        }
+
+         function top_val()
+        {
+            $('html, body').animate({scrollTop : 0}, 600);
+        }
+
+        function show_itmeinfo(answer, count, class_type, prdCode, iteminfo_title, iteminfo_type, iteminfo_downdata_name, iteminfo_downdata, iteminfo_downdata_sub, iteminfo_downdata_name_sub)
+        {
+            var iteminfo_html = '<input type="radio" name="accordion" id=' + answer + '>';
+            var div_id = "div_"+ answer ;
+            iteminfo_html += '<label for=' + answer + '>' + iteminfo_title + '<em></em></label><div id=' + div_id + '><p>';
+
+            if(iteminfo_type == 'download')
+            {
+                var down_src;
+                if(class_type == 'common')
+                {
+                    down_src = '/static/resource/data/download/common/' + iteminfo_downdata;
+                }
+                else if(class_type == 'sub')
+                {
+                    down_src = '/static/resource/data/download/common/' + iteminfo_downdata;
+                }
+                else
+                    down_src = '/static/resource/data/download/' + prdCode + '/' + iteminfo_downdata;
+
+
+
+                iteminfo_html += '<a href=' + down_src + ' download>' + iteminfo_downdata_name + '</a>';
+
+
+                if(iteminfo_downdata_name_sub != 'None')
+                {
+                    var down_sub_src;
+                    if(class_type == 'common')
+                    {
+                        down_sub_src = '/static/resource/data/download/common/' + iteminfo_downdata_sub;
+                    }
+                    else if(class_type == 'sub')
+                    {
+                        down_sub_src = '/static/resource/data/download/common/' + iteminfo_downdata_sub;
+                    }
+                    else
+                        down_sub_src = '/static/resource/data/download/' + prdCode + '/' + iteminfo_downdata_sub;
+
+                    iteminfo_html += '<br/><a href=' + down_sub_src + ' download>' + iteminfo_downdata_name_sub + '</a>';
+                }
+
+            }
+            if(iteminfo_type == 'link')
+            {
+                iteminfo_html += '<a href=' + iteminfo_downdata + ' target="_blank">' + iteminfo_downdata_name + '</a>';
+            }
+            if(iteminfo_type == 'img')
+            {
+                var img_file = '/static/resource/img/' + iteminfo_downdata_name;
+                var call_func = 'javascript:itemImg_close("' + div_id + '");';
+                iteminfo_html += '<img class="subVisual myClass" src=' + img_file + ' onclick=' + call_func + '>';
+            }
+            if(iteminfo_type == 'text')
+            {
+                iteminfo_html += iteminfo_downdata + '<br/>' + iteminfo_downdata_sub + '<br/>' + iteminfo_downdata_name + '<br/>';
+            }
+
+             iteminfo_html += '</p></div>';
+
+              $('#lecture_data').append($(iteminfo_html));
+
+        }
+
+        function getVideo(prdCode, data, class_type, count, iteminfo1, iteminfo2, iteminfo3, iteminfo4, iteminfo5)
+        {
+               document.getElementById('lecture_data').innerHTML = '';
+
+              if(iteminfo1 != 'None')
+              {
+                    var iteminfo1_title = class_type + "_" + count + "_iteminfo_1_title";
+                    var iteminfo1_type = class_type + "_" + count +"_iteminfo_1_type";
+                    var iteminfo1_downdata = class_type+"_" + count+"_iteminfo_1_downdata";
+                    var iteminfo1_downdata_sub = class_type+"_" + count+"_iteminfo_1_downdata_sub";
+                    var iteminfo1_downdata_name = class_type+"_" + count+"_iteminfo_1_downdata_name";
+                    var iteminfo1_downdata_name_sub = class_type+"_" + count+"_iteminfo_1_downdata_name_sub";
+                    var iteminfo1_stat = class_type+"_" + count+"_iteminfo_1_stat";
+
+                    var iteminfo1_title_val = document.getElementById(iteminfo1_title).value;
+                    var iteminfo1_type_val = document.getElementById(iteminfo1_type).value;
+                    var iteminfo1_downdata_val = document.getElementById(iteminfo1_downdata).value;
+                    var iteminfo1_downdata_sub_val = document.getElementById(iteminfo1_downdata_sub).value;
+                    var iteminfo1_downdata_name_val = document.getElementById(iteminfo1_downdata_name).value;
+                    var iteminfo1_downdata_name_sub_val = document.getElementById(iteminfo1_downdata_name_sub).value;
+                    var iteminfo1_stat_val = document.getElementById(iteminfo1_stat).value;
+
+                    if(iteminfo1_stat_val != 'D')
+                        show_itmeinfo("class01", 1,  class_type, prdCode, iteminfo1_title_val, iteminfo1_type_val, iteminfo1_downdata_name_val, iteminfo1_downdata_val, iteminfo1_downdata_sub_val, iteminfo1_downdata_name_sub_val);
+
+              }
+
+              if(iteminfo2 != 'None')
+              {
+                    var iteminfo2_title = class_type + "_" + count + "_iteminfo_2_title";
+                    var iteminfo2_type = class_type+"_" + count+"_iteminfo_2_type";
+                    var iteminfo2_downdata = class_type+"_" + count+"_iteminfo_2_downdata";
+                    var iteminfo2_downdata_sub = class_type+"_" + count+"_iteminfo_2_downdata_sub";
+                    var iteminfo2_downdata_name = class_type+"_" + count+"_iteminfo_2_downdata_name";
+                    var iteminfo2_downdata_name_sub = class_type+"_" + count+"_iteminfo_2_downdata_name_sub";
+                    var iteminfo2_stat = class_type+"_" + count+"_iteminfo_2_stat";
+
+                    var iteminfo2_title_val = document.getElementById(iteminfo2_title).value;
+                    var iteminfo2_type_val = document.getElementById(iteminfo2_type).value;
+                    var iteminfo2_downdata_val = document.getElementById(iteminfo2_downdata).value;
+                    var iteminfo2_downdata_sub_val = document.getElementById(iteminfo2_downdata_sub).value;
+                    var iteminfo2_downdata_name_val = document.getElementById(iteminfo2_downdata_name).value;
+                    var iteminfo2_downdata_name_sub_val = document.getElementById(iteminfo2_downdata_name_sub).value;
+                    var iteminfo2_stat_val = document.getElementById(iteminfo2_stat).value;
+
+                    if(iteminfo2_stat_val != 'D')
+                        show_itmeinfo("class02", 2, class_type, prdCode, iteminfo2_title_val, iteminfo2_type_val, iteminfo2_downdata_name_val, iteminfo2_downdata_val, iteminfo2_downdata_sub_val, iteminfo2_downdata_name_sub_val);
+              }
+
+              if(iteminfo3 != 'None')
+              {
+                    var iteminfo3_title = class_type + "_" + count + "_iteminfo_3_title";
+                    var iteminfo3_type = class_type+"_" + count+"_iteminfo_3_type";
+                    var iteminfo3_downdata = class_type+"_" + count+"_iteminfo_3_downdata";
+                    var iteminfo3_downdata_sub = class_type+"_" + count+"_iteminfo_3_downdata_sub";
+                    var iteminfo3_downdata_name = class_type+"_" + count+"_iteminfo_3_downdata_name";
+                    var iteminfo3_downdata_name_sub = class_type+"_" + count+"_iteminfo_3_downdata_name_sub";
+                    var iteminfo3_stat = class_type+"_" + count+"_iteminfo_3_stat";
+
+                    var iteminfo3_title_val = document.getElementById(iteminfo3_title).value;
+                    var iteminfo3_type_val = document.getElementById(iteminfo3_type).value;
+                    var iteminfo3_downdata_val = document.getElementById(iteminfo3_downdata).value;
+                    var iteminfo3_downdata_sub_val = document.getElementById(iteminfo3_downdata_sub).value;
+                    var iteminfo3_downdata_name_val = document.getElementById(iteminfo3_downdata_name).value;
+                    var iteminfo3_downdata_name_sub_val = document.getElementById(iteminfo3_downdata_name_sub).value;
+                    var iteminfo3_stat_val = document.getElementById(iteminfo3_stat).value;
+
+                    if(iteminfo3_stat_val != 'D')
+                        show_itmeinfo("class03", 3, class_type, prdCode, iteminfo3_title_val, iteminfo3_type_val, iteminfo3_downdata_name_val, iteminfo3_downdata_val, iteminfo3_downdata_sub_val, iteminfo3_downdata_name_sub_val);
+              }
+
+              if(iteminfo4 != 'None')
+              {
+                    var iteminfo4_title = class_type + "_" + count + "_iteminfo_4_title";
+                    var iteminfo4_type = class_type+"_" + count+"_iteminfo_4_type";
+                    var iteminfo4_downdata = class_type+"_" + count+"_iteminfo_4_downdata";
+                    var iteminfo4_downdata_sub = class_type+"_" + count+"_iteminfo_4_downdata_sub";
+                    var iteminfo4_downdata_name = class_type+"_" + count+"_iteminfo_4_downdata_name";
+                    var iteminfo4_downdata_name_sub = class_type+"_" + count+"_iteminfo_4_downdata_name_sub";
+                    var iteminfo4_stat = class_type+"_" + count+"_iteminfo_4_stat";
+
+                    var iteminfo4_title_val = document.getElementById(iteminfo4_title).value;
+                    var iteminfo4_type_val = document.getElementById(iteminfo4_type).value;
+                    var iteminfo4_downdata_val = document.getElementById(iteminfo4_downdata).value;
+                    var iteminfo4_downdata_sub_val = document.getElementById(iteminfo4_downdata_sub).value;
+                    var iteminfo4_downdata_name_val = document.getElementById(iteminfo4_downdata_name).value;
+                    var iteminfo4_downdata_name_sub_val = document.getElementById(iteminfo4_downdata_name_sub).value;
+                    var iteminfo4_stat_val = document.getElementById(iteminfo4_stat).value;
+
+                    if(iteminfo4_stat_val != 'D')
+                        show_itmeinfo("class04", 4, class_type, prdCode, iteminfo4_title_val, iteminfo4_type_val, iteminfo4_downdata_name_val, iteminfo4_downdata_val, iteminfo4_downdata_sub_val, iteminfo4_downdata_name_sub_val);
+              }
+
+              if(iteminfo5 != 'None')
+              {
+                    var iteminfo5_title = class_type + "_" + count + "_iteminfo_5_title";
+                    var iteminfo5_type = class_type+"_" + count+"_iteminfo_5_type";
+                    var iteminfo5_downdata = class_type+"_" + count+"_iteminfo_5_downdata";
+                    var iteminfo5_downdata_sub = class_type+"_" + count+"_iteminfo_5_downdata_sub";
+                    var iteminfo5_downdata_name = class_type+"_" + count+"_iteminfo_5_downdata_name";
+                    var iteminfo5_downdata_name_sub = class_type+"_" + count+"_iteminfo_5_downdata_name_sub";
+                    var iteminfo5_stat = class_type+"_" + count+"_iteminfo_5_stat";
+
+                    var iteminfo5_title_val = document.getElementById(iteminfo5_title).value;
+                    var iteminfo5_type_val = document.getElementById(iteminfo5_type).value;
+                    var iteminfo5_downdata_val = document.getElementById(iteminfo5_downdata).value;
+                    var iteminfo5_downdata_sub_val = document.getElementById(iteminfo5_downdata_sub).value;
+                    var iteminfo5_downdata_name_val = document.getElementById(iteminfo5_downdata_name).value;
+                    var iteminfo5_downdata_name_sub_val = document.getElementById(iteminfo5_downdata_name_sub).value;
+                    var iteminfo5_stat_val = document.getElementById(iteminfo5_stat).value;
+
+                    if(iteminfo5_stat_val != 'D')
+                        show_itmeinfo("class05", 5, class_type, prdCode, iteminfo5_title_val, iteminfo5_type_val, iteminfo5_downdata_name_val, iteminfo5_downdata_val, iteminfo5_downdata_sub_val, iteminfo5_downdata_name_sub_val);
+              }
+
+            var src;
+            if (class_type == 'common')
+                src = '/common/' + data;
+            else if (class_type == 'sub')
+                src = '/common/' + data;
+            else
+                src = prdCode + '/' + data;
+
+            var video  = document.getElementById('video_ctrl');
+            video.setAttribute("src", "/static/resource/data/lecture/" + src);
+            video.load();
+            video.play();
+
+
+            var play = $("input[type=hidden][name=play_enable]").val();
+
+            var myclass_idx = '{{myclass_idx}}';
+
+             $.ajax({
+                data: {prdCode:prdCode, data:data, myclass_idx:myclass_idx, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                type: 'post',
+                url: '/video_play/',
+                dataType: 'json',
+                success:function(result){
+                    if(result == 200)
+                    {
+                        $("input[type=hidden][name=play_enable]").val('A');
+                    }
+                }
+             });
+        }
+    </script>
+
+</body></html>

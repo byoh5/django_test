@@ -234,20 +234,20 @@ def pay_deposit(request, payway_info, pay_num):
         if int(addr_num) == 1:
             phone = regi_info[0].regi_phone
             name = regi_info[0].regi_name
-            addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
-                0].regi_receiver1_add01 + ")"
+            # addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
+            #     0].regi_receiver1_add01 + ")"
         else:
             name = regi_info[0].regi_receiver2_name
             phone = regi_info[0].regi_receiver2_phone
-            addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
-                0].regi_receiver2_add01 + ")"
+            # addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
+            #     0].regi_receiver2_add01 + ")"
 
         pay_userStatus_info = select_userStatue(pay_status_deposit_noCheck)
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          payWay_name=de_name, payWay_receipt=de_receipt,
                          prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
-                         delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay=payway_info[0])
+                         delivery_name=name, delivery_addr="addr", delivery_phone=phone, payWay=payway_info[0])
 
         pay_info.save()
 
@@ -299,18 +299,18 @@ def pay_credit(request, payway_info, pay_num):
         if int(addr_num) == 1:
             phone = regi_info[0].regi_phone
             name = regi_info[0].regi_name
-            addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
-                0].regi_receiver1_add01 + ")"
+            # addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
+            #     0].regi_receiver1_add01 + ")"
         else:
             name = regi_info[0].regi_receiver2_name
             phone = regi_info[0].regi_receiver2_phone
-            addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
-                0].regi_receiver2_add01 + ")"
+            # addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
+            #     0].regi_receiver2_add01 + ")"
 
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
              prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
              prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
-             delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay=payway_info[0])
+             delivery_name=name, delivery_addr="addr", delivery_phone=phone, payWay=payway_info[0])
 
     pay_info.save()
 
@@ -360,20 +360,20 @@ def pay_escrow(request, payway_info, pay_num):
         if int(addr_num) == 1:
             phone = regi_info[0].regi_phone
             name = regi_info[0].regi_name
-            addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
-                0].regi_receiver1_add01 + ")"
+            # addr = regi_info[0].regi_receiver1_add02 + " " + regi_info[0].regi_receiver1_add03 + "(" + regi_info[
+            #     0].regi_receiver1_add01 + ")"
         else:
             name = regi_info[0].regi_receiver2_name
             phone = regi_info[0].regi_receiver2_phone
-            addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
-                0].regi_receiver2_add01 + ")"
+            # addr = regi_info[0].regi_receiver2_add02 + " " + regi_info[0].regi_receiver2_add03 + "(" + regi_info[
+            #     0].regi_receiver2_add01 + ")"
 
         pay_userStatus_info = select_userStatue(pay_status_prepay)
         pay_info = PayTB(pay_num=pay_num, pay_user=regi_info[0], order_id=order_list, coupon_num=coupon_num,
                          prd_info=prd_title, pay_user_status=pay_userStatus_info[0],
                          payWay_name=es_name, payWay_receipt=es_receipt,
                          prd_price=prd_price, delivery_price=delivery_price, prd_total_price=pay_price,
-                         delivery_name=name, delivery_addr=addr, delivery_phone=phone, payWay=payway_info[0])
+                         delivery_name=name, delivery_addr="addr", delivery_phone=phone, payWay=payway_info[0])
         pay_info.save()
 
         context = {
