@@ -1,5 +1,167 @@
 {% load static %}
-{% include "common/header.html" %}
+{% include "common/head.html" %}
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/animate.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/jquery.modal.css" />
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/jquery.modal.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
+
+<header>
+
+
+    <script>
+    Object.defineProperty(console, '_commandLineAPI', { get : function() { throw '콘솔을 사용할 수 없습니다.' } });
+
+
+    // F12 버튼 방지
+    $(document).ready(function(){
+        if($("input[type=hidden][name=clientId]").val() != "")
+        {
+            $("#logout").show();
+            $("#login").hide();
+        }
+        else
+        {
+            $("#logout").hide();
+            $("#login").show();
+        }
+    });
+
+     function goMyClass_header()
+    {
+         if($("input[type=hidden][name=clientId]").val() == "")
+         {
+            $("#res_msg").text("회원만 접근이 가능합니다. 로그인 후 이용해주세요. ");
+            $('div.modal').modal();
+         }
+         else
+         {
+            location.href="/myclass_list/";
+         }
+
+    }
+
+    // 우측 클릭 방지
+    document.onmousedown=disableclick;
+    status="오른쪽 마우스 사용을 할 수 없습니다. (닫기:esc키)";
+
+
+    function disableclick(event){
+        if (event.button==2) {
+            $("#res_msg").text(status);
+            $('div.modal').modal();
+            return false;
+        }
+    }
+
+
+    function setCookie(name, value, expiredays)
+    {
+        var date = new Date();
+        date.setDate(date.getDate() + expiredays);
+        document.cookie = escape(name) + "=" + escape(value) + "; path=/; expires=" + date.toUTCString();
+    }
+
+    function getCookie(name)
+    {
+
+         var cookie = document.cookie;
+
+         if (document.cookie != "")
+         {
+              var cookieArray = cookie.split("; ");
+              for (var index in cookieArray)
+              {
+                  var cookieName = cookieArray[index].split("=");
+                  if (cookieName[0] == "popup_coo")
+                  {
+                       return cookieName[1];
+                  }
+              }
+         } return ;
+    }
+
+    function delete_cookie(name)
+    {
+        var today = new Date();
+
+        today.setTime(today.getTime() - 1);
+        var value = get_cookie(name);
+        if(value != "")
+            document.cookie = name + "=" + value + "; path=/; expires=" + today.toGMTString();
+    }
+
+    function goPay()
+    {
+        var win = window.open('https://smartstore.naver.com/runcoding/', '_blank');
+        win.focus();
+    }
+
+
+    </script>
+
+    <div class="header_wrap">
+        <input type="hidden" id="clientId" name="clientId" value={{ request.session.user_id }}>
+        <a href="/" class="logo">
+            <img src="{% static 'resource/img/common/logo.png' %}" alt="runcoding">
+        </a>
+        <!-- gnb -->
+        <ul class="menu">
+            <li>
+                <a class="btn buy" href="javascript:void(0);" onClick="javascript:goPay();" >구매하기</a>
+            </li>
+            <li>
+                <a href="/lounge/">코딩라운지</a>
+            </li>
+
+            <li>
+                <a href="/comunity/">커뮤니티</a>
+            </li>
+            <li>
+                <a href="javascript:goMyClass_header();">나의 강의실</a>
+            </li>
+        </ul>
+        <div class="ab_right">
+            <div class="user_menu">
+                <span class="userImg"><img src="{% static 'resource/img/sub/img_user.png' %}" alt="유저 프로필"></span>
+                <ul class="sub_menu">
+                     <div id="logout" >
+                         {% if request.session.runcoding > 10 %}
+                         <a href="/coupon_list/" target="_blank">
+                            <li style="border-bottom:1px solid #dcdcdc;">
+                                관리자모드
+                            </li>
+                        </a>
+                         {% endif %}
+                          <a href="/myprofile/">
+                              <li style="border-bottom:1px solid #dcdcdc;">
+                               내 프로필
+                            </li>
+                          </a>
+                         <a href="/coupon/">
+                              <li style="border-bottom:1px solid #dcdcdc;">
+                               쿠폰
+                            </li>
+                          </a>
+                        <a href="/run_logout/">
+                            <li>
+                                로그아웃
+                            </li>
+                        </a>
+                     </div>
+                     <div id="login">
+                         <a href="/run_login/">
+                             <li>
+                                로그인
+                             </li>
+                         </a>
+                     </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.4.js"></script>

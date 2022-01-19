@@ -4,6 +4,6 @@ EMAIL = {
 'EMAIL_PORT' : 587,
 'EMAIL_HOST' : 'smtp.gmail.com',
 'EMAIL_HOST_USER' : 'runcoding.authteam@gmail.com',
-'EMAIL_HOST_PASSWORD' : 'run!auth',
+'EMAIL_HOST_PASSWORD' : 'tzjnpznstlhvtqbw',
 'REDIRECT_PAGE' : '/'
 }

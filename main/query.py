@@ -309,27 +309,53 @@ def select_bonus_item(prd_code):
     return item_info
 
 def select_item_group(prd_code):
-    item_info = ItemTB.objects.filter(prd__prd_code=prd_code, dbstat='A').values('item_code').annotate(max_count=Count('item_code'))
+    query_search = Q()
+
+    query_search.add(Q(prd_kit__prd_code=prd_code) | Q(prd_online__prd_code=prd_code) |
+                     Q(prd_teach__prd_code=prd_code) | Q(prd_other__prd_code=prd_code), query_search.AND)
+
+    item_info = ItemTB.objects.filter(query_search,dbstat='A').values('item_code').annotate(max_count=Count('item_code'))
     return item_info
+
 
 def select_class_detail(prd_code):
-    item_info = ItemTB.objects.filter(prd__prd_code=prd_code, dbstat='A').order_by('order')
+    query_search = Q()
+
+    query_search.add(Q(prd_kit__prd_code=prd_code) | Q(prd_online__prd_code=prd_code) |
+                     Q(prd_teach__prd_code=prd_code) | Q(prd_other__prd_code=prd_code), query_search.AND)
+
+    item_info = ItemTB.objects.filter(query_search, dbstat='A').order_by('order')
     return item_info
 
+
+
 def select_class_item_detail(prd_code, item_code):
-    item_info = ItemTB.objects.filter(prd__prd_code=prd_code, item_code=item_code, dbstat='A').order_by('order')
+    query_search = Q()
+
+    query_search.add(Q(prd_kit__prd_code=prd_code) | Q(prd_online__prd_code=prd_code) |
+                    Q(prd_teach__prd_code=prd_code) | Q(prd_other__prd_code=prd_code), query_search.AND)
+
+    item_info = ItemTB.objects.filter(query_search, item_code=item_code, dbstat='A').order_by('order')
     return item_info
 
 def select_class_common_detail(prd_code):
     item_info = ItemCommonTB.objects.filter(prd__prd_code=prd_code, dbstat='A').order_by('order')
     return item_info
 
-def select_class_item_common_detail(prd_code, item_code):
-    item_info = ItemCommonTB.objects.filter(prd__prd_code=prd_code, item_code=item_code, dbstat='A').order_by('order')
+def select_class_item_common_detail(prdCode, category_val):
+
+    item_info = ItemCommonTB.objects.filter(Q(category_large__value=category_val, prd_code='all', dbstat='A') |
+                Q(category_large__value=category_val, prd_code=prdCode, dbstat='A')).order_by('order')
+
     return item_info
 
 def select_class_item_sub_detail(prd_code, item_code):
-    item_info = ItemSubTB.objects.filter(prd__prd_code=prd_code, item_code=item_code, dbstat='A').order_by('order')
+    query_search = Q()
+
+    query_search.add(Q(prd_kit__prd_code=prd_code) | Q(prd_online__prd_code=prd_code) |
+                     Q(prd_teach__prd_code=prd_code) | Q(prd_other__prd_code=prd_code), query_search.AND)
+
+    item_info = ItemSubTB.objects.filter(query_search, item_code=item_code, dbstat='A').order_by('order')
     return item_info
 
 def select_class_item_Bonus(prd_code, item_code):

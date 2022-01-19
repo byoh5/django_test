@@ -12,13 +12,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/layout.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'resource/css/main.css' %}">
 
-    <img src="{% static 'resource/img/BonusClass/trashcan_sound_popup.jpg' %}" onclick='javascript:go_page();'>
+    <img src="{% static 'resource/img/popup/summer_camp.jpg' %}" onclick='javascript:go_page();'>
 
 <script>
     function go_page()
     {
         window.close();
-        setCookie('popup_coo', 'N', 1);
+        setCookie('popup_coo', 'N', 0);
+        var win = window.open('https://m.smartstore.naver.com/runcoding/products/5741434862', '_blank');
 
     }
 

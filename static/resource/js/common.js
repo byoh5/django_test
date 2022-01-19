@@ -804,3 +804,9 @@ function popup_exam(url, title)
     if (window.focus) {newwin.focus()}
     return false;
 }
+
+function video()
+{
+    alert("test");
+}
+}

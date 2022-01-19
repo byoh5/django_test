@@ -34,10 +34,6 @@ from main.codeView.bizMsg import *
 from main.codeView.delivery_notify import *
 from main.codeView.auth import *
 
-from django.conf import settings
-from django.conf.urls.static import static
-
-
 urlpatterns = [
     path('regi/', register_page),
     path('run_login/', login_page),
@@ -117,12 +113,9 @@ urlpatterns = [
     path('delivery_list/', get_delivery_list),
 
     path('auth_user/', auth_user_regi),
-    path('auth_user_no/', auth_user_regi_fail),
 
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
 
 
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

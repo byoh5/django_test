@@ -1,0 +1,157 @@
+{% include "common/header.html" %}
+{% load static %}
+
+    <script>
+    function getVideo(url) {
+        var src = '../resource/data/arduino_trashcan/arduino_install.mp4';
+        if(url == 9)
+            src = '../resource/data/arduino_trashcan/arduino_trashcan.mp4';
+
+        var video  = document.getElementById('video_ctrl');
+        video.src = src;
+    }
+
+    </script>
+
+
+
+    <div class="wrap">
+     <section class="sub_visual">
+    <div class="section_wrap">
+        <div class="slogan">
+                    <span class="bigSlg">
+                        코딩 라운지
+                    </span>
+            <p>
+                다른 학생들은 어떤 작품을 만들었을까?<br/>
+                동영상으로 확인해보세요!
+            </p>
+        </div>
+        <img class="subVisual codingLounge" src="{% static 'resource/img/sub/sv_review.png' %}" alt="코딩라운지">
+    </div>
+    </section>
+
+
+        <!-- codingKit list -->
+        <div class="codingKit_list detail myClass">
+            <div class="lounge_list detail">
+                <div class="detail_area">
+                    <!-- 동영상 영역입니다. -->
+                    <div class="video_area">
+                        <iframe id="youTubePlayer1" type="text/html" width="1000" height="500"
+                        src="https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid={{lounge_video}}&outKey={{lounge_key}}" frameborder="0"></iframe>
+                    </div>
+
+                     <!-- 코드 & 회로-->
+                    <div class="board_community">
+                        <div class="point_content_faq"><strong>영상 자료실</strong></div>
+                         <div class="accordion" style="padding-left:25px;">
+                            {% for lounge in lounge_info %}
+                                {% if lounge.down_mblock_code != "" %}
+                                <input type="radio" name="accordion" id="lounge0">
+                                <label for="lounge0">블럭코딩(엠블럭 / 엔트리) 코드 다운로드<em></em></label>
+                                <div>
+                                    <p>
+                                        <a href="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.down_mblock_code}}" download>{{lounge.title}} </a>
+                                    </p>
+                                </div>
+                                {% endif %}
+                              {% if lounge.down_arduino_code != "" %}
+                                <input type="radio" name="accordion" id="lounge1">
+                                <label for="lounge1">아두이노 코드 다운로드<em></em></label>
+                                <div>
+                                    <p>
+                                        <a href="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.down_arduino_code}}" download>{{lounge.title}} </a>
+                                    </p>
+                                </div>
+                                {% endif %}
+                             {% if lounge.diagram_img != "" %}
+                                <input type="radio" name="accordion" id="lounge2">
+                                <label for="lounge2">회로 구성<em></em></label>
+                                <div>
+                                    <p>
+                                        <img class="subVisual myClass" src="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.diagram_img}}" onclick="javascript:itemImg_close(lounge2);">
+                                    </p>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                         </div>
+                    </div>
+
+                </div>
+                <div>
+                <a href="/lounge/" class="btn list_more" >목록으로</a>
+               </div>
+            </div>
+        </div>
+
+        {% include "common/banner_bottom.html" %}
+        {% include "common/footer.html" %}
+
+    <script>
+        // hamberger menu
+        $('.menu-btn').click(function() {
+            $('.line').toggleClass('animate');
+        });
+        // hamberger menu
+        // navigation
+        $(document).ready(function() {
+            $(".gnbClose, .gnbOpen").on("click", function(){
+                $(".gnb").toggleClass("active");
+                $(".gnbOpen").toggleClass("gnbClose");
+                $("html, body, .wrap").toggleClass("open");
+                $('html, body, .wrap').off('scroll touchmove mousewheel');
+            });
+        });
+
+        // accordion menu
+        $(document).ready(function() {
+            $("#accordion .section_title").click(function() {
+                var link = $(this);
+                var closest_ul = link.closest("ul");
+                var parallel_active_links = closest_ul.find(".active")
+                var closest_li = link.closest("li");
+                var link_status = closest_li.hasClass("active");
+                var count = 0;
+
+                closest_ul.find("ul").slideUp(function() {
+                    if (++count == closest_ul.find("ul").length)
+                        parallel_active_links.removeClass("active");
+                });
+
+                if (!link_status) {
+                    closest_li.children("ul").slideDown();
+                    closest_li.addClass("active");
+                }
+            })
+        });
+
+        $(window).scroll(function() {
+            var scroll_top = $(window).scrollTop();
+            if (scroll_top >= $(".sub_visual").outerHeight()) {
+                $(".filter_area").addClass("scr");
+            } else {
+                $(".filter_area").removeClass("scr");
+            }
+        });
+
+        $(window).scroll(function () {
+            var scroll_top = $(window).scrollTop();
+            if ( $(".sub_visual").outerHeight() + $(".lecture_list").height() <= scroll_top + $(".fixedArea").height()) {
+                $(".scr").addClass("end");
+            } else {
+                $(".scr").removeClass("end");
+            }
+        });
+
+        function itemImg_close(div_id)
+        {
+            $('input[id*="lounge"]').prop('checked', false);
+            document.getElementById(div_id).animate({height:'0px','background-position':'0 0px'}, 500);
+        }
+
+
+    </script>
+
+
+</body></html>

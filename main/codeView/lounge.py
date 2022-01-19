@@ -3,7 +3,7 @@ from main.query import *
 from main.models import *
 from main.codeView.stat import stat_menu_step
 
-page_cnt = 6 # display count 노출되는 리스트 갯수
+page_cnt = 15 # display count 노출되는 리스트 갯수
 
 def lounge_page(request):
     category_info = select_lounge_categoy()
@@ -77,16 +77,27 @@ def lounge_page_paging(request):
 
 def loungeView_page(request):
     lounge_video = request.POST.get('lounge_video', 0)
+
     lounge_info = select_lounge_videoId(lounge_video)
 
     stat_menu_step(request, "coding_lounge", "lounge_detail", lounge_info[0].title)
     if lounge_info.count() > 0:
-        context = {
-            "lounge_video": lounge_video,
-            "lounge_info":lounge_info,
-        }
 
-        return render(request, 'lounge/coding_lounge_view.html', context)
+        if lounge_info[0].outkey == "":
+            context = {
+                "lounge_video": lounge_video,
+                "lounge_info":lounge_info,
+            }
+
+            return render(request, 'lounge/coding_lounge_view.html', context)
+        else:
+            context = {
+                "lounge_video": lounge_video,
+                "lounge_key": lounge_info[0].outkey,
+                "lounge_info": lounge_info,
+            }
+
+            return render(request, 'lounge/coding_lounge_nvr_view.html', context)
 
     else:
         return lounge_page(request)

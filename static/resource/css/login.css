@@ -160,25 +160,27 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 }
 
 .join_area {
-	display:flex;
+	display:center;
 	justify-content:space-between;
 	align-items:stretch;
 	margin:0 auto;
 	padding:4.16em 0.83em;
 	width:100%;
-	max-width:1130px;
+	max-width:700px;
 	border-top:1px solid #969696;
 }
 
 .join_area .accountInfo{
 	position:relative;
-	width:520px;
+	width:100%;
+	max-width:700px;
 }
 
 .join_area .terms_area {
 	position:relative;
-	margin-top:100px;
-	width:520px;
+	margin-top:80px;
+	margin-left:150px;
+	width:500px;
 }
 
 .join_area > div > h2 {
@@ -247,10 +249,11 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 	border:none;
 	background-color:#646464;
 }
-
+/*
 .join_area .terms_area .terms01 {
 	margin-bottom:1em;
 }
+*/
 .join_area .terms_area .input_area {
 	position:relative;
 	display:flex;
@@ -379,11 +382,13 @@ body,th,td,input,select,textarea,button {font-size:24px;}
 
 @media screen and (max-width:1130px) {
 	.join_area {
-		max-width:1024px;
+		max-width:700px;
 	}
+	/*
 	.join_area .accountInfo, .join_area .terms_area {
 		width:480px;
 	}
+	*/
 	.review_area {
 		padding:4.16em 0;
 	}

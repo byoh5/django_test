@@ -113,7 +113,7 @@
 
     function goPay()
     {
-        var win = window.open('https://smartstore.naver.com/runcoding/products/5579509945', '_blank');
+        var win = window.open('https://smartstore.naver.com/runcoding/', '_blank');
         win.focus();
     }
 
@@ -128,7 +128,7 @@
         <!-- gnb -->
         <ul class="menu">
             <li>
-                <a class="btn buy" href="javascript:void(0);" onClick="javascript:goPay();" >교사연수신청</a>
+                <a class="btn buy" href="javascript:void(0);" onClick="javascript:goPay();" >구매하기</a>
             </li>
             <li>
                 <a href="/lounge/">코딩라운지</a>
@@ -147,7 +147,7 @@
                 <ul class="sub_menu">
                      <div id="logout" >
                          {% if request.session.runcoding > 10 %}
-                         <a href="/deposit_list/" target="_blank">
+                         <a href="/coupon_list/" target="_blank">
                             <li style="border-bottom:1px solid #dcdcdc;">
                                 관리자모드
                             </li>

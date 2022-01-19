@@ -49,10 +49,10 @@
                             {% for lounge in lounge_info %}
                                 {% if lounge.down_mblock_code != "" %}
                                 <input type="radio" name="accordion" id="lounge0">
-                                <label for="lounge0">엠블럭 코드 다운로드<em></em></label>
+                                <label for="lounge0">블럭코딩(엠블럭 / 엔트리) 코드 다운로드<em></em></label>
                                 <div>
                                     <p>
-                                        <a href="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.down_mblock_code}}" download>{{lounge.title}} 엠블럭 코드</a>
+                                        <a href="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.down_mblock_code}}" download>{{lounge.title}} </a>
                                     </p>
                                 </div>
                                 {% endif %}
@@ -61,7 +61,7 @@
                                 <label for="lounge1">아두이노 코드 다운로드<em></em></label>
                                 <div>
                                     <p>
-                                        <a href="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.down_arduino_code}}" download>{{lounge.title}} 아두이노 코드</a>
+                                        <a href="/static/resource/data/download/lounge/{{lounge.video_id}}/{{lounge.down_arduino_code}}" download>{{lounge.title}} </a>
                                     </p>
                                 </div>
                                 {% endif %}

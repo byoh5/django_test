@@ -30,21 +30,32 @@ def add_coupon(coupon_num, coupon_name, prd_code):
     print(coupon_num, coupon_name, prd_code[0].title)
 
 def make():
-    coupon_num_arduino_smart = 'asm_'
-    coupon_num_arduino_ai_trashcan = 'aait_'
-    coupon_num_arduino_neopixel = 'aneo_'
+    # naming [arduino, make, kit]
+    coupon_num_arduino_smart = 'asm_' #asm_, amsm_
+    coupon_num_arduino_smart_make = 'amsm_'  # asm_, amsm_
+    coupon_num_arduino_ai_trashcan = 'amait_' #asm_, amsm_
+    coupon_num_arduino_neopixel = 'ane_'
+    coupon_num_arduino_ai_charm = 'amaic_'
 
-    for i in range(5):
-        print(coupon_num_arduino_smart, i)
-        add_coupon(coupon_num_arduino_smart, "스마트 휴지통 아두이노 버전", "2020080013001") #2020080013001
+    # for i in range(36):
+    #     print(coupon_num_arduino_smart_make, i)
+    #     add_coupon(coupon_num_arduino_smart_make, "스마트 휴지통 아두이노 maker", "202008am_smart") #202008am_smart , 202008a_smart
 
-    for i in range(5):
-        print(coupon_num_arduino_ai_trashcan, i)
-        add_coupon(coupon_num_arduino_ai_trashcan, "인공지능 휴지통 아두이노 버전", "2020080013002") #	2020080013002
+    # for i in range(36):
+    #     print(coupon_num_arduino_ai_trashcan, i)
+    #     add_coupon(coupon_num_arduino_ai_trashcan, "인공지능 휴지통 아두이노 maker", "202008am_aiTrashcan") #	202008am_aiTrashcan
 
-    for i in range(5):
+    for i in range(36):
         print(coupon_num_arduino_neopixel, i)
-        add_coupon(coupon_num_arduino_neopixel, "네오픽셀 아두이노 버전", "2020120030002") #2020120030002
+        add_coupon(coupon_num_arduino_neopixel, "네오픽셀 아두이노 버전", "202012a_neopixel") #202012am_neopixel
+
+    # for i in range(36):
+    #     print(coupon_num_arduino_ai_charm, i)
+    #     add_coupon(coupon_num_arduino_ai_charm, "참참참 인공지능 아두이노 maker", "202108am_aiCharm") #202108am_aiCharm
+
+    # for i in range(36):
+    #     print(coupon_num_arduino_smart, i)
+    #     add_coupon(coupon_num_arduino_smart, "스마트 휴지통 아두이노 버전", "202008a_smart") #202008am_smart , 202008a_smart
 
 
 if __name__ == '__main__':

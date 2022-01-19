@@ -51,10 +51,10 @@
                                     <ul class="submenu">
                                          {% for item_common_detail in myclass_common_detail %}
                                        <li>
-                                            {% if item_common_detail.viewtype == 'D' %}
+                                            {% if subTitle == 'teacher' and item_common_detail.viewtype == 'D' %}
                                             <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{item_common_detail.title}}</p>
                                            {% else %}
-                                             <a href="javascript:getVideo('{{item_common_detail.prd.prd_code}}', '{{item_common_detail.data}}', 'common', '{{forloop.counter}}', '{{item_common_detail.iteminfo_1}}', '{{item_common_detail.iteminfo_2}}', '{{item_common_detail.iteminfo_3}}', '{{item_common_detail.iteminfo_4}}', '{{item_common_detail.iteminfo_5}}');" class="classList">
+                                             <a href="javascript:getVideo('', '{{item_common_detail.data}}', 'common', '{{forloop.counter}}', '{{item_common_detail.iteminfo_1}}', '{{item_common_detail.iteminfo_2}}', '{{item_common_detail.iteminfo_3}}', '{{item_common_detail.iteminfo_4}}', '{{item_common_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{item_common_detail.title}}</a>
                                             {% endif %}
 
@@ -111,10 +111,10 @@
                                     <ul class="submenu">
                                          {% for item_detail in myclass_detail %}
                                        <li>
-                                            {% if item_detail.viewtype == 'D' %}
+                                            {% if subTitle == 'teacher' and item_detail.viewtype == 'D' %}
                                             <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{item_detail.title}}</p>
                                            {% else %}
-                                             <a href="javascript:getVideo('{{item_detail.prd.prd_code}}', '{{item_detail.data}}',  'kit', '{{forloop.counter}}', '{{item_detail.iteminfo_1}}', '{{item_detail.iteminfo_2}}', '{{item_detail.iteminfo_3}}', '{{item_detail.iteminfo_4}}', '{{item_detail.iteminfo_5}}');" class="classList">
+                                             <a href="javascript:getVideo('{{itemCode}}', '{{item_detail.data}}',  'kit', '{{forloop.counter}}', '{{item_detail.iteminfo_1}}', '{{item_detail.iteminfo_2}}', '{{item_detail.iteminfo_3}}', '{{item_detail.iteminfo_4}}', '{{item_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{item_detail.title}}</a>
                                             {%endif %}
                                             <!-- iteminfo1 -->
@@ -165,16 +165,18 @@
                                          {% endfor %}
                                     </ul>
                                 </li>
+
+                                {% if subTitle != 'make class' %}
                                 <span class="section">Study Class</span>
                                 <li class="active" style="border-top: none;">
                                      <span>문법/이론/키트미션</span>
                                     <ul class="submenu">
                                          {% for sub_detail in myclass_sub_detail %}
                                        <li>
-                                            {% if sub_detail.viewtype == 'D' %}
+                                            {% if subTitle == 'teacher' and sub_detail.viewtype == 'D' %}
                                             <p style="color:#d4cece; padding-left: 0.75em;">{{forloop.counter}}. {{sub_detail.title}}</p>
                                            {% else %}
-                                             <a href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.data}}',  'sub', '{{forloop.counter}}', '{{sub_detail.iteminfo_1}}', '{{sub_detail.iteminfo_2}}', '{{sub_detail.iteminfo_3}}', '{{sub_detail.iteminfo_4}}', '{{sub_detail.iteminfo_5}}');" class="classList">
+                                             <a href="javascript:getVideo('{{itemCode}}', '{{sub_detail.data}}',  'sub', '{{forloop.counter}}', '{{sub_detail.iteminfo_1}}', '{{sub_detail.iteminfo_2}}', '{{sub_detail.iteminfo_3}}', '{{sub_detail.iteminfo_4}}', '{{sub_detail.iteminfo_5}}');" class="classList">
                                                  {{forloop.counter}}. {{sub_detail.title}}</a>
                                             {% endif %}
 
@@ -227,10 +229,10 @@
                                         {% if sub_detail.subKit != null %}
                                             <li class="subkit">
 
-                                                 {% if sub_detail.subKit.viewtype == 'D' %}
+                                                 {% if subTitle == 'teacher' and sub_detail.subKit.viewtype == 'D' %}
                                                     <p style="color:#d4cece; padding-top:5px; padding-left:15px;">└&nbsp; 키트미션 : {{sub_detail.subKit.title}}</p>
                                                  {% else %}
-                                                  <a style="padding-top:5px; padding-left:15px;" href="javascript:getVideo('{{sub_detail.prd.prd_code}}', '{{sub_detail.subKit.data}}',  'subkit', '{{forloop.counter}}', '{{sub_detail.subKit.iteminfo_1}}', '{{sub_detail.subKit.iteminfo_2}}', '{{sub_detail.subKit.iteminfo_3}}', '{{sub_detail.subKit.iteminfo_4}}', '{{sub_detail.subKit.iteminfo_5}}');" class="classList">
+                                                  <a style="padding-top:5px; padding-left:15px;" href="javascript:getVideo('{{itemCode}}', '{{sub_detail.subKit.data}}',  'subkit', '{{forloop.counter}}', '{{sub_detail.subKit.iteminfo_1}}', '{{sub_detail.subKit.iteminfo_2}}', '{{sub_detail.subKit.iteminfo_3}}', '{{sub_detail.subKit.iteminfo_4}}', '{{sub_detail.subKit.iteminfo_5}}');" class="classList">
                                                   &nbsp;&nbsp;└&nbsp; 키트미션 : {{sub_detail.subKit.title}}</a>
                                                   {% endif %}
                                                     <!-- iteminfo1 -->
@@ -282,6 +284,7 @@
                                         {% endfor %}
                                     </ul>
                                 </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -349,7 +352,7 @@
             $('html, body').animate({scrollTop : 0}, 600);
         }
 
-        function show_itmeinfo(answer, count, class_type, prdCode, iteminfo_title, iteminfo_type, iteminfo_downdata_name, iteminfo_downdata, iteminfo_downdata_sub, iteminfo_downdata_name_sub)
+        function show_itmeinfo(answer, count, class_type, itemCode, iteminfo_title, iteminfo_type, iteminfo_downdata_name, iteminfo_downdata, iteminfo_downdata_sub, iteminfo_downdata_name_sub)
         {
             var iteminfo_html = '<input type="radio" name="accordion" id=' + answer + '>';
             var div_id = "div_"+ answer ;
@@ -367,7 +370,7 @@
                     down_src = '/static/resource/data/download/common/' + iteminfo_downdata;
                 }
                 else
-                    down_src = '/static/resource/data/download/' + prdCode + '/' + iteminfo_downdata;
+                    down_src = '/static/resource/data/download/' + itemCode + '/' + iteminfo_downdata;
 
 
 
@@ -386,7 +389,7 @@
                         down_sub_src = '/static/resource/data/download/common/' + iteminfo_downdata_sub;
                     }
                     else
-                        down_sub_src = '/static/resource/data/download/' + prdCode + '/' + iteminfo_downdata_sub;
+                        down_sub_src = '/static/resource/data/download/' + itemCode + '/' + iteminfo_downdata_sub;
 
                     iteminfo_html += '<br/><a href=' + down_sub_src + ' download>' + iteminfo_downdata_name_sub + '</a>';
                 }
@@ -404,7 +407,7 @@
             }
             if(iteminfo_type == 'text')
             {
-                iteminfo_html += iteminfo_downdata + '<br/>' + iteminfo_downdata_sub + '<br/>' + iteminfo_downdata_name + '<br/>';
+                iteminfo_html += iteminfo_downdata + '<br/>' + iteminfo_downdata_sub + '<br/><font size="5px" color="red">' + iteminfo_downdata_name + '</font><br/>';
             }
 
              iteminfo_html += '</p></div>';
@@ -413,7 +416,7 @@
 
         }
 
-        function getVideo(prdCode, data, class_type, count, iteminfo1, iteminfo2, iteminfo3, iteminfo4, iteminfo5)
+        function getVideo(itemCode, data, class_type, count, iteminfo1, iteminfo2, iteminfo3, iteminfo4, iteminfo5)
         {
                document.getElementById('lecture_data').innerHTML = '';
 
@@ -436,7 +439,7 @@
                     var iteminfo1_stat_val = document.getElementById(iteminfo1_stat).value;
 
                     if(iteminfo1_stat_val != 'D')
-                        show_itmeinfo("class01", 1,  class_type, prdCode, iteminfo1_title_val, iteminfo1_type_val, iteminfo1_downdata_name_val, iteminfo1_downdata_val, iteminfo1_downdata_sub_val, iteminfo1_downdata_name_sub_val);
+                        show_itmeinfo("class01", 1,  class_type, itemCode, iteminfo1_title_val, iteminfo1_type_val, iteminfo1_downdata_name_val, iteminfo1_downdata_val, iteminfo1_downdata_sub_val, iteminfo1_downdata_name_sub_val);
 
               }
 
@@ -459,7 +462,7 @@
                     var iteminfo2_stat_val = document.getElementById(iteminfo2_stat).value;
 
                     if(iteminfo2_stat_val != 'D')
-                        show_itmeinfo("class02", 2, class_type, prdCode, iteminfo2_title_val, iteminfo2_type_val, iteminfo2_downdata_name_val, iteminfo2_downdata_val, iteminfo2_downdata_sub_val, iteminfo2_downdata_name_sub_val);
+                        show_itmeinfo("class02", 2, class_type, itemCode, iteminfo2_title_val, iteminfo2_type_val, iteminfo2_downdata_name_val, iteminfo2_downdata_val, iteminfo2_downdata_sub_val, iteminfo2_downdata_name_sub_val);
               }
 
               if(iteminfo3 != 'None')
@@ -481,7 +484,7 @@
                     var iteminfo3_stat_val = document.getElementById(iteminfo3_stat).value;
 
                     if(iteminfo3_stat_val != 'D')
-                        show_itmeinfo("class03", 3, class_type, prdCode, iteminfo3_title_val, iteminfo3_type_val, iteminfo3_downdata_name_val, iteminfo3_downdata_val, iteminfo3_downdata_sub_val, iteminfo3_downdata_name_sub_val);
+                        show_itmeinfo("class03", 3, class_type, itemCode, iteminfo3_title_val, iteminfo3_type_val, iteminfo3_downdata_name_val, iteminfo3_downdata_val, iteminfo3_downdata_sub_val, iteminfo3_downdata_name_sub_val);
               }
 
               if(iteminfo4 != 'None')
@@ -503,7 +506,7 @@
                     var iteminfo4_stat_val = document.getElementById(iteminfo4_stat).value;
 
                     if(iteminfo4_stat_val != 'D')
-                        show_itmeinfo("class04", 4, class_type, prdCode, iteminfo4_title_val, iteminfo4_type_val, iteminfo4_downdata_name_val, iteminfo4_downdata_val, iteminfo4_downdata_sub_val, iteminfo4_downdata_name_sub_val);
+                        show_itmeinfo("class04", 4, class_type, itemCode, iteminfo4_title_val, iteminfo4_type_val, iteminfo4_downdata_name_val, iteminfo4_downdata_val, iteminfo4_downdata_sub_val, iteminfo4_downdata_name_sub_val);
               }
 
               if(iteminfo5 != 'None')
@@ -525,7 +528,7 @@
                     var iteminfo5_stat_val = document.getElementById(iteminfo5_stat).value;
 
                     if(iteminfo5_stat_val != 'D')
-                        show_itmeinfo("class05", 5, class_type, prdCode, iteminfo5_title_val, iteminfo5_type_val, iteminfo5_downdata_name_val, iteminfo5_downdata_val, iteminfo5_downdata_sub_val, iteminfo5_downdata_name_sub_val);
+                        show_itmeinfo("class05", 5, class_type, itemCode, iteminfo5_title_val, iteminfo5_type_val, iteminfo5_downdata_name_val, iteminfo5_downdata_val, iteminfo5_downdata_sub_val, iteminfo5_downdata_name_sub_val);
               }
 
             var src;
@@ -534,7 +537,7 @@
             else if (class_type == 'sub')
                 src = '/common/' + data;
             else
-                src = prdCode + '/' + data;
+                src = itemCode + '/' + data;
 
             var video  = document.getElementById('video_ctrl');
             video.setAttribute("src", "/static/resource/data/lecture/" + src);
@@ -547,7 +550,7 @@
             var myclass_idx = '{{myclass_idx}}';
 
              $.ajax({
-                data: {prdCode:prdCode, data:data, myclass_idx:myclass_idx, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                data: {data:data, myclass_idx:myclass_idx, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 type: 'post',
                 url: '/video_play/',
                 dataType: 'json',

@@ -91,7 +91,12 @@ def myclass_page(request):
     if user_id is not None:
         if checkSession(session, user_id):
             item_info = select_class_item_detail(prdCode, itemCode)
-            item_common_info = select_class_item_common_detail(prdCode, itemCode)
+
+
+            prd_info = select_prd(prdCode)
+            item_common_info = select_class_item_common_detail(prdCode, prd_info[0].category_large.value)
+
+            print(item_common_info[0].title)
             item_sub_info = select_class_item_sub_detail(prdCode, itemCode)
 
             if item_info.count() > 0:
@@ -99,15 +104,18 @@ def myclass_page(request):
                     "myclass_detail": item_info,
                     "myclass_common_detail": item_common_info,
                     "myclass_sub_detail": item_sub_info,
-                    "title": item_info[0].prd.title,
-                    "subTitle": item_info[0].prd.keyword,
+                    "category": prd_info[0].category_large.value,
+                    "itemCode": itemCode,
+                    "prdCode": prdCode,
+                    "title": prd_info[0].title,
+                    "subTitle": prd_info[0].keyword,
                     "myclass_idx":myclass_idx,
                     "play":play,
                 }
 
-                if item_info[0].prd.viewType == 'A':
+                if prd_info[0].viewType == 'A':
                     return render(request, 'myclass/myclass.html', context)
-                elif item_info[0].prd.viewType == 'B':
+                elif prd_info[0].viewType == 'B':
                     return render(request, 'myclass/myclass_teach.html', context)
         else:
             disableSession(user_id, request)

@@ -3,8 +3,9 @@ from datetime import timezone
 import requests, base64
 from django.http import HttpResponse
 # 운영
-# url = 'https://api.bizppurio.com/'
+url = 'https://api.bizppurio.com'
 # 검수
+#url = 'https://dev-api.bizppurio.com'
 from main.query import *
 from main.models import *
 
@@ -15,7 +16,7 @@ pay_status_prepay = 4
 pay_status_deposit_noCheck = 5
 
 
-url = 'https://api.bizppurio.com'
+
 
 tokenUrl = url + '/v1/token'
 msgUrl = url + '/v3/message'

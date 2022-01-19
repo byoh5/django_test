@@ -37,23 +37,12 @@ class PrdTB(models.Model):
     prd_idx = models.AutoField(primary_key=True)
     prd_code = models.CharField(max_length=50, default='') #year(2020) + month(08) + trashcan(001), AI(300), kit count(1)
     title = models.CharField(max_length=50)
-    list = models.CharField(max_length=50,  null=True,  blank=True) #group by 있으면 list에 표시 - 상세페이지 이름으로 지정
-    category_large = models.ForeignKey(codingkit_category_large, on_delete=models.PROTECT, null=True, blank=True)
+    category_large = models.ForeignKey(codingkit_category_large, on_delete=models.PROTECT, null=True, blank=True, default='')
     prd_list_img = models.CharField(max_length=50, default='')
-    prd_detail_img = models.CharField(max_length=50, default='')
     period = models.IntegerField(default='0')
-    class_count = models.IntegerField(default='0')
-    price = models.IntegerField(default='0')
     item_code = models.CharField(max_length=150, default='') # , 로 구분한 item code = 강의 item_code
-    option1 = models.CharField(max_length=50, blank=True)
-    option1_price = models.IntegerField(null=True, blank=True)
-    option2 = models.CharField(max_length=50, blank=True)
-    option2_price = models.IntegerField(null=True, blank=True)
-    option3 = models.CharField(max_length=50, blank=True)
-    option3_price = models.IntegerField(null=True, blank=True)
-    category_sub = models.CharField(max_length=150)
+    viewType = models.CharField(max_length=5, default='A') # 교사연수(B, 부분오픈)와 일반구매(A, 강의전체오픈)를 구분하기 위한
     keyword = models.CharField(max_length=50, default = '') #search 용
-    link = models.CharField(max_length=150, null=True, blank=True)
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
     dbstat = models.CharField(max_length=50, default='A')
@@ -77,7 +66,7 @@ class ItemInfoTB(models.Model):
     ItemInfo_idx = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
     type = models.CharField(max_length=50) # text, img, link, download
-    downdata = models.CharField(max_length=50, null=True, blank=True) # 실제 데이터 파일
+    downdata = models.CharField(max_length=500, null=True, blank=True) # 실제 데이터 파일
     downdata_sub = models.CharField(max_length=500, null=True, blank=True) # 실제 데이터 내용 긴 내용(text)
     downdata_name = models.CharField(max_length=50, null=True, blank=True) # 화면에 표시되는 이름
     downdata_name_sub = models.CharField(max_length=50, null=True, blank=True)  # 화면에 표시되는 이름 - download 일때만
@@ -87,11 +76,11 @@ class ItemInfoTB(models.Model):
 
 class ItemCommonTB(models.Model):
     itemcommon_idx = models.AutoField(primary_key=True)
-    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
-    item_code = models.CharField(max_length=50, default='')# 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
+    prd_code = models.CharField(max_length=50, default='all') #all or 각 키트code
+    category_large = models.ForeignKey(codingkit_category_large, on_delete=models.PROTECT, default='', null=True)
     title = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
-    order = models.IntegerField(default='0', null=True, blank=True)
+    order = models.IntegerField(default='0', blank=True)
     iteminfo_1 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_1', on_delete=models.PROTECT, null=True, blank=True) #answer01
     iteminfo_2 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_2', on_delete=models.PROTECT, null=True, blank=True) #answer02
     iteminfo_3 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Common_3', on_delete=models.PROTECT, null=True, blank=True) #answer03
@@ -105,7 +94,10 @@ class ItemCommonTB(models.Model):
 
 class ItemSubKitTB(models.Model):
     ItemSubKit_idx = models.AutoField(primary_key=True)
-    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
+    prd_kit = models.ForeignKey(PrdTB, related_name='prd_kit_itemSubKit', on_delete=models.PROTECT, null=True, blank=True)
+    prd_online = models.ForeignKey(PrdTB, related_name='prd_online_itemSubKit', on_delete=models.PROTECT, null=True, blank=True)
+    prd_teach = models.ForeignKey(PrdTB, related_name='prd_teach_itemSubKit', on_delete=models.PROTECT, null=True, blank=True)
+    prd_other = models.ForeignKey(PrdTB, related_name='prd_other_itemSubKit', on_delete=models.PROTECT, null=True, blank=True)
     item_code = models.CharField(max_length=50, default='')# 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
     title = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
@@ -116,13 +108,16 @@ class ItemSubKitTB(models.Model):
     iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
     iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Subkit_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
-    viewtype = models.CharField(max_length=50, default='A')
+    viewtype = models.CharField(max_length=50, default='A')#teach_viewtype
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
 class ItemSubTB(models.Model):
     ItemSub_idx = models.AutoField(primary_key=True)
-    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT, null=True, blank=True)
+    prd_kit = models.ForeignKey(PrdTB, related_name='prd_kit_itemSub', on_delete=models.PROTECT, null=True, blank=True)
+    prd_online = models.ForeignKey(PrdTB, related_name='prd_online_itemSub', on_delete=models.PROTECT, null=True, blank=True)
+    prd_teach = models.ForeignKey(PrdTB, related_name='prd_teach_itemSub', on_delete=models.PROTECT, null=True, blank=True)
+    prd_other = models.ForeignKey(PrdTB, related_name='prd_other_itemSub', on_delete=models.PROTECT, null=True, blank=True)
     subKit = models.ForeignKey(ItemSubKitTB, on_delete=models.PROTECT, null=True, blank=True)
     item_code = models.CharField(max_length=50, default='')# 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
     title = models.CharField(max_length=50)
@@ -134,7 +129,7 @@ class ItemSubTB(models.Model):
     iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
     iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_Sub_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
-    viewtype = models.CharField(max_length=50, default='A')
+    viewtype = models.CharField(max_length=50, default='A')#teach_viewtype
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
@@ -142,7 +137,10 @@ class ItemSubTB(models.Model):
 class ItemTB(models.Model): #curriculum
     item_idx = models.AutoField(primary_key=True)
     item_code = models.CharField(max_length=50, default='') # 강의를 구분할 수 있다. 스마트휴지통/인공지능 휴지통
-    prd = models.ForeignKey(PrdTB, on_delete=models.PROTECT)
+    prd_kit = models.ForeignKey(PrdTB, related_name='prd_kit_item', on_delete=models.PROTECT, null=True, blank=True)
+    prd_online = models.ForeignKey(PrdTB, related_name='prd_online_item', on_delete=models.PROTECT, null=True, blank=True)
+    prd_teach = models.ForeignKey(PrdTB, related_name='prd_teach_item', on_delete=models.PROTECT, null=True, blank=True)
+    prd_other = models.ForeignKey(PrdTB, related_name='prd_other_item', on_delete=models.PROTECT, null=True, blank=True)
     title = models.CharField(max_length=50)
     data = models.CharField(max_length=150, default='')
     order = models.IntegerField(default='0', null=True, blank=True)
@@ -152,7 +150,7 @@ class ItemTB(models.Model): #curriculum
     iteminfo_4 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_4', on_delete=models.PROTECT, null=True, blank=True) #answer04
     iteminfo_5 = models.ForeignKey(ItemInfoTB, related_name='ItemInfoTB_5', on_delete=models.PROTECT, null=True, blank=True) #answer05
     dbstat = models.CharField(max_length=50, default='A')
-    viewtype = models.CharField(max_length=50, default='A')
+    viewtype = models.CharField(max_length=50, default='A') #teach_viewtype
     stime = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True, blank=True)
 
@@ -231,6 +229,7 @@ class loungeListTB(models.Model):
     search_title = models.CharField(max_length=150, default='', blank=True) #검색에 걸리고 싶은 단어 화면노출 o
     search_title2 = models.CharField(max_length=150, default='', blank=True)  # 검색에 걸리고 싶은 단어 화면노출 X
     video_id = models.CharField(max_length=150, default='')
+    outkey = models.CharField(max_length=200, default='', blank=True)
     down_mblock_code = models.CharField(max_length=50, default='', blank=True)
     down_arduino_code = models.CharField(max_length=50, default='', blank=True)
     diagram_img = models.CharField(max_length=50, default='', blank=True)

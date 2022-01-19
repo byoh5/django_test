@@ -1,0 +1,376 @@
+{% load static %}
+{% include "common/header.html" %}
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.4.js"></script>
+
+    <div class="wrap mypage">
+
+        <!-- mypage tabs -->
+        <div class="tabs mypage">
+            <ul>
+                <li class="active"><a href="/myprofile/">내 프로필</a></li>
+                <li><a href="/coupon/">내 쿠폰</a></li>
+                <li><a href="/myorder/">주문내역</a></li>
+            </ul>
+        </div>
+
+        <!-- mypage content -->
+        <div class="mypage_area myInfo">
+            <div class="info_area">
+                <ul>
+                     {% for userInfo in user_detail %}
+
+                    <li class="email">
+                        <span class="infoTit">name / email</span>
+                        <p>{{userInfo.regi_name}} / {{userInfo.regi_email}}</p>
+                    </li>
+
+                    <li class="phone">
+                        <span class="infoTit">phone</span>
+                        <p>{{userInfo.regi_phone}}</p>
+                        <a href="#phone" class="btn edit">변경</a>
+                    </li>
+<!--                    <li class="address">-->
+<!--                        <span class="infoTit">({{userInfo.regi_name}}) 기본배송지</span>-->
+<!--                        <p>({{userInfo.regi_receiver1_add01}}) {{userInfo.regi_receiver1_add02}} {{userInfo.regi_receiver1_add03}}</p>-->
+<!--                        <a href="#address1" class="btn edit">변경</a>-->
+<!--                    </li>-->
+<!--                     <li class="address">-->
+<!--                        <span class="infoTit">({{userInfo.regi_receiver2_name}}) 배송지</span>-->
+<!--                         {% if userInfo.regi_receiver2_name != "" %}-->
+<!--                        <span><p>{{userInfo.regi_receiver2_phone}}</p></span>-->
+<!--                        <p>({{userInfo.regi_receiver2_add01}}) {{userInfo.regi_receiver2_add02}} {{userInfo.regi_receiver2_add03}}</p>-->
+<!--                         {% endif %}-->
+<!--                        <a href="#address2" class="btn edit">변경</a>-->
+<!--                    </li>-->
+                    <li class="password">
+                        <span class="infoTit">비밀번호 변경 </span>
+                        <div class="input_area">
+                            <input type="password" name="beforePW" id="beforePW" onkeyup="enterkey();"  placeholder="이전 비밀번호">
+                            <input type="password" name="newPW" id="newPW" onkeyup="enterkey();"  placeholder="새 비밀번호">
+                            <input type="password" name="newChPW" id="newChPW" onkeyup="enterkey();"  placeholder="새 비밀번호 확인">
+                            <a href="javascript:changePW();" class="btn editPW">비밀번호 변경</a>
+                        </div>
+                    </li>
+
+                    <input type="hidden" id="idx" name="idx" value="{{userInfo.regi_idx}}">
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- 전화번호 변경 팝업 -->
+        <div data-ml-modal="" id="phone">
+            <a href="#!" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg mypage">
+                <a href="#!" class="modal-close">×</a>
+                <h3>전화번호 변경</h3>
+                <div class="modal-content">
+                    <span>변경할 가입자 휴대폰 번호를 입력해주세요.</span>
+                    <div class="input_area">
+                        <input type="text" name="change_phone" id="change_phone" class="login_inp" placeholder="전화번호를 -없이 숫자만 입력해주세요.">
+                        <a href="javascript:void(0);" onclick="javascript:goAuthPhone();" class="btn certified">휴대폰 인증</a>
+                    </div>
+                    <div class="btn_area">
+                        <a href="#" class="btn cancle">변경 취소</a>
+                        <a href="#" class="btn apply">변경사항 적용</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 주소 변경 팝업 -->
+        <div data-ml-modal="" id="address1">
+            <a href="" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg mypage">
+                <a href="#" class="modal-close">×</a>
+                <h3>주소 변경</h3>
+                <div class="modal-content">
+                    <span>변경할 주소를 입력해주세요.</span>
+                    <div class="input_area address">
+                        <input type="text" name="regi_add01" id="regi_add01" class="login_inp add01 w50">
+                        <button class="btn address w30" onClick="javascript:getAddress();">주소 찾기</button>
+                        <input type="text" name="regi_add02" id="regi_add02" class="login_inp add02 w80">
+                        <input type="text" name="regi_add03" id="regi_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
+                    </div>
+                    <div class="btn_area">
+                        <a href="#" class="btn cancle">변경 취소</a>
+                        <a href="javascript:void(0);" onclick="javascript:changeAddr();" class="btn apply">변경사항 적용</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- 주소 변경 팝업 -->
+        <div data-ml-modal="" id="address2">
+            <a href="" class="modal-overlay"></a>
+            <div class="modal-dialog modal-dialog-lg mypage">
+                <a href="#" class="modal-close">×</a>
+                <h3>주소 변경</h3>
+                <div class="modal-content">
+                    <span>추가 배송지 정보를 입력해주세요.</span>
+                        <div class="input_area address">
+                            <input type="text" name="regi_receiver2_add01" id="regi_receiver2_add01" class="login_inp add01 w50">
+                            <button class="btn address w30" onClick="javascript:getAddress(2);">주소 찾기</button>
+                            <input type="text" name="regi_receiver2_add02" id="regi_receiver2_add02" class="login_inp add02 w80">
+                            <input type="text" name="regi_receiver2_add03" id="regi_receiver2_add03" class="login_inp add03 w80" placeholder="상세주소를 입력해 주세요.">
+                        </div>
+                        <div class="input_area" style="margin-left:10px; margin-top:10px">
+                             <input type="text" name="regi_receiver2_name" id="regi_receiver2_name" class="w40" style="margin-right:10px;" placeholder="받는 분 이름을 작성해주세요.">
+                             <input type="text" name="regi_receiver2_phone" id="regi_receiver2_phone" class="w40" style="margin-right:10px;" placeholder="받는 분 휴대폰 번호를 작성해주세요.">
+                         </div>
+                    <div class="btn_area">
+                        <a href="#" class="btn cancle">변경 취소</a>
+                        <a href="javascript:void(0);" onclick="javascript:changeAddr2();" class="btn apply">변경사항 적용</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include "common/footer.html" %}
+    </div>
+
+    <input type="hidden" id="msg" name="msg" value="{{message}}">
+    <input type="hidden" id="imp" name="imp" value="{{imp}}">
+    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/animate.min.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/css/jquery.modal.css" />
+<script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/jquery.modal.js"></script>
+<script src="//cdn.jsdelivr.net/gh/stove99/jquery-modal-sample@v1.4/js/modal.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        var msg = $("input[type=hidden][name=msg]").val();
+        if(msg == 202)
+        {
+             $("#res_msg").text("입력하신 이전 비밀번호가 다릅니다");
+             $('div.modal').modal();
+        }
+        else if (msg == 401)
+        {
+            $("#res_msg").text("변경될 휴대폰 번호가 가입자 명의가 아닙니다. 다시 확인해 주세요.");
+            $('div.modal').modal();
+        }
+        else if (msg == 404)
+        {
+            $("#res_msg").text("입력한 번호와 인증받은 번호가 다릅니다. 다시 확인해 주세요.");
+            $('div.modal').modal();
+        }
+    });
+
+    function enterkey()
+    {
+        if (window.event.keyCode == 13) {
+
+             // 엔터키가 눌렸을 때 실행할 내용
+             changePW();
+        }
+    }
+
+    function getAddress(data)
+    {
+        if(data == 2)
+        {
+            new daum.Postcode({
+                oncomplete: function(data)
+                {
+                    $('[name=regi_receiver2_add01]').val(data.zonecode); // 우편번호 (5자리)
+                    $('[name=regi_receiver2_add02]').val(data.address);
+                    $('[name=regi_receiver2_add03]').val(data.buildingName);
+                }
+            }).open();
+
+        }
+        else
+        {
+            new daum.Postcode({
+            oncomplete: function(data)
+            {
+                $('[name=regi_add01]').val(data.zonecode); // 우편번호 (5자리)
+                $('[name=regi_add02]').val(data.address);
+                $('[name=regi_add03]').val(data.buildingName);
+            }
+	    }).open();
+
+        }
+
+
+	    return true;
+	}
+
+	function changeAddr()
+	{
+	    if($('[name=regi_add01]').val() == "" || $('[name=regi_add02]').val() == "" || $('[name=regi_add03]').val() == "")
+	    {
+             alert("주소를 바르게 입력해주세요.");
+             return false;
+	    }
+	    else
+	    {
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "modify");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/my_modify_addr/");
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add01', value : $('[name=regi_add01]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add02', value : $('[name=regi_add02]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_add03', value : $('[name=regi_add03]').val()}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+        }
+	}
+
+	function changeAddr2()
+	{
+	    if($('[name=regi_receiver2_add01]').val() == "" || $('[name=regi_receiver2_add02]').val() == "" || $('[name=regi_receiver2_add03]').val() == "")
+	    {
+             alert("주소를 바르게 입력해주세요.");
+	    }
+	    else if($('[name=regi_receiver2_name]').val() == "")
+	    {
+            alert("이름을 입력해주세요.");
+	    }
+	    else if($('[name=regi_receiver2_phone]').val() == "")
+	    {
+            alert("휴대폰 정보를 입력해주세요.");
+	    }
+	    else
+	    {
+            var newForm = $('<form></form>');
+
+            newForm.attr("name", "modify");
+            newForm.attr("method", "post");
+            newForm.attr("action", "/my_modify_addr2/");
+
+           // var phoneVal = chkItemPhone($('[name=regi_receiver2_phone]').val());
+
+            newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_name', value : $('[name=regi_receiver2_name]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_phone', value : $('[name=regi_receiver2_phone]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add01', value : $('[name=regi_receiver2_add01]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add02', value : $('[name=regi_receiver2_add02]').val()}));
+            newForm.append($('<input/>', {type: 'hidden', name: 'regi_receiver2_add03', value : $('[name=regi_receiver2_add03]').val()}));
+
+            newForm.appendTo('body');
+            newForm.submit();
+        }
+	}
+
+	function changePW()
+	{
+	    var pass_patten = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/; // 숫자, 특문 1회이상/ 영문 2개이상 8자리 이상
+	    var pass = document.getElementById('newPW');
+        var pass_chk = document.getElementById('newChPW');
+
+	    if(pass.value.length == 0 || pass_chk.value.length < 8)
+        {
+            $("#res_msg").text("비밀번호는 8자 이상 필요합니다.");
+            $('div.modal').modal();
+            return false;
+        }
+        else
+        {
+            if(!pass_patten.test(pass.value))
+            {
+                $("#res_msg").text("비밀번호는 영문 + 숫자 + 특수문자가 필요합니다.");
+                $('div.modal').modal();
+                return false;
+            }
+
+            if(pass.value != pass_chk.value)
+            {
+                $("#res_msg").text("비밀번호와 비밀번호 확인 번호가 다릅니다.");
+                $('div.modal').modal();
+                pass_chk.value = "";
+                return false;
+            }
+        }
+
+        var newForm = $('<form></form>');
+
+        newForm.attr("name", "modify_pw");
+        newForm.attr("method", "post");
+        newForm.attr("action", "/my_modify_pw/");
+
+        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'beforePW', value : $('[name=beforePW]').val()}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'newPW', value : $('[name=newPW]').val()}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'newChPW', value : $('[name=newChPW]').val()}));
+
+        newForm.appendTo('body');
+        newForm.submit();
+	}
+
+    function confirmSubmit(run_uid, phone)
+    {
+        var index = document.getElementById('idx').value;
+
+        var newForm = $('<form></form>');
+
+        newForm.attr("name", "confirm_user");
+        newForm.attr("method", "post");
+        newForm.attr("action", "/confirm/");
+
+        newForm.append($('<input/>', {type: 'hidden', name: 'csrfmiddlewaretoken', value : '{{ csrf_token }}'}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'run_uid', value : run_uid}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'regi_idx', value : index}));
+        newForm.append($('<input/>', {type: 'hidden', name: 'new_phone', value : phone}));
+
+        newForm.appendTo('body');
+        newForm.submit();
+    }
+
+	function goAuthPhone()
+	{
+	    var new_phone = document.getElementById('change_phone').value;
+	    if(new_phone == "")
+	    {
+	        alert("변경할 휴대폰 번호를 입력해 주세요");
+	        return false;
+	    }
+	    else
+	    {
+	        var phone_num = new_phone.replace(/[^0-9]/g, "");
+
+             if (phone_num.length < 9)
+             {
+                alert("휴대폰 번호를 정확히 입력하세요.");
+                return false;
+             }
+	    }
+
+	    imp_uid = "";
+	    imp_id = $('[name=imp]').val();
+	    IMP.init(imp_id);
+	    IMP.certification({
+            merchant_uid : 'merchant_' + new Date().getTime()
+        }, function(rsp) {
+            if ( rsp.success )
+            {
+                 // 인증성공
+                imp_uid = rsp.imp_uid;
+                confirmSubmit(imp_uid, phone_num);
+            }
+            else
+            {
+                 // 인증취소 또는 인증실패
+                var msg = '인증에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+
+                alert(msg);
+            }
+        });
+    }
+
+
+    </script>
+
+
+</body></html>
